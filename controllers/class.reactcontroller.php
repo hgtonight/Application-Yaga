@@ -31,12 +31,10 @@ class ReactController extends YagaController {
    * @access public
    */
   public function Initialize() {
+    parent::Initialize();
     if(!$this->Request->IsPostBack()) {
-      //throw PermissionException('Javascript');
+      throw PermissionException('Javascript');
     }
-
-    $this->AddJsFile('yaga.js');
-    $this->AddCssFile('yaga.css');
   }
 
   public function Index() {
@@ -48,7 +46,7 @@ class ReactController extends YagaController {
     // check to see if allowed to react
     $this->Permission('Plugins.Reactions.Add');
     
-    if($this->ActionModel->GetAction($ActionID)) {
+    if(!$this->ActionModel->ActionExists($ActionID)) {
       throw new Gdn_UserException('Invalid Action');
     }
     
@@ -68,25 +66,25 @@ class ReactController extends YagaController {
     }
 
     // It has passed through the gauntlet
-    $this->ReactionModel->SetReaction($DiscussionID, 'discussion', $UserID, $ActionID);
+    $this->ReactionModel->SetReaction($DiscussionID, 'discussion', $Discussion->InsertUserID, $UserID, $ActionID);
     
     $this->JsonTarget($Anchor, $this->_RenderActions($DiscussionID, 'discussion', FALSE), 'ReplaceWith');
     
     $this->Render('Blank', 'Utility', 'Dashboard');
   }
   
-  public function Comment($DiscussionID, $ActionID) {
+  public function Comment($CommentID, $ActionID) {
     // check to see if allowed to react
     $this->Permission('Plugins.Reactions.Add');
     
-    if($this->ActionModel->GetAction($ActionID)) {
+    if(!$this->ActionModel->ActionExists($ActionID)) {
       throw new Gdn_UserException('Invalid Action');
     }
     
-    $Discussion = $this->DiscussionModel->GetID($DiscussionID);
+    $Comment = $this->CommentModel->GetID($CommentID);
     
-    if($Discussion) {
-      $Anchor = '#Discussion_' . $DiscussionID . ' .ReactMenu';
+    if($Comment) {
+      $Anchor = '#Comment_' . $CommentID . ' .ReactMenu';
     }
     else {
       throw new Gdn_UserException('Invalid ID');
@@ -94,30 +92,30 @@ class ReactController extends YagaController {
     
     $UserID = Gdn::Session()->UserID;
     
-    if($Discussion->InsertUserID == $UserID) {
+    if($Comment->InsertUserID == $UserID) {
       throw new Gdn_UserException('You cannot react to your own content.');
     }
 
     // It has passed through the gauntlet
-    $this->ReactionModel->SetReaction($DiscussionID, 'discussion', $UserID, $ActionID);
+    $this->ReactionModel->SetReaction($CommentID, 'comment', $Comment->InsertUserID, $UserID, $ActionID);
     
-    $this->JsonTarget($Anchor, $this->_RenderActions($DiscussionID, 'discussion', FALSE), 'ReplaceWith');
+    $this->JsonTarget($Anchor, $this->_RenderActions($CommentID, 'comment', FALSE), 'ReplaceWith');
     
     $this->Render('Blank', 'Utility', 'Dashboard');
   }
   
-  public function Activity($DiscussionID, $ActionID) {
+  public function Activity($ActivityID, $ActionID) {
     // check to see if allowed to react
     $this->Permission('Plugins.Reactions.Add');
     
-    if($this->ActionModel->GetAction($ActionID)) {
+    if(!$this->ActionModel->ActionExists($ActionID)) {
       throw new Gdn_UserException('Invalid Action');
     }
     
-    $Discussion = $this->DiscussionModel->GetID($DiscussionID);
+    $Activity = $this->ActivityModel->GetID($ActivityID);
     
-    if($Discussion) {
-      $Anchor = '#Discussion_' . $DiscussionID . ' .ReactMenu';
+    if($Activity) {
+      $Anchor = '#Activity_' . $ActivityID . ' .ReactMenu';
     }
     else {
       throw new Gdn_UserException('Invalid ID');
@@ -125,27 +123,26 @@ class ReactController extends YagaController {
     
     $UserID = Gdn::Session()->UserID;
     
-    if($Discussion->InsertUserID == $UserID) {
+    if($Activity->InsertUserID == $UserID) {
       throw new Gdn_UserException('You cannot react to your own content.');
     }
 
     // It has passed through the gauntlet
-    $this->ReactionModel->SetReaction($DiscussionID, 'discussion', $UserID, $ActionID);
+    $this->ReactionModel->SetReaction($ActivityID, 'activity', $Activity->InsertUserID, $UserID, $ActionID);
     
-    $this->JsonTarget($Anchor, $this->_RenderActions($DiscussionID, 'discussion', FALSE), 'ReplaceWith');
+    $this->JsonTarget($Anchor, $this->_RenderActions($ActivityID, 'activity', FALSE), 'ReplaceWith');
     
     $this->Render('Blank', 'Utility', 'Dashboard');
   }
 
   private function _RenderActions($ID, $Type, $Echo = TRUE) {
     $Reactions = $this->ReactionModel->GetReactions($ID, $Type);
-    //decho($Reactions);
     $ActionsString = '';
     foreach($Reactions as $Action) {
       $ActionsString .= Anchor(
               Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID)) .
               WrapIf(count($Action->UserIDs), 'span', array('class' => 'Count')) .
-              Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'discussion/react/' . $Type . '/' . $ID . '/' . $Action->ActionID,
+              Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'react/' . $Type . '/' . $ID . '/' . $Action->ActionID,
               'Hijack ReactButton'
       );
     }

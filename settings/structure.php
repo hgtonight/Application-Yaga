@@ -10,9 +10,9 @@ if(!isset($Explicit)) {
 }
 
 $Database = Gdn::Database();
-$SQL = $Database->SQL(); // To run queries.
+//$SQL = $Database->SQL(); // To run queries.
 $Construct = $Database->Structure(); // To modify and add database tables.
-$Validation = new Gdn_Validation(); // To validate permissions (if necessary).
+//$Validation = new Gdn_Validation(); // To validate permissions (if necessary).
 
 $Construct->Table('Reaction')
         ->PrimaryKey('ReactionID')
@@ -20,6 +20,7 @@ $Construct->Table('Reaction')
         ->Column('ActionID', 'int', FALSE, 'index')
         ->Column('ParentID', 'int', TRUE)
         ->Column('ParentType', array('discussion', 'comment', 'activity'), TRUE)
+        ->Column('ParentAuthorID', 'int', FALSE)
         ->Column('DateInserted', 'datetime')
         ->Set($Explicit, $Drop);
 

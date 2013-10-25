@@ -3,9 +3,9 @@
 
 /**
  * Reactions
- * 
+ *
  * Events:
- * 
+ *
  * @package Yaga
  * @since 1.0
  */
@@ -34,19 +34,40 @@ class ActionModel extends Gdn_Model {
     }
     return self::$_Actions;
   }
-  
+
   /**
    * Returns data for a specific action
    * @param int $ActionID
    * @return dataset
    */
   public function GetAction($ActionID) {
-    return $this->SQL
+    $Action = $this->SQL
                     ->Select()
                     ->From('Action')
                     ->Where('ActionID', $ActionID)
                     ->Get()
                     ->FirstRow();
+    return $Action;
   }
-  
+
+  public function ActionExists($ActionID) {
+    return !empty($this->GetAction($ActionID));
+  }
+
+  public function DeleteAction($ActionID, $ReplacementID = NULL) {
+    if($this->ActionExists($ActionID)) {
+      $this->SQL->Delete('Action', array('ActionID' => $ActionID));
+      // TODO: Ask the user if they want to delete reactions or lump them in
+      // with another action
+      if($ReplacementID && $this->ActionExists($ReplacementID)) {
+        $this->SQL->Update('Reaction')
+                ->Set('ActionID', $ReplacementID)
+                ->Where('ActionID', $ActionID);
+      }
+      else {
+        $this->SQL->Delete('Reaction', array('ActionID' => $ActionID));
+      }
+    }
+  }
+
 }

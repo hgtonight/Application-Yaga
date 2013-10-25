@@ -9,9 +9,6 @@
  */
 class YagaController extends Gdn_Controller {
 
-  /** @var array List of objects to prep. They will be available as $this->$Name. */
-  public $Uses = array('Form');
-
   /**
    * If you use a constructor, always call parent.
    * Delete this if you don't need it.
@@ -31,11 +28,6 @@ class YagaController extends Gdn_Controller {
    * @access public
    */
   public function Initialize() {
-    // There are 4 delivery types used by Render().
-    // DELIVERY_TYPE_ALL is the default and indicates an entire page view.
-    if($this->DeliveryType() == DELIVERY_TYPE_ALL)
-      $this->Head = new HeadModule($this);
-
     // Call Gdn_Controller's Initialize() as well.
     parent::Initialize();
   }

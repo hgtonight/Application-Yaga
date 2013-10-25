@@ -102,17 +102,16 @@ class ReactionModel extends Gdn_Model {
             ->FirstRow();
   }
   
-  // TODO: Make this get the reactions received, not given
   public function GetUserReactionCount($UserID, $ActionID) {
     return $this->SQL
             ->Select()
             ->From('Reaction')
             ->Where('ActionID', $ActionID)
-            ->Where('InsertUserID', $UserID)
+            ->Where('ParentAuthorID', $UserID)
             ->GetCount();
   }
   
-  public function SetReaction($ID, $Type, $UserID, $ActionID) {
+  public function SetReaction($ID, $Type, $AuthorID, $UserID, $ActionID) {
     // clear the cache
     unset(self::$_Reactions[$Type . $ID]);
 
@@ -130,6 +129,7 @@ class ReactionModel extends Gdn_Model {
         return $this->SQL
               ->Update('Reaction')
               ->Set('ActionID', $ActionID)
+              ->Set('DateInserted', date(DATE_ISO8601))
               ->Where('ParentID', $ID)
               ->Where('ParentType', $Type)
               ->Where('InsertUserID', $UserID)
@@ -143,7 +143,9 @@ class ReactionModel extends Gdn_Model {
                       array('ActionID' => $ActionID,
                       'ParentID' =>  $ID,
                       'ParentType' => $Type,
-                      'InsertUserID' => $UserID));
+                      'ParentAuthorID' => $AuthorID,
+                      'InsertUserID' => $UserID,
+                      'DateInserted' => date(DATE_ISO8601)));
     }
   }
 }
