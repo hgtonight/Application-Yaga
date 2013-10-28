@@ -61,7 +61,8 @@ class ActionModel extends Gdn_Model {
   }
 
   public function ActionExists($ActionID) {
-    return !empty($this->GetAction($ActionID));
+    $temp = $this->GetAction($ActionID);
+    return !empty($temp);
   }
 
   public function DeleteAction($ActionID, $ReplacementID = NULL) {
