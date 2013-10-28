@@ -49,6 +49,16 @@ class ActionModel extends Gdn_Model {
                     ->FirstRow();
     return $Action;
   }
+  
+  public function GetNewestAction() {
+    $Action = $this->SQL
+                    ->Select()
+                    ->From('Action')
+                    ->OrderBy('ActionID', 'desc')
+                    ->Get()
+                    ->FirstRow();
+    return $Action;
+  }
 
   public function ActionExists($ActionID) {
     return !empty($this->GetAction($ActionID));

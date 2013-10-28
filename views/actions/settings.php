@@ -10,6 +10,7 @@ echo Wrap(Anchor('Add Action', 'yaga/actions/add', array('class' => 'Popup Small
   <thead>
     <tr>
       <th>Name</th>
+      <th>Icon</th>
       <th>Description</th>
       <th>Tooltip</th>
       <th>Award Value</th>
@@ -22,6 +23,7 @@ echo Wrap(Anchor('Add Action', 'yaga/actions/add', array('class' => 'Popup Small
     foreach($this->Data('Actions') as $Action) {
       echo '<tr id="ActionID_' . $Action->ActionID . '" data-actionid="'. $Action->ActionID . '"' . ($Alt ? ' class="Alt"' : '') . '>';
       echo "<td>$Action->Name</td>";
+      echo '<td><span class="ReactSprite ' . $Action->CssClass . '"> </span></td>';
       echo "<td>$Action->Description</td>";
       echo "<td>$Action->Tooltip</td>";
       echo "<td>$Action->AwardValue</td>";

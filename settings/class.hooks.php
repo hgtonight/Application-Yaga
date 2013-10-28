@@ -14,7 +14,8 @@ class YagaHooks implements Gdn_IPlugin {
    * @param type $Sender
    */
   public function UserInfoModule_OnBasicInfo_Handler($Sender) {
-    $Points = 0;
+    $Model = new YagaModel();
+    $Points = $Model->GetUserPoints($Sender->User->UserID);
     echo Wrap(T('Yaga.Points', 'Points'), 'dt') . ' ' . Wrap($Points, 'dd');
   }
 
@@ -32,9 +33,7 @@ class YagaHooks implements Gdn_IPlugin {
     $Actions = $this->_ReactionModel->GetActions();
     $String = '';
     foreach($Actions as $Action) {
-      //decho($Action);
       $Count = $this->_ReactionModel->GetUserReactionCount($User->UserID, $Action->ActionID);
-      //decho($Count);
       $TempString = Wrap(Wrap(Gdn_Format::BigNumber($Count), 'span', array('title' => $Count)), 'span', array('class' => 'Yarbs_ReactionCount CountTotal'));
       $TempString .= Wrap($Action->Name, 'span', array('class' => 'Yarbs_ReactionName CountLabel'));
 
@@ -80,13 +79,12 @@ class YagaHooks implements Gdn_IPlugin {
     }
 
     $Reactions = $this->_ReactionModel->GetReactions($ID, $Type);
-
     foreach($Reactions as $Reaction) {
       if($Reaction->UserIDs) {
         foreach($Reaction->UserIDs as $Index => $UserID) {
           $User = Gdn::UserModel()->GetID($UserID);
           $String = UserPhoto($User, array('Size' => 'Small'));
-          $String .= '<span class="ReactSprite ReactLol Reaction-' . $Reaction->ActionID . '"></span>';
+          $String .= '<span class="ReactSprite Reaction-' . $Reaction->ActionID . ' ' . $Reaction->CssClass . '"></span>';
           $Wrapttributes = array(
               'class' => 'UserReactionWrap',
               'data-userid' => $User->UserID,
@@ -174,7 +172,7 @@ class YagaHooks implements Gdn_IPlugin {
     $ActionsString = '';
     foreach($Reactions as $Action) {
       $ActionsString .= Anchor(
-              Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID)) .
+              Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID . ' ' . $Action->CssClass)) .
               WrapIf(count($Action->UserIDs), 'span', array('class' => 'Count')) .
               Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'react/' . $Type . '/' . $ID . '/' . $Action->ActionID, 'Hijack ReactButton'
       );

@@ -29,6 +29,7 @@ $Construct->Table('Action')
         ->Column('Name', 'varchar(140)')
         ->Column('Description', 'varchar(255)')
         ->Column('Tooltip', 'varchar(255)')
+        ->Column('CssClass', 'varchar(255)')
         ->Column('AwardValue', 'int', 1)
         ->Set($Explicit, $Drop);
 

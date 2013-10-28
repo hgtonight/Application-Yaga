@@ -2,7 +2,7 @@
 /* Copyright 2013 Zachary Doll */
 
 /**
- * Reactions
+ * Cross table functions
  * 
  * Events:
  * 
@@ -10,16 +10,33 @@
  * @since 1.0
  */
 
-class ReactionModel extends Gdn_Model {
+class YagaModel extends Gdn_Model {
   private static $_Reactions = array();
   private static $_Actions = NULL;
   /**
    * Class constructor. Defines the related database table name.
    */
   public function __construct() {
-    parent::__construct('Reaction');
+    parent::__construct();
   }
 
+  public function GetUserPoints($UserID) {
+    // TODO: Add in other sources other than reactions
+    $ActionPoints = $this->SQL
+            ->Select('a.ActionID, a.Name, a.AwardValue, COUNT(*) Count')
+            ->From('Action a')
+            ->Join('Reaction r', 'a.ActionID = r.ActionID')
+            ->Where('ParentAuthorID', $UserID)
+            ->GroupBy('a.ActionID')
+            ->Get()
+            ->Result();
+    $Points = 0;
+    
+    foreach($ActionPoints as $Action) {
+      $Points += $Action->AwardValue * $Action->Count;
+    }
+    return $Points;
+  }
   /**
    * Returns a list of all available actions
    */

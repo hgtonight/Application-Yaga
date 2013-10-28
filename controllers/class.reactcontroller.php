@@ -140,7 +140,7 @@ class ReactController extends YagaController {
     $ActionsString = '';
     foreach($Reactions as $Action) {
       $ActionsString .= Anchor(
-              Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID)) .
+              Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID . ' ' . $Action->CssClass)) .
               WrapIf(count($Action->UserIDs), 'span', array('class' => 'Count')) .
               Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'react/' . $Type . '/' . $ID . '/' . $Action->ActionID,
               'Hijack ReactButton'

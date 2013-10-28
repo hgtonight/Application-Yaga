@@ -37,7 +37,7 @@ class ActionsController extends DashboardController {
       $this->Menu->HighlightRoute('/actions');
     }
     $this->AddJsFile('actions.js');
-    $this->AddCssFile('actions.css');
+    $this->AddCssFile('reactions.css');
   }
 
   public function Settings($Page = '') {
@@ -56,10 +56,12 @@ class ActionsController extends DashboardController {
     $this->Permission('Yaga.Reactions.Manage');
     $this->AddSideMenu('actions/settings');
     $this->Form->SetModel($this->ActionModel);
-
+    
+    $Edit = FALSE;
     if($ActionID) {
       $this->Action = $this->ActionModel->GetAction($ActionID);
       $this->Form->AddHidden('ActionID', $ActionID);
+      $Edit = TRUE;
     }
     
     if($this->Form->IsPostBack() == FALSE) {
@@ -67,16 +69,28 @@ class ActionsController extends DashboardController {
     }
     else {
       if($this->Form->Save()) {
-        $Action = $this->ActionModel->GetAction($this->Form->GetValue('ActionID'));
+        if($Edit) {
+          $Action = $this->ActionModel->GetAction($this->Form->GetFormValue('ActionID'));
+        }
+        else {
+          $Action = $this->ActionModel->GetNewestAction();
+        }
         $NewActionRow = '<tr id="ActionID_' . $Action->ActionID . '" data-actionid="'. $Action->ActionID . '">';
         $NewActionRow .= "<td>$Action->Name</td>";
+        $NewActionRow .= '<td><span class="ReactSprite ' . $Action->CssClass . '"> </span></td>';
         $NewActionRow .= "<td>$Action->Description</td>";
         $NewActionRow .= "<td>$Action->Tooltip</td>";
         $NewActionRow .= "<td>$Action->AwardValue</td>";
         $NewActionRow .= '<td>' . Anchor(T('Edit'), 'yaga/actions/edit/' . $Action->ActionID, array('class' => 'Popup SmallButton')) . Anchor(T('Delete'), 'yaga/actions/delete/' . $Action->ActionID, array('class' => 'Hijack SmallButton')) . '</td>';
         $NewActionRow .= '</tr>';
-        $this->JsonTarget('#ActionID_' . $this->Action->ActionID, $NewActionRow, 'ReplaceWith');
-        $this->InformMessage('Action updated successfully!');
+        if($Edit) {
+          $this->JsonTarget('#ActionID_' . $this->Action->ActionID, $NewActionRow, 'ReplaceWith');
+          $this->InformMessage('Action updated successfully!');
+        }
+        else {
+          $this->JsonTarget('#Actions tbody', $NewActionRow, 'Append');
+          $this->InformMessage('Action added successfully!');
+        }
       }
     }
 

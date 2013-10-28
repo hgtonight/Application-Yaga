@@ -1,3 +1,7 @@
+#icon-preview {
+  margin: auto 20px;
+}
+
 .Reactions {
    position: relative;
    font-size: 11px;
@@ -30,7 +34,7 @@
 }
 .ReactButton {
    display: inline-block;
-   margin: 0 2px;
+   margin: 0 5px;
    line-height: 18px;
    vertical-align: top;
    position: relative;
@@ -403,4 +407,61 @@ only screen and (max-device-width: 480px) {
       -ms-transition-property: left, right, top;
        -o-transition-property: left, right, top;
           transition-property: left, right, top;
+}
+
+/* Imported from style.css for backward compatibility */
+.ReactSprite {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  margin-right: 4px;
+  line-height: 18px;
+  vertical-align: bottom;
+  background-image: url('images/action-sprites.png');
+  background-position: 16px 16px;
+  background-repeat: no-repeat;
+}
+input + .ReactSprite {
+   vertical-align: middle;
+}
+
+.ReactEverything { background-position: -197px -53px; }
+.ReactAwesome { background-position: -269px -6px; }
+.ReactFlag { background-position: -54px -52px; }
+.ReactInsightful { background-position: -149px -6px; }
+.ReactOffTopic { background-position: -173px -6px; }
+.ReactAbuse { background-position: -6px -52px; }
+.ReactSpam { background-position: -125px -6px; }
+.ReactTroll { background-position: -101px -6px; }
+.ReactPromote { background-position: -50px -29px; }
+.ReactDisagree { background-position: -28px -5px; }
+.ReactAgree { background-position: -4px -5px; }
+.ReactDislike { background-position: -28px -28px; }
+.ReactLike { background-position: -4px -31px; }
+.ReactDown { background-position: -220px -29px; }
+.ReactUp { background-position: -195px -30px; }
+.ReactWTF { background-position: -76px -5px; }
+.ReactLOL { background-position: -52px -5px; }
+.ReactQuote { background-position: -316px -6px; }
+.ReactInfraction { background-position: -100px -53px; }
+.ReactAccept { background-position: -6px -102px; }
+.ReactReject { background-position: -342px -6px; }
+.ReactFacebook { background-position: -29px -124px; }
+.ReactTwitter { background-position: -53px -124px; }
+.ReactGooglePlus { background-position: -77px -124px; }
+.ReactMessage { background-position: -101px -102px; }
+.ReactWarn { background-position: -222px -6px; }
+
+/* Switch to the white icons when hovering over a menuitem sprite */
+.MenuItems a:hover .ReactSprite,
+.MenuItems a:hover .Sprite {
+   background-image: url('images/action-sprites-white.png');
+}
+/* Switch to bordered icons for user reaction overlays */
+.UserReactionWrap .ReactSprite {
+   background-image: url('images/action-sprites-bordered.png');
+}
+.ActionBlock {
+    margin: 15px 0 5px;
+    font-style: italic;
 }
