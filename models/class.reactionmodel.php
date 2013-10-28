@@ -80,9 +80,12 @@ class ReactionModel extends Gdn_Model {
             $ReactionSet[$Index]->UserIDs[] = $Reaction->UserID;
             $ReactionSet[$Index]->Dates[] = $Reaction->DateInserted;
           }
+          if(empty($ReactionSet[$Index]->UserIDs[])) {
+            $ReactionSet[$Index]->UserIDs = array();
+          }
+            
         }
 
-        //decho('Filling in the reaction cache for ' . $Type . $ID);
         self::$_Reactions[$Type . $ID] = $ReactionSet;
       }
       return self::$_Reactions[$Type . $ID];
