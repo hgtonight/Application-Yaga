@@ -80,7 +80,7 @@ class ReactionModel extends Gdn_Model {
             $ReactionSet[$Index]->UserIDs[] = $Reaction->UserID;
             $ReactionSet[$Index]->Dates[] = $Reaction->DateInserted;
           }
-          if(empty($ReactionSet[$Index]->UserIDs[])) {
+          if(empty($ReactionSet[$Index]->UserIDs)) {
             $ReactionSet[$Index]->UserIDs = array();
           }
             
