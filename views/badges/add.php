@@ -1,6 +1,6 @@
 <?php if(!defined('APPLICATION')) exit();
 /* Copyright 2013 Zachary Doll */
-if(is_object($this->Badge)) {
+if(property_exists($this, 'Badge')) {
   echo Wrap(T('Edit Badge'), 'h1');
 }
 else {
@@ -17,9 +17,9 @@ echo $this->Form->Errors();
     $Photo = $this->Form->GetValue('Photo');
     if($Photo) {
       echo Img(Gdn_Upload::Url($Photo));
-      //echo '<br />'.Anchor(T('Delete Photo'), 
-      //  CombinePaths(array('vanilla/settings/deletecategoryphoto', $this->Category->CategoryID, Gdn::Session()->TransientKey())), 
-      //'SmallButton Danger PopConfirm');
+      echo '<br />'.Anchor(T('Delete Photo'), 
+        CombinePaths(array('badges/deletephoto', $this->Badge->BadgeID, Gdn::Session()->TransientKey())), 
+      'SmallButton Danger PopConfirm');
     }
     echo $this->Form->Input('PhotoUpload', 'file');
     ?>

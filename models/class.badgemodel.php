@@ -88,5 +88,26 @@ class BadgeModel extends Gdn_Model {
 //      }
     }
   }
+  
+  public function AwardBadge($BadgeID, $UserID) {
+    if($this->BadgeExists($BadgeID)) {
+      if(!$this->UserHasBadge($UserID, $BadgeID)) {
+        $this->SQL->Insert('BadgeAward', array(
+            'BadgeID' => $BadgeID,
+            'UserID' => $UserID,
+            'DateInserted' => date(DATE_ISO8601)
+        ));
+      }
+    } 
+  }
+  
+  public function UserHasBadge($UserID, $BadgeID) {
+    return $this->SQL
+            ->Select()
+            ->From('BadgeAward')
+            ->Where('BadgeID', $ActionID)
+            ->Where('UserID', $UserID)
+            ->GetCount();
+  }
 
 }

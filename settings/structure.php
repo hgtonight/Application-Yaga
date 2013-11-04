@@ -43,3 +43,10 @@ $Construct->Table('Badge')
         ->Column('AwardValue', 'int', 0)
         ->Column('Enabled', 'tinyint(1)', '1')
         ->Set($Explicit, $Drop);
+
+$Construct->Table('BadgeAward')
+        ->PrimaryKey('BadgeAwardID')
+        ->Column('BadgeID', 'int')
+        ->Column('UserID', 'int')
+        ->Column('DateInserted', 'datetime')
+        ->Set($Explicit, $Drop);

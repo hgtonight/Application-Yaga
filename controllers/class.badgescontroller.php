@@ -2,7 +2,7 @@
 /* Copyright 2013 Zachary Doll */
 
 /**
- * All is the base class for controllers throughout the gamification applicati0n.
+ * Contains management code for creating badges.
  *
  * @since 1.0
  * @package Yaga
@@ -51,6 +51,26 @@ class BadgesController extends DashboardController {
 
     $this->Render();
   }
+  
+  public function UpdateRuleMap() {
+    foreach(glob(PATH_APPLICATIONS . DS . 'yaga' . DS . 'rules' . DS . '*.php') as $filename) {
+      include_once $filename;
+    }
+    $Cache = array();
+    $Cache['Class'] = array();
+    $Cache['Name'] = array();
+    $Cache['Description'] = array();
+    
+    foreach(get_declared_classes() as $className) {
+      if(in_array('YagaRule', class_implements($className))) {
+        $object = new $className();
+        $Cache['Name'][] = $object->FriendlyName();
+        $Cache['Description'][] = $object->Description();
+        $Cache['Class'][] = $className;
+      }
+    }
+    decho($Cache);
+  }
 
   public function Edit($BadgeID = NULL) {
     $this->Permission('Yaga.Badges.Manage');
@@ -65,50 +85,32 @@ class BadgesController extends DashboardController {
     }
 
     if($this->Form->IsPostBack() == FALSE) {
-      $this->Form->SetData($this->Badge);
+      if(property_exists($this, 'Badge')) {
+        $this->Form->SetData($this->Badge);
+      }
     }
     else {
+      $Upload = new Gdn_Upload();
+      $TmpImage = $Upload->ValidateUpload('PhotoUpload', FALSE);
+
+      if($TmpImage) {
+        // Generate the target image name
+        $TargetImage = $Upload->GenerateTargetName(PATH_UPLOADS);
+        $ImageBaseName = pathinfo($TargetImage, PATHINFO_BASENAME);
+
+        // Save the uploaded image
+        $Parts = $Upload->SaveAs($TmpImage, $ImageBaseName);
+
+        $this->Form->SetFormValue('Photo', $Parts['SaveName']);
+      }
       if($this->Form->Save()) {
-        $Upload = new Gdn_Upload();
-        $TmpImage = $Upload->ValidateUpload('PhotoUpload_New', FALSE);
-
-        if($TmpImage) {
-          // Generate the target image name
-          $TargetImage = $Upload->GenerateTargetName(PATH_UPLOADS);
-          $ImageBaseName = pathinfo($TargetImage, PATHINFO_BASENAME);
-
-          // Save the uploaded image
-          $Parts = $Upload->SaveAs(
-                  $TmpImage, $ImageBaseName
-          );
-          $this->Form->SetFormValue('Photo', $Parts['SaveName']);
-        }
-
         if($Edit) {
-          $Badge = $this->BadgeModel->GetBadge($this->Form->GetFormValue('BadgeID'));
-        }
-        else {
-          $Badge = $this->BadgeModel->GetNewestBadge();
-        }
-        $NewBadgeRow = '<tr id="BadgeID_' . $Badge->BadgeID . '" data-badgeid="' . $Badge->BadgeID . '"' . ($Alt ? ' class="Alt"' : '') . '>';
-        $NewBadgeRow .= '<td>' . Img($Badge->Photo) . '</td>';
-        $NewBadgeRow .= "<td>$Badge->Name</td>";
-        $NewBadgeRow .= "<td>$Badge->Description</td>";
-        $NewBadgeRow .= "<td>$Badge->RuleClass</td>";
-        $NewBadgeRow .= "<td>$Badge->RuleCriteria</td>";
-        $NewBadgeRow .= "<td>$Badge->AwardValue</td>";
-        $ToggleText = ($Badge->Enabled) ? T('Yes') : T('No');
-        $NewBadgeRow .= '<td>' . Anchor($ToggleText, 'yaga/badges/toggle/' . $Badge->BadgeID, array('class' => 'Hijack')) . '</td>';
-        $NewBadgeRow .= '<td>' . Anchor(T('Edit'), 'yaga/badges/edit/' . $Badge->BadgeID, array('class' => 'SmallButton')) . Anchor(T('Delete'), 'yaga/badges/delete/' . $Badge->BadgeID, array('class' => 'Danger PopConfirm SmallButton')) . '</td>';
-        $NewBadgeRow .= '</tr>';
-        if($Edit) {
-          $this->JsonTarget('#BadgeID_' . $this->Badge->BadgeID, $NewBadgeRow, 'ReplaceWith');
           $this->InformMessage('Badge updated successfully!');
         }
         else {
-          $this->JsonTarget('#Badges tbody', $NewBadgeRow, 'Append');
           $this->InformMessage('Badge added successfully!');
         }
+        Redirect('/yaga/badges/settings');
       }
     }
 
@@ -130,16 +132,49 @@ class BadgesController extends DashboardController {
 
   public function Toggle($BadgeID) {
     if(!$this->Request->IsPostBack()) {
-      //throw PermissionException('Javascript');
+      throw PermissionException('Javascript');
     }
     $this->Permission('Yaga.Reactions.Manage');
     $this->AddSideMenu('badges/settings');
-    
+
     $Badge = $this->BadgeModel->GetBadge($BadgeID);
-    $Enable = (!$Badge->Enabled) ? TRUE : FALSE;
-    $EnableText = ($Enable) ? 'Yes' : 'No';
+    
+    if($Badge->Enabled) {
+      $Enable = FALSE;
+      $ToggleText = T('Disabled');
+      $ActiveClass = 'InActive';
+    }
+    else {
+      $Enable = TRUE;
+      $ToggleText = T('Enabled');
+      $ActiveClass = 'Active';
+    }
+    
+    $Slider = Wrap(Wrap(Anchor($ToggleText, 'yaga/badges/toggle/' . $Badge->BadgeID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
     $this->BadgeModel->EnableBadge($BadgeID, $Enable);
-    $this->JsonTarget('#BadgeID_' . $BadgeID . ' td:nth-child(7)', Wrap(Anchor($EnableText, 'yaga/badges/toggle/' . $BadgeID, array('class' => 'Hijack')), 'td'), 'ReplaceWith');
+    $this->JsonTarget('#BadgeID_' . $BadgeID . ' td:nth-child(7)', $Slider, 'ReplaceWith');
     $this->Render('Blank', 'Utility', 'Dashboard');
   }
+
+  public function DeletePhoto($BadgeID = FALSE, $TransientKey = '') {
+      // Check permission
+      $this->Permission('Garden.Badges.Manage');
+      
+      $RedirectUrl = 'yaga/badges/edit/'.$BadgeID;
+      
+      if (Gdn::Session()->ValidateTransientKey($TransientKey)) {
+         // Do removal, set message, redirect
+         $BadgeModel = new BadgeModel();
+         $BadgeModel->SetField($BadgeID, 'Photo', NULL); 
+         $this->InformMessage(T('Badge photo has been deleted.'));
+      }
+      if ($this->_DeliveryType == DELIVERY_TYPE_ALL) {
+          Redirect($RedirectUrl);
+      } else {
+         $this->ControllerName = 'Home';
+         $this->View = 'FileNotFound';
+         $this->RedirectUrl = Url($RedirectUrl);
+         $this->Render();
+      }
+   }
 }
