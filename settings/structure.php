@@ -10,7 +10,7 @@ if(!isset($Explicit)) {
 }
 
 $Database = Gdn::Database();
-//$SQL = $Database->SQL(); // To run queries.
+$SQL = $Database->SQL(); // To run queries.
 $Construct = $Database->Structure(); // To modify and add database tables.
 //$Validation = new Gdn_Validation(); // To validate permissions (if necessary).
 
@@ -50,3 +50,8 @@ $Construct->Table('BadgeAward')
         ->Column('UserID', 'int')
         ->Column('DateInserted', 'datetime')
         ->Set($Explicit, $Drop);
+
+if ($SQL->GetWhere('ActivityType', array('Name' => 'BadgeAward'))->NumRows() == 0)
+   $SQL->Insert('ActivityType', array('AllowComments' => '1', 'Name' => 'BadgeAward', 'FullHeadline' => '%1$s earned the %6$s badge.', 'ProfileHeadline' => '%1$s earned the %6$s badge.'));
+if ($SQL->GetWhere('ActivityType', array('Name' => 'RankPromotion'))->NumRows() == 0)
+   $SQL->Insert('ActivityType', array('AllowComments' => '1', 'Name' => 'RankPromotion', 'FullHeadline' => '%1$s was promoted to %6$s.', 'ProfileHeadline' => '%1$s was promoted to %6$s.'));

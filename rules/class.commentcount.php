@@ -8,7 +8,7 @@ include_once 'interface.yagarule.php';
  * @package Yaga
  */
 class CommentCount implements YagaRule{
-  public function AwardCheck($Criteria, $UserID) {
+  public function CalculateAward($UserID, $Criteria) {
     $UserModel = new UserModel();
     $User = $UserModel->GetID($UserID); 
     $InsertDate = strtotime($User->DateInserted);
@@ -20,19 +20,11 @@ class CommentCount implements YagaRule{
       return FALSE;
     }
   }
-  
-  public function CalculationHook() {
-    return 'EntryController_Signin_Handler';
-  }
-  
+    
   public function Description() {
     $Description = 'This rule checks a users total comment count against the criteria. If the user has more comments than the criteria, this will return true.';
     return $Description;
     
-  }
-  
-  public function AggregationFunction($UserID) {
-    return TRUE;
   }
   
   public function FriendlyName() {

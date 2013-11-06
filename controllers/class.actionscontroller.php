@@ -65,7 +65,9 @@ class ActionsController extends DashboardController {
     }
     
     if($this->Form->IsPostBack() == FALSE) {
-      $this->Form->SetData($this->Action);
+      if(property_exists($this, 'Action')) {
+        $this->Form->SetData($this->Action);
+      }
     }
     else {
       if($this->Form->Save()) {

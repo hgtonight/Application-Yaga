@@ -7,10 +7,10 @@
  * @since 1.0
  * @package Yaga
  */
-class ReactController extends YagaController {
+class ReactController extends Gdn_Controller {
 
   /** @var array List of objects to prep. They will be available as $this->$Name. */
-  public $Uses = array('DiscussionModel', 'ActivityModel', 'CommentModel', 'ActionModel', 'ReactionModel');
+  public $Uses = array('ActionModel', 'ReactionModel');
 
   /**
    * If you use a constructor, always call parent.
@@ -50,7 +50,8 @@ class ReactController extends YagaController {
       throw new Gdn_UserException('Invalid Action');
     }
     
-    $Discussion = $this->DiscussionModel->GetID($DiscussionID);
+    $DiscussionModel = new DiscussionModel();
+    $Discussion = $DiscussionModel->GetID($DiscussionID);
     
     if($Discussion) {
       $Anchor = '#Discussion_' . $DiscussionID . ' .ReactMenu';
@@ -81,7 +82,8 @@ class ReactController extends YagaController {
       throw new Gdn_UserException('Invalid Action');
     }
     
-    $Comment = $this->CommentModel->GetID($CommentID);
+    $CommentModel = new CommentModel();
+    $Comment = $CommentModel->GetID($CommentID);
     
     if($Comment) {
       $Anchor = '#Comment_' . $CommentID . ' .ReactMenu';
@@ -112,7 +114,8 @@ class ReactController extends YagaController {
       throw new Gdn_UserException('Invalid Action');
     }
     
-    $Activity = $this->ActivityModel->GetID($ActivityID);
+    $ActivityModel = new ActivityModel();
+    $Activity = $ActivityModel->GetID($ActivityID);
     
     if($Activity) {
       $Anchor = '#Activity_' . $ActivityID . ' .ReactMenu';

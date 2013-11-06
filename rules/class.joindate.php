@@ -7,8 +7,8 @@ include_once 'interface.yagarule.php';
  * @since 1.0
  * @package Yaga
  */
-class JoinDate implements YagaRule{
-  public function AwardCheck($Criteria, $UserID) {
+class JoinDate implements YagaRule {
+  public function CalculateAward($UserID, $Criteria) {
     $UserModel = new UserModel();
     $User = $UserModel->GetID($UserID); 
     $InsertDate = strtotime($User->DateInserted);
@@ -21,18 +21,10 @@ class JoinDate implements YagaRule{
     }
   }
   
-  public function CalculationHook() {
-    return 'EntryController_Signin_Handler';
-  }
-  
   public function Description() {
     $Description = 'This rule checks a users join date against the current date. The criteria is the age of the account in days. It will return true if the account is older than this number of days.';
     return $Description;
     
-  }
-  
-  public function AggregationFunction($UserID) {
-    return TRUE;
   }
   
   public function FriendlyName() {

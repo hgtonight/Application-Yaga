@@ -10,7 +10,7 @@
 class BadgesController extends DashboardController {
 
   /** @var array List of objects to prep. They will be available as $this->$Name. */
-  public $Uses = array('Form', 'BadgeModel');
+  public $Uses = array('Form', 'BadgeModel', 'Gdn_Filecache');
 
   /**
    * If you use a constructor, always call parent.
@@ -38,6 +38,7 @@ class BadgesController extends DashboardController {
     }
     $this->AddJsFile('badges.js');
     $this->AddCssFile('badges.css');
+    $this->Filecache->AddContainer(array(Gdn_Cache::CONTAINER_LOCATION=>'./cache/'));
   }
 
   public function Settings($Page = '') {
@@ -52,26 +53,64 @@ class BadgesController extends DashboardController {
     $this->Render();
   }
   
-  public function UpdateRuleMap() {
-    foreach(glob(PATH_APPLICATIONS . DS . 'yaga' . DS . 'rules' . DS . '*.php') as $filename) {
-      include_once $filename;
-    }
-    $Cache = array();
-    $Cache['Class'] = array();
-    $Cache['Name'] = array();
-    $Cache['Description'] = array();
-    
-    foreach(get_declared_classes() as $className) {
-      if(in_array('YagaRule', class_implements($className))) {
-        $object = new $className();
-        $Cache['Name'][] = $object->FriendlyName();
-        $Cache['Description'][] = $object->Description();
-        $Cache['Class'][] = $className;
+  public function GetRules() {
+    $Rules = $this->Filecache->Get('Yaga.Badges.Rules');
+    if($Rules == Gdn_Cache::CACHEOP_FAILURE) {
+      foreach(glob(PATH_APPLICATIONS . DS . 'yaga' . DS . 'rules' . DS . '*.php') as $filename) {
+        include_once $filename;
       }
+      
+      $TempRules = array();
+      foreach(get_declared_classes() as $className) {
+        if(in_array('YagaRule', class_implements($className))) {
+          $Rule = new $className();
+          $TempRules[$className] = $Rule->FriendlyName();
+        }
+      }
+      $Rules = serialize($TempRules);
+      $this->Filecache->Store('Yaga.Badges.Rules', $Rules, array(Gdn_Cache::FEATURE_EXPIRY => C('Yaga.Rules.CacheExpire', 86400)));
     }
-    decho($Cache);
+    
+    return unserialize($Rules);
   }
 
+  public function test() {
+    $Session = Gdn::Session();
+    if(!$Session->IsValid())
+      return;
+
+    $UserID = $Session->UserID;
+
+    $BadgeModel = new BadgeModel();
+    $Badges = $BadgeModel->GetEnabledBadges();
+    $UserBadges = $BadgeModel->GetUserBadgeAwards($UserID);
+    
+    $Rules = array();
+    foreach($Badges as $Badge) {
+      if(!InSubArray($Badge->BadgeID, $UserBadges)) {
+        // The user doesn't have this badge
+        
+        $Class = $Badge->RuleClass;
+        // Create a rule object if needed
+        if(!in_array($Class, $Rules)) {
+          $Rule = new $Class();
+          $Rules[$Class] = $Rule;
+        }
+        
+        // execute the Calculated
+        $Rule = $Rules[$Class];
+        if($Rule->CalculateAward($UserID, $Badge->RuleCriteria)) {
+          $BadgeModel->AwardBadge($Badge->BadgeID, $UserID);
+          
+          // TODO: Record to Activity Table
+          $this->InformMessage('Badge "' . $Badge->Name . '" was awarded to you!');
+          // Notify user of badge award
+        }
+      }
+    }
+    $this->Render('add');
+  }
+  
   public function Edit($BadgeID = NULL) {
     $this->Permission('Yaga.Badges.Manage');
     $this->AddSideMenu('badges/settings');

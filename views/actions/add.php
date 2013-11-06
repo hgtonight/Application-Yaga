@@ -1,6 +1,6 @@
 <?php if(!defined('APPLICATION')) exit();
 /* Copyright 2013 Zachary Doll */
-if(is_object($this->Action)) {
+if(property_exists($this, 'Action')) {
   echo Wrap(T('Edit Action'), 'h1');
 }
 else {

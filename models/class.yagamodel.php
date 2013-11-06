@@ -21,7 +21,10 @@ class YagaModel extends Gdn_Model {
   }
 
   public function GetUserPoints($UserID) {
-    // TODO: Add in other sources other than reactions
+    // TODO: Move this to a calculated user column
+    $Points = 0;
+    
+    // Reaction Points
     $ActionPoints = $this->SQL
             ->Select('a.ActionID, a.Name, a.AwardValue, COUNT(*) Count')
             ->From('Action a')
@@ -30,11 +33,25 @@ class YagaModel extends Gdn_Model {
             ->GroupBy('a.ActionID')
             ->Get()
             ->Result();
-    $Points = 0;
     
     foreach($ActionPoints as $Action) {
       $Points += $Action->AwardValue * $Action->Count;
     }
+    
+    // Badge Award Points
+    
+    $BadgePoints = $this->SQL
+            ->Select('b.AwardValue')
+            ->From('BadgeAward ba')
+            ->Join('Badge b', 'ba.BadgeID = b.BadgeID')
+            ->Where('ba.UserID', $UserID)
+            ->Get()
+            ->Result();
+    
+    foreach($BadgePoints as $Badge) {
+      $Points += $Badge->AwardValue;
+    }
+    
     return $Points;
   }
   /**

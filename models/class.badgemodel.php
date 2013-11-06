@@ -35,6 +35,16 @@ class BadgeModel extends Gdn_Model {
     return self::$_Badges;
   }
 
+  public function GetEnabledBadges() {
+    return $this->SQL
+              ->Select()
+              ->From('Badge')
+              ->Where('Enabled', TRUE)
+              ->OrderBy('BadgeID')
+              ->Get()
+              ->Result();
+  }
+  
   /**
    * Returns data for a specific badge
    * @param int $BadgeID
@@ -105,9 +115,19 @@ class BadgeModel extends Gdn_Model {
     return $this->SQL
             ->Select()
             ->From('BadgeAward')
-            ->Where('BadgeID', $ActionID)
+            ->Where('BadgeID', $BadgeID)
             ->Where('UserID', $UserID)
             ->GetCount();
   }
-
+  
+  public function GetUserBadgeAwards($UserID) {
+    return $this->SQL
+            ->Select()
+            ->From('Badge b')
+            ->Join('BadgeAward ba', 'ba.BadgeID = b.BadgeID', 'left')
+            ->Where('ba.UserID', $UserID)
+            ->Get()
+            ->Result(DATASET_TYPE_ARRAY);
+  }
+  
 }

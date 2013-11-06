@@ -38,15 +38,8 @@ echo $this->Form->Errors();
   </li>
   <li>
     <?php
-    // TODO: Generate this dynamically based on rules classes that exist
     echo $this->Form->Label('Rule', 'RuleClass');
-    echo $this->Form->Dropdown('RuleClass', array(
-        'CommentCount' => 'Total Comment Count',
-        'DiscussionCount' => 'Total Discussion Count',
-        'JoinDate' => 'Length of Service',
-        'CharterMember' => 'First X Users',
-        'ReactionCount' => 'Reaction Count'
-    ));
+    echo $this->Form->Dropdown('RuleClass', $this->GetRules());
     ?>
   </li>
   <li>

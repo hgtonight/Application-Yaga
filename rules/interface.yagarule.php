@@ -6,10 +6,8 @@
  * @package Yaga
  */
 interface YagaRule {
-  public function AwardCheck($Criteria, $UserID);
+  public function CalculateAward($Criteria, $UserID);
   public function FriendlyName();
-  public function CalculationHook();
   public function Description();
-  public function AggregationFunction($UserID);
 }
 ?>
