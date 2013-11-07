@@ -52,6 +52,6 @@ $Construct->Table('BadgeAward')
         ->Set($Explicit, $Drop);
 
 if ($SQL->GetWhere('ActivityType', array('Name' => 'BadgeAward'))->NumRows() == 0)
-   $SQL->Insert('ActivityType', array('AllowComments' => '1', 'Name' => 'BadgeAward', 'FullHeadline' => '%1$s earned the %6$s badge.', 'ProfileHeadline' => '%1$s earned the %6$s badge.', 'Notify' => 1));
+   $SQL->Insert('ActivityType', array('AllowComments' => '1', 'Name' => 'BadgeAward', 'FullHeadline' => '%1$s earned a badge.', 'ProfileHeadline' => '%1$s earned a badge.', 'Notify' => 1));
 if ($SQL->GetWhere('ActivityType', array('Name' => 'RankPromotion'))->NumRows() == 0)
-   $SQL->Insert('ActivityType', array('AllowComments' => '1', 'Name' => 'RankPromotion', 'FullHeadline' => '%1$s was promoted to %6$s.', 'ProfileHeadline' => '%1$s was promoted to %6$s.', 'Notify' => 1));
+   $SQL->Insert('ActivityType', array('AllowComments' => '1', 'Name' => 'RankPromotion', 'FullHeadline' => '%1$s was promoted.', 'ProfileHeadline' => '%1$s was promoted.', 'Notify' => 1));
