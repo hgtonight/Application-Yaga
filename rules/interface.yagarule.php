@@ -11,7 +11,8 @@ interface YagaRule {
    * This performs the grunt work of an award rule. Given an expected criteria,
    * it determines if a specific user meets muster.
    * 
-   * @param Mixed $Criteria
+   * @param string $Criteria This is a serialized array with key value pairs
+   * that match the criteria that were previously rendered
    * @param int $UserID
    * @return bool True if the user meets the criteria, false otherwise
    */

@@ -122,7 +122,9 @@ class BadgesController extends DashboardController {
     $this->Form->SetModel($this->BadgeModel);
     
     // Only allow editing if some rules exist
-    
+    if(!$this->GetRules()) {
+      throw ForbiddenException('add or edit badges without rules');
+    }
 
     $Edit = FALSE;
     if($BadgeID) {
