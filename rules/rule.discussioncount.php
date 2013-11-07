@@ -21,6 +21,10 @@ class DiscussionCount implements YagaRule{
     }
   }
   
+  public function RenderCriteriaInterface($Form) {
+    return TRUE;
+  }
+  
   public function Description() {
     $Description = 'This rule checks a users discussion count against the criteria. It will return true once the user has as many or more than the given amount.';
     return $Description;

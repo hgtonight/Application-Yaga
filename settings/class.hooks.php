@@ -97,7 +97,7 @@ class YagaHooks implements Gdn_IPlugin {
   }
 
   /**
-   * Add and action list to discussion items
+   * Add action list to discussion items
    * @param DiscussionController $Sender
    */
   public function DiscussionController_AfterReactions_Handler($Sender) {

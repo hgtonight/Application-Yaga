@@ -54,8 +54,8 @@ class BadgesController extends DashboardController {
   }
   
   public function GetRules() {
-    $Rules = $this->Filecache->Get('Yaga.Badges.Rules');
-    if($Rules == Gdn_Cache::CACHEOP_FAILURE) {
+    //$Rules = $this->Filecache->Get('Yaga.Badges.Rules');
+    //if($Rules == Gdn_Cache::CACHEOP_FAILURE) {
       foreach(glob(PATH_APPLICATIONS . DS . 'yaga' . DS . 'rules' . DS . '*.php') as $filename) {
         include_once $filename;
       }
@@ -68,8 +68,8 @@ class BadgesController extends DashboardController {
         }
       }
       $Rules = serialize($TempRules);
-      $this->Filecache->Store('Yaga.Badges.Rules', $Rules, array(Gdn_Cache::FEATURE_EXPIRY => C('Yaga.Rules.CacheExpire', 86400)));
-    }
+      //$this->Filecache->Store('Yaga.Badges.Rules', $Rules, array(Gdn_Cache::FEATURE_EXPIRY => C('Yaga.Rules.CacheExpire', 86400)));
+    //}
     
     return unserialize($Rules);
   }

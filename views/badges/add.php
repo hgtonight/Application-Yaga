@@ -45,8 +45,8 @@ echo $this->Form->Errors();
   <li>
     <?php
     // TODO: Think about this come more
-    echo $this->Form->Label('Criteria', 'RuleCriteria');
-    echo $this->Form->TextBox('RuleCriteria');
+    $Rule = new LengthOfService();
+    $Rule->RenderCriteriaInterface($this->Form);
     ?>
   </li>
   <li>

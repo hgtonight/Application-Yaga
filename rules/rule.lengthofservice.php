@@ -7,7 +7,7 @@ include_once 'interface.yagarule.php';
  * @since 1.0
  * @package Yaga
  */
-class CommentCount implements YagaRule{
+class LengthOfService implements YagaRule {
   public function CalculateAward($UserID, $Criteria) {
     $UserModel = new UserModel();
     $User = $UserModel->GetID($UserID); 
@@ -20,15 +20,19 @@ class CommentCount implements YagaRule{
       return FALSE;
     }
   }
-    
+  
+  public function RenderCriteriaInterface($Form) {
+    echo $Form->Textbox('TestInput');
+  }
+  
   public function Description() {
-    $Description = 'This rule checks a users total comment count against the criteria. If the user has more comments than the criteria, this will return true.';
+    $Description = 'This rule checks a users join date against the current date. The criteria is the age of the account in days. It will return true if the account is older than this number of days.';
     return $Description;
     
   }
   
   public function FriendlyName() {
-    return 'Comment Count Total';
+    return 'Length of Service';
   }
 }
 
