@@ -3,7 +3,7 @@
 
 echo Wrap($this->Title(), 'h1');
 echo Wrap(Wrap('Add or edit the available badges that can be earned.', 'div'), 'div', array('class' => 'Wrap'));
-echo Wrap(Anchor('Add Action', 'yaga/badges/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
+echo Wrap(Anchor('Add Badge', 'yaga/badges/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
 
 ?>
 <table id="Actions" class="AltRows">
@@ -13,7 +13,6 @@ echo Wrap(Anchor('Add Action', 'yaga/badges/add', array('class' => 'SmallButton'
       <th>Name</th>
       <th>Description</th>
       <th>Rule</th>
-      <th>Rule Criteria</th>
       <th>Award Value</th>
       <th>Active</th>
       <th>Options</th>
@@ -35,7 +34,6 @@ echo Wrap(Anchor('Add Action', 'yaga/badges/add', array('class' => 'SmallButton'
       $Row .= Wrap($Badge->Name, 'td');
       $Row .= Wrap($Badge->Description, 'td');
       $Row .= Wrap($Badge->RuleClass, 'td');
-      $Row .= Wrap($Badge->RuleCriteria, 'td');
       $Row .= Wrap($Badge->AwardValue, 'td');
       $ToggleText = ($Badge->Enabled) ? T('Enabled') : T('Disabled');
       $ActiveClass = ($Badge->Enabled) ? 'Active' : 'InActive';

@@ -8,12 +8,14 @@ include_once 'interface.yagarule.php';
  * @package Yaga
  */
 class LengthOfService implements YagaRule {
+  
   public function CalculateAward($UserID, $Criteria) {
+    $Criteria = unserialize($Criteria);
     $UserModel = new UserModel();
     $User = $UserModel->GetID($UserID); 
     $InsertDate = strtotime($User->DateInserted);
-    $Days = $Criteria * 24 * 60 * 60;
-    if($InsertDate < time() - $Days) {
+    $TargetDate = strtotime($Criteria['Duration'] . ' ' . $Criteria['Period'] . ' ago');
+    if($InsertDate < $TargetDate) {
       return TRUE;
     }
     else {
@@ -22,7 +24,15 @@ class LengthOfService implements YagaRule {
   }
   
   public function RenderCriteriaInterface($Form) {
-    echo $Form->Textbox('TestInput');
+    $Lengths = array(
+        'day' => 'Days',
+        'week' => 'Weeks',
+        'year' => 'Years'        
+    );
+    
+    echo $Form->Label('Time Served', 'LengthOfService');
+    echo $Form->Textbox('Duration');
+    echo $Form->DropDown('Period', $Lengths);
   }
   
   public function Description() {

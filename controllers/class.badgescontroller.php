@@ -36,7 +36,7 @@ class BadgesController extends DashboardController {
     if($this->Menu) {
       $this->Menu->HighlightRoute('/badges');
     }
-    $this->AddJsFile('badges.js');
+    $this->AddJsFile('admin.badges.js');
     $this->AddCssFile('badges.css');
     $this->Filecache->AddContainer(array(Gdn_Cache::CONTAINER_LOCATION=>'./cache/'));
   }
@@ -67,7 +67,12 @@ class BadgesController extends DashboardController {
           $TempRules[$className] = $Rule->FriendlyName();
         }
       }
-      $Rules = serialize($TempRules);
+      if(empty($TempRules)) {
+        $Rules = serialize(FALSE);
+      }
+      else{
+        $Rules = serialize($TempRules);
+      }
       //$this->Filecache->Store('Yaga.Badges.Rules', $Rules, array(Gdn_Cache::FEATURE_EXPIRY => C('Yaga.Rules.CacheExpire', 86400)));
     //}
     
@@ -115,6 +120,9 @@ class BadgesController extends DashboardController {
     $this->Permission('Yaga.Badges.Manage');
     $this->AddSideMenu('badges/settings');
     $this->Form->SetModel($this->BadgeModel);
+    
+    // Only allow editing if some rules exist
+    
 
     $Edit = FALSE;
     if($BadgeID) {
@@ -125,10 +133,16 @@ class BadgesController extends DashboardController {
 
     if($this->Form->IsPostBack() == FALSE) {
       if(property_exists($this, 'Badge')) {
-        $this->Form->SetData($this->Badge);
+        // Manually merge the criteria into the badge object
+        $Criteria = unserialize($this->Badge->RuleCriteria);
+        $BadgeArray = (array) $this->Badge; 
+        
+        $Data = array_merge($BadgeArray, $Criteria);
+        $this->Form->SetData($Data);
       }
     }
     else {
+      // Handle the photo upload
       $Upload = new Gdn_Upload();
       $TmpImage = $Upload->ValidateUpload('PhotoUpload', FALSE);
 
@@ -142,6 +156,18 @@ class BadgesController extends DashboardController {
 
         $this->Form->SetFormValue('Photo', $Parts['SaveName']);
       }
+      
+      // Find the rule criteria
+      $FormValues = $this->Form->FormValues();
+      $Criteria = array();
+      foreach($FormValues as $Key => $Value) {
+        if(substr($Key, 0, 7) == '_Rules/') {
+          $RealKey = substr($Key, 7);
+          $Criteria[$RealKey] = $Value;
+        }
+      }
+      $SerializedCriteria = serialize($Criteria);
+      $this->Form->SetFormValue('RuleCriteria', $SerializedCriteria);
       if($this->Form->Save()) {
         if($Edit) {
           $this->InformMessage('Badge updated successfully!');

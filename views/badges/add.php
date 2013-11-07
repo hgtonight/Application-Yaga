@@ -2,9 +2,11 @@
 /* Copyright 2013 Zachary Doll */
 if(property_exists($this, 'Badge')) {
   echo Wrap(T('Edit Badge'), 'h1');
+  $RuleClass = $this->Badge->RuleClass;
 }
 else {
   echo Wrap(T('Add Badge'), 'h1');
+  $RuleClass = '';
 }
 
 echo $this->Form->Open(array('enctype' => 'multipart/form-data', 'class' => 'Badge'));
@@ -42,12 +44,21 @@ echo $this->Form->Errors();
     echo $this->Form->Dropdown('RuleClass', $this->GetRules());
     ?>
   </li>
-  <li>
-    <?php
-    // TODO: Think about this come more
-    $Rule = new LengthOfService();
+  <li id="Rule-Criteria">
+  <?php
+  if($RuleClass) {
+    // Save the Prefix for later
+    $Prefix = $this->Form->InputPrefix;
+    $this->Form->InputPrefix = $Prefix . '_Rules';
+    $Rule = new $RuleClass();
     $Rule->RenderCriteriaInterface($this->Form);
-    ?>
+    // Restore the prefix
+    $this->Form->InputPrefix = $Prefix;
+  }
+  else {
+    echo 'No rule criteria needed.';
+  }
+  ?>
   </li>
   <li>
     <?php
