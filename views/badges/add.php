@@ -11,7 +11,7 @@ if(property_exists($this, 'Badge')) {
 else {
   echo Wrap(T('Add Badge'), 'h1');
   reset($Rules);
-  $RuleClass = key($array);
+  $RuleClass = key($Rules);
 }
 
 echo $this->Form->Open(array('enctype' => 'multipart/form-data', 'class' => 'Badge'));

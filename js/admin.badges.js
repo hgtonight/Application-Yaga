@@ -8,11 +8,9 @@ var Cache = {
     return Cache.data.hasOwnProperty(key) && Cache.data[key] !== null;
   },
   get: function(key) {
-    console.log('Getting cache for key ' + key);
     return Cache.data[key];
   },
   set: function(key, cachedData) {
-    console.log('Setting cache for key ' + key);
     Cache.remove(key);
     Cache.data[key] = cachedData;
   }
@@ -24,7 +22,9 @@ jQuery(document).ready(function($) {
     // Update the cache before the change
     var Rule = $(this).val();
     var FormHtml = $('#Rule-Criteria').html();
-    Cache.set(Rule, FormHtml);
+    if(!Cache.exists(Rule)) {
+      Cache.set(Rule, FormHtml);
+    }
   }).change(function() {
     
   // Grab the form from cache or ajax
