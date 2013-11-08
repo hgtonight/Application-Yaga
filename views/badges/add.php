@@ -2,7 +2,7 @@
 /* Copyright 2013 Zachary Doll */
 
 // Gnab the rules so we can render the first criteria form by default
-$Rules = $this->GetRules();
+$Rules = RulesController::GetRules();
 
 if(property_exists($this, 'Badge')) {
   echo Wrap(T('Edit Badge'), 'h1');

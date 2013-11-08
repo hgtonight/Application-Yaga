@@ -10,7 +10,7 @@
 class BadgesController extends DashboardController {
 
   /** @var array List of objects to prep. They will be available as $this->$Name. */
-  public $Uses = array('Form', 'BadgeModel', 'Gdn_Filecache');
+  public $Uses = array('Form', 'BadgeModel');
 
   /**
    * If you use a constructor, always call parent.
@@ -38,7 +38,6 @@ class BadgesController extends DashboardController {
     }
     $this->AddJsFile('admin.badges.js');
     $this->AddCssFile('badges.css');
-    $this->Filecache->AddContainer(array(Gdn_Cache::CONTAINER_LOCATION=>'./cache/'));
   }
 
   public function Settings($Page = '') {
@@ -53,32 +52,6 @@ class BadgesController extends DashboardController {
     $this->Render();
   }
   
-  public function GetRules() {
-    //$Rules = $this->Filecache->Get('Yaga.Badges.Rules');
-    //if($Rules == Gdn_Cache::CACHEOP_FAILURE) {
-      foreach(glob(PATH_APPLICATIONS . DS . 'yaga' . DS . 'rules' . DS . '*.php') as $filename) {
-        include_once $filename;
-      }
-      
-      $TempRules = array();
-      foreach(get_declared_classes() as $className) {
-        if(in_array('YagaRule', class_implements($className))) {
-          $Rule = new $className();
-          $TempRules[$className] = $Rule->FriendlyName();
-        }
-      }
-      if(empty($TempRules)) {
-        $Rules = serialize(FALSE);
-      }
-      else{
-        $Rules = serialize($TempRules);
-      }
-      //$this->Filecache->Store('Yaga.Badges.Rules', $Rules, array(Gdn_Cache::FEATURE_EXPIRY => C('Yaga.Rules.CacheExpire', 86400)));
-    //}
-    
-    return unserialize($Rules);
-  }
-
   public function test() {
     $Session = Gdn::Session();
     if(!$Session->IsValid())
@@ -122,7 +95,7 @@ class BadgesController extends DashboardController {
     $this->Form->SetModel($this->BadgeModel);
     
     // Only allow editing if some rules exist
-    if(!$this->GetRules()) {
+    if(!RulesController::GetRules()) {
       throw ForbiddenException('add or edit badges without rules');
     }
 

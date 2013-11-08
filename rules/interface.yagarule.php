@@ -23,7 +23,7 @@ interface YagaRule {
    * 
    * @param Gdn_Form $Form
    */
-  public function RenderCriteriaInterface($Form);
+  public function RenderCriteriaInterface($Form, $Echo = TRUE);
   
   /**
    * Returns a string representing a user friendly name of this rule.

@@ -23,16 +23,23 @@ class LengthOfService implements YagaRule {
     }
   }
   
-  public function RenderCriteriaInterface($Form) {
+  public function RenderCriteriaInterface($Form, $Echo = TRUE) {
     $Lengths = array(
         'day' => 'Days',
         'week' => 'Weeks',
         'year' => 'Years'        
     );
     
-    echo $Form->Label('Time Served', 'LengthOfService');
-    echo $Form->Textbox('Duration');
-    echo $Form->DropDown('Period', $Lengths);
+    $String = $Form->Label('Time Served', 'LengthOfService');
+    $String .= $Form->Textbox('Duration');
+    $String .= $Form->DropDown('Period', $Lengths);
+    
+    if($Echo) {
+      echo $String;
+    }
+    else {
+      return $String;
+    }
   }
   
   public function Description() {
