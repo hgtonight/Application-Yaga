@@ -52,13 +52,16 @@ class BadgesController extends DashboardController {
     $this->Render();
   }
   
+  // TODO: Put this some place else
   public function test() {
     $Session = Gdn::Session();
     if(!$Session->IsValid())
       return;
 
     $UserID = $Session->UserID;
-
+    $UserModel = new UserModel();
+    $User = $UserModel->GetID($UserID);
+    
     $BadgeModel = new BadgeModel();
     $Badges = $BadgeModel->GetEnabledBadges();
     $UserBadges = $BadgeModel->GetUserBadgeAwards($UserID);
@@ -67,8 +70,9 @@ class BadgesController extends DashboardController {
     foreach($Badges as $Badge) {
       if(!InSubArray($Badge->BadgeID, $UserBadges)) {
         // The user doesn't have this badge
-        
         $Class = $Badge->RuleClass;
+        $Criteria = (object) unserialize($Badge->RuleCriteria);
+
         // Create a rule object if needed
         if(!in_array($Class, $Rules)) {
           $Rule = new $Class();
@@ -77,7 +81,7 @@ class BadgesController extends DashboardController {
         
         // execute the Calculated
         $Rule = $Rules[$Class];
-        if($Rule->CalculateAward($UserID, $Badge->RuleCriteria)) {
+        if($Rule->CalculateAward($User, $Criteria)) {
           $BadgeModel->AwardBadge($Badge->BadgeID, $UserID);
           
           // TODO: Record to Activity Table

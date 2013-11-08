@@ -9,12 +9,9 @@ include_once 'interface.yagarule.php';
  */
 class LengthOfService implements YagaRule {
   
-  public function CalculateAward($UserID, $Criteria) {
-    $Criteria = unserialize($Criteria);
-    $UserModel = new UserModel();
-    $User = $UserModel->GetID($UserID); 
+  public function CalculateAward($User, $Criteria) {
     $InsertDate = strtotime($User->DateInserted);
-    $TargetDate = strtotime($Criteria['Duration'] . ' ' . $Criteria['Period'] . ' ago');
+    $TargetDate = strtotime($Criteria->Duration . ' ' . $Criteria->Period . ' ago');
     if($InsertDate < $TargetDate) {
       return TRUE;
     }

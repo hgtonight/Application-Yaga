@@ -8,9 +8,8 @@ include_once 'interface.yagarule.php';
  * @package Yaga
  */
 class CommentCount implements YagaRule{
-  public function CalculateAward($UserID, $Criteria) {
-    $UserModel = new UserModel();
-    $User = $UserModel->GetID($UserID); 
+
+  public function CalculateAward($User, $Criteria) {
     $InsertDate = strtotime($User->DateInserted);
     $Days = $Criteria * 24 * 60 * 60;
     if($InsertDate < time() - $Days) {
