@@ -40,15 +40,18 @@ jQuery(document).ready(function($) {
       $.ajax({
         url: url,
         global: false,
-        type: "GET",
-        data: null,
-        dataType: "json",
+        type: 'GET',
+        data: { 'DeliveryMethod' : 'JSON' },
+        dataType: 'json',
         success: function(data) {
           Cache.set(NewRule, data.CriteriaForm);
           $('#Rule-Criteria').fadeOut(function() {
             $(this).html(Cache.get(NewRule)).fadeIn();
           });
-        }
+        },
+        error: function(jqXHR) {
+          gdn.informError(jqXHR);
+        }     
       });
     }
   });

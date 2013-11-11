@@ -64,19 +64,18 @@ class RulesController extends YagaController {
   }
   
   public function GetCriteriaForm($RuleClass) {
-    try {
+    if(class_exists($RuleClass) && in_array('YagaRule', class_implements($RuleClass))) {
       $Rule = new $RuleClass();
+      $Form = Gdn::Factory('Form');
+      $Form->InputPrefix = '_Rules';
+      $FormString = $Rule->RenderCriteriaInterface($Form, FALSE);
+      $Description = $Rule->Description();
+
+      $Data = array('CriteriaForm' => $FormString, 'RuleClass' => $RuleClass, 'Description' => $Description);
+      $this->RenderData($Data);
     }
-    catch (Exception $ex) {
-      $this->ErrorMessage('Unknown class: ' . $ex->getMessage());
-      return;
+    else {
+      $this->RenderException(new Gdn_UserException('Rule not found.'));
     }
-    $Form = Gdn::Factory('Form');
-    $Form->InputPrefix = '_Rules';
-    $FormString = $Rule->RenderCriteriaInterface($Form, FALSE);
-    $Description = $Rule->Description();
-    
-    $Data = array( 'CriteriaForm' => $FormString, 'RuleClass' => $RuleClass, 'Description' => $Description);
-    $this->RenderData($Data);
   }
 }
