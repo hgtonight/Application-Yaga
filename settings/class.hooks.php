@@ -43,6 +43,10 @@ class YagaHooks implements Gdn_IPlugin {
     echo Wrap($String, 'div', array('class' => 'DataCounts'));
   }
 
+  public function ProfileController_AfterPreferencesDefined_Handler($Sender) {
+    $Sender->Preferences['Notifications']['Email.Badges'] = T('Notify me when I earn a badge.');
+    $Sender->Preferences['Notifications']['Popup.Badges'] = T('Notify me when I earn a badge.');
+  }
   /**
    * Display a record of reactions after the first post
    * @param DiscussionController $Sender
@@ -206,27 +210,27 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Check for Badge Awards where appropriate
-   */  
+   */
   public function CommentModel_AfterSaveComment_Handler($Sender) {
     $this->_AwardBadges($Sender, 'CommentModel_AfterSaveComment');
   }
-  
+
   public function DiscussionModel_AfterSaveDiscussion_Handler($Sender) {
     $this->_AwardBadges($Sender, 'DiscussionModel_AfterSaveDiscussion');
   }
-  
+
   public function Base_AfterSignIn_Handler($Sender) {
     $this->_AwardBadges($Sender, 'Base_AfterSignIn');
   }
-  
+
   public function UserModel_AfterSave_Handler($Sender) {
     $this->_AwardBadges($Sender, 'UserModel_AfterSave');
   }
-  
+
   public function ReactionModel_AfterReaction_Handler($Sender) {
     $this->_AwardBadges($Sender, 'ReactionModel_AfterReaction');
   }
-  
+
   public function Base_AfterConnection_Handler($Sender) {
     $this->_AwardBadges($Sender, 'Base_AfterConnection');
   }
@@ -267,8 +271,7 @@ class YagaHooks implements Gdn_IPlugin {
         if(in_array($Hook, $Rule->Hooks()) && $Rule->Award($Sender, $User, $Criteria)) {
           $BadgeModel->AwardBadge($Badge->BadgeID, $UserID);
 
-          // TODO: Record to Activity Table
-          Gdn::Controller()->InformMessage('Badge "' . $Badge->Name . '" was awarded to you!');
+          // Gdn::Controller()->InformMessage('Badge "' . $Badge->Name . '" was awarded to you!');
           // Notify user of badge award
         }
       }

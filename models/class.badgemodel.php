@@ -114,23 +114,27 @@ class BadgeModel extends Gdn_Model {
         
         $Activity = array(
             'ActivityType' => 'BadgeAward',
-            'ActivityUserID' => $UserID,
+            'ActivityUserID' => Gdn::Session()->UserID,
+            'RegardingUserID' => $UserID,
             'Photo' => '/uploads/' . $Badge->Photo,
             'RecordType' => 'Badge',
             'RecordID' => $BadgeID,
             'Route' => '/badge/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name),
-            'HeadlineFormat' => '{ActivityUserID,user} earned the <a href="{Url,html}">{Data.Name,text}</a> badge.',
+            'HeadlineFormat' => '{RegardingUserID,You} earned the <a href="{Url,html}">{Data.Name,text}</a> badge.',
             'Data' => array(
                'Name' => $Badge->Name
             ),
             'Story' => $Badge->Description
          );
-
-        $ActivityModel->Queue($Activity);
-        
-        // TODO: Handle notifications
-        
-        $ActivityModel->SaveQueue();
+         
+         $ActivityModel->Queue($Activity);
+         
+         // Notify the user of the unban.
+         $Activity['NotifyUserID'] = $UserID;
+         $Activity['Emailed'] = ActivityModel::SENT_PENDING;
+         $ActivityModel->Queue($Activity, 'Badges', array('Force' => TRUE));
+         
+         $ActivityModel->SaveQueue();
       }
     } 
   }
