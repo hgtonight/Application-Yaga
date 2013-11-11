@@ -9,18 +9,31 @@ include_once 'interface.yagarule.php';
  */
 class CommentCount implements YagaRule{
 
-  public function CalculateAward($User, $Criteria) {
-    $InsertDate = strtotime($User->DateInserted);
-    $Days = $Criteria * 24 * 60 * 60;
-    if($InsertDate < time() - $Days) {
-      return TRUE;
+  public function Award($Sender, $User, $Criteria) {
+    $Result = FALSE;
+    switch($Criteria->Comparison) {
+      case 'gt':
+        if($User->CountComments > $Criteria->Target) {
+          $Result = TRUE;
+        }
+        break;
+      case 'lt':
+        if($User->CountComments < $Criteria->Target) {
+          $Result = TRUE;
+        }
+        break;
+      default:
+      case 'gte':
+        if($User->CountComments >= $Criteria->Target) {
+          $Result = TRUE;
+        }
+        break;
     }
-    else {
-      return FALSE;
-    }
+    
+    return $Result;
   }
     
-  public function RenderCriteriaInterface($Form, $Echo = TRUE) {
+  public function Form($Form) {
     $Comparisons = array(
         'gt' => 'more than:',
         'lt' => 'less than:',
@@ -32,13 +45,12 @@ class CommentCount implements YagaRule{
     $String .= $Form->DropDown('Comparison', $Comparisons);
     $String .= $Form->Textbox('Target');
     $String .= ' comments';
-    
-    if($Echo) {
-      echo $String;
-    }
-    else {
-      return $String;
-    }    
+
+    return $String; 
+  }
+  
+  public function Hooks() {
+    return array('CommentModel_AfterSaveComment');
   }
   
   public function Description() {
@@ -47,7 +59,7 @@ class CommentCount implements YagaRule{
     
   }
   
-  public function FriendlyName() {
+  public function Name() {
     return 'Comment Count Total';
   }
 }

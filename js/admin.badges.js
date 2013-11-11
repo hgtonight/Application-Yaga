@@ -18,7 +18,7 @@ var Cache = {
 
 jQuery(document).ready(function($) {
   // TODO: Save form inputs to cache as well as the elements
-  $('form.Badge select').focus(function() {
+  $("form.Badge select[name='RuleClass']").focus(function() {
     // Update the cache before the change
     var Rule = $(this).val();
     var FormHtml = $('#Rule-Criteria').html();

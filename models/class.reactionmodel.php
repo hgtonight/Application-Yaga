@@ -123,14 +123,14 @@ class ReactionModel extends Gdn_Model {
     if($CurrentReaction) {
       if($ActionID == $CurrentReaction->ActionID) {
         // remove the record
-        return $this->SQL->Delete('Reaction', array('ParentID' => $ID,
+        $Reaction = $this->SQL->Delete('Reaction', array('ParentID' => $ID,
                     'ParentType' => $Type,
                     'InsertUserID' => $UserID,
                     'ActionID' => $ActionID));
       }
       else {
         // update the record
-        return $this->SQL
+        $Reaction = $this->SQL
               ->Update('Reaction')
               ->Set('ActionID', $ActionID)
               ->Set('DateInserted', date(DATE_ISO8601))
@@ -142,7 +142,7 @@ class ReactionModel extends Gdn_Model {
     }
     else {
       // insert a record
-      return $this->SQL
+      $Reaction = $this->SQL
               ->Insert('Reaction',
                       array('ActionID' => $ActionID,
                       'ParentID' =>  $ID,
@@ -151,5 +151,9 @@ class ReactionModel extends Gdn_Model {
                       'InsertUserID' => $UserID,
                       'DateInserted' => date(DATE_ISO8601)));
     }
+    $EventArgs['Reaction'] = $Reaction;
+    $this->FireEvent('AfterReaction', $EventArgs);
+    
+    return $Reaction;
   }
 }

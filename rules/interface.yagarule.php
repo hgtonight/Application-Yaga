@@ -16,21 +16,28 @@ interface YagaRule {
    * match the criteria that were previously rendered
    * @return bool True if the user meets the criteria, false otherwise
    */
-  public function CalculateAward($User, $Criteria);
+  public function Award($Sender, $User, $Criteria);
   
   /**
-   * Renders a criteria form to allow for complex criteria.
+   * This determines what hook the rule should be checked on.
+   * @return string The hook name to fire our calculations on
+   */
+  public function Hooks();
+  
+  /**
+   * Returns the needed criteria form for this rule's criteria.
    * 
    * @param Gdn_Form $Form
+   * @return string The fully rendered form.
    */
-  public function RenderCriteriaInterface($Form, $Echo = TRUE);
+  public function Form($Form);
   
   /**
    * Returns a string representing a user friendly name of this rule.
    * 
    * @return string Name shown on forms
    */
-  public function FriendlyName();
+  public function Name();
   
   /**
    * Returns a string representing the in depth description of how to use this rule.

@@ -9,7 +9,7 @@ include_once 'interface.yagarule.php';
  */
 class LengthOfService implements YagaRule {
   
-  public function CalculateAward($User, $Criteria) {
+  public function Award($Sender, $User, $Criteria) {
     $InsertDate = strtotime($User->DateInserted);
     $TargetDate = strtotime($Criteria->Duration . ' ' . $Criteria->Period . ' ago');
     if($InsertDate < $TargetDate) {
@@ -20,7 +20,7 @@ class LengthOfService implements YagaRule {
     }
   }
   
-  public function RenderCriteriaInterface($Form, $Echo = TRUE) {
+  public function Form($Form) {
     $Lengths = array(
         'day' => 'Days',
         'week' => 'Weeks',
@@ -31,12 +31,11 @@ class LengthOfService implements YagaRule {
     $String .= $Form->Textbox('Duration');
     $String .= $Form->DropDown('Period', $Lengths);
     
-    if($Echo) {
-      echo $String;
-    }
-    else {
-      return $String;
-    }
+    return $String;
+  }
+  
+  public function Hooks() {
+    return array('Base_AfterSignIn');
   }
   
   public function Description() {
@@ -45,7 +44,7 @@ class LengthOfService implements YagaRule {
     
   }
   
-  public function FriendlyName() {
+  public function Name() {
     return 'Length of Service';
   }
 }

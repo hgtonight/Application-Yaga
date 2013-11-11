@@ -28,7 +28,7 @@ class YagaHooks implements Gdn_IPlugin {
     //decho($User);
     echo '<div class="Yarbs ReactionsWrap">';
     echo Wrap(T('Yarbs.Reactions.Title', 'Reactions'), 'h2', array('class' => 'H'));
-    
+
     // insert the reaction totals in the profile
     $Actions = $this->_ReactionModel->GetActions();
     $String = '';
@@ -39,10 +39,10 @@ class YagaHooks implements Gdn_IPlugin {
 
       $String .= Wrap(Wrap(Anchor($TempString, '/profile/yarbs/' . $User->UserID . '/' . $User->Name . '/' . $Action->ActionID, array('class' => 'Yarbs_Reaction TextColor', 'title' => $Action->Description)), 'span', array('class' => 'CountItem')), 'span', array('class' => 'CountItemWrap'));
     }
-    
+
     echo Wrap($String, 'div', array('class' => 'DataCounts'));
   }
-  
+
   /**
    * Display a record of reactions after the first post
    * @param DiscussionController $Sender
@@ -203,15 +203,86 @@ class YagaHooks implements Gdn_IPlugin {
   public function CommentController_Render_Before($Sender) {
     $this->_AddResources($Sender);
   }
+
+  /**
+   * Check for Badge Awards where appropriate
+   */  
+  public function CommentModel_AfterSaveComment_Handler($Sender) {
+    $this->_AwardBadges($Sender, 'CommentModel_AfterSaveComment');
+  }
   
+  public function DiscussionModel_AfterSaveDiscussion_Handler($Sender) {
+    $this->_AwardBadges($Sender, 'DiscussionModel_AfterSaveDiscussion');
+  }
+  
+  public function Base_AfterSignIn_Handler($Sender) {
+    $this->_AwardBadges($Sender, 'Base_AfterSignIn');
+  }
+  
+  public function UserModel_AfterSave_Handler($Sender) {
+    $this->_AwardBadges($Sender, 'UserModel_AfterSave');
+  }
+  
+  public function ReactionModel_AfterReaction_Handler($Sender) {
+    $this->_AwardBadges($Sender, 'ReactionModel_AfterReaction');
+  }
+  
+  public function Base_AfterConnection_Handler($Sender) {
+    $this->_AwardBadges($Sender, 'Base_AfterConnection');
+  }
+
+  /**
+   * This is the dispatcher to check badge awards
+   * TODO: Optimize this by caching the rules... or something
+   * @param string $Hook What rules will be checked this pass around
+   */
+  private function _AwardBadges($Sender, $Hook) {
+    $Session = Gdn::Session();
+    if(!$Session->IsValid())
+      return;
+
+    $UserID = $Session->UserID;
+    $UserModel = new UserModel();
+    $User = $UserModel->GetID($UserID);
+
+    $BadgeModel = new BadgeModel();
+    $Badges = $BadgeModel->GetEnabledBadges();
+    $UserBadges = $BadgeModel->GetUserBadgeAwards($UserID);
+
+    $Rules = array();
+    foreach($Badges as $Badge) {
+      if(!InSubArray($Badge->BadgeID, $UserBadges)) {
+        // The user doesn't have this badge
+        $Class = $Badge->RuleClass;
+        $Criteria = (object) unserialize($Badge->RuleCriteria);
+
+        // Create a rule object if needed
+        if(!in_array($Class, $Rules)) {
+          $Rule = new $Class();
+          $Rules[$Class] = $Rule;
+        }
+
+        // execute the Calculated
+        $Rule = $Rules[$Class];
+        if(in_array($Hook, $Rule->Hooks()) && $Rule->Award($Sender, $User, $Criteria)) {
+          $BadgeModel->AwardBadge($Badge->BadgeID, $UserID);
+
+          // TODO: Record to Activity Table
+          Gdn::Controller()->InformMessage('Badge "' . $Badge->Name . '" was awarded to you!');
+          // Notify user of badge award
+        }
+      }
+    }
+  }
+
   private function _AddResources($Sender) {
     if(empty($this->_ReactionModel)) {
       $this->_ReactionModel = new ReactionModel();
     }
-    
+
     $Sender->AddCssFile('reactions.css', 'yaga');
   }
-  
+
   /**
    * Add resources to all dashboard pages
    * @param type $Sender
@@ -221,7 +292,7 @@ class YagaHooks implements Gdn_IPlugin {
         $Sender->AddCssFile('yaga.css', 'yaga');
       }
    }
-   
+
   /**
    * Special function automatically run upon clicking 'Enable' on your application.
    */

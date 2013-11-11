@@ -55,7 +55,7 @@ echo $this->Form->Errors();
     $Prefix = $this->Form->InputPrefix;
     $this->Form->InputPrefix = $Prefix . '_Rules';
     $Rule = new $RuleClass();
-    $Rule->RenderCriteriaInterface($this->Form);
+    echo $Rule->Form($this->Form);
     // Restore the prefix
     $this->Form->InputPrefix = $Prefix;
   ?>

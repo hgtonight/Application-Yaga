@@ -52,47 +52,6 @@ class BadgesController extends DashboardController {
     $this->Render();
   }
   
-  // TODO: Put this some place else
-  public function test() {
-    $Session = Gdn::Session();
-    if(!$Session->IsValid())
-      return;
-
-    $UserID = $Session->UserID;
-    $UserModel = new UserModel();
-    $User = $UserModel->GetID($UserID);
-    
-    $BadgeModel = new BadgeModel();
-    $Badges = $BadgeModel->GetEnabledBadges();
-    $UserBadges = $BadgeModel->GetUserBadgeAwards($UserID);
-    
-    $Rules = array();
-    foreach($Badges as $Badge) {
-      if(!InSubArray($Badge->BadgeID, $UserBadges)) {
-        // The user doesn't have this badge
-        $Class = $Badge->RuleClass;
-        $Criteria = (object) unserialize($Badge->RuleCriteria);
-
-        // Create a rule object if needed
-        if(!in_array($Class, $Rules)) {
-          $Rule = new $Class();
-          $Rules[$Class] = $Rule;
-        }
-        
-        // execute the Calculated
-        $Rule = $Rules[$Class];
-        if($Rule->CalculateAward($User, $Criteria)) {
-          $BadgeModel->AwardBadge($Badge->BadgeID, $UserID);
-          
-          // TODO: Record to Activity Table
-          $this->InformMessage('Badge "' . $Badge->Name . '" was awarded to you!');
-          // Notify user of badge award
-        }
-      }
-    }
-    $this->Render('add');
-  }
-  
   public function Edit($BadgeID = NULL) {
     $this->Permission('Yaga.Badges.Manage');
     $this->AddSideMenu('badges/settings');
@@ -113,7 +72,7 @@ class BadgesController extends DashboardController {
     if($this->Form->IsPostBack() == FALSE) {
       if(property_exists($this, 'Badge')) {
         // Manually merge the criteria into the badge object
-        $Criteria = unserialize($this->Badge->RuleCriteria);
+        $Criteria = (array) unserialize($this->Badge->RuleCriteria);
         $BadgeArray = (array) $this->Badge; 
         
         $Data = array_merge($BadgeArray, $Criteria);

@@ -1,32 +1,30 @@
 <?php if(!defined('APPLICATION')) exit();
 include_once 'interface.yagarule.php';
 /**
- * This rule awards badges based on a user's join date
+ * TODO: Implement
  *
  * @author Zachary Doll
  * @since 1.0
  * @package Yaga
  */
-class DiscussionCount implements YagaRule{
-  
+class SocialConnection implements YagaRule{
+
   public function Award($Sender, $User, $Criteria) {
-    decho($User);
-    
     $Result = FALSE;
     switch($Criteria->Comparison) {
       case 'gt':
-        if($User->CountDiscussions > $Criteria->Target) {
+        if($User->CountComments > $Criteria->Target) {
           $Result = TRUE;
         }
         break;
       case 'lt':
-        if($User->CountDiscussions < $Criteria->Target) {
+        if($User->CountComments < $Criteria->Target) {
           $Result = TRUE;
         }
         break;
       default:
       case 'gte':
-        if($User->CountDiscussions >= $Criteria->Target) {
+        if($User->CountComments >= $Criteria->Target) {
           $Result = TRUE;
         }
         break;
@@ -34,7 +32,7 @@ class DiscussionCount implements YagaRule{
     
     return $Result;
   }
-  
+    
   public function Form($Form) {
     $Comparisons = array(
         'gt' => 'more than:',
@@ -46,23 +44,23 @@ class DiscussionCount implements YagaRule{
     $String .= 'User has ';
     $String .= $Form->DropDown('Comparison', $Comparisons);
     $String .= $Form->Textbox('Target');
-    $String .= ' discussions';
-    
-    return $String;
+    $String .= ' comments';
+
+    return $String; 
   }
   
   public function Hooks() {
-    return array('DiscussionModel_AfterSaveDiscussion');
+    return array('Base_AfterConnection');
   }
   
   public function Description() {
-    $Description = 'This rule checks a users discussion count against the criteria. It will return true once the user has as many or more than the given amount.';
+    $Description = 'This rule checks a users total comment count against the criteria. If the user has more comments than the criteria, this will return true.';
     return $Description;
     
   }
   
   public function Name() {
-    return 'Discussion Count Total';
+    return 'Comment Count Total';
   }
 }
 

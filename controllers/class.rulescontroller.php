@@ -35,11 +35,9 @@ class RulesController extends YagaController {
   }
   
   public static function GetRules() {
-    $Filecache = new Gdn_Filecache();
-    $Filecache->AddContainer(array(Gdn_Cache::CONTAINER_LOCATION=>'./cache/'));
-    
-    $Rules = $Filecache->Get('Yaga.Badges.Rules');
-    if($Rules == Gdn_Cache::CACHEOP_FAILURE) {
+    $Rules = Gdn::Cache()->Get('Yaga.Badges.Rules');
+    if($Rules === Gdn_Cache::CACHEOP_FAILURE) {
+      echo('Building Rules Cache');
       foreach(glob(PATH_APPLICATIONS . DS . 'yaga' . DS . 'rules' . DS . '*.php') as $filename) {
         include_once $filename;
       }
@@ -48,7 +46,7 @@ class RulesController extends YagaController {
       foreach(get_declared_classes() as $className) {
         if(in_array('YagaRule', class_implements($className))) {
           $Rule = new $className();
-          $TempRules[$className] = $Rule->FriendlyName();
+          $TempRules[$className] = $Rule->Name();
         }
       }
       if(empty($TempRules)) {
@@ -57,7 +55,7 @@ class RulesController extends YagaController {
       else{
         $Rules = serialize($TempRules);
       }
-      $Filecache->Store('Yaga.Badges.Rules', $Rules, array(Gdn_Cache::FEATURE_EXPIRY => C('Yaga.Rules.CacheExpire', 86400)));
+      Gdn::Cache()->Store('Yaga.Badges.Rules', $Rules, array(Gdn_Cache::FEATURE_EXPIRY => C('Yaga.Rules.CacheExpire', 86400)));
     }
     
     return unserialize($Rules);
@@ -68,10 +66,11 @@ class RulesController extends YagaController {
       $Rule = new $RuleClass();
       $Form = Gdn::Factory('Form');
       $Form->InputPrefix = '_Rules';
-      $FormString = $Rule->RenderCriteriaInterface($Form, FALSE);
+      $FormString = $Rule->Form($Form);
       $Description = $Rule->Description();
+      $Name = $Rule->Name();
 
-      $Data = array('CriteriaForm' => $FormString, 'RuleClass' => $RuleClass, 'Description' => $Description);
+      $Data = array('CriteriaForm' => $FormString, 'RuleClass' => $RuleClass, 'Name' => $Name, 'Description' => $Description);
       $this->RenderData($Data);
     }
     else {
