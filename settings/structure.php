@@ -48,6 +48,8 @@ $Construct->Table('BadgeAward')
         ->PrimaryKey('BadgeAwardID')
         ->Column('BadgeID', 'int')
         ->Column('UserID', 'int')
+        ->Column('InsertUserID', 'int', NULL)
+        ->Column('Reason', 'text', NULL)
         ->Column('DateInserted', 'datetime')
         ->Set($Explicit, $Drop);
 

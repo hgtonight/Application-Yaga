@@ -167,9 +167,35 @@ class BadgesController extends DashboardController {
       
       if (Gdn::Session()->ValidateTransientKey($TransientKey)) {
          // Do removal, set message, redirect
-         $BadgeModel = new BadgeModel();
-         $BadgeModel->SetField($BadgeID, 'Photo', NULL); 
+         $this->BadgeModel->SetField($BadgeID, 'Photo', NULL); 
          $this->InformMessage(T('Badge photo has been deleted.'));
+      }
+      if ($this->_DeliveryType == DELIVERY_TYPE_ALL) {
+          Redirect($RedirectUrl);
+      } else {
+         $this->ControllerName = 'Home';
+         $this->View = 'FileNotFound';
+         $this->RedirectUrl = Url($RedirectUrl);
+         $this->Render();
+      }
+   }
+   
+   /**
+    * TODO: Add this in as a full up option
+    * @param int $UserID
+    * @param int $BadgeID
+    * @param type $TransientKey
+    */
+   public function Award($UserID, $BadgeID, $TransientKey = '') {
+     // Check permission
+      $this->Permission('Garden.Badges.Add');
+      
+      $RedirectUrl = 'yaga/badges/settings';
+      
+      if (Gdn::Session()->ValidateTransientKey($TransientKey)) {
+         // Do removal, set message, redirect
+         $this->BadgeModel->AwardBadge($BadgeID, $UserID); 
+         $this->InformMessage(T('Badge has been awarded.'));
       }
       if ($this->_DeliveryType == DELIVERY_TYPE_ALL) {
           Redirect($RedirectUrl);

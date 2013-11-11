@@ -227,8 +227,8 @@ class YagaHooks implements Gdn_IPlugin {
     $this->_AwardBadges($Sender, 'UserModel_AfterSave');
   }
 
-  public function ReactionModel_AfterReaction_Handler($Sender) {
-    $this->_AwardBadges($Sender, 'ReactionModel_AfterReaction');
+  public function ReactionModel_AfterReactionSave_Handler($Sender) {
+    $this->_AwardBadges($Sender, 'ReactionModel_AfterReactionSave');
   }
 
   public function Base_AfterConnection_Handler($Sender) {
@@ -268,11 +268,17 @@ class YagaHooks implements Gdn_IPlugin {
 
         // execute the Calculated
         $Rule = $Rules[$Class];
-        if(in_array($Hook, $Rule->Hooks()) && $Rule->Award($Sender, $User, $Criteria)) {
-          $BadgeModel->AwardBadge($Badge->BadgeID, $UserID);
-
-          // Gdn::Controller()->InformMessage('Badge "' . $Badge->Name . '" was awarded to you!');
-          // Notify user of badge award
+        if(in_array($Hook, $Rule->Hooks())) {
+          $Result = $Rule->Award($Sender, $User, $Criteria);
+          if($Result) {
+            if(is_numeric($Result)) {
+              $AwardedUserID = $Result;
+            }
+            else {
+              $AwardedUserID = $UserID;
+            }
+            $BadgeModel->AwardBadge($Badge->BadgeID, $AwardedUserID, $UserID);
+          }
         }
       }
     }

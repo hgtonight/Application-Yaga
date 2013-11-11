@@ -99,12 +99,14 @@ class BadgeModel extends Gdn_Model {
     }
   }
   
-  public function AwardBadge($BadgeID, $UserID) {
+  public function AwardBadge($BadgeID, $UserID, $InsertUserID = NULL, $Reason = '') {
     if($this->BadgeExists($BadgeID)) {
       if(!$this->UserHasBadge($UserID, $BadgeID)) {
         $this->SQL->Insert('BadgeAward', array(
             'BadgeID' => $BadgeID,
             'UserID' => $UserID,
+            'InsertUserID' => $InsertUserID,
+            'Reason' => $Reason,
             'DateInserted' => date(DATE_ISO8601)
         ));
         

@@ -151,8 +151,8 @@ class ReactionModel extends Gdn_Model {
                       'InsertUserID' => $UserID,
                       'DateInserted' => date(DATE_ISO8601)));
     }
-    $EventArgs['Reaction'] = $Reaction;
-    $this->FireEvent('AfterReaction', $EventArgs);
+    $EventArgs['Reaction'] = $Reaction->Result();
+    $this->FireEvent('AfterReactionSave', $EventArgs);
     
     return $Reaction;
   }

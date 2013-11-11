@@ -10,13 +10,23 @@ include_once 'interface.yagarule.php';
 class ReactionCount implements YagaRule{
   
   public function Award($Sender, $User, $Criteria) {
-    if($User->CountDiscussions >= $Criteria->Target) {
-          $Result = TRUE;
-        }
-        else {
-          $Result = FALSE;
-        }    
-    return $Result;
+    $Reaction = $Sender->EventArguments['Reaction'][0];
+    decho($Criteria->ActionID);
+    decho($Reaction);
+    die();
+    $ReactionModel = new ReactionModel();
+    $Count = $ReactionModel->GetUserReactionCount($Reaction->ParentAuthorID, $Criteria->ActionID);
+    
+    decho($Count);
+    if($Count >= $Criteria->Target) {
+      decho($Reaction);
+      
+      return $Reaction->InsertUserID;
+    }
+    else {
+      die();
+      return FALSE;
+    }
   }
   
   public function Form($Form) {
@@ -30,13 +40,13 @@ class ReactionCount implements YagaRule{
     $String = $Form->Label('Total reactions', 'ReactionCount');
     $String .= 'User has ';
     $String .= $Form->Textbox('Target');
-    $String .= $Form->DropDown('ReactionID', $Reactions);
+    $String .= $Form->DropDown('ActionID', $Reactions);
     
     return $String;
   }
   
   public function Hooks() {
-    return array('ReactionModel_AfterReaction');
+    return array('ReactionModel_AfterReactionSave');
   }
   
   public function Description() {
