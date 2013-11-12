@@ -217,4 +217,22 @@ class BadgeModel extends Gdn_Model {
             ->Result(DATASET_TYPE_ARRAY);
   }
   
+  /**
+   * Returns the full list of badges and the associated user awards if applicable
+   * 
+   * @todo Refactor controllers that massage the data together to use this instead
+   * @param int $UserID
+   * @return DataSet
+   */
+  public function GetAllBadgesUserAwards($UserID) {
+    return $this->SQL
+            ->Select('b.BadgeID, b.Name, b.Description, b.Photo, b.AwardValue, ba.UserID, ba.InsertUserID, ba.Reason, ba.DateInserted, ui.Name as InsertUserName')
+            ->From('Badge b')
+            ->Join('BadgeAward ba', 'ba.BadgeID = b.BadgeID', 'left')
+            ->Join('User ui', 'ba.InsertUserID = ui.UserID', 'left')
+            ->Where('ba.UserID', $UserID)
+            ->OrWhere('b.BadgeID is not null') // needed to get the full set of badges
+            ->Get()
+            ->Result();
+  }
 }
