@@ -39,7 +39,7 @@ class LengthOfService implements YagaRule {
   }
   
   public function Description() {
-    $Description = 'This rule checks a users join date against the current date. The criteria is the age of the account in days. It will return true if the account is older than this number of days.';
+    $Description = 'This rule checks a users join date against the current date. It will return true if the account is older than the specified number of days, weeks, or years.';
     return $Description;
     
   }

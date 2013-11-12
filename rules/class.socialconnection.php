@@ -1,7 +1,8 @@
 <?php if(!defined('APPLICATION')) exit();
 include_once 'interface.yagarule.php';
 /**
- * TODO: Implement
+ * This rule awards badges when the user connects social accounts
+ * @todo Implement social connection rule
  *
  * @author Zachary Doll
  * @since 1.0
@@ -11,41 +12,20 @@ class SocialConnection implements YagaRule{
 
   public function Award($Sender, $User, $Criteria) {
     $Result = FALSE;
-    switch($Criteria->Comparison) {
-      case 'gt':
-        if($User->CountComments > $Criteria->Target) {
-          $Result = TRUE;
-        }
-        break;
-      case 'lt':
-        if($User->CountComments < $Criteria->Target) {
-          $Result = TRUE;
-        }
-        break;
-      default:
-      case 'gte':
-        if($User->CountComments >= $Criteria->Target) {
-          $Result = TRUE;
-        }
-        break;
-    }
-    
+
     return $Result;
   }
     
   public function Form($Form) {
-    $Comparisons = array(
-        'gt' => 'more than:',
-        'lt' => 'less than:',
-        'gte' => 'more than or equal to:'        
+    $SocialNetworks = array(
+        'twitter' => 'Twitter',
+        'facebook' => 'Facebook'        
     );
     
-    $String = $Form->Label('Total comments', 'CommentCount');
-    $String .= 'User has ';
-    $String .= $Form->DropDown('Comparison', $Comparisons);
-    $String .= $Form->Textbox('Target');
-    $String .= ' comments';
-
+    $String = $Form->Label('Social Networks', 'SocialConnection');
+    $String .= 'User has connect to: ';
+    $String .= $Form->DropDown('SocialNetwork', $SocialNetworks);
+    
     return $String; 
   }
   
@@ -54,13 +34,13 @@ class SocialConnection implements YagaRule{
   }
   
   public function Description() {
-    $Description = 'This rule checks a users total comment count against the criteria. If the user has more comments than the criteria, this will return true.';
+    $Description = 'This rule checks a users connection to social networks. If the user chooses to connect to the target network, this will return true.';
     return $Description;
     
   }
   
   public function Name() {
-    return 'Comment Count Total';
+    return 'Social Connections';
   }
 }
 

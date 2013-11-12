@@ -1,7 +1,7 @@
 <?php if(!defined('APPLICATION')) exit();
 include_once 'interface.yagarule.php';
 /**
- * This rule awards badges based on a user's join date
+ * This rule awards badges based on a user's discussion count
  *
  * @author Zachary Doll
  * @since 1.0
@@ -42,7 +42,7 @@ class DiscussionCount implements YagaRule{
         'gte' => 'more than or equal to:'        
     );
     
-    $String = $Form->Label('Total comments', 'CommentCount');
+    $String = $Form->Label('Total Discussions', 'DiscussionCount');
     $String .= 'User has ';
     $String .= $Form->DropDown('Comparison', $Comparisons);
     $String .= $Form->Textbox('Target');
@@ -56,7 +56,7 @@ class DiscussionCount implements YagaRule{
   }
   
   public function Description() {
-    $Description = 'This rule checks a users discussion count against the criteria. It will return true once the user has as many or more than the given amount.';
+    $Description = 'This rule checks a users discussion count against the criteria. It will return true once the comparision is true.';
     return $Description;
     
   }

@@ -1,7 +1,7 @@
 <?php if(!defined('APPLICATION')) exit();
 include_once 'interface.yagarule.php';
 /**
- * This rule awards badges based on a user's join date
+ * This rule awards badges based on a user's sign in date
  *
  * @author Zachary Doll
  * @since 1.0

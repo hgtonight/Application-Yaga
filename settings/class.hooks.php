@@ -252,6 +252,10 @@ class YagaHooks implements Gdn_IPlugin {
     $this->_AwardBadges($Sender, 'CommentModel_AfterSaveComment');
   }
 
+  public function ActivityModel_BeforeSaveComment_Handler($Sender) {
+    $this->_AwardBadges($Sender, 'ActivityModel_BeforeSaveComment');
+  }
+  
   public function DiscussionModel_AfterSaveDiscussion_Handler($Sender) {
     $this->_AwardBadges($Sender, 'DiscussionModel_AfterSaveDiscussion');
   }
@@ -274,7 +278,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * This is the dispatcher to check badge awards
-   * TODO: Optimize this by caching the rules... or something
+   * @todo Optimize this by caching the rules... or something
    *
    * @param string $Hook What rules will be checked this pass around
    */

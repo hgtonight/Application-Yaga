@@ -1,7 +1,8 @@
 <?php if(!defined('APPLICATION')) exit();
 include_once 'interface.yagarule.php';
 /**
- * This rule awards badges based on a user's join date
+ * This rule never awards badges. It can safely be used for special badges that
+ * only need to be manually awarded
  *
  * @author Zachary Doll
  * @since 1.0
