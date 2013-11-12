@@ -48,6 +48,7 @@ class BadgeController extends DashboardController {
 
     // Get list of badges from the model and pass to the view
     $this->SetData('Badges', $this->BadgeModel->GetBadges());
+    $this->SetData('Rules', RulesController::GetRules());
 
     $this->Render();
   }

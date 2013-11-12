@@ -2,20 +2,17 @@
 /* Copyright 2013 Zachary Doll */
 
 /**
- * Contains management code for creating badges.
+ * Manages the building of a rules cache and is a jumping off point for admin
+ * ajax requests in the dashboard for badges.
  *
  * @since 1.0
  * @package Yaga
  */
 class RulesController extends YagaController {
 
-  /** @var array List of objects to prep. They will be available as $this->$Name. */
-  public $Uses = array();
-
   /**
-   * If you use a constructor, always call parent.
-   * Delete this if you don't need it.
-   *
+   * Don't need anything special here.
+   * 
    * @access public
    */
   public function __construct() {
@@ -23,10 +20,8 @@ class RulesController extends YagaController {
   }
 
   /**
-   * This is a good place to include JS, CSS, and modules used by all methods of this controller.
-   *
-   * Always called by dispatcher before controller's requested method.
-   *
+   * May be used in the future.
+   * 
    * @since 1.0
    * @access public
    */
@@ -34,6 +29,14 @@ class RulesController extends YagaController {
     parent::Initialize();
   }
   
+  /**
+   * This checks the cache for current rule set and expires once a day.
+   * It loads all php files in the rules folder and selects only those that
+   * implement the 'YagaRule' interface.
+   * 
+   * @return array Rules that are currently available to use. The class names
+   * are keys and the friendly names are values.
+   */
   public static function GetRules() {
     $Rules = Gdn::Cache()->Get('Yaga.Badges.Rules');
     if($Rules === Gdn_Cache::CACHEOP_FAILURE) {
@@ -60,6 +63,11 @@ class RulesController extends YagaController {
     return unserialize($Rules);
   }
   
+  /**
+   * This creates a new rule object in a safe way and renders its criteria form.
+   * 
+   * @param string $RuleClass
+   */
   public function GetCriteriaForm($RuleClass) {
     if(class_exists($RuleClass) && in_array('YagaRule', class_implements($RuleClass))) {
       $Rule = new $RuleClass();

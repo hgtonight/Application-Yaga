@@ -1,6 +1,8 @@
 <?php if (!defined('APPLICATION')) exit();
 /* Copyright 2013 Zachary Doll */
 
+$Rules = $this->Data('Rules');
+
 echo Wrap($this->Title(), 'h1');
 echo Wrap(Wrap('Add or edit the available badges that can be earned.', 'div'), 'div', array('class' => 'Wrap'));
 echo Wrap(Anchor('Add Badge', 'yaga/badge/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
@@ -33,7 +35,7 @@ echo Wrap(Anchor('Add Badge', 'yaga/badge/add', array('class' => 'SmallButton'))
       }
       $Row .= Wrap($Badge->Name, 'td');
       $Row .= Wrap($Badge->Description, 'td');
-      $Row .= Wrap($Badge->RuleClass, 'td');
+      $Row .= Wrap($Rules[$Badge->RuleClass], 'td');
       $Row .= Wrap($Badge->AwardValue, 'td');
       $ToggleText = ($Badge->Enabled) ? T('Enabled') : T('Disabled');
       $ActiveClass = ($Badge->Enabled) ? 'Active' : 'InActive';
