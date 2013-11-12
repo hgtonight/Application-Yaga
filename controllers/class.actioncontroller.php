@@ -2,12 +2,12 @@
 /* Copyright 2013 Zachary Doll */
 
 /**
- * All is the base class for controllers throughout the gamification applicati0n.
+ * Manage actions that are available for reactions
  *
  * @since 1.0
  * @package Yaga
  */
-class ActionsController extends DashboardController {
+class ActionController extends DashboardController {
 
   /** @var array List of objects to prep. They will be available as $this->$Name. */
   public $Uses = array('Form', 'ActionModel');
@@ -42,7 +42,7 @@ class ActionsController extends DashboardController {
 
   public function Settings($Page = '') {
     $this->Permission('Yaga.Reactions.Manage');
-    $this->AddSideMenu('actions/settings');
+    $this->AddSideMenu('action/settings');
 
     $this->Title('Manage Reactions');
 
@@ -54,7 +54,7 @@ class ActionsController extends DashboardController {
 
   public function Edit($ActionID = NULL) {
     $this->Permission('Yaga.Reactions.Manage');
-    $this->AddSideMenu('actions/settings');
+    $this->AddSideMenu('action/settings');
     $this->Form->SetModel($this->ActionModel);
     
     $Edit = FALSE;
@@ -83,7 +83,7 @@ class ActionsController extends DashboardController {
         $NewActionRow .= "<td>$Action->Description</td>";
         $NewActionRow .= "<td>$Action->Tooltip</td>";
         $NewActionRow .= "<td>$Action->AwardValue</td>";
-        $NewActionRow .= '<td>' . Anchor(T('Edit'), 'yaga/actions/edit/' . $Action->ActionID, array('class' => 'Popup SmallButton')) . Anchor(T('Delete'), 'yaga/actions/delete/' . $Action->ActionID, array('class' => 'Hijack SmallButton')) . '</td>';
+        $NewActionRow .= '<td>' . Anchor(T('Edit'), 'yaga/action/edit/' . $Action->ActionID, array('class' => 'Popup SmallButton')) . Anchor(T('Delete'), 'yaga/action/delete/' . $Action->ActionID, array('class' => 'Hijack SmallButton')) . '</td>';
         $NewActionRow .= '</tr>';
         if($Edit) {
           $this->JsonTarget('#ActionID_' . $this->Action->ActionID, $NewActionRow, 'ReplaceWith');
@@ -108,7 +108,7 @@ class ActionsController extends DashboardController {
       throw PermissionException('Javascript');
     }
     $this->Permission('Yaga.Reactions.Manage');
-    $this->AddSideMenu('actions/settings');
+    $this->AddSideMenu('action/settings');
     
     $this->ActionModel->DeleteAction($ActionID);
     

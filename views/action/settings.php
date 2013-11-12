@@ -3,7 +3,7 @@
 
 echo Wrap($this->Title(), 'h1');
 echo Wrap(Wrap('Add or edit the available actions that can be used as reactions.', 'div'), 'div', array('class' => 'Wrap'));
-echo Wrap(Anchor('Add Action', 'yaga/actions/add', array('class' => 'Popup SmallButton')), 'div', array('class' => 'Wrap'));
+echo Wrap(Anchor('Add Action', 'yaga/action/add', array('class' => 'Popup SmallButton')), 'div', array('class' => 'Wrap'));
 
 ?>
 <table id="Actions" class="AltRows">
@@ -27,7 +27,7 @@ echo Wrap(Anchor('Add Action', 'yaga/actions/add', array('class' => 'Popup Small
       echo "<td>$Action->Description</td>";
       echo "<td>$Action->Tooltip</td>";
       echo "<td>$Action->AwardValue</td>";
-      echo '<td>' . Anchor(T('Edit'), 'yaga/actions/edit/' . $Action->ActionID, array('class' => 'Popup SmallButton')) . Anchor(T('Delete'), 'yaga/actions/delete/' . $Action->ActionID, array('class' => 'Hijack SmallButton')) . '</td>';
+      echo '<td>' . Anchor(T('Edit'), 'yaga/action/edit/' . $Action->ActionID, array('class' => 'Popup SmallButton')) . Anchor(T('Delete'), 'yaga/action/delete/' . $Action->ActionID, array('class' => 'Hijack SmallButton')) . '</td>';
       echo '</tr>';
     }
     ?>
