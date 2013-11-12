@@ -7,7 +7,7 @@
  * @since 1.0
  * @package Yaga
  */
-class BadgesController extends DashboardController {
+class BadgeController extends DashboardController {
 
   /** @var array List of objects to prep. They will be available as $this->$Name. */
   public $Uses = array('Form', 'BadgeModel');
@@ -34,7 +34,7 @@ class BadgesController extends DashboardController {
     parent::Initialize();
     Gdn_Theme::Section('Dashboard');
     if($this->Menu) {
-      $this->Menu->HighlightRoute('/badges');
+      $this->Menu->HighlightRoute('/badge');
     }
     $this->AddJsFile('admin.badges.js');
     $this->AddCssFile('badges.css');
@@ -42,7 +42,7 @@ class BadgesController extends DashboardController {
 
   public function Settings($Page = '') {
     $this->Permission('Yaga.Badges.Manage');
-    $this->AddSideMenu('badges/settings');
+    $this->AddSideMenu('badge/settings');
 
     $this->Title('Manage Badges');
 
@@ -54,7 +54,7 @@ class BadgesController extends DashboardController {
   
   public function Edit($BadgeID = NULL) {
     $this->Permission('Yaga.Badges.Manage');
-    $this->AddSideMenu('badges/settings');
+    $this->AddSideMenu('badge/settings');
     $this->Form->SetModel($this->BadgeModel);
     
     // Only allow editing if some rules exist
@@ -90,7 +90,7 @@ class BadgesController extends DashboardController {
         $ImageBaseName = pathinfo($TargetImage, PATHINFO_BASENAME);
 
         // Save the uploaded image
-        $Parts = $Upload->SaveAs($TmpImage, $ImageBaseName);
+        $Parts = $Upload->SaveAs($TmpImage, 'badges/' . $ImageBaseName);
 
         $this->Form->SetFormValue('Photo', $Parts['SaveName']);
       }
@@ -113,7 +113,7 @@ class BadgesController extends DashboardController {
         else {
           $this->InformMessage('Badge added successfully!');
         }
-        Redirect('/yaga/badges/settings');
+        Redirect('/yaga/badge/settings');
       }
     }
 
@@ -126,19 +126,19 @@ class BadgesController extends DashboardController {
 
   public function Delete($BadgeID) {
     $this->Permission('Yaga.Badges.Manage');
-    $this->AddSideMenu('badges/settings');
+    $this->AddSideMenu('badge/settings');
 
     $this->BadgeModel->DeleteBadge($BadgeID);
 
-    redirect('badges/settings');
+    redirect('badge/settings');
   }
 
   public function Toggle($BadgeID) {
     if(!$this->Request->IsPostBack()) {
       throw PermissionException('Javascript');
     }
-    $this->Permission('Yaga.Reactions.Manage');
-    $this->AddSideMenu('badges/settings');
+    $this->Permission('Yaga.Badges.Manage');
+    $this->AddSideMenu('badge/settings');
 
     $Badge = $this->BadgeModel->GetBadge($BadgeID);
     
@@ -153,7 +153,7 @@ class BadgesController extends DashboardController {
       $ActiveClass = 'Active';
     }
     
-    $Slider = Wrap(Wrap(Anchor($ToggleText, 'yaga/badges/toggle/' . $Badge->BadgeID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
+    $Slider = Wrap(Wrap(Anchor($ToggleText, 'yaga/badge/toggle/' . $Badge->BadgeID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
     $this->BadgeModel->EnableBadge($BadgeID, $Enable);
     $this->JsonTarget('#BadgeID_' . $BadgeID . ' td:nth-child(7)', $Slider, 'ReplaceWith');
     $this->Render('Blank', 'Utility', 'Dashboard');
@@ -163,7 +163,7 @@ class BadgesController extends DashboardController {
       // Check permission
       $this->Permission('Garden.Badges.Manage');
       
-      $RedirectUrl = 'yaga/badges/edit/'.$BadgeID;
+      $RedirectUrl = 'yaga/badge/edit/'.$BadgeID;
       
       if (Gdn::Session()->ValidateTransientKey($TransientKey)) {
          // Do removal, set message, redirect
@@ -190,7 +190,7 @@ class BadgesController extends DashboardController {
      // Check permission
       $this->Permission('Garden.Badges.Add');
       
-      $RedirectUrl = 'yaga/badges/settings';
+      $RedirectUrl = 'yaga/badge/settings';
       
       if (Gdn::Session()->ValidateTransientKey($TransientKey)) {
          // Do removal, set message, redirect

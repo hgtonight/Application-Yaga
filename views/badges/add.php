@@ -25,7 +25,7 @@ echo $this->Form->Errors();
     if($Photo) {
       echo Img(Gdn_Upload::Url($Photo));
       echo '<br />'.Anchor(T('Delete Photo'), 
-        CombinePaths(array('badges/deletephoto', $this->Badge->BadgeID, Gdn::Session()->TransientKey())), 
+        CombinePaths(array('badge/deletephoto', $this->Badge->BadgeID, Gdn::Session()->TransientKey())), 
       'SmallButton Danger PopConfirm');
     }
     echo $this->Form->Input('PhotoUpload', 'file');

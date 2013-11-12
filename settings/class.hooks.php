@@ -332,10 +332,10 @@ class YagaHooks implements Gdn_IPlugin {
       $Menu->AddLink($Section, 'Reactions', 'actions/settings', 'Yaga.Reactions.Manage');
     }
     if(C('Yaga.Badges.Enabled')) {
-      $Menu->AddLink($Section, 'Badges', 'badges/settings', 'Yaga.Badges.Manage');
+      $Menu->AddLink($Section, 'Badges', 'badge/settings', 'Yaga.Badges.Manage');
     }
     if(C('Yaga.Ranks.Enabled')) {
-      $Menu->AddLink($Section, 'Ranks', 'ranks/settings', 'Yaga.Ranks.Manage');
+      $Menu->AddLink($Section, 'Ranks', 'rank/settings', 'Yaga.Ranks.Manage');
     }
   }
 

@@ -3,7 +3,7 @@
 
 echo Wrap($this->Title(), 'h1');
 echo Wrap(Wrap('Add or edit the available badges that can be earned.', 'div'), 'div', array('class' => 'Wrap'));
-echo Wrap(Anchor('Add Badge', 'yaga/badges/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
+echo Wrap(Anchor('Add Badge', 'yaga/badge/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
 
 ?>
 <table id="Actions" class="AltRows">
@@ -37,8 +37,8 @@ echo Wrap(Anchor('Add Badge', 'yaga/badges/add', array('class' => 'SmallButton')
       $Row .= Wrap($Badge->AwardValue, 'td');
       $ToggleText = ($Badge->Enabled) ? T('Enabled') : T('Disabled');
       $ActiveClass = ($Badge->Enabled) ? 'Active' : 'InActive';
-      $Row .= Wrap(Wrap(Anchor($ToggleText, 'yaga/badges/toggle/' . $Badge->BadgeID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
-      $Row .= Wrap(Anchor(T('Edit'), 'yaga/badges/edit/' . $Badge->BadgeID, array('class' => 'SmallButton')) . Anchor(T('Delete'), 'yaga/badges/delete/' . $Badge->BadgeID, array('class' => 'Danger PopConfirm SmallButton')), 'td');
+      $Row .= Wrap(Wrap(Anchor($ToggleText, 'yaga/badge/toggle/' . $Badge->BadgeID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
+      $Row .= Wrap(Anchor(T('Edit'), 'yaga/badge/edit/' . $Badge->BadgeID, array('class' => 'SmallButton')) . Anchor(T('Delete'), 'yaga/badge/delete/' . $Badge->BadgeID, array('class' => 'Danger PopConfirm SmallButton')), 'td');
       echo Wrap($Row, 'tr', array('id' => 'BadgeID_' . $Badge->BadgeID, 'data-badgeid' => $Badge->BadgeID, 'class' => $Alt));
     }
     ?>
