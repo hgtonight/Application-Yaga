@@ -36,7 +36,7 @@ class ActionsController extends DashboardController {
     if($this->Menu) {
       $this->Menu->HighlightRoute('/actions');
     }
-    $this->AddJsFile('actions.js');
+    $this->AddJsFile('admin.actions.js');
     $this->AddCssFile('reactions.css');
   }
 

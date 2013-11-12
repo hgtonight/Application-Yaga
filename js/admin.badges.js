@@ -1,4 +1,6 @@
 /* Copyright 2013 Zachary Doll */
+
+// Poor mans cache
 var Cache = {
   data: {},
   remove: function(key) {
@@ -17,17 +19,18 @@ var Cache = {
 };
 
 jQuery(document).ready(function($) {
+  
   // TODO: Save form inputs to cache as well as the elements
+  
   $("form.Badge select[name='RuleClass']").focus(function() {
-    // Update the cache before the change
+    // Save the current form to the current value's cache on focus
     var Rule = $(this).val();
     var FormHtml = $('#Rule-Criteria').html();
     if(!Cache.exists(Rule)) {
       Cache.set(Rule, FormHtml);
     }
   }).change(function() {
-    
-  // Grab the form from cache or ajax
+    // Grab the form from cache or ajax on change
     var NewRule = $(this).val();
     if (Cache.exists(NewRule)) {
       $('#Rule-Criteria').fadeOut(function() {
@@ -55,4 +58,5 @@ jQuery(document).ready(function($) {
       });
     }
   });
+  
 });
