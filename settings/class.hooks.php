@@ -10,8 +10,30 @@ class YagaHooks implements Gdn_IPlugin {
   static $_ReactionModel = NULL;
 
   /**
+   * Add the settings page links
+   *
+   * @param Object $Sender
+   */
+  public function Base_GetAppSettingsMenuItems_Handler($Sender) {
+    $Menu = $Sender->EventArguments['SideMenu'];
+    $Section = 'Gamification';
+    $Attrs = array('class' => $Section);
+    $Menu->AddItem($Section, $Section, FALSE, $Attrs);
+    $Menu->AddLink($Section, 'Settings', 'configure', 'Garden.Settings.Manage');
+    if(C('Yaga.Reactions.Enabled')) {
+      $Menu->AddLink($Section, 'Reactions', 'actions/settings', 'Yaga.Reactions.Manage');
+    }
+    if(C('Yaga.Badges.Enabled')) {
+      $Menu->AddLink($Section, 'Badges', 'badge/settings', 'Yaga.Badges.Manage');
+    }
+    if(C('Yaga.Ranks.Enabled')) {
+      $Menu->AddLink($Section, 'Ranks', 'rank/settings', 'Yaga.Ranks.Manage');
+    }
+  }
+
+  /**
    * Display points in the user info list
-   * @param type $Sender
+   * @param object $Sender
    */
   public function UserInfoModule_OnBasicInfo_Handler($Sender) {
     $Model = new YagaModel();
@@ -21,7 +43,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Display the reaction counts on the profile page
-   * @param type $Sender
+   * @param object $Sender
    */
   public function ProfileController_AfterUserInfo_Handler($Sender) {
     $User = $Sender->User;
@@ -43,13 +65,27 @@ class YagaHooks implements Gdn_IPlugin {
     echo Wrap($String, 'div', array('class' => 'DataCounts'));
   }
 
+  /**
+   * Add the badge and rank notification options
+   *
+   * @param object $Sender
+   */
   public function ProfileController_AfterPreferencesDefined_Handler($Sender) {
-    $Sender->Preferences['Notifications']['Email.Badges'] = T('Notify me when I earn a badge.');
-    $Sender->Preferences['Notifications']['Popup.Badges'] = T('Notify me when I earn a badge.');
+    if(C('Yaga.Badges.Enabled')) {
+      $Sender->Preferences['Notifications']['Email.Badges'] = T('Notify me when I earn a badge.');
+      $Sender->Preferences['Notifications']['Popup.Badges'] = T('Notify me when I earn a badge.');
+    }
+
+    if(C('Yaga.Ranks.Enabled')) {
+      $Sender->Preferences['Notifications']['Email.Ranks'] = T('Notify me when I am promoted in rank.');
+      $Sender->Preferences['Notifications']['Popup.Ranks'] = T('Notify me when I am promoted in rank.');
+    }
   }
+
   /**
    * Display a record of reactions after the first post
-   * @param DiscussionController $Sender
+   *
+   * @param object $Sender
    */
   public function DiscussionController_AfterDiscussionBody_Handler($Sender) {
     $Type = 'discussion';
@@ -59,7 +95,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Display a record of reactions after comments
-   * @param DiscussionController $Sender
+   * @param object $Sender
    */
   public function DiscussionController_AfterCommentBody_Handler($Sender) {
     $Type = 'comment';
@@ -102,7 +138,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Add action list to discussion items
-   * @param DiscussionController $Sender
+   * @param object $Sender
    */
   public function DiscussionController_AfterReactions_Handler($Sender) {
     if(C('Yaga.Reactions.Enabled') == FALSE) {
@@ -128,7 +164,8 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Add the action list to any activity items that can be commented on
-   * @param ActivityController $Sender
+   *
+   * @param object $Sender
    */
   public function ActivityController_AfterActivityBody_Handler($Sender) {
     $Activity = $Sender->EventArguments['Activity'];
@@ -161,6 +198,7 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * Renders an action list that also contains the current count of reactions
    * an item has received
+   *
    * @param int $ID
    * @param enum $Type 'discussion', 'activity', or 'comment'
    * @param bool $Echo Should it be echoed?
@@ -172,7 +210,6 @@ class YagaHooks implements Gdn_IPlugin {
     }
 
     $Reactions = $this->_ReactionModel->GetReactions($ID, $Type);
-    //decho($Reactions);
     $ActionsString = '';
     foreach($Reactions as $Action) {
       $ActionsString .= Anchor(
@@ -238,6 +275,7 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * This is the dispatcher to check badge awards
    * TODO: Optimize this by caching the rules... or something
+   *
    * @param string $Hook What rules will be checked this pass around
    */
   private function _AwardBadges($Sender, $Hook) {
@@ -284,6 +322,11 @@ class YagaHooks implements Gdn_IPlugin {
     }
   }
 
+  /**
+   * Add the appropriate resources for each controller
+   *
+   * @param object $Sender
+   */
   private function _AddResources($Sender) {
     if(empty($this->_ReactionModel)) {
       $this->_ReactionModel = new ReactionModel();
@@ -293,17 +336,19 @@ class YagaHooks implements Gdn_IPlugin {
   }
 
   /**
-   * Add resources to all dashboard pages
+   * Add global Yaga resources to all dashboard pages
+   *
    * @param type $Sender
    */
   public function Base_Render_Before($Sender) {
-      if($Sender->MasterView == 'admin') {
-        $Sender->AddCssFile('yaga.css', 'yaga');
-      }
-   }
+    if($Sender->MasterView == 'admin') {
+      $Sender->AddCssFile('yaga.css', 'yaga');
+    }
+  }
 
   /**
-   * Special function automatically run upon clicking 'Enable' on your application.
+   * Run the structure and stub scripts if necessary when the application is
+   * enabled.
    */
   public function Setup() {
     $Config = Gdn::Factory(Gdn::AliasConfig);
@@ -319,38 +364,19 @@ class YagaHooks implements Gdn_IPlugin {
   }
 
   /**
-   * Add the settings page links
-   * @param Mixed $Sender
-   */
-  public function Base_GetAppSettingsMenuItems_Handler($Sender) {
-    $Menu = $Sender->EventArguments['SideMenu'];
-    $Section = 'Gamification';
-    $Attrs = array('class' => $Section);
-    $Menu->AddItem($Section, $Section, FALSE, $Attrs);
-    $Menu->AddLink($Section, 'Settings', 'configure', 'Garden.Settings.Manage');
-    if(C('Yaga.Reactions.Enabled')) {
-      $Menu->AddLink($Section, 'Reactions', 'actions/settings', 'Yaga.Reactions.Manage');
-    }
-    if(C('Yaga.Badges.Enabled')) {
-      $Menu->AddLink($Section, 'Badges', 'badge/settings', 'Yaga.Badges.Manage');
-    }
-    if(C('Yaga.Ranks.Enabled')) {
-      $Menu->AddLink($Section, 'Ranks', 'rank/settings', 'Yaga.Ranks.Manage');
-    }
-  }
-
-  /**
    * Special function automatically run upon clicking 'Disable' on your application.
+   * @todo Determine if I need to do anything on disable.
    */
   public function OnDisable() {
-    // Optional. Delete this if you don't need it.
+
   }
 
   /**
    * Special function automatically run upon clicking 'Remove' on your application.
+   * @todo Determine if I need to do anything on removal.
    */
   public function CleanUp() {
-    // Optional. Delete this if you don't need it.
+
   }
 
 }
