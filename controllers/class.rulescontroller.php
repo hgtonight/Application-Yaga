@@ -2,22 +2,13 @@
 /* Copyright 2013 Zachary Doll */
 
 /**
- * Manages the building of a rules cache and is a jumping off point for admin
- * ajax requests in the dashboard for badges.
+ * Manages the building of a rules cache and is provides admin functions for
+ * managing badges in the dashboard.
  *
  * @since 1.0
  * @package Yaga
  */
 class RulesController extends YagaController {
-
-  /**
-   * Don't need anything special here.
-   * 
-   * @access public
-   */
-  public function __construct() {
-    parent::__construct();
-  }
 
   /**
    * May be used in the future.

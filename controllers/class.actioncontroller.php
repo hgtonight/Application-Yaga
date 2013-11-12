@@ -9,23 +9,14 @@
  */
 class ActionController extends DashboardController {
 
-  /** @var array List of objects to prep. They will be available as $this->$Name. */
+  /**
+   * @var array These objects will be created on instantiation and available via
+   * $this->ObjectName
+   */
   public $Uses = array('Form', 'ActionModel');
 
   /**
-   * If you use a constructor, always call parent.
-   * Delete this if you don't need it.
-   *
-   * @access public
-   */
-  public function __construct() {
-    parent::__construct();
-  }
-
-  /**
-   * This is a good place to include JS, CSS, and modules used by all methods of this controller.
-   *
-   * Always called by dispatcher before controller's requested method.
+   * Make this look like a dashboard page and add the resources
    *
    * @since 1.0
    * @access public
@@ -40,6 +31,11 @@ class ActionController extends DashboardController {
     $this->AddCssFile('reactions.css');
   }
 
+  /**
+   * Manage the available actions for reactions
+   * 
+   * @param int $Page
+   */
   public function Settings($Page = '') {
     $this->Permission('Yaga.Reactions.Manage');
     $this->AddSideMenu('action/settings');
@@ -52,6 +48,11 @@ class ActionController extends DashboardController {
     $this->Render();
   }
 
+  /**
+   * Edit an existing action or add a new one
+   * 
+   * @param int $ActionID
+   */
   public function Edit($ActionID = NULL) {
     $this->Permission('Yaga.Reactions.Manage');
     $this->AddSideMenu('action/settings');
@@ -99,20 +100,24 @@ class ActionController extends DashboardController {
     $this->Render('add');
   }
 
+  /**
+   * Convenience function for nice URLs
+   */
   public function Add() {
     $this->Edit();
   }
 
+  /**
+   * Remove the action via model.
+   * 
+   * @todo Consider adding a confirmation page when not using JS
+   * @param int $ActionID
+   */
   public function Delete($ActionID) {
-    if(!$this->Request->IsPostBack()) {
-      throw PermissionException('Javascript');
-    }
     $this->Permission('Yaga.Reactions.Manage');
-    $this->AddSideMenu('action/settings');
     
     $this->ActionModel->DeleteAction($ActionID);
-    
-    $this->JsonTarget('#ActionID_' . $ActionID, null, 'SlideUp');
-    $this->Render('Blank', 'Utility', 'Dashboard');
+
+    redirect('action/settings');
   }
 }

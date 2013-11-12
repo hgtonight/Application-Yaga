@@ -9,23 +9,14 @@
  */
 class BadgeController extends DashboardController {
 
-  /** @var array List of objects to prep. They will be available as $this->$Name. */
+  /**
+   * @var array These objects will be created on instantiation and available via
+   * $this->ObjectName
+   */
   public $Uses = array('Form', 'BadgeModel');
 
   /**
-   * If you use a constructor, always call parent.
-   * Delete this if you don't need it.
-   *
-   * @access public
-   */
-  public function __construct() {
-    parent::__construct();
-  }
-
-  /**
-   * This is a good place to include JS, CSS, and modules used by all methods of this controller.
-   *
-   * Always called by dispatcher before controller's requested method.
+   * Make this look like a dashboard page and add the resources
    *
    * @since 1.0
    * @access public
@@ -40,6 +31,11 @@ class BadgeController extends DashboardController {
     $this->AddCssFile('badges.css');
   }
 
+  /**
+   * Manage the current badges and add new ones
+   * 
+   * @param int $Page
+   */
   public function Settings($Page = '') {
     $this->Permission('Yaga.Badges.Manage');
     $this->AddSideMenu('badge/settings');
@@ -53,6 +49,12 @@ class BadgeController extends DashboardController {
     $this->Render();
   }
   
+  /**
+   * Edit an existing badge or add a new one
+   * 
+   * @param int $BadgeID
+   * @throws ForbiddenException if no proper rules are found
+   */
   public function Edit($BadgeID = NULL) {
     $this->Permission('Yaga.Badges.Manage');
     $this->AddSideMenu('badge/settings');
@@ -121,10 +123,19 @@ class BadgeController extends DashboardController {
     $this->Render('add');
   }
 
+  /**
+   * Convenience function for nice URLs
+   */
   public function Add() {
     $this->Edit();
   }
 
+  /**
+   * Remove the badge via model.
+   * 
+   * @todo Consider adding a confirmation page when not using JS
+   * @param int $BadgeID
+   */
   public function Delete($BadgeID) {
     $this->Permission('Yaga.Badges.Manage');
     $this->AddSideMenu('badge/settings');
@@ -134,6 +145,12 @@ class BadgeController extends DashboardController {
     redirect('badge/settings');
   }
 
+  /**
+   * Toggle the enabled state of a badge. Must be done via JS.
+   * 
+   * @param int $BadgeID
+   * @throws PermissionException
+   */
   public function Toggle($BadgeID) {
     if(!$this->Request->IsPostBack()) {
       throw PermissionException('Javascript');
@@ -160,6 +177,12 @@ class BadgeController extends DashboardController {
     $this->Render('Blank', 'Utility', 'Dashboard');
   }
 
+  /**
+   * Remove the photo association of a badge. This does not remove the actual file
+   * 
+   * @param int $BadgeID
+   * @param string $TransientKey
+   */
   public function DeletePhoto($BadgeID = FALSE, $TransientKey = '') {
       // Check permission
       $this->Permission('Garden.Badges.Manage');
@@ -167,10 +190,10 @@ class BadgeController extends DashboardController {
       $RedirectUrl = 'yaga/badge/edit/'.$BadgeID;
       
       if (Gdn::Session()->ValidateTransientKey($TransientKey)) {
-         // Do removal, set message, redirect
          $this->BadgeModel->SetField($BadgeID, 'Photo', NULL); 
          $this->InformMessage(T('Badge photo has been deleted.'));
       }
+      
       if ($this->_DeliveryType == DELIVERY_TYPE_ALL) {
           Redirect($RedirectUrl);
       } else {
@@ -182,10 +205,10 @@ class BadgeController extends DashboardController {
    }
    
    /**
-    * TODO: Add this in as a full up option
+    * @todo Add this in as a full up option
     * @param int $UserID
     * @param int $BadgeID
-    * @param type $TransientKey
+    * @param string $TransientKey
     */
    public function Award($UserID, $BadgeID, $TransientKey = '') {
      // Check permission
@@ -194,7 +217,6 @@ class BadgeController extends DashboardController {
       $RedirectUrl = 'yaga/badge/settings';
       
       if (Gdn::Session()->ValidateTransientKey($TransientKey)) {
-         // Do removal, set message, redirect
          $this->BadgeModel->AwardBadge($BadgeID, $UserID); 
          $this->InformMessage(T('Badge has been awarded.'));
       }

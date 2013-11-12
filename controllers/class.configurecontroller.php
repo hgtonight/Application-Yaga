@@ -2,30 +2,22 @@
 /* Copyright 2013 Zachary Doll */
 
 /**
- * All is the base class for controllers throughout the gamification applicati0n.
- *
+ * Handles the configuration of the Yaga Application
+ * 
+ * @todo Consider moving to the Yaga controller?
  * @since 1.0
  * @package Yaga
  */
 class ConfigureController extends DashboardController {
 
-  /** @var array List of objects to prep. They will be available as $this->$Name. */
+  /**
+   * @var array These objects will be created on instantiation and available via
+   * $this->ObjectName
+   */
   public $Uses = array('Database', 'Form');
 
   /**
-   * If you use a constructor, always call parent.
-   * Delete this if you don't need it.
-   *
-   * @access public
-   */
-  public function __construct() {
-    parent::__construct();
-  }
-
-  /**
-   * This is a good place to include JS, CSS, and modules used by all methods of this controller.
-   *
-   * Always called by dispatcher before controller's requested method.
+   * Make this look like a dashboard page and add the resources
    *
    * @since 1.0
    * @access public
@@ -40,10 +32,16 @@ class ConfigureController extends DashboardController {
     $this->AddCssFile('yaga.css');
   }
 
+  /**
+   * Convenience reroute to yaga
+   */
   public function Index() {
     $this->Yaga();
   }
   
+  /**
+   * A simple configuration page for the Yaga Application
+   */
   public function Yaga() {
     $this->Permission('Garden.Settings.Manage');
     
@@ -58,9 +56,5 @@ class ConfigureController extends DashboardController {
     $this->SetData('Title', 'Gamification Settings');
     $this->ConfigurationModule = $ConfigModule;
     $ConfigModule->RenderAll();
-  }
-  
-  public function Reactions($Page = '') {
-    
   }
 }

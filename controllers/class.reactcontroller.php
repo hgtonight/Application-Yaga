@@ -2,33 +2,23 @@
 /* Copyright 2013 Zachary Doll */
 
 /**
- * All is the base class for controllers throughout the gamification applicati0n.
+ * This handles all the AJAX requests to actually react to user generated content.
  *
  * @since 1.0
  * @package Yaga
  */
 class ReactController extends Gdn_Controller {
 
-  /** @var array List of objects to prep. They will be available as $this->$Name. */
+  /**
+   * @var array These objects will be created on instantiation and available via
+   * $this->ObjectName
+   */
   public $Uses = array('ActionModel', 'ReactionModel');
 
   /**
-   * If you use a constructor, always call parent.
-   * Delete this if you don't need it.
-   *
-   * @access public
-   */
-  public function __construct() {
-    parent::__construct();
-  }
-
-  /**
-   * This is a good place to include JS, CSS, and modules used by all methods of this controller.
-   *
-   * Always called by dispatcher before controller's requested method.
-   *
-   * @since 1.0
-   * @access public
+   * All requests to this controller must be made via JS.
+   * 
+   * @throws PermissionException
    */
   public function Initialize() {
     parent::Initialize();
@@ -37,11 +27,22 @@ class ReactController extends Gdn_Controller {
     }
   }
 
+  /**
+   * Render a blank page if no methods were specified in dispatch
+   */
   public function Index() {
-    decho($this);
     $this->Render('Blank', 'Utility', 'Dashboard');
   }
   
+  /**
+   * Makes the current user react to a specific discussion
+   * 
+   * @todo Consider merging with comment and activity methods
+   * @param int $DiscussionID
+   * @param int $ActionID The action to use
+   * @throws Gdn_UserException Any funny business and your inform messages will
+   * tell you!
+   */
   public function Discussion($DiscussionID, $ActionID) {
     // check to see if allowed to react
     $this->Permission('Plugins.Reactions.Add');
@@ -74,6 +75,15 @@ class ReactController extends Gdn_Controller {
     $this->Render('Blank', 'Utility', 'Dashboard');
   }
   
+  /**
+   * Makes the current user react to a specific comment
+   * 
+   * @todo Consider merging with discussion and activity methods 
+   * @param int $CommentID
+   * @param int $ActionID The action to use
+   * @throws Gdn_UserException Any funny business and your inform messages will
+   * tell you!
+   */
   public function Comment($CommentID, $ActionID) {
     // check to see if allowed to react
     $this->Permission('Plugins.Reactions.Add');
@@ -106,6 +116,15 @@ class ReactController extends Gdn_Controller {
     $this->Render('Blank', 'Utility', 'Dashboard');
   }
   
+  /**
+   * Makes the current user react to a specific activity
+   * 
+   * @todo Consider merging with discussion and comment methods 
+   * @param int $ActivityID
+   * @param int $ActionID The action to use
+   * @throws Gdn_UserException Any funny business and your inform messages will
+   * tell you!
+   */
   public function Activity($ActivityID, $ActionID) {
     // check to see if allowed to react
     $this->Permission('Plugins.Reactions.Add');
