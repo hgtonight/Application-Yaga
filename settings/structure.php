@@ -12,8 +12,8 @@ if(!isset($Explicit)) {
 $Database = Gdn::Database();
 $SQL = $Database->SQL(); // To run queries.
 $Construct = $Database->Structure(); // To modify and add database tables.
-//$Validation = new Gdn_Validation(); // To validate permissions (if necessary).
 
+// Tracks the data associated with reacting to content
 $Construct->Table('Reaction')
         ->PrimaryKey('ReactionID')
         ->Column('InsertUserID', 'int', FALSE, 'index.1')
@@ -24,6 +24,7 @@ $Construct->Table('Reaction')
         ->Column('DateInserted', 'datetime')
         ->Set($Explicit, $Drop);
 
+// Describes actions that can be taken on a comment, discussion or activity
 $Construct->Table('Action')
         ->PrimaryKey('ActionID')
         ->Column('Name', 'varchar(140)')
@@ -33,6 +34,7 @@ $Construct->Table('Action')
         ->Column('AwardValue', 'int', 1)
         ->Set($Explicit, $Drop);
 
+// Describes a badge and the associated rule criteria
 $Construct->Table('Badge')
         ->PrimaryKey('BadgeID')
         ->Column('Name', 'varchar(140)')
@@ -44,6 +46,7 @@ $Construct->Table('Badge')
         ->Column('Enabled', 'tinyint(1)', '1')
         ->Set($Explicit, $Drop);
 
+// Tracks the actual awarding of badges
 $Construct->Table('BadgeAward')
         ->PrimaryKey('BadgeAwardID')
         ->Column('BadgeID', 'int')
@@ -53,6 +56,7 @@ $Construct->Table('BadgeAward')
         ->Column('DateInserted', 'datetime')
         ->Set($Explicit, $Drop);
 
+// Add activity types for Badge and Rank awards
 if ($SQL->GetWhere('ActivityType', array('Name' => 'BadgeAward'))->NumRows() == 0)
    $SQL->Insert('ActivityType', array('AllowComments' => '1', 'Name' => 'BadgeAward', 'FullHeadline' => '%1$s earned a badge.', 'ProfileHeadline' => '%1$s earned a badge.', 'Notify' => 1));
 if ($SQL->GetWhere('ActivityType', array('Name' => 'RankPromotion'))->NumRows() == 0)
