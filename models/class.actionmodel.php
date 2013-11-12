@@ -2,7 +2,7 @@
 /* Copyright 2013 Zachary Doll */
 
 /**
- * Reactions
+ * Describe the available actions one can react with to other user content.
  *
  * Events:
  *
@@ -11,9 +11,15 @@
  */
 
 class ActionModel extends Gdn_Model {
-  private static $_Actions = NULL;
+  
   /**
-   * Class constructor. Defines the related database table name.
+   * This is used as a cache.
+   * @var object
+   */
+  private static $_Actions = NULL;
+  
+  /**
+   * Defines the related database table name.
    */
   public function __construct() {
     parent::__construct('Action');
@@ -37,6 +43,7 @@ class ActionModel extends Gdn_Model {
 
   /**
    * Returns data for a specific action
+   * 
    * @param int $ActionID
    * @return dataset
    */
@@ -50,6 +57,11 @@ class ActionModel extends Gdn_Model {
     return $Action;
   }
   
+  /**
+   * Gets the last inserted Action
+   * 
+   * @return DataSet
+   */
   public function GetNewestAction() {
     $Action = $this->SQL
                     ->Select()
@@ -60,11 +72,24 @@ class ActionModel extends Gdn_Model {
     return $Action;
   }
 
+  /**
+   * Determine if a specified action exists
+   * 
+   * @param int $ActionID
+   * @return bool
+   */
   public function ActionExists($ActionID) {
     $temp = $this->GetAction($ActionID);
     return !empty($temp);
   }
 
+  /**
+   * Remove an action from the db
+   * 
+   * @param int $ActionID
+   * @param int $ReplacementID what action ID existing reactions should report
+   * to. Null will delete the associated reactions.
+   */
   public function DeleteAction($ActionID, $ReplacementID = NULL) {
     if($this->ActionExists($ActionID)) {
       $this->SQL->Delete('Action', array('ActionID' => $ActionID));

@@ -2,26 +2,39 @@
 /* Copyright 2013 Zachary Doll */
 
 /**
- * Reactions
+ * Reactions are the actions a user takes against another user's content
  * 
- * Events:
+ * Events: AfterReactionSave
  * 
  * @package Yaga
  * @since 1.0
  */
 
 class ReactionModel extends Gdn_Model {
-  private static $_Reactions = array();
-  private static $_Actions = NULL;
+  
   /**
-   * Class constructor. Defines the related database table name.
+   * Used to cache the reactions
+   * @var array
+   */
+  private static $_Reactions = array();
+  
+  /**
+   * Used as a cache for the available actions
+   * @var DataSet
+   */
+  private static $_Actions = NULL;
+  
+  /**
+   * Defines the related database table name.
    */
   public function __construct() {
     parent::__construct('Reaction');
   }
 
   /**
-   * Returns a list of all available actions
+   * Returns a list of all available actions.
+   * 
+   * @return DataSet
    */
   public function GetActions() {
     if(empty(self::$_Actions)) {
@@ -31,15 +44,15 @@ class ReactionModel extends Gdn_Model {
               ->OrderBy('ActionID')
               ->Get()
               ->Result();
-      //decho('Filling the action cache.');
     }
     return self::$_Actions;
   }
   
   /**
    * Returns data for a specific action
+   * 
    * @param int $ActionID
-   * @return dataset
+   * @return DataSet
    */
   public function GetActionID($ActionID) {
     return $this->SQL
@@ -51,9 +64,10 @@ class ReactionModel extends Gdn_Model {
   }
 
   /**
-   * Returns the reactions associated a specified ID.
+   * Returns the reactions associated with the specified user content.
+   * 
    * @param int $ID
-   * @param enum $Type is the kind of ID. Valid values are comment and discussion
+   * @param enum $Type is the kind of ID. Valid: comment, discussion, activity
    */
   public function GetReactions($ID, $Type) {
     if(in_array($Type, array('discussion', 'comment', 'activity')) && $ID > 0) {
@@ -74,8 +88,8 @@ class ReactionModel extends Gdn_Model {
                   ->Where('ParentID', $ID)
                   ->Where('ParentType', $Type)
                   ->Get()
-                  ->Result();               
-          //decho($Reaction);
+                  ->Result();
+          
           foreach($Reactions as $Reaction) {
             $ReactionSet[$Index]->UserIDs[] = $Reaction->UserID;
             $ReactionSet[$Index]->Dates[] = $Reaction->DateInserted;
@@ -95,6 +109,14 @@ class ReactionModel extends Gdn_Model {
     }
   }
 
+  /**
+   * Return a list of reactions a user has received
+   * 
+   * @param int $ID
+   * @param enum $Type activity, comment, discussion
+   * @param int $UserID
+   * @return DataSet
+   */
   public function GetUserReaction($ID, $Type, $UserID) {
     return $this->SQL
             ->Select()
@@ -106,6 +128,13 @@ class ReactionModel extends Gdn_Model {
             ->FirstRow();
   }
   
+  /**
+   * Return the count of reactions received by a user
+   * 
+   * @param int $UserID
+   * @param int $ActionID
+   * @return DataSet
+   */
   public function GetUserReactionCount($UserID, $ActionID) {
     return $this->SQL
             ->Select()
@@ -115,6 +144,20 @@ class ReactionModel extends Gdn_Model {
             ->GetCount();
   }
   
+  /**
+   * Sets a users reaction against another user's content. A user can only react
+   * in one way to each unique piece of content. This function makes sure to
+   * enforce this rule
+   * 
+   * Events: AfterReactionSave
+   * 
+   * @param int $ID
+   * @param enum $Type activity, comment, discussion
+   * @param int $AuthorID
+   * @param int $UserID
+   * @param int $ActionID
+   * @return DataSet
+   */
   public function SetReaction($ID, $Type, $AuthorID, $UserID, $ActionID) {
     // clear the cache
     unset(self::$_Reactions[$Type . $ID]);
