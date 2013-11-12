@@ -37,7 +37,6 @@ class RulesController extends YagaController {
   public static function GetRules() {
     $Rules = Gdn::Cache()->Get('Yaga.Badges.Rules');
     if($Rules === Gdn_Cache::CACHEOP_FAILURE) {
-      echo('Building Rules Cache');
       foreach(glob(PATH_APPLICATIONS . DS . 'yaga' . DS . 'rules' . DS . '*.php') as $filename) {
         include_once $filename;
       }
