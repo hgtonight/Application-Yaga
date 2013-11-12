@@ -21,7 +21,7 @@ class YagaHooks implements Gdn_IPlugin {
     $Menu->AddItem($Section, $Section, FALSE, $Attrs);
     $Menu->AddLink($Section, 'Settings', 'configure', 'Garden.Settings.Manage');
     if(C('Yaga.Reactions.Enabled')) {
-      $Menu->AddLink($Section, 'Reactions', 'actions/settings', 'Yaga.Reactions.Manage');
+      $Menu->AddLink($Section, 'Reactions', 'action/settings', 'Yaga.Reactions.Manage');
     }
     if(C('Yaga.Badges.Enabled')) {
       $Menu->AddLink($Section, 'Badges', 'badge/settings', 'Yaga.Badges.Manage');

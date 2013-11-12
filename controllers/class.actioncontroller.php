@@ -34,7 +34,7 @@ class ActionController extends DashboardController {
     parent::Initialize();
     Gdn_Theme::Section('Dashboard');
     if($this->Menu) {
-      $this->Menu->HighlightRoute('/actions');
+      $this->Menu->HighlightRoute('/action');
     }
     $this->AddJsFile('admin.actions.js');
     $this->AddCssFile('reactions.css');
