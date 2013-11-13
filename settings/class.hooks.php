@@ -283,6 +283,9 @@ class YagaHooks implements Gdn_IPlugin {
    * @param string $Hook The rule hooks to check
    */
   private function _AwardBadges($Sender, $Hook) {
+    if(!C('Yaga.Badges.Enabled', FALSE)) {
+      return;
+    }
     $Session = Gdn::Session();
     if(!$Session->IsValid())
       return;
