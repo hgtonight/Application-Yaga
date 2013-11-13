@@ -83,6 +83,22 @@ class YagaHooks implements Gdn_IPlugin {
   }
 
   /**
+   * Add the Award Badge option to the profile controller
+   *
+   * @param object $Sender
+   */
+  public function ProfileController_BeforeProfileOptions_Handler($Sender) {
+    if(Gdn::Session()->IsValid() && CheckPermission('Yaga.Badges.Add')) {
+      //decho($Sender->EventArguments);
+      $Sender->EventArguments['ProfileOptions'][] = array(
+          'Text' => Sprite('SpModeratorActivities') . ' ' . T('Give Badge'),
+          'Url' => '/badge/award/' . $Sender->User->UserID,
+          'CssClass' => 'Popup'
+      );
+    }
+  }
+
+  /**
    * Display a record of reactions after the first post
    *
    * @param object $Sender
@@ -235,7 +251,7 @@ class YagaHooks implements Gdn_IPlugin {
    */
   public function ProfileController_Render_Before($Sender) {
     $this->_AddResources($Sender);
-    
+
     if(C('Yaga.Badges.Enabled')) {
       $Sender->AddModule('BadgesModule');
     }
@@ -259,7 +275,7 @@ class YagaHooks implements Gdn_IPlugin {
   public function ActivityModel_BeforeSaveComment_Handler($Sender) {
     $this->_AwardBadges($Sender, 'ActivityModel_BeforeSaveComment');
   }
-  
+
   public function DiscussionModel_AfterSaveDiscussion_Handler($Sender) {
     $this->_AwardBadges($Sender, 'DiscussionModel_AfterSaveDiscussion');
   }
@@ -290,7 +306,7 @@ class YagaHooks implements Gdn_IPlugin {
     if(!C('Yaga.Badges.Enabled', FALSE)) {
       return;
     }
-    
+
     $Session = Gdn::Session();
     if(!$Session->IsValid())
       return;

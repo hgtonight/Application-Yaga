@@ -42,6 +42,10 @@ class BadgeModel extends Gdn_Model {
     }
     return self::$_Badges;
   }
+  
+  public function GetBadgeCount() {
+    return count($this->GetBadges());
+  }
 
   /**
    * Returns a list of currently enabled badges
@@ -176,7 +180,7 @@ class BadgeModel extends Gdn_Model {
             'Photo' => '/uploads/' . $Badge->Photo,
             'RecordType' => 'Badge',
             'RecordID' => $BadgeID,
-            'Route' => '/badge/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name),
+            'Route' => '/badges/detail/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name),
             'HeadlineFormat' => '{RegardingUserID,You} earned the <a href="{Url,html}">{Data.Name,text}</a> badge.',
             'Data' => array(
                'Name' => $Badge->Name

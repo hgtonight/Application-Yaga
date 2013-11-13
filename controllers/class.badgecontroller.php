@@ -33,7 +33,7 @@ class BadgeController extends DashboardController {
 
   /**
    * Manage the current badges and add new ones
-   * 
+   *
    * @param int $Page
    */
   public function Settings($Page = '') {
@@ -48,10 +48,10 @@ class BadgeController extends DashboardController {
 
     $this->Render();
   }
-  
+
   /**
    * Edit an existing badge or add a new one
-   * 
+   *
    * @param int $BadgeID
    * @throws ForbiddenException if no proper rules are found
    */
@@ -59,7 +59,7 @@ class BadgeController extends DashboardController {
     $this->Permission('Yaga.Badges.Manage');
     $this->AddSideMenu('badge/settings');
     $this->Form->SetModel($this->BadgeModel);
-    
+
     // Only allow editing if some rules exist
     if(!RulesController::GetRules()) {
       throw ForbiddenException('add or edit badges without rules');
@@ -76,8 +76,8 @@ class BadgeController extends DashboardController {
       if(property_exists($this, 'Badge')) {
         // Manually merge the criteria into the badge object
         $Criteria = (array) unserialize($this->Badge->RuleCriteria);
-        $BadgeArray = (array) $this->Badge; 
-        
+        $BadgeArray = (array) $this->Badge;
+
         $Data = array_merge($BadgeArray, $Criteria);
         $this->Form->SetData($Data);
       }
@@ -97,7 +97,7 @@ class BadgeController extends DashboardController {
 
         $this->Form->SetFormValue('Photo', $Parts['SaveName']);
       }
-      
+
       // Find the rule criteria
       $FormValues = $this->Form->FormValues();
       $Criteria = array();
@@ -132,7 +132,7 @@ class BadgeController extends DashboardController {
 
   /**
    * Remove the badge via model.
-   * 
+   *
    * @todo Consider adding a confirmation page when not using JS
    * @param int $BadgeID
    */
@@ -147,7 +147,7 @@ class BadgeController extends DashboardController {
 
   /**
    * Toggle the enabled state of a badge. Must be done via JS.
-   * 
+   *
    * @param int $BadgeID
    * @throws PermissionException
    */
@@ -159,7 +159,7 @@ class BadgeController extends DashboardController {
     $this->AddSideMenu('badge/settings');
 
     $Badge = $this->BadgeModel->GetBadge($BadgeID);
-    
+
     if($Badge->Enabled) {
       $Enable = FALSE;
       $ToggleText = T('Disabled');
@@ -170,7 +170,7 @@ class BadgeController extends DashboardController {
       $ToggleText = T('Enabled');
       $ActiveClass = 'Active';
     }
-    
+
     $Slider = Wrap(Wrap(Anchor($ToggleText, 'yaga/badge/toggle/' . $Badge->BadgeID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
     $this->BadgeModel->EnableBadge($BadgeID, $Enable);
     $this->JsonTarget('#BadgeID_' . $BadgeID . ' td:nth-child(7)', $Slider, 'ReplaceWith');
@@ -179,21 +179,21 @@ class BadgeController extends DashboardController {
 
   /**
    * Remove the photo association of a badge. This does not remove the actual file
-   * 
+   *
    * @param int $BadgeID
    * @param string $TransientKey
    */
   public function DeletePhoto($BadgeID = FALSE, $TransientKey = '') {
       // Check permission
       $this->Permission('Garden.Badges.Manage');
-      
+
       $RedirectUrl = 'yaga/badge/edit/'.$BadgeID;
-      
+
       if (Gdn::Session()->ValidateTransientKey($TransientKey)) {
-         $this->BadgeModel->SetField($BadgeID, 'Photo', NULL); 
+         $this->BadgeModel->SetField($BadgeID, 'Photo', NULL);
          $this->InformMessage(T('Badge photo has been deleted.'));
       }
-      
+
       if ($this->_DeliveryType == DELIVERY_TYPE_ALL) {
           Redirect($RedirectUrl);
       } else {
@@ -203,30 +203,70 @@ class BadgeController extends DashboardController {
          $this->Render();
       }
    }
-   
+
    /**
-    * @todo Add this in as a full up option
+    * You can manually award badges to users for special cases
+    *
     * @param int $UserID
-    * @param int $BadgeID
-    * @param string $TransientKey
     */
-   public function Award($UserID, $BadgeID, $TransientKey = '') {
-     // Check permission
-      $this->Permission('Garden.Badges.Add');
-      
-      $RedirectUrl = 'yaga/badge/settings';
-      
-      if (Gdn::Session()->ValidateTransientKey($TransientKey)) {
-         $this->BadgeModel->AwardBadge($BadgeID, $UserID); 
-         $this->InformMessage(T('Badge has been awarded.'));
+   public function Award($UserID) {
+    // Check permission
+    $this->Permission('Garden.Badges.Add');
+    $this->AddSideMenu('badge/settings');
+
+    // Only allow awarding if some badges exist
+    if(!$this->BadgeModel->GetBadgeCount()) {
+      throw ForbiddenException('award badges without any badges defined');
+    }
+
+    $UserModel = Gdn::UserModel();
+    $User = $UserModel->GetID($UserID);
+
+    $this->SetData('Username', $User->Name);
+
+    $Badges = $this->BadgeModel->GetBadges();
+    $Badgelist = array();
+    foreach($Badges as $Badge) {
+      $Badgelist[$Badge->BadgeID] = $Badge->Name;
+    }
+    $this->SetData('Badges', $Badgelist);
+
+    if($this->Form->IsPostBack() == FALSE) {
+      // Add the user id field
+      $this->Form->AddHidden('UserID', $User->UserID);
+    }
+    else {
+      $Validation = new Gdn_Validation();
+      $Validation->ApplyRule('UserID', 'ValidateRequired');
+      $Validation->ApplyRule('BadgeID', 'ValidateRequired');
+      if($Validation->Validate($this->Request->Post())) {
+        $FormValues = $this->Form->FormValues();
+        if($this->BadgeModel->UserHasBadge($FormValues['UserID'], $FormValues['BadgeID'])) {
+          $this->Form->AddError($User->Name . T(' already has this badge!'), 'BadgeID');
+          // Need to respecify the user id
+          $this->Form->AddHidden('UserID', $User->UserID);
+        }
+
+        if($this->Form->ErrorCount() == 0) {
+          $this->BadgeModel->AwardBadge($FormValues['BadgeID'], $FormValues['UserID'], Gdn::Session()->UserID, $FormValues['Reason']);
+
+          if($this->Request->Get('Target')) {
+            $this->RedirectUrl = $this->Request->Get('Target');
+          }
+          elseif($this->DeliveryType() == DELIVERY_TYPE_ALL) {
+            $this->RedirectUrl = Url(UserUrl($User));
+          }
+          else {
+            $this->JsonTarget('', '', 'Refresh');
+          }
+        }
       }
-      if ($this->_DeliveryType == DELIVERY_TYPE_ALL) {
-          Redirect($RedirectUrl);
-      } else {
-         $this->ControllerName = 'Home';
-         $this->View = 'FileNotFound';
-         $this->RedirectUrl = Url($RedirectUrl);
-         $this->Render();
+      else {
+        $this->Form->SetValidationResults($Validation->Results());
       }
-   }
+    }
+
+    $this->Render();
+  }
+
 }

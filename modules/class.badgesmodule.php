@@ -10,7 +10,8 @@ class BadgesModule extends Gdn_Module {
     parent::__construct($Sender);
 
     // default to the user object on the controller/the currently logged in user
-    if(property_exists($Sender, 'User')) {
+    if(property_exists($Sender, 'User')
+            && $Sender->User) {
       $UserID = $Sender->User->UserID;
     }
     else {
