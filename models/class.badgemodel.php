@@ -142,14 +142,7 @@ class BadgeModel extends Gdn_Model {
   public function DeleteBadge($BadgeID) {
     if($this->BadgeExists($BadgeID)) {
       $this->SQL->Delete('Badge', array('BadgeID' => $BadgeID));
-//      if($ReplacementID && $this->BadgeExists($ReplacementID)) {
-//        $this->SQL->Update('Reaction')
-//                ->Set('BadgeID', $ReplacementID)
-//                ->Where('BadgeID', $BadgeID);
-//      }
-//      else {
-//        $this->SQL->Delete('Reaction', array('BadgeID' => $BadgeID));
-//      }
+      $this->SQL->Delete('BadgeAward', array('BadgeID' => $BadgeID));
     }
   }
   
