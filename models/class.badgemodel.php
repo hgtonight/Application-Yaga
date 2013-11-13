@@ -235,4 +235,23 @@ class BadgeModel extends Gdn_Model {
             ->Get()
             ->Result();
   }
+  
+  /**
+   * Returns the list of unobtained but enabled badges for a specific user
+   * 
+   * @param int $UserID
+   * @param bool $Enabled Description
+   * @return DataSet
+   */
+  public function GetBadgesToCheckForUser($UserID) {
+    return $this->SQL
+            ->Select()
+            ->From('Badge b')
+            ->Join('BadgeAward ba', 'b.BadgeID = ba.BadgeID', 'left')
+            ->Where('ba.UserID', $UserID)
+            ->Where('b.Enabled', 1)
+            //->OrWhere('b.BadgeID is not null') // needed to get the full set of badges
+            ->Get()
+            ->Result();
+  }
 }

@@ -10,21 +10,19 @@ include_once 'interface.yagarule.php';
 class ReactionCount implements YagaRule{
   
   public function Award($Sender, $User, $Criteria) {
-    $Reaction = $Sender->EventArguments['Reaction'][0];
-    decho($Criteria->ActionID);
-    decho($Reaction);
-    die();
-    $ReactionModel = new ReactionModel();
-    $Count = $ReactionModel->GetUserReactionCount($Reaction->ParentAuthorID, $Criteria->ActionID);
+    $ActionID = $Sender->EventArguments['ActionID'];
     
-    decho($Count);
-    if($Count >= $Criteria->Target) {
-      decho($Reaction);
-      
-      return $Reaction->InsertUserID;
+    if($Criteria->ActionID != $ActionID) {
+      return FALSE;
+    }
+    
+    $ReactionModel = new ReactionModel();
+    $Count = $ReactionModel->GetUserReactionCount($Sender->EventArguments['UserID'], $Criteria->ActionID);
+    
+    if($Count >= $Criteria->Target) {      
+      return $Sender->EventArguments['InsertUserID'];
     }
     else {
-      die();
       return FALSE;
     }
   }

@@ -162,6 +162,8 @@ class ReactionModel extends Gdn_Model {
     // clear the cache
     unset(self::$_Reactions[$Type . $ID]);
 
+    $EventArgs = array('ID' => $ID, 'Type' => $Type, 'UserID' => $AuthorID, 'InsertUserID' => $UserID, 'Action' => $ActionID);
+    
     $CurrentReaction = $this->GetUserReaction($ID, $Type, $UserID);
     if($CurrentReaction) {
       if($ActionID == $CurrentReaction->ActionID) {
@@ -170,6 +172,7 @@ class ReactionModel extends Gdn_Model {
                     'ParentType' => $Type,
                     'InsertUserID' => $UserID,
                     'ActionID' => $ActionID));
+        $EventArgs['Exists'] = FALSE;
       }
       else {
         // update the record
@@ -181,6 +184,7 @@ class ReactionModel extends Gdn_Model {
               ->Where('ParentType', $Type)
               ->Where('InsertUserID', $UserID)
               ->Put();
+        $EventArgs['Exists'] = TRUE;
       }
     }
     else {
@@ -193,10 +197,10 @@ class ReactionModel extends Gdn_Model {
                       'ParentAuthorID' => $AuthorID,
                       'InsertUserID' => $UserID,
                       'DateInserted' => date(DATE_ISO8601)));
+      $EventArgs['Exists'] = TRUE;
     }
-    $EventArgs['Reaction'] = $Reaction->Result();
-    $this->FireEvent('AfterReactionSave', $EventArgs);
     
+    $this->FireEvent('AfterReactionSave', $EventArgs);
     return $Reaction;
   }
 }

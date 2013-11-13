@@ -280,7 +280,7 @@ class YagaHooks implements Gdn_IPlugin {
    * This is the dispatcher to check badge awards
    * @todo Optimize this by caching the rules... or something
    *
-   * @param string $Hook What rules will be checked this pass around
+   * @param string $Hook The rule hooks to check
    */
   private function _AwardBadges($Sender, $Hook) {
     $Session = Gdn::Session();

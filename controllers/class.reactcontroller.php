@@ -135,7 +135,8 @@ class ReactController extends Gdn_Controller {
     
     $ActivityModel = new ActivityModel();
     $Activity = $ActivityModel->GetID($ActivityID);
-    
+//    decho($Activity);
+//    die();
     if($Activity) {
       $Anchor = '#Activity_' . $ActivityID . ' .ReactMenu';
     }
@@ -145,12 +146,12 @@ class ReactController extends Gdn_Controller {
     
     $UserID = Gdn::Session()->UserID;
     
-    if($Activity->InsertUserID == $UserID) {
+    if($Activity['ActivityUserID'] == $UserID) {
       throw new Gdn_UserException('You cannot react to your own content.');
     }
 
     // It has passed through the gauntlet
-    $this->ReactionModel->SetReaction($ActivityID, 'activity', $Activity->RegardingUserID, $UserID, $ActionID);
+    $this->ReactionModel->SetReaction($ActivityID, 'activity', $Activity['ActivityUserID'], $UserID, $ActionID);
     
     $this->JsonTarget($Anchor, $this->_RenderActions($ActivityID, 'activity', FALSE), 'ReplaceWith');
     

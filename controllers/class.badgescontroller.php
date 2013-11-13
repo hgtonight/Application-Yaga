@@ -58,6 +58,11 @@ class BadgesController extends Gdn_Controller {
    * @param string $Slug
    */
   public function Detail($BadgeID, $Slug = NULL) {
+    $UserID = Gdn::Session()->UserID;
     
+    $Badges = $this->BadgeModel->GetBadgesToCheckForUser($UserID);
+    decho($Badges);
+    
+    $this->Render('Blank', 'Utility', 'Dashboard');
   }
 }
