@@ -16,6 +16,14 @@ class BadgesModule extends Gdn_Module {
     else {
       $UserID = Gdn::Session()->UserID;
     }
+    
+    if(Gdn::Session()->UserID == $UserID) {
+      $this->Title = 'My Badges';
+    }
+    else {
+      $this->Title = 'Badges';      
+    }
+    
     $BadgeModel = new BadgeModel();
     $this->Data = $BadgeModel->GetUserBadgeAwards($UserID);
   }
