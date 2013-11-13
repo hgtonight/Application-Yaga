@@ -59,10 +59,22 @@ class BadgesController extends Gdn_Controller {
    */
   public function Detail($BadgeID, $Slug = NULL) {
     $UserID = Gdn::Session()->UserID;
+    $Badge = $this->BadgeModel->GetBadge($BadgeID);
+    $AwardCount = $this->BadgeModel->GetBadgeAwardCount($BadgeID);
+    $UserBadgeAward = $this->BadgeModel->GetUserBadgeAward($UserID, $BadgeID);
+    $RecentAwards = $this->BadgeModel->GetRecentBadgeAwards($BadgeID);
     
-    $Badges = $this->BadgeModel->GetBadgesToCheckForUser($UserID);
-    decho($Badges);
+    if(!$Badge) {
+      throw NotFoundException('Badge');
+    }
     
-    $this->Render('Blank', 'Utility', 'Dashboard');
+    $this->SetData('AwardCount', $AwardCount);
+    $this->SetData('RecentAwards', $RecentAwards);
+    $this->SetData('UserBadgeAward', $UserBadgeAward);
+    $this->SetData('Badge', $Badge);
+    
+    $this->Title(T('View Badge: ') . $Badge->Name);
+    
+    $this->Render();
   }
 }

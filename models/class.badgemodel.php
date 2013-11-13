@@ -4,6 +4,7 @@
 /**
  * Describes badges and the associated rule criteria
  *
+ * @todo Consider splitting into two models
  * Events:
  *
  * @package Yaga
@@ -86,6 +87,24 @@ class BadgeModel extends Gdn_Model {
                     ->Get()
                     ->FirstRow();
     return $Badge;
+  }
+  
+  public function GetBadgeAwardCount($BadgeID) {
+    $Wheres = array('BadgeID' => $BadgeID);
+    return $this->SQL
+            ->GetCount('BadgeAward', $Wheres);
+  }
+  
+  public function GetRecentBadgeAwards($BadgeID, $Limit = 15) {
+    return $this->SQL
+            ->Select('ba.UserID, ba.DateInserted, u.Name, u.Photo, u.Gender, u.Email')
+            ->From('BadgeAward ba')
+            ->Join('User u', 'ba.UserID = u.UserID')
+            ->Where('BadgeID', $BadgeID)
+            ->OrderBy('DateInserted', 'Desc')
+            ->Limit($Limit)
+            ->Get()
+            ->Result();
   }
 
   /**
@@ -207,6 +226,23 @@ class BadgeModel extends Gdn_Model {
    * @param int $UserID
    * @return array
    */
+  public function GetUserBadgeAward($UserID, $BadgeID) {
+    return $this->SQL
+            ->Select()
+            ->From('Badge b')
+            ->Join('BadgeAward ba', 'ba.BadgeID = b.BadgeID', 'left')
+            ->Where('b.BadgeID', $BadgeID)
+            ->Where('ba.UserID', $UserID)
+            ->Get()
+            ->FirstRow();
+  }
+  
+  /**
+   * Returns the badges a user already has
+   * 
+   * @param int $UserID
+   * @return array
+   */
   public function GetUserBadgeAwards($UserID) {
     return $this->SQL
             ->Select()
@@ -232,6 +268,8 @@ class BadgeModel extends Gdn_Model {
             ->Join('User ui', 'ba.InsertUserID = ui.UserID', 'left')
             ->Where('ba.UserID', $UserID)
             ->OrWhere('b.BadgeID is not null') // needed to get the full set of badges
+            ->GroupBy('b.BadgeID')
+            ->OrderBy('b.BadgeID')
             ->Get()
             ->Result();
   }

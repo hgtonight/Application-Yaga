@@ -1,46 +1,51 @@
 <?php if(!defined('APPLICATION')) exit();
 /* Copyright 2013 Zachary Doll */
 
-echo Wrap($this->Title(), 'h1');
-echo '<ul class="DataList Badges">';
-foreach($this->Data('Badges') as $Badge) {
-  // Don't show disabled badges
-  //if(!$Badge->Enabled) {
-  //  continue;
-  //}
-  $Row = '';
-  $AwardDescription = '';
-  $ReadClass = ' Read';
-  
-  if($Badge->UserID) {
-    $ReadClass = '';
-    $AwardDescription = 'You earned this badge ' . Gdn_Format::Date($Badge->DateInserted, 'html') . ' from ' . $Badge->InsertUserName;
-    if($Badge->Reason) {
-      $AwardDescription .= ': "' . $Badge->Reason . '"';
-    }
-  }
-  
-  if($Badge->Photo) {
-    $Row .= Img(Gdn_Upload::Url($Badge->Photo), array('class' => 'BadgePhoto'));
-  }
-  else {
-    $Row .= Img('tododefault', array('class' => 'BadgePhoto'));
-  }
+$Badge = $this->Data('Badge');
+$UserBadgeAward = $this->Data('UserBadgeAward', FALSE);
+$RecentAwards = $this->Data('RecentAwards', FALSE);
+$AwardCount = $this->Data('AwardCount', 0);
 
-  $Row .= Wrap(
-          Wrap(
-                  Anchor($Badge->Name, 'badges/detail/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name), array('class' => 'Title')), 'div', array('class' => 'Title')
-          ) .
-          Wrap(
-                  Wrap($Badge->Description, 'span', array('class' => 'MItem BadgeDescription')) .
-                  Wrap($Badge->AwardValue . ' points.', 'span', array('class' => 'MItem BadgePoints')) .
-                  WrapIf($AwardDescription, 'p'),
-                  'div',
-                  array('class' => 'Meta')),
+echo Wrap(
+        Img(Gdn_Upload::Url($Badge->Photo), array('class' => 'BadgePhotoDisplay')) .
+        Wrap($Badge->Name, 'h1') .
+        Wrap($Badge->Description, 'p'),
+        'div',
+        array('class' => 'Badge-Details'));
+
+echo '<div class="Badge-Earned">';
+
+if($UserBadgeAward) {
+  echo Wrap(
+          UserPhoto(Gdn::Session()->User) .
+          T('You earned this badge') . ' ' .
+          Wrap(Gdn_Format::Date($UserBadgeAward->DateInserted, 'html'), 'span', array('class' => 'DateReceived')),
           'div',
-          array('class' => 'ItemContent Badge')
-  );
-  echo Wrap($Row, 'li', array('class' => 'Item ItemBadge' . $ReadClass));
+          array('class' => 'EarnedThisBadge'));
 }
 
-echo '</ul>';
+if($AwardCount) {
+  echo Wrap(Plural($AwardCount, '%s person has earned this badge.', '%s people have earned this badge.'), 'p', array('class' => 'BadgeCountDisplay'));
+}
+else {
+  echo Wrap(T('Nobody has earned this badge yet.'), 'p');
+}
+
+if($RecentAwards) {
+  echo Wrap(T('Most recent recipients'), 'h2');
+  echo '<div class="RecentRecipients">';
+  foreach($RecentAwards as $Award) {
+    $User = UserBuilder($Award);
+    echo Wrap(
+            Wrap(
+                    UserPhoto($User) .
+                    UserAnchor($User) . ' ' .
+                    Wrap(Gdn_Format::Date($Award->DateInserted, 'html'), 'span', array('class' => 'DateReceived')),
+                    'div',
+                    array('class' => 'Cell')),
+            'div',
+            array('class' => 'CellWrap'));
+  }
+  echo '</div>';
+}
+echo '</div>';

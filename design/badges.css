@@ -1,21 +1,50 @@
 /* Copyright 2013 Zachary Doll */
 
-.ItemBadge .BadgePhoto { 
-   float: left;
-   width: 40px;
-   height: 40px;
+.ItemBadge .BadgePhoto {
+  float: left;
+  width: 40px;
+  height: 40px;
 }
 .ItemBadge .ItemContent {
-   padding-left: 55px;
-   min-height: 40px;
+  padding-left: 55px;
+  min-height: 40px;
 }
 .ItemBadge .Meta {
-   line-height: 1.3;
+  line-height: 1.3;
 }
 
 .BadgeGrid img {
-   margin: 1px;
-   vertical-align: bottom;
-   height: 40px;
-   width: 40px;
+  margin: 1px;
+  vertical-align: bottom;
+  height: 40px;
+  width: 40px;
+}
+
+/* Badge detail page */
+.ProfilePhotoMedium {
+  height: 24px;
+  margin-bottom: 3px;
+  margin-right: 3px;
+  vertical-align: middle;
+  width: 24px;
+}
+
+.RecentRecipients {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.RecentRecipients .CellWrap {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  width: 33%;
+  box-sizing: border-box;
+  overflow: hidden;
+  float: left;
+}
+
+.RecentRecipients .Cell {
+  padding: 3px;
 }
