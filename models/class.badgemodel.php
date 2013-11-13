@@ -258,7 +258,7 @@ class BadgeModel extends Gdn_Model {
    * @return DataSet
    */
   public function GetAllBadgesUserAwards($UserID) {
-    return $this->SQL
+    $temp = $this->SQL
             ->Select('b.BadgeID, b.Name, b.Description, b.Photo, b.AwardValue, ba.UserID, ba.InsertUserID, ba.Reason, ba.DateInserted, ui.Name as InsertUserName')
             ->From('Badge b')
             ->Join('BadgeAward ba', 'ba.BadgeID = b.BadgeID', 'left')
@@ -266,9 +266,10 @@ class BadgeModel extends Gdn_Model {
             ->Where('ba.UserID', $UserID)
             ->OrWhere('b.BadgeID is not null') // needed to get the full set of badges
             ->GroupBy('b.BadgeID')
-            ->OrderBy('b.BadgeID')
-            ->Get()
-            ->Result();
+            ->OrderBy('b.BadgeID', 'Desc')
+            ->Get();
+    decho($temp);
+    return $temp->Result();
   }
   
   /**
