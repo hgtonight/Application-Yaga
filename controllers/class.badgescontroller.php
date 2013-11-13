@@ -48,7 +48,7 @@ class BadgesController extends Gdn_Controller {
     
     // TODO: Add leaderboard module
     
-    $this->Render();
+    $this->Render('all');
   }
   
   /**

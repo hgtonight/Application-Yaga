@@ -236,11 +236,9 @@ class YagaHooks implements Gdn_IPlugin {
   public function ProfileController_Render_Before($Sender) {
     $this->_AddResources($Sender);
     
-//    $UserID = $Sender->User->UserID;
-//    $Module = new BadgesModule();
-//    $Module->SetUser($UserID);
-    
-    $Sender->AddModule('BadgesModule');
+    if(C('Yaga.Badges.Enabled')) {
+      $Sender->AddModule('BadgesModule');
+    }
   }
 
   public function DiscussionController_Render_Before($Sender) {
