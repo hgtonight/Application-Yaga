@@ -34,8 +34,7 @@ echo $this->Form->Errors();
       if($OriginalCssClass == $Class) {
         $Selected = 'Selected';
       }
-      echo Img('applications' . DS . 'yaga' . DS . 'design' . DS . DS . 'images' . DS . 'action-icons' . DS . $Icon . '.png',
-              array('title' => $Icon, 'data-class' => $Class, 'class' => $Selected));
+      echo Img('applications' . DS . 'yaga' . DS . 'design' . DS . DS . 'images' . DS . 'action-icons' . DS . $Icon . '.png', array('title' => $Icon, 'data-class' => $Class, 'class' => $Selected));
     }
     ?>
   </li>
