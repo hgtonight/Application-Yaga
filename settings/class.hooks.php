@@ -264,6 +264,10 @@ class YagaHooks implements Gdn_IPlugin {
   public function CommentController_Render_Before($Sender) {
     $this->_AddResources($Sender);
   }
+  
+  public function ActivityController_Render_Before($Sender) {
+    $this->_AddResources($Sender);
+  }
 
   /**
    * Check for Badge Awards where appropriate
