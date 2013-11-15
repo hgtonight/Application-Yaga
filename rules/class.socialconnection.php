@@ -2,7 +2,7 @@
 include_once 'interface.yagarule.php';
 /**
  * This rule awards badges when the user connects social accounts
- * @todo Implement social connection rule
+ * @todo test this on a live db
  *
  * @author Zachary Doll
  * @since 1.0
@@ -11,15 +11,20 @@ include_once 'interface.yagarule.php';
 class SocialConnection implements YagaRule{
 
   public function Award($Sender, $User, $Criteria) {
-    $Result = FALSE;
-
-    return $Result;
+    $Network = $Sender->EventArguments['Provider'];
+    
+    if($Network == $Criteria->SocialNetwork) {
+      return TRUE;
+    }
+    else {
+      return FALSE;
+    }
   }
     
   public function Form($Form) {
     $SocialNetworks = array(
-        'twitter' => 'Twitter',
-        'facebook' => 'Facebook'        
+        'Twitter' => 'Twitter',
+        'Facebook' => 'Facebook'        
     );
     
     $String = $Form->Label('Social Networks', 'SocialConnection');
@@ -34,7 +39,7 @@ class SocialConnection implements YagaRule{
   }
   
   public function Description() {
-    $Description = 'This rule checks a users connection to social networks. If the user chooses to connect to the target network, this will return true.';
+    $Description = 'This rule checks if a user has connected to the target social network. If the user has, this will return true.';
     return $Description;
     
   }

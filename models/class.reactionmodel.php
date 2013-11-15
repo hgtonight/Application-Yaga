@@ -151,6 +151,7 @@ class ReactionModel extends Gdn_Model {
    * 
    * Events: AfterReactionSave
    * 
+   * @todo Add points to the parent score column on discussions and comments
    * @param int $ID
    * @param enum $Type activity, comment, discussion
    * @param int $AuthorID
@@ -162,7 +163,7 @@ class ReactionModel extends Gdn_Model {
     // clear the cache
     unset(self::$_Reactions[$Type . $ID]);
 
-    $EventArgs = array('ID' => $ID, 'Type' => $Type, 'UserID' => $AuthorID, 'InsertUserID' => $UserID, 'Action' => $ActionID);
+    $EventArgs = array('ParentID' => $ID, 'ParentType' => $Type, 'ParentUserID' => $AuthorID, 'InsertUserID' => $UserID, 'ActionID' => $ActionID);
     
     $CurrentReaction = $this->GetUserReaction($ID, $Type, $UserID);
     if($CurrentReaction) {

@@ -13,9 +13,13 @@ include_once 'interface.yagarule.php';
 class HasMentioned implements YagaRule{
 
   public function Award($Sender, $User, $Criteria) {
-    $Result = FALSE;
-        
-    return $Result;
+    $HasMentioned  = count($Sender->EventArguments['MentionedUsers']);
+    if($HasMentioned) {
+      return TRUE;
+    }
+    else {
+      return FALSE;
+    }
   }
     
   public function Form($Form) {
@@ -23,7 +27,7 @@ class HasMentioned implements YagaRule{
   }
   
   public function Hooks() {
-    return array('CommentModel_AfterSaveComment', 'DiscussionModel_AfterSaveDiscussion', 'ActivityModel_BeforeSaveComment');
+    return array('CommentModel_BeforeNotification', 'DiscussionModel_BeforeNotification');
   }
   
   public function Description() {

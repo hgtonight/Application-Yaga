@@ -34,6 +34,7 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * Display points in the user info list
    * @param object $Sender
+   * @todo Use the unused Points column in the User Table to store the points
    */
   public function UserInfoModule_OnBasicInfo_Handler($Sender) {
     $Model = new YagaModel();
@@ -276,12 +277,16 @@ class YagaHooks implements Gdn_IPlugin {
     $this->_AwardBadges($Sender, 'CommentModel_AfterSaveComment');
   }
 
-  public function ActivityModel_BeforeSaveComment_Handler($Sender) {
-    $this->_AwardBadges($Sender, 'ActivityModel_BeforeSaveComment');
-  }
-
   public function DiscussionModel_AfterSaveDiscussion_Handler($Sender) {
     $this->_AwardBadges($Sender, 'DiscussionModel_AfterSaveDiscussion');
+  }
+  
+  public function CommentModel_BeforeNotification_Handler($Sender) {
+    $this->_AwardBadges($Sender, 'CommentModel_BeforeNotification');
+  }
+
+  public function DiscussionModel_BeforeNotification_Handler($Sender) {
+    $this->_AwardBadges($Sender, 'DiscussionModel_BeforeNotification');
   }
 
   public function Base_AfterSignIn_Handler($Sender) {
