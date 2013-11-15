@@ -301,6 +301,10 @@ class YagaHooks implements Gdn_IPlugin {
     $this->_AwardBadges($Sender, 'ReactionModel_AfterReactionSave');
   }
 
+  public function BadgeModel_AfterBadgeAward_Handler($Sender) {
+    $this->_AwardBadges($Sender, 'BadgeModel_AfterBadgeAward');
+  }
+  
   public function Base_AfterConnection_Handler($Sender) {
     $this->_AwardBadges($Sender, 'Base_AfterConnection');
   }
@@ -356,7 +360,6 @@ class YagaHooks implements Gdn_IPlugin {
         }
       }
     }
-    die();
   }
 
   /**

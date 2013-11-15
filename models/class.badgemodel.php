@@ -195,6 +195,9 @@ class BadgeModel extends Gdn_Model {
          $ActivityModel->Queue($Activity, 'Badges', array('Force' => TRUE));
          
          $ActivityModel->SaveQueue();
+         
+         $this->EventArguments['UserID'] = $UserID;
+         $this->FireEvent('AfterBadgeAward');
       }
     } 
   }
@@ -252,7 +255,6 @@ class BadgeModel extends Gdn_Model {
   /**
    * Returns the full list of badges and the associated user awards if applicable
    * 
-   * @todo Refactor controllers that massage the data together to use this instead
    * @param int $UserID
    * @return DataSet
    */
