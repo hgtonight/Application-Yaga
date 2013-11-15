@@ -34,12 +34,6 @@ echo $this->Form->Errors();
   </li>
   <li>
     <?php
-    echo $this->Form->Label('CSS Class', 'CssClass');
-    echo $this->Form->TextBox('CssClass');
-    ?>
-  </li>
-  <li>
-    <?php
     echo $this->Form->Label('Description', 'Description');
     echo $this->Form->TextBox('Description');
     ?>
@@ -55,6 +49,21 @@ echo $this->Form->Errors();
     echo $this->Form->Label('Award Value', 'AwardValue');
     echo $this->Form->TextBox('AwardValue');
     ?>
+  </li>
+  <li id="AdvancedActionSettings">
+    <span>Advanced Settings</span>
+    <div>
+        <?php
+        echo $this->Form->Label('CSS Class', 'CssClass');
+        echo $this->Form->TextBox('CssClass');
+        ?>
+      </div>
+      <div>
+        <?php
+        echo $this->Form->Label('Elevated Permission', 'Permission');
+        echo $this->Form->Dropdown('Permission', $this->Data('Permissions'));
+        ?>
+      </div>
   </li>
 </ul>
 <?php

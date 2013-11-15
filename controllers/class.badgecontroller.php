@@ -62,7 +62,7 @@ class BadgeController extends DashboardController {
 
     // Only allow editing if some rules exist
     if(!RulesController::GetRules()) {
-      throw ForbiddenException('add or edit badges without rules');
+      throw new Gdn_UserException('You cannot add or edit badges without rules!');
     }
 
     $Edit = FALSE;

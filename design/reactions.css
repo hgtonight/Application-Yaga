@@ -552,3 +552,12 @@ input + .ReactSprite {
   margin-top: 10px;
   text-align: left;
 }
+
+#AdvancedActionSettings {
+  cursor: pointer;
+}
+
+#AdvancedActionSettings span {
+  text-align: right;
+  width: 250px;
+}
