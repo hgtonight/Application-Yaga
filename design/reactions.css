@@ -3,6 +3,7 @@
    font-size: 11px;
    line-height: 18px;
 }
+
 .Reactions .Handle {
    display: inline-block;
    opacity: .3;
@@ -511,11 +512,8 @@ input + .ReactSprite {
 .UserReactionWrap .ReactSprite {
    background-image: url('images/action-sprites-bordered.png');
 }
-.ActionBlock {
-    margin: 15px 0 5px;
-    font-style: italic;
-}
 
+/* Settings view */
 #ActionIcons {
   width: 300px;
 }
@@ -523,4 +521,34 @@ input + .ReactSprite {
 #ActionIcons img {
   padding: 6px;
   cursor: pointer;
+}
+
+#Actions li {
+  border: 1px solid #e0e0e0;
+  border-right: none;
+  cursor: move;
+  margin: -1px 0 0 -1px;
+  background-color: #ffffff;
+  padding: 10px;
+}
+
+#Actions li.Placeholder {
+  background-color: #cfcfcf; 
+}
+
+#Actions h4 {
+  padding: 0px;
+}
+
+#Actions .Action {
+  display: inline-block;
+}
+#Actions .Tools {
+  display: inline-block;
+  vertical-align: top;
+}
+.Reactions.Preview {
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: left;
 }

@@ -32,6 +32,7 @@ $Construct->Table('Action')
         ->Column('Tooltip', 'varchar(255)')
         ->Column('CssClass', 'varchar(255)')
         ->Column('AwardValue', 'int', 1)
+        ->Column('Sort', 'int', TRUE)
         ->Set($Explicit, $Drop);
 
 // Describes a badge and the associated rule criteria

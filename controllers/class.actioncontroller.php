@@ -27,6 +27,7 @@ class ActionController extends DashboardController {
     if($this->Menu) {
       $this->Menu->HighlightRoute('/action');
     }
+    $this->AddJsFile('jquery-ui-1.10.0.custom.min.js');
     $this->AddJsFile('admin.actions.js');
     $this->AddCssFile('reactions.css');
   }
@@ -78,20 +79,24 @@ class ActionController extends DashboardController {
         else {
           $Action = $this->ActionModel->GetNewestAction();
         }
-        $NewActionRow = '<tr id="ActionID_' . $Action->ActionID . '" data-actionid="'. $Action->ActionID . '">';
-        $NewActionRow .= "<td>$Action->Name</td>";
-        $NewActionRow .= '<td><span class="ReactSprite ' . $Action->CssClass . '"> </span></td>';
-        $NewActionRow .= "<td>$Action->Description</td>";
-        $NewActionRow .= "<td>$Action->Tooltip</td>";
-        $NewActionRow .= "<td>$Action->AwardValue</td>";
-        $NewActionRow .= '<td>' . Anchor(T('Edit'), 'yaga/action/edit/' . $Action->ActionID, array('class' => 'Popup SmallButton')) . Anchor(T('Delete'), 'yaga/action/delete/' . $Action->ActionID, array('class' => 'Hijack SmallButton')) . '</td>';
-        $NewActionRow .= '</tr>';
+        $NewActionRow = Wrap(
+            Wrap(
+                    Anchor(T('Edit'), 'yaga/action/edit/' . $Action->ActionID, array('class' => 'Popup SmallButton')) . Anchor(T('Delete'), 'yaga/action/delete/' . $Action->ActionID, array('class' => 'Hijack SmallButton')), 'div', array('class' => 'Tools')) .
+            Wrap(
+                    Wrap($Action->Name, 'h4') .
+                    Wrap(
+                            Wrap($Action->Description, 'span') . ' ' .
+                            Wrap(Plural($Action->AwardValue, '%s Point', '%s Points'), 'span'), 'div', array('class' => 'Meta')) .
+                    Wrap(
+                            Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID . ' ' . $Action->CssClass)) .
+                            WrapIf(rand(0, 18), 'span', array('class' => 'Count')) .
+                            Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'div', array('class' => 'Preview Reactions')), 'div', array('class' => 'Action')), 'li', array('id' => 'Action_' . $Action->ActionID));
         if($Edit) {
-          $this->JsonTarget('#ActionID_' . $this->Action->ActionID, $NewActionRow, 'ReplaceWith');
+          $this->JsonTarget('#Action_' . $this->Action->ActionID, $NewActionRow, 'ReplaceWith');
           $this->InformMessage('Action updated successfully!');
         }
         else {
-          $this->JsonTarget('#Actions tbody', $NewActionRow, 'Append');
+          $this->JsonTarget('#Actions', $NewActionRow, 'Append');
           $this->InformMessage('Action added successfully!');
         }
       }
@@ -120,4 +125,21 @@ class ActionController extends DashboardController {
 
     redirect('action/settings');
   }
+  
+  public function Sort() {
+      // Check permission
+      $this->Permission('Garden.Reactions.Manage');
+      
+      // Set delivery type to true/false
+      $TransientKey = GetIncomingValue('TransientKey');
+      if (Gdn::Request()->IsPostBack()) {
+         $SortArray = GetValue('SortArray', $_POST);
+         $Saves = $this->ActionModel->SaveSort($SortArray);
+         $this->SetData('Result', TRUE);
+         $this->SetData('Saves', $Saves);
+      }
+         
+      // Renders true/false rather than template  
+      $this->Render();
+   }
 }

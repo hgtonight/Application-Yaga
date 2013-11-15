@@ -33,7 +33,7 @@ class ActionModel extends Gdn_Model {
       self::$_Actions = $this->SQL
               ->Select()
               ->From('Action')
-              ->OrderBy('ActionID')
+              ->OrderBy('Sort')
               ->Get()
               ->Result();
       //decho('Filling the action cache.');
@@ -104,6 +104,15 @@ class ActionModel extends Gdn_Model {
         $this->SQL->Delete('Reaction', array('ActionID' => $ActionID));
       }
     }
+  }
+  
+  public function SaveSort($SortArray) {
+    foreach($SortArray as $Index => $Action) {
+      // remove the 'Action_' prefix
+      $ActionID = substr($Action, 7);
+      $this->SetField($ActionID, 'Sort', $Index);
+    }
+    return TRUE;
   }
 
 }
