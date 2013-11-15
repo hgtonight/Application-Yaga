@@ -25,13 +25,7 @@ jQuery(document).ready(function($) {
       );
     }
   });
-  // find the existing class to select
-//  var CurrentCssClass = $("input[name='CssClass']").val();
-//
-//  if(CurrentCssClass.length) {
-//    $("#ActionIcons img[data-class='" + CurrentCssClass + "']").addClass('Selected');
-//  }
-
+  
   // If someone types in the class manually, deselect icons and select if needed
   $(document).on('input', "input[name='CssClass']", function() {
     $('#ActionIcons img.Selected').removeClass('Selected');
