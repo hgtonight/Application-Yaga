@@ -151,7 +151,6 @@ class ReactionModel extends Gdn_Model {
    * 
    * Events: AfterReactionSave
    * 
-   * @todo Add points to the parent score column on discussions and comments
    * @param int $ID
    * @param enum $Type activity, comment, discussion
    * @param int $AuthorID

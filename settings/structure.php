@@ -32,6 +32,7 @@ $Construct->Table('Action')
         ->Column('Tooltip', 'varchar(255)')
         ->Column('CssClass', 'varchar(255)')
         ->Column('AwardValue', 'int', 1)
+        ->Column('Permission', 'varchar(255)', 'Yaga.Reactions.Add')
         ->Column('Sort', 'int', TRUE)
         ->Set($Explicit, $Drop);
 

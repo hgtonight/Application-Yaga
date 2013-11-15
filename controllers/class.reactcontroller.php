@@ -44,11 +44,15 @@ class ReactController extends Gdn_Controller {
    * tell you!
    */
   public function Discussion($DiscussionID, $ActionID) {
-    // check to see if allowed to react
-    $this->Permission('Plugins.Reactions.Add');
+    $Action = $this->ActionModel->GetAction($ActionID);
     
-    if(!$this->ActionModel->ActionExists($ActionID)) {
+    // Make sure the action exists and the user is allowed to react    
+    if(!$Action) {
       throw new Gdn_UserException('Invalid Action');
+    }
+    
+    if(!Gdn::Session()->CheckPermission($Action->Permission)) {
+      throw PermissionException();
     }
     
     $DiscussionModel = new DiscussionModel();
@@ -85,11 +89,15 @@ class ReactController extends Gdn_Controller {
    * tell you!
    */
   public function Comment($CommentID, $ActionID) {
-    // check to see if allowed to react
-    $this->Permission('Plugins.Reactions.Add');
+    $Action = $this->ActionModel->GetAction($ActionID);
     
-    if(!$this->ActionModel->ActionExists($ActionID)) {
+    // Make sure the action exists and the user is allowed to react    
+    if(!$Action) {
       throw new Gdn_UserException('Invalid Action');
+    }
+    
+    if(!Gdn::Session()->CheckPermission($Action->Permission)) {
+      throw PermissionException();
     }
     
     $CommentModel = new CommentModel();
@@ -126,17 +134,20 @@ class ReactController extends Gdn_Controller {
    * tell you!
    */
   public function Activity($ActivityID, $ActionID) {
-    // check to see if allowed to react
-    $this->Permission('Plugins.Reactions.Add');
+    $Action = $this->ActionModel->GetAction($ActionID);
     
-    if(!$this->ActionModel->ActionExists($ActionID)) {
+    // Make sure the action exists and the user is allowed to react    
+    if(!$Action) {
       throw new Gdn_UserException('Invalid Action');
+    }
+    
+    if(!Gdn::Session()->CheckPermission($Action->Permission)) {
+      throw PermissionException();
     }
     
     $ActivityModel = new ActivityModel();
     $Activity = $ActivityModel->GetID($ActivityID);
-//    decho($Activity);
-//    die();
+
     if($Activity) {
       $Anchor = '#Activity_' . $ActivityID . ' .ReactMenu';
     }
