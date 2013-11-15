@@ -140,7 +140,6 @@ class BadgeModel extends Gdn_Model {
   /**
    * Remove a badge and associated awards
    * 
-   * @todo Actually remove the associated awards
    * @param int $BadgeID
    */
   public function DeleteBadge($BadgeID) {
@@ -258,8 +257,8 @@ class BadgeModel extends Gdn_Model {
    * @return DataSet
    */
   public function GetAllBadgesUserAwards($UserID) {
-    $temp = $this->SQL
-            ->Select('b.BadgeID, b.Name, b.Description, b.Photo, b.AwardValue, ba.UserID, ba.InsertUserID, ba.Reason, ba.DateInserted, ui.Name as InsertUserName')
+    return $this->SQL
+            ->Select('b.*, ba.UserID, ba.InsertUserID, ba.Reason, ba.DateInserted, ui.Name as InsertUserName')
             ->From('Badge b')
             ->Join('BadgeAward ba', 'ba.BadgeID = b.BadgeID', 'left')
             ->Join('User ui', 'ba.InsertUserID = ui.UserID', 'left')
@@ -268,8 +267,6 @@ class BadgeModel extends Gdn_Model {
             ->GroupBy('b.BadgeID')
             ->OrderBy('b.BadgeID', 'Desc')
             ->Get();
-    decho($temp);
-    return $temp->Result();
   }
   
   /**

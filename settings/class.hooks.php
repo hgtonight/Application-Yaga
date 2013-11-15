@@ -325,12 +325,11 @@ class YagaHooks implements Gdn_IPlugin {
     $User = $UserModel->GetID($UserID);
 
     $BadgeModel = new BadgeModel();
-    $Badges = $BadgeModel->GetEnabledBadges();
-    $UserBadges = $BadgeModel->GetUserBadgeAwards($UserID);
+    $Badges = $BadgeModel->GetAllBadgesUserAwards($UserID);
 
     $Rules = array();
     foreach($Badges as $Badge) {
-      if(!InSubArray($Badge->BadgeID, $UserBadges)) {
+      if($Badge->UserID != $UserID) {
         // The user doesn't have this badge
         $Class = $Badge->RuleClass;
         $Criteria = (object) unserialize($Badge->RuleCriteria);
@@ -357,6 +356,7 @@ class YagaHooks implements Gdn_IPlugin {
         }
       }
     }
+    die();
   }
 
   /**
