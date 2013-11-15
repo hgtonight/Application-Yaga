@@ -41,7 +41,7 @@ class ReactionModel extends Gdn_Model {
       self::$_Actions = $this->SQL
               ->Select()
               ->From('Action')
-              ->OrderBy('ActionID')
+              ->OrderBy('Sort')
               ->Get()
               ->Result();
     }
