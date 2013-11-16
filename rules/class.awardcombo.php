@@ -19,14 +19,14 @@ class AwardCombo implements YagaRule {
     $TargetDate = strtotime($Criteria->Duration . ' ' . $Criteria->Period . ' ago');
     $Badges = $BadgeModel->GetUserBadgeAwards($UserID);
     
-    $Count = 0;
+    $Types = array();
     foreach($Badges as $Badge) {
       if(strtotime($Badge['DateInserted']) >= $TargetDate) {
-        $Count++;
+        $Types[$Badge['RuleClass']] = TRUE;
       }
     }
-    
-    if($Count >= $Target) {
+
+    if(count($Types) >= $Target) {
       return $UserID;
     }
     else {
@@ -41,7 +41,7 @@ class AwardCombo implements YagaRule {
         'year' => 'Years'        
     );
     
-    $String = $Form->Label('Number of Badges', 'AwardCombo');
+    $String = $Form->Label('Number of Badge Types', 'AwardCombo');
     $String .= $Form->Textbox('Target');
     $String .= $Form->Label('Time Frame');
     $String .= $Form->Textbox('Duration');
