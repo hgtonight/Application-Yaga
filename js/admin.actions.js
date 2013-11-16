@@ -31,8 +31,8 @@ jQuery(document).ready(function($) {
     
     // Hide the advanced settings
     $('#AdvancedActionSettings').children('div').hide();
-    $('#AdvancedActionSettings').click(function(){
-      $(this).children('div').slideToggle();
+    $('#AdvancedActionSettings span').click(function(){
+      $(this).siblings().slideToggle();
     });
     
     // If someone types in the class manually, deselect icons and select if needed

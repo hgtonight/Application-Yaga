@@ -80,6 +80,7 @@ class ReactionModel extends Gdn_Model {
           $ReactionSet[$Index]->Tooltip = $Action->Tooltip;
           $ReactionSet[$Index]->CssClass = $Action->CssClass;
           $ReactionSet[$Index]->AwardValue = $Action->AwardValue;
+          $ReactionSet[$Index]->Permission = $Action->Permission;
           
           $Reactions = $this->SQL
                   ->Select('InsertUserID as UserID, DateInserted')

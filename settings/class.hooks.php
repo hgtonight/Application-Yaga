@@ -127,7 +127,7 @@ class YagaHooks implements Gdn_IPlugin {
    */
   protected function _RenderCurrentReactions($ID, $Type) {
     // check to see if allowed to view reactions
-    if(!Gdn::Session()->CheckPermission('Plugins.Reactions.View')) {
+    if(!Gdn::Session()->CheckPermission('Yaga.Reactions.View')) {
       return;
     }
 
@@ -165,7 +165,7 @@ class YagaHooks implements Gdn_IPlugin {
     $Sender->AddJsFile('reactions.js', 'yaga');
     $Sender->AddCssFile('reactions.css', 'yaga');
     // check to see if allowed to add reactions
-    if(!Gdn::Session()->CheckPermission('Plugins.Reactions.Add')) {
+    if(!Gdn::Session()->CheckPermission('Yaga.Reactions.Add')) {
       return;
     }
 
@@ -196,7 +196,7 @@ class YagaHooks implements Gdn_IPlugin {
     }
 
     // check to see if allowed to add reactions
-    if(!Gdn::Session()->CheckPermission('Plugins.Reactions.Add')) {
+    if(!Gdn::Session()->CheckPermission('Yaga.Reactions.Add')) {
       return;
     }
 
@@ -229,11 +229,13 @@ class YagaHooks implements Gdn_IPlugin {
     $Reactions = $this->_ReactionModel->GetReactions($ID, $Type);
     $ActionsString = '';
     foreach($Reactions as $Action) {
-      $ActionsString .= Anchor(
-              Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID . ' ' . $Action->CssClass)) .
-              WrapIf(count($Action->UserIDs), 'span', array('class' => 'Count')) .
-              Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'react/' . $Type . '/' . $ID . '/' . $Action->ActionID, 'Hijack ReactButton'
-      );
+      if(CheckPermission($Action->Permission)) {
+        $ActionsString .= Anchor(
+                Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID . ' ' . $Action->CssClass)) .
+                WrapIf(count($Action->UserIDs), 'span', array('class' => 'Count')) .
+                Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'react/' . $Type . '/' . $ID . '/' . $Action->ActionID, 'Hijack ReactButton'
+        );
+      }
     }
 
     $AllActionsString = Wrap($ActionsString, 'span', array('class' => 'ReactMenu'));
