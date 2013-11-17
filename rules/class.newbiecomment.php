@@ -16,8 +16,8 @@ class NewbieComment implements YagaRule{
     $TargetDate = strtotime($Criteria->Duration . ' ' . $Criteria->Period . ' ago');
     
     $SQL = Gdn::SQL();
-    $FirstDiscussion = $SQL->Select('DiscussionID')
-            ->From('Discussion, DateInserted')
+    $FirstDiscussion = $SQL->Select('DiscussionID, DateInserted')
+            ->From('Discussion')
             ->Where('InsertUserID', $NewbUserID)
             ->OrderBy('DateInserted')
             ->Get()
