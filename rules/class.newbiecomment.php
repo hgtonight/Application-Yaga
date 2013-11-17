@@ -3,7 +3,6 @@ include_once 'interface.yagarule.php';
 /**
  * This rule awards badges if a comment is placed on a new member's first discussion
  *
- * @todo Add in checking for newness of user
  * @author Zachary Doll
  * @since 1.0
  * @package Yaga
@@ -11,41 +10,40 @@ include_once 'interface.yagarule.php';
 class NewbieComment implements YagaRule{
 
   public function Award($Sender, $User, $Criteria) {
-    $Result = FALSE;
-    switch($Criteria->Comparison) {
-      case 'gt':
-        if($User->CountComments > $Criteria->Target) {
-          $Result = TRUE;
-        }
-        break;
-      case 'lt':
-        if($User->CountComments < $Criteria->Target) {
-          $Result = TRUE;
-        }
-        break;
-      default:
-      case 'gte':
-        if($User->CountComments >= $Criteria->Target) {
-          $Result = TRUE;
-        }
-        break;
-    }
+    $Discussion = $Sender->EventArguments['Discussion'];
+    $NewbUserID = $Discussion->InsertUserID;
+    $CurrentDiscussionID = $Discussion->DiscussionID;
+    $TargetDate = strtotime($Criteria->Duration . ' ' . $Criteria->Period . ' ago');
     
-    return $Result;
+    $SQL = Gdn::SQL();
+    $FirstDiscussion = $SQL->Select('DiscussionID')
+            ->From('Discussion, DateInserted')
+            ->Where('InsertUserID', $NewbUserID)
+            ->OrderBy('DateInserted')
+            ->Get()
+            ->FirstRow();
+    
+    $InsertDate = strtotime($FirstDiscussion->DateInserted);
+    
+    if($CurrentDiscussionID == $FirstDiscussion->DiscussionID
+            && $InsertDate > $TargetDate) {
+      return $User->UserID;
+    }
+    else {
+      return FALSE;
+    }
   }
     
   public function Form($Form) {
-    $Comparisons = array(
-        'gt' => 'more than:',
-        'lt' => 'less than:',
-        'gte' => 'more than or equal to:'        
+    $Lengths = array(
+        'day' => 'Days',
+        'week' => 'Weeks',
+        'year' => 'Years'        
     );
     
-    $String = $Form->Label('Total comments', 'CommentCount');
-    $String .= 'User has ';
-    $String .= $Form->DropDown('Comparison', $Comparisons);
-    $String .= $Form->Textbox('Target');
-    $String .= ' comments';
+    $String = $Form->Label('User Newbness', 'NewbieComment');
+    $String .= $Form->Textbox('Duration');
+    $String .= $Form->DropDown('Period', $Lengths);
 
     return $String; 
   }
@@ -55,13 +53,13 @@ class NewbieComment implements YagaRule{
   }
   
   public function Description() {
-    $Description = 'This rule checks a users total comment count against the criteria. If the user has more comments than the criteria, this will return true.';
+    $Description = 'This rule checks if a comment is placed on a newbs first discussion. If it is, this will return true.';
     return $Description;
     
   }
   
   public function Name() {
-    return 'CommentingComment Count Total';
+    return 'Comment on New User\'s Discussion';
   }
 }
 
