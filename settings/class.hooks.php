@@ -37,27 +37,254 @@ class YagaHooks implements Gdn_IPlugin {
    */
   public function ProfileController_AfterUserInfo_Handler($Sender) {
     $User = $Sender->User;
-    //decho($User);
-    echo '<div class="Yarbs ReactionsWrap">';
-    echo Wrap(T('Yarbs.Reactions.Title', 'Reactions'), 'h2', array('class' => 'H'));
+    echo '<div class="Yaga ReactionsWrap">';
+    echo Wrap(T('Yaga.Reactions', 'Reactions'), 'h2', array('class' => 'H'));
 
     // insert the reaction totals in the profile
     $Actions = $this->_ReactionModel->GetActions();
     $String = '';
     foreach($Actions as $Action) {
       $Count = $this->_ReactionModel->GetUserReactionCount($User->UserID, $Action->ActionID);
-      $TempString = Wrap(Wrap(Gdn_Format::BigNumber($Count), 'span', array('title' => $Count)), 'span', array('class' => 'Yarbs_ReactionCount CountTotal'));
-      $TempString .= Wrap($Action->Name, 'span', array('class' => 'Yarbs_ReactionName CountLabel'));
+      $TempString = Wrap(Wrap(Gdn_Format::BigNumber($Count), 'span', array('title' => $Count)), 'span', array('class' => 'Yaga_ReactionCount CountTotal'));
+      $TempString .= Wrap($Action->Name, 'span', array('class' => 'Yaga_ReactionName CountLabel'));
 
-      $String .= Wrap(Wrap(Anchor($TempString, '/profile/yarbs/' . $User->UserID . '/' . $User->Name . '/' . $Action->ActionID, array('class' => 'Yarbs_Reaction TextColor', 'title' => $Action->Description)), 'span', array('class' => 'CountItem')), 'span', array('class' => 'CountItemWrap'));
+      $String .= Wrap(Wrap(Anchor($TempString, '/profile/reactions/' . $User->UserID . '/' . Gdn_Format::Url($User->Name) . '/' . $Action->ActionID, array('class' => 'Yaga_Reaction TextColor', 'title' => $Action->Description)), 'span', array('class' => 'CountItem')), 'span', array('class' => 'CountItemWrap'));
     }
 
     echo Wrap($String, 'div', array('class' => 'DataCounts'));
   }
 
   /**
+   * @todo document
+   * @todo create pager
+   * @param type $Sender
+   * @param type $UserReference
+   * @param type $Username
+   * @param type $ActionID
+   * @param type $Page
+   * @param type $UserID
+   */
+  public function ProfileController_Reactions_Create($Sender, $UserReference = '', $Username = '', $ActionID = '', $Page = '', $UserID = '') {
+    $Expiry = 60;
+    
+    $Sender->EditMode(FALSE);
+
+    // Tell the ProfileController what tab to load
+	$Sender->GetUserInfo($UserReference, $Username, $UserID);
+    $Sender->_SetBreadcrumbs(T('Reactions'), UserUrl($Sender->User, '', 'reactions'));
+    $Sender->SetTabView('Reactions', 'reactions', 'profile', 'Yaga');
+    
+    $Sender->AddJsFile('jquery.expander.js');
+    $Sender->AddJsFile('reactions.js', 'yaga');
+    $Sender->AddDefinition('ExpandText', T('(more)'));
+    $Sender->AddDefinition('CollapseText', T('(less)'));
+      
+    $PageSize = Gdn::Config('Vanilla.Discussions.PerPage', 30);
+    list($Offset, $Limit) = OffsetLimit($Page, $PageSize);
+
+    // Check cache
+    $CacheKey = "yaga.profile.reactions.{$ActionID}";
+    $Content = Gdn::Cache()->Get($CacheKey);
+      
+      if ($Content == Gdn_Cache::CACHEOP_FAILURE) {
+         
+         // Get matching Discussions
+        $Type = 'discussion';
+         $Discussions = Gdn::SQL()->Select('d.*')
+            ->From('Discussion d')
+                 ->Join('Reaction r', 'd.DiscussionID = r.ParentID')
+            //->Where('r.ParentAuthorID', $UserReference)
+                 ->Where('d.InsertUserID', $UserReference)
+                 ->Where('r.ActionID', $ActionID)
+            //     ->Where('r.ParentType', $Type)
+            ->OrderBy('r.DateInserted', 'DESC')
+            ->Limit($Limit)
+             ->Get()->Result(DATASET_TYPE_ARRAY);
+
+         // Get matching Comments
+         $Comments = Gdn::SQL()->Select('c.*')
+            ->From('Comment c')
+                 ->Join('Reaction r', 'c.CommentID = r.ParentID')
+            //->Where('r.ParentAuthorID', 'c.InsertUserID')
+            //     ->Where('r.ParentType', '\'comment\'')
+                 ->Where('c.InsertUserID', $UserReference)
+                 ->Where('r.ActionID', $ActionID)
+            //     ->Where('r.ParentType', $Type)
+            ->OrderBy('r.DateInserted', 'DESC')
+            ->Limit($Limit)
+             ->Get()->Result(DATASET_TYPE_ARRAY);
+         
+         $this->JoinCategory($Comments);
+         
+         // Interleave
+         $Content = $this->Union('DateInserted', array(
+            'Discussion'   => $Discussions, 
+            'Comment'      => $Comments
+         ));
+         $this->Prepare($Content);
+         
+         // Add result to cache
+         Gdn::Cache()->Store($CacheKey, $Content, array(
+            Gdn_Cache::FEATURE_EXPIRY  => $Expiry
+         ));
+      }
+      
+      $this->Security($Content);
+      $this->Condense($Content, $Limit);
+
+    // Deliver JSON data if necessary
+    if ($Sender->DeliveryType() != DELIVERY_TYPE_ALL && $Offset > 0) {
+       $Sender->SetJson('LessRow', $Sender->Pager->ToString('less'));
+       $Sender->SetJson('MoreRow', $Sender->Pager->ToString('more'));
+       $Sender->View = 'reactions';
+    }
+
+    $Sender->SetData('Content', $Content);
+    
+    // Set the HandlerType back to normal on the profilecontroller so that it fetches it's own views
+    $Sender->HandlerType = HANDLER_TYPE_NORMAL;
+
+    // Do not show discussion options
+    $Sender->ShowOptions = FALSE;
+
+    if ($Sender->Head) {
+       $Sender->Head->AddTag('meta', array('name' => 'robots', 'content' => 'noindex,noarchive'));
+    }
+
+    // Render the ProfileController
+    $Sender->Render();
+  }
+   
+   /**
+    * Attach CategoryID to Comments
+    * @todo move somewhere else
+    * @param array $Comments
+    */
+   protected function JoinCategory(&$Comments) {
+      $DiscussionIDs = array();
+      
+      foreach ($Comments as &$Comment) {
+         $DiscussionIDs[$Comment['DiscussionID']] = TRUE;
+      }
+      $DiscussionIDs = array_keys($DiscussionIDs);
+      
+      $Discussions = Gdn::SQL()->Select('d.*')
+         ->From('Discussion d')
+         ->WhereIn('DiscussionID', $DiscussionIDs)
+         ->Get()->Result(DATASET_TYPE_ARRAY);
+      
+      $DiscussionsByID = array();
+      foreach ($Discussions as $Discussion) {
+         $DiscussionsByID[$Discussion['DiscussionID']] = $Discussion;
+      }
+      unset(${$Discussions});
+      
+      foreach ($Comments as &$Comment) {
+         $Comment['Discussion'] = $DiscussionsByID[$Comment['DiscussionID']];
+         $Comment['CategoryID'] = GetValueR('Discussion.CategoryID', $Comment);
+      }
+   }
+   
+   /**
+    * Interleave two or more result arrays by a common field
+    * @todo move somewhere else
+    * @param string $Field
+    * @param array $Sections Array of result arrays
+    * @return array
+    */
+   protected function Union($Field, $Sections) {
+      if (!is_array($Sections)) return;
+      
+      $Interleaved = array();
+      foreach ($Sections as $SectionType => $Section) {
+         if (!is_array($Section)) continue;
+         
+         foreach ($Section as $Item) {
+            $ItemField = GetValue($Field, $Item);
+            $Interleaved[$ItemField] = array_merge($Item, array('ItemType' => $SectionType));
+            
+            ksort($Interleaved);
+         }
+      }
+      
+      $Interleaved = array_reverse($Interleaved);
+      return $Interleaved;
+   }
+   
+   /**
+    * Pre-process content into a uniform format for output
+    * @todo move somewhere else
+    * @param Array $Content By reference
+    */
+   protected function Prepare(&$Content) {
+      
+      foreach ($Content as &$ContentItem) {
+         $ContentType = GetValue('ItemType', $ContentItem);
+         
+         $Replacement = array();
+         $Fields = array('DiscussionID', 'CategoryID', 'DateInserted', 'DateUpdated', 'InsertUserID', 'Body', 'Format', 'ItemType');
+         
+         switch (strtolower($ContentType)) {
+            case 'comment':
+               $Fields = array_merge($Fields, array('CommentID'));
+               
+               // Comment specific
+               $Replacement['Name'] = GetValueR('Discussion.Name', $ContentItem);
+               break;
+            
+            case 'discussion':
+               $Fields = array_merge($Fields, array('Name', 'Type'));
+               break;
+         }
+         
+         $Fields = array_fill_keys($Fields, TRUE);
+         $Common = array_intersect_key($ContentItem, $Fields);
+         $Replacement = array_merge($Replacement, $Common);
+         $ContentItem = $Replacement;
+         
+         // Attach User
+         $UserID = GetValue('InsertUserID', $ContentItem);
+         $User = Gdn::UserModel()->GetID($UserID);
+         $ContentItem['Author'] = $User;
+      }
+   }
+   
+   /**
+    * Strip out content that this user is not allowed to see
+    * @todo move somewhere else
+    * @param array $Content Content array, by reference
+    */
+   protected function Security(&$Content) {
+      if (!is_array($Content)) return;
+      $Content = array_filter($Content, array($this, 'SecurityFilter'));
+   }
+   
+   protected function SecurityFilter($ContentItem) {
+      $CategoryID = GetValue('CategoryID', $ContentItem, NULL);
+      if (is_null($CategoryID) || $CategoryID === FALSE)
+         return FALSE;
+
+      $Category = CategoryModel::Categories($CategoryID);
+      $CanView = GetValue('PermsDiscussionsView', $Category);
+      if (!$CanView)
+         return FALSE;
+      
+      return TRUE;
+   }
+   
+   /**
+    * Condense an interleaved content list down to the required size
+    * @todo move somewhere else
+    * @param array $Content
+    * @param array $Limit
+    */
+   protected function Condense(&$Content, $Limit) {
+      $Content = array_slice($Content, 0, $Limit);
+   }
+  
+  /**
    * Add the badge and rank notification options
-   *
+   * 
    * @param object $Sender
    */
   public function ProfileController_AfterPreferencesDefined_Handler($Sender) {
