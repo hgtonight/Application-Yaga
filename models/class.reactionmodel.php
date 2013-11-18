@@ -180,9 +180,12 @@ class ReactionModel extends Gdn_Model {
     unset(self::$_Reactions[$Type . $ID]);
 
     $EventArgs = array('ParentID' => $ID, 'ParentType' => $Type, 'ParentUserID' => $AuthorID, 'InsertUserID' => $UserID, 'ActionID' => $ActionID);
-    
+    $NewAction = $this->GetActionID($ActionID);
+    $Points = $Score = $NewAction->AwardValue;
     $CurrentReaction = $this->GetUserReaction($ID, $Type, $UserID);
     if($CurrentReaction) {
+      $OldAction = $this->GetActionID($CurrentReaction->ActionID);
+      
       if($ActionID == $CurrentReaction->ActionID) {
         // remove the record
         $Reaction = $this->SQL->Delete('Reaction', array('ParentID' => $ID,
@@ -190,6 +193,8 @@ class ReactionModel extends Gdn_Model {
                     'InsertUserID' => $UserID,
                     'ActionID' => $ActionID));
         $EventArgs['Exists'] = FALSE;
+        $Score = 0;
+        $Points = -1 * $OldAction->AwardValue;
       }
       else {
         // update the record
@@ -202,6 +207,7 @@ class ReactionModel extends Gdn_Model {
               ->Where('InsertUserID', $UserID)
               ->Put();
         $EventArgs['Exists'] = TRUE;
+        $Points = -1 * ($OldAction->AwardValue - $Points);
       }
     }
     else {
@@ -217,7 +223,10 @@ class ReactionModel extends Gdn_Model {
       $EventArgs['Exists'] = TRUE;
     }
     
-    $this->CalculateScore($ID, $Type);
+    // Update the parent item score
+    $this->SetUserScore($ID, $Type, $UserID, $Score);
+    // Give the user points commesurate with reaction activity
+    UserModel::GivePoints($AuthorID, $Points, 'Reaction');
     $this->FireEvent('AfterReactionSave', $EventArgs);
     return $Reaction;
   }
@@ -226,38 +235,25 @@ class ReactionModel extends Gdn_Model {
    * @todo document
    * @param type $ID
    * @param type $Type
-   * @param type $Increment
-   * @return type
+   * @param type $UserID
+   * @param type $Score
+   * @return boolean
    */
-  private function CalculateScore($ID, $Type) {
-    // Activities don't have scores
-    if($Type == 'activity') {
-      return;
-    }
-    
-    $Reactions = $this->GetReactions($ID, $Type);
-    $Score = 0;
-    foreach($Reactions as $Reaction) {
-      $Score += $Reaction->AwardValue * $Reaction->Count;
-    }
+  private function SetUserScore($ID, $Type, $UserID, $Score) {
+    $Model = FALSE;
     switch($Type) {
       default:
-        return;
+        return FALSE;
       case 'discussion':
-        $this->SQL
-              ->Update('Discussion')
-              ->Set('Score', $Score)
-              ->Where('DiscussionID', $ID)
-              ->Put();
-              break;
+        $Model = new DiscussionModel();
+        break;
       case 'comment':
-        $this->SQL
-              ->Update('Comment')
-              ->Set('Score', $Score)
-              ->Where('CommentID', $ID)
-              ->Put();
+        $Model = new CommentModel();
         break;
     }
-    return TRUE;
+    
+    if($Model) {
+      $Model->SetUserScore($ID, $UserID, $Score);
+    }
   }
 }

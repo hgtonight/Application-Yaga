@@ -158,7 +158,8 @@ class BadgeModel extends Gdn_Model {
    * @param string $Reason This is the reason the giver gave with the award
    */
   public function AwardBadge($BadgeID, $UserID, $InsertUserID = NULL, $Reason = '') {
-    if($this->BadgeExists($BadgeID)) {
+    $Badge = $this->GetBadge($BadgeID);
+    if(!empty($Badge)) {
       if(!$this->UserHasBadge($UserID, $BadgeID)) {
         $this->SQL->Insert('BadgeAward', array(
             'BadgeID' => $BadgeID,
@@ -167,6 +168,9 @@ class BadgeModel extends Gdn_Model {
             'Reason' => $Reason,
             'DateInserted' => date(DATE_ISO8601)
         ));
+        
+        // Record the points for this badge
+        UserModel::GivePoints($UserID, $Badge->AwardValue, 'Badge');
         
         // Record some activity
         $Badge = $this->GetBadge($BadgeID);
