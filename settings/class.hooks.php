@@ -32,17 +32,6 @@ class YagaHooks implements Gdn_IPlugin {
   }
 
   /**
-   * Display points in the user info list
-   * @param object $Sender
-   * @todo Use the unused Points column in the User Table to store the points
-   */
-  public function UserInfoModule_OnBasicInfo_Handler($Sender) {
-    $Model = new YagaModel();
-    $Points = $Model->GetUserPoints($Sender->User->UserID);
-    echo Wrap(T('Yaga.Points', 'Points'), 'dt') . ' ' . Wrap($Points, 'dd');
-  }
-
-  /**
    * Display the reaction counts on the profile page
    * @param object $Sender
    */
@@ -135,7 +124,7 @@ class YagaHooks implements Gdn_IPlugin {
       $this->_ReactionModel = new ReactionModel();
     }
 
-    $Reactions = $this->_ReactionModel->GetReactions($ID, $Type);
+    $Reactions = $this->_ReactionModel->GetAllReactions($ID, $Type);
     foreach($Reactions as $Reaction) {
       if($Reaction->UserIDs) {
         foreach($Reaction->UserIDs as $Index => $UserID) {
@@ -226,7 +215,7 @@ class YagaHooks implements Gdn_IPlugin {
       $this->_ReactionModel = new ReactionModel();
     }
 
-    $Reactions = $this->_ReactionModel->GetReactions($ID, $Type);
+    $Reactions = $this->_ReactionModel->GetAllReactions($ID, $Type);
     $ActionsString = '';
     foreach($Reactions as $Action) {
       if(CheckPermission($Action->Permission)) {

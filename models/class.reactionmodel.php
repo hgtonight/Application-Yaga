@@ -69,7 +69,7 @@ class ReactionModel extends Gdn_Model {
    * @param int $ID
    * @param enum $Type is the kind of ID. Valid: comment, discussion, activity
    */
-  public function GetReactions($ID, $Type) {
+  public function GetAllReactions($ID, $Type) {
     if(in_array($Type, array('discussion', 'comment', 'activity')) && $ID > 0) {
       $ReactionSet = array();
       if(empty(self::$_Reactions[$Type . $ID])) {
@@ -108,6 +108,22 @@ class ReactionModel extends Gdn_Model {
     else {
       return NULL;
     }
+  }
+  
+  /**
+   * @todo document this
+   * @param type $ID
+   * @param type $Type
+   */
+  public function GetReactions($ID, $Type) {
+    return $this->SQL->
+            Select('a.ActionID, a.AwardValue, COUNT(a.ActionID) as Count')
+            ->From('Action a')
+            ->Join('Reaction r', 'a.ActionID = r.ActionID', 'left')
+            ->Where('r.ParentID', $ID)
+            ->Where('r.ParentType', $Type)
+            ->GroupBy('a.ActionID')
+            ->Get();    
   }
 
   /**
@@ -201,7 +217,47 @@ class ReactionModel extends Gdn_Model {
       $EventArgs['Exists'] = TRUE;
     }
     
+    $this->CalculateScore($ID, $Type);
     $this->FireEvent('AfterReactionSave', $EventArgs);
     return $Reaction;
+  }
+  
+  /**
+   * @todo document
+   * @param type $ID
+   * @param type $Type
+   * @param type $Increment
+   * @return type
+   */
+  private function CalculateScore($ID, $Type) {
+    // Activities don't have scores
+    if($Type == 'activity') {
+      return;
+    }
+    
+    $Reactions = $this->GetReactions($ID, $Type);
+    $Score = 0;
+    foreach($Reactions as $Reaction) {
+      $Score += $Reaction->AwardValue * $Reaction->Count;
+    }
+    switch($Type) {
+      default:
+        return;
+      case 'discussion':
+        $this->SQL
+              ->Update('Discussion')
+              ->Set('Score', $Score)
+              ->Where('DiscussionID', $ID)
+              ->Put();
+              break;
+      case 'comment':
+        $this->SQL
+              ->Update('Comment')
+              ->Set('Score', $Score)
+              ->Where('CommentID', $ID)
+              ->Put();
+        break;
+    }
+    return TRUE;
   }
 }

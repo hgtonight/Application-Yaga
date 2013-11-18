@@ -170,7 +170,7 @@ class ReactController extends Gdn_Controller {
   }
 
   private function _RenderActions($ID, $Type, $Echo = TRUE) {
-    $Reactions = $this->ReactionModel->GetReactions($ID, $Type);
+    $Reactions = $this->ReactionModel->GetAllReactions($ID, $Type);
     $ActionsString = '';
     foreach($Reactions as $Action) {
       $ActionsString .= Anchor(
