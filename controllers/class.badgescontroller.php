@@ -26,7 +26,11 @@ class BadgesController extends Gdn_Controller {
     $this->AddCssFile('style.css');
     $this->AddCssFile('badges.css');
     $this->AddModule('BadgesModule');
-    $this->AddModule('LeaderBoardModule');
+    $Module = new LeaderBoardModule();
+    $Module->GetData('w');
+    $this->AddModule($Module);
+    $Module = new LeaderBoardModule();
+    $this->AddModule($Module);
   }
 
   /**
