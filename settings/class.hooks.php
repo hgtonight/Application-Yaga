@@ -37,6 +37,13 @@ class YagaHooks implements Gdn_IPlugin {
    */
   public function ProfileController_AfterUserInfo_Handler($Sender) {
     $User = $Sender->User;
+    $Method = $Sender->RequestMethod;
+    if($Method == 'reactions') {
+      $ActionID = $Sender->RequestArgs[2];
+    }
+    else {
+      $ActionID = -1;
+    }
     echo '<div class="Yaga ReactionsWrap">';
     echo Wrap(T('Yaga.Reactions', 'Reactions'), 'h2', array('class' => 'H'));
 
@@ -44,11 +51,12 @@ class YagaHooks implements Gdn_IPlugin {
     $Actions = $this->_ReactionModel->GetActions();
     $String = '';
     foreach($Actions as $Action) {
+      $Selected = ($ActionID == $Action->ActionID) ? ' Selected' : '';
       $Count = $this->_ReactionModel->GetUserReactionCount($User->UserID, $Action->ActionID);
       $TempString = Wrap(Wrap(Gdn_Format::BigNumber($Count), 'span', array('title' => $Count)), 'span', array('class' => 'Yaga_ReactionCount CountTotal'));
       $TempString .= Wrap($Action->Name, 'span', array('class' => 'Yaga_ReactionName CountLabel'));
 
-      $String .= Wrap(Wrap(Anchor($TempString, '/profile/reactions/' . $User->UserID . '/' . Gdn_Format::Url($User->Name) . '/' . $Action->ActionID, array('class' => 'Yaga_Reaction TextColor', 'title' => $Action->Description)), 'span', array('class' => 'CountItem')), 'span', array('class' => 'CountItemWrap'));
+      $String .= Wrap(Wrap(Anchor($TempString, '/profile/reactions/' . $User->UserID . '/' . Gdn_Format::Url($User->Name) . '/' . $Action->ActionID, array('class' => 'Yaga_Reaction TextColor', 'title' => $Action->Description)), 'span', array('class' => 'CountItem' . $Selected)), 'span', array('class' => 'CountItemWrap'));
     }
 
     echo Wrap($String, 'div', array('class' => 'DataCounts'));
