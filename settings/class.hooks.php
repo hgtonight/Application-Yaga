@@ -64,7 +64,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * @todo document
-   * @todo create pager
+   * @todo Add a pager
    * @param type $Sender
    * @param type $UserReference
    * @param type $Username
