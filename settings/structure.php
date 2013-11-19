@@ -58,6 +58,17 @@ $Construct->Table('BadgeAward')
         ->Column('DateInserted', 'datetime')
         ->Set($Explicit, $Drop);
 
+// Tracks the actual awarding of badges
+$Construct->Table('Rank')
+        ->PrimaryKey('RankID')
+        ->Column('Name', 'varchar(140)')
+        ->Column('Description', 'varchar(255)', NULL)
+        ->Column('Photo', 'varchar(255)', NULL)
+        ->Column('AwardLevel', 'int', 0)
+        ->Column('Permissions', 'text', NULL)
+        ->Column('Enabled', 'tinyint(1)', '1')
+        ->Set($Explicit, $Drop);
+
 // Add activity types for Badge and Rank awards
 if ($SQL->GetWhere('ActivityType', array('Name' => 'BadgeAward'))->NumRows() == 0)
    $SQL->Insert('ActivityType', array('AllowComments' => '1', 'Name' => 'BadgeAward', 'FullHeadline' => '%1$s earned a badge.', 'ProfileHeadline' => '%1$s earned a badge.', 'Notify' => 1));
