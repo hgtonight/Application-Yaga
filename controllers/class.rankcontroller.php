@@ -59,14 +59,26 @@ class RankController extends DashboardController {
     $this->AddSideMenu('rank/settings');
     $this->Form->SetModel($this->RankModel);
 
+    $this->Title(T('Add Rank'));
     $Edit = FALSE;
+    $Permissions = Gdn::PermissionModel()->GetPermissionsEdit(0);
     if($RankID) {
       $this->Rank = $this->RankModel->GetRank($RankID);
       $this->Form->AddHidden('RankID', $RankID);
       $Edit = TRUE;
+      $this->Title(T('Edit Rank'));
+      $Permissions = $this->Rank->Permissions;
     }
-
-    $this->SetData('PermissionData', Gdn::PermissionModel()->GetPermissionsEdit(0), true);
+    
+     // Load up all permissions
+    $PermissionModel = new PermissionModel();
+    $Permissions = $PermissionModel->PermissionColumns();
+    unset($Permissions['PermissionID']);
+    $PermissionKeys = array_keys($Permissions);
+    $PermissionList = array_combine($PermissionKeys, $PermissionKeys);
+    $this->SetData('Permissions', $PermissionList);
+    
+    //$this->SetData('PermissionData', $Permissions, true);
     
     if($this->Form->IsPostBack() == FALSE) {
       if(property_exists($this, 'Rank')) {
@@ -88,6 +100,9 @@ class RankController extends DashboardController {
 
         $this->Form->SetFormValue('Photo', $Parts['SaveName']);
       }
+      
+      decho($this->Form->FormValues());
+      die();
 
       if($this->Form->Save()) {
         if($Edit) {
