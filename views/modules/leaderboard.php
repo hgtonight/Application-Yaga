@@ -11,8 +11,8 @@ foreach($this->Data as $Leader) {
     break;
   }
   echo Wrap(
-          UserPhoto($Leader) .
-          UserAnchor($Leader) .
+          UserPhoto($Leader) . ' ' .
+          UserAnchor($Leader) . ' ' .
           Wrap(
                   Wrap(Plural($Leader->Points, '%s Point', '%s Points'), 'span', array('class' => 'Count')),
                   'span',
