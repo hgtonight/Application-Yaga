@@ -66,6 +66,8 @@ class RankController extends DashboardController {
       $Edit = TRUE;
     }
 
+    $this->SetData('PermissionData', Gdn::PermissionModel()->GetPermissionsEdit(0), true);
+    
     if($this->Form->IsPostBack() == FALSE) {
       if(property_exists($this, 'Rank')) {
         $this->Form->SetData($this->Rank);

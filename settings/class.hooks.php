@@ -372,7 +372,7 @@ class YagaHooks implements Gdn_IPlugin {
 
     // Users shouldn't be able to react to their own content
     if(Gdn::Session()->UserID != $Sender->EventArguments['Author']->UserID) {
-      RenderActions($ID, $Type);
+      RenderReactions($ID, $Type);
     }
   }
 
@@ -405,7 +405,7 @@ class YagaHooks implements Gdn_IPlugin {
       // User is the author of this activity
     }
     else {
-      echo Wrap(RenderActions($ID, $Type, FALSE), 'div', array('class' => 'Reactions'));
+      echo Wrap(RenderReactions($ID, $Type, FALSE), 'div', array('class' => 'Reactions'));
     }
   }
 
@@ -418,7 +418,7 @@ class YagaHooks implements Gdn_IPlugin {
   public function UserModel_AfterGetSession_Handler($Sender) {
     $User = $Sender->EventArguments['User'];
     $TempPerms = unserialize($User->Permissions);
-    if(!in_array($TempPerms, 'Inject.Permission.View')) {
+    if(!in_array('Inject.Permission.View', $TempPerms)) {
       $TempPerms[] = 'Inject.Permission.View';
     }
     $User->Permissions = serialize($TempPerms);

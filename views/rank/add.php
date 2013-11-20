@@ -37,6 +37,12 @@ echo $this->Form->Errors();
     echo $this->Form->TextBox('Description');
     ?>
   </li>
+  <li class="RolePermissions">
+    <?php
+    echo '<strong>'.T('Check all permissions that apply to this role:').'</strong>';
+    echo $this->Form->CheckBoxGridGroups($this->PermissionData, 'Permission');
+    ?>
+  </li>
   <li>
     <?php
     echo $this->Form->Label('Award Value', 'AwardValue');
