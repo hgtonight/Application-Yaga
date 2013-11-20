@@ -329,9 +329,12 @@ class YagaHooks implements Gdn_IPlugin {
    * @param object $Sender
    */
   public function DiscussionController_AfterDiscussionBody_Handler($Sender) {
+    if(!Gdn::Session()->CheckPermission('Yaga.Reactions.View')) {
+      return;
+    }
     $Type = 'discussion';
     $ID = $Sender->DiscussionID;
-    $this->_RenderCurrentReactions($ID, $Type);
+    RenderReactionRecord($ID, $Type);
   }
 
   /**
@@ -339,42 +342,12 @@ class YagaHooks implements Gdn_IPlugin {
    * @param object $Sender
    */
   public function DiscussionController_AfterCommentBody_Handler($Sender) {
-    $Type = 'comment';
-    $ID = $Sender->EventArguments['Comment']->CommentID;
-    $this->_RenderCurrentReactions($ID, $Type);
-  }
-
-  /**
-   * Renders the reaction record for a specific item
-   * @param int $ID
-   * @param enum $Type 'discussion', 'activity', or 'comment'
-   */
-  protected function _RenderCurrentReactions($ID, $Type) {
-    // check to see if allowed to view reactions
     if(!Gdn::Session()->CheckPermission('Yaga.Reactions.View')) {
       return;
     }
-
-    if(empty($this->_ReactionModel)) {
-      $this->_ReactionModel = new ReactionModel();
-    }
-
-    $Reactions = $this->_ReactionModel->GetAllReactions($ID, $Type);
-    foreach($Reactions as $Reaction) {
-      if($Reaction->UserIDs) {
-        foreach($Reaction->UserIDs as $Index => $UserID) {
-          $User = Gdn::UserModel()->GetID($UserID);
-          $String = UserPhoto($User, array('Size' => 'Small'));
-          $String .= '<span class="ReactSprite Reaction-' . $Reaction->ActionID . ' ' . $Reaction->CssClass . '"></span>';
-          $Wrapttributes = array(
-              'class' => 'UserReactionWrap',
-              'data-userid' => $User->UserID,
-              'title' => $User->Name . ' - ' . $Reaction->Name . ' on ' . Gdn_Format::Date($Reaction->Dates[$Index], '%B %e, %Y')
-          );
-          echo Wrap($String, 'span', $Wrapttributes);
-        }
-      }
-    }
+    $Type = 'comment';
+    $ID = $Sender->EventArguments['Comment']->CommentID;
+    RenderReactionRecord($ID, $Type);
   }
 
   /**
@@ -399,7 +372,7 @@ class YagaHooks implements Gdn_IPlugin {
 
     // Users shouldn't be able to react to their own content
     if(Gdn::Session()->UserID != $Sender->EventArguments['Author']->UserID) {
-      $this->_RenderActions($ID, $Type);
+      RenderActions($ID, $Type);
     }
   }
 
@@ -432,47 +405,25 @@ class YagaHooks implements Gdn_IPlugin {
       // User is the author of this activity
     }
     else {
-      echo Wrap($this->_RenderActions($ID, $Type, FALSE), 'div', array('class' => 'Reactions'));
+      echo Wrap(RenderActions($ID, $Type, FALSE), 'div', array('class' => 'Reactions'));
     }
   }
 
   /**
-   * Renders an action list that also contains the current count of reactions
-   * an item has received
-   *
-   * @param int $ID
-   * @param enum $Type 'discussion', 'activity', or 'comment'
-   * @param bool $Echo Should it be echoed?
-   * @return mixed String if $Echo is false, TRUE otherwise
+   * Inject rank based permissions into the session object
+   * @todo document
+   * @todo actually inject the rank permissions
+   * @param type $Sender
    */
-  public function _RenderActions($ID, $Type, $Echo = TRUE) {
-    if(empty($this->_ReactionModel)) {
-      $this->_ReactionModel = new ReactionModel();
+  public function UserModel_AfterGetSession_Handler($Sender) {
+    $User = $Sender->EventArguments['User'];
+    $TempPerms = unserialize($User->Permissions);
+    if(!in_array($TempPerms, 'Inject.Permission.View')) {
+      $TempPerms[] = 'Inject.Permission.View';
     }
-
-    $Reactions = $this->_ReactionModel->GetAllReactions($ID, $Type);
-    $ActionsString = '';
-    foreach($Reactions as $Action) {
-      if(CheckPermission($Action->Permission)) {
-        $ActionsString .= Anchor(
-                Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID . ' ' . $Action->CssClass)) .
-                WrapIf(count($Action->UserIDs), 'span', array('class' => 'Count')) .
-                Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'react/' . $Type . '/' . $ID . '/' . $Action->ActionID, 'Hijack ReactButton'
-        );
-      }
-    }
-
-    $AllActionsString = Wrap($ActionsString, 'span', array('class' => 'ReactMenu'));
-
-    if($Echo) {
-      echo $AllActionsString;
-      return true;
-    }
-    else {
-      return $AllActionsString;
-    }
+    $User->Permissions = serialize($TempPerms);
   }
-
+  
   /**
    * Insert JS and CSS files into the appropiate controllers
    */
