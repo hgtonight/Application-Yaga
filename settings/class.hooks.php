@@ -494,6 +494,13 @@ class YagaHooks implements Gdn_IPlugin {
   
   public function ActivityController_Render_Before($Sender) {
     $this->_AddResources($Sender);
+    
+    // add leaderboard modules to the activity page
+    $Module = new LeaderBoardModule();
+    $Module->GetData('w');
+    $Sender->AddModule($Module);
+    $Module = new LeaderBoardModule();
+    $Sender->AddModule($Module);
   }
 
   /**
