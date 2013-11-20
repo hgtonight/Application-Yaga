@@ -74,7 +74,7 @@ class ReactController extends Gdn_Controller {
     // It has passed through the gauntlet
     $this->ReactionModel->SetReaction($DiscussionID, 'discussion', $Discussion->InsertUserID, $UserID, $ActionID);
     
-    $this->JsonTarget($Anchor, RenderActions($DiscussionID, 'discussion', FALSE), 'ReplaceWith');
+    $this->JsonTarget($Anchor, RenderReactions($DiscussionID, 'discussion', FALSE), 'ReplaceWith');
     
     $this->Render('Blank', 'Utility', 'Dashboard');
   }
@@ -119,7 +119,7 @@ class ReactController extends Gdn_Controller {
     // It has passed through the gauntlet
     $this->ReactionModel->SetReaction($CommentID, 'comment', $Comment->InsertUserID, $UserID, $ActionID);
     
-    $this->JsonTarget($Anchor, RenderActions($CommentID, 'comment', FALSE), 'ReplaceWith');
+    $this->JsonTarget($Anchor, RenderReactions($CommentID, 'comment', FALSE), 'ReplaceWith');
     
     $this->Render('Blank', 'Utility', 'Dashboard');
   }
@@ -164,7 +164,7 @@ class ReactController extends Gdn_Controller {
     // It has passed through the gauntlet
     $this->ReactionModel->SetReaction($ActivityID, 'activity', $Activity['ActivityUserID'], $UserID, $ActionID);
     
-    $this->JsonTarget($Anchor, RenderActions($ActivityID, 'activity', FALSE), 'ReplaceWith');
+    $this->JsonTarget($Anchor, RenderReactions($ActivityID, 'activity', FALSE), 'ReplaceWith');
     
     $this->Render('Blank', 'Utility', 'Dashboard');
   }
