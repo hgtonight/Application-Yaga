@@ -169,16 +169,25 @@ class ReactController extends Gdn_Controller {
     $this->Render('Blank', 'Utility', 'Dashboard');
   }
 
+  /**
+   * @todo merge this into a functions render file so I don't have two copies floating around
+   * @param type $ID
+   * @param type $Type
+   * @param type $Echo
+   * @return type
+   */
   private function _RenderActions($ID, $Type, $Echo = TRUE) {
     $Reactions = $this->ReactionModel->GetAllReactions($ID, $Type);
     $ActionsString = '';
     foreach($Reactions as $Action) {
-      $ActionsString .= Anchor(
-              Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID . ' ' . $Action->CssClass)) .
-              WrapIf(count($Action->UserIDs), 'span', array('class' => 'Count')) .
-              Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'react/' . $Type . '/' . $ID . '/' . $Action->ActionID,
-              'Hijack ReactButton'
-      );
+      if(CheckPermission($Action->Permission)) {
+        $ActionsString .= Anchor(
+                Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID . ' ' . $Action->CssClass)) .
+                WrapIf(count($Action->UserIDs), 'span', array('class' => 'Count')) .
+                Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'react/' . $Type . '/' . $ID . '/' . $Action->ActionID,
+                'Hijack ReactButton'
+        );
+      }
     }
     
     $AllActionsString = Wrap($ActionsString, 'span', array('class' => 'ReactMenu'));
