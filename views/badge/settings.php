@@ -8,7 +8,7 @@ echo Wrap(Wrap('Add or edit the available badges that can be earned.', 'div'), '
 echo Wrap(Anchor('Add Badge', 'yaga/badge/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
 
 ?>
-<table id="Actions" class="AltRows">
+<table id="Badges" class="AltRows">
   <thead>
     <tr>
       <th>Image</th>

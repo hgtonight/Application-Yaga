@@ -1,4 +1,7 @@
 /* Copyright 2013 Zachary Doll */
+#Badges .BadgePhoto {
+  width: 40px;
+}
 
 .ItemBadge .BadgePhoto {
   float: left;
