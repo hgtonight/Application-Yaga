@@ -58,16 +58,22 @@ $Construct->Table('BadgeAward')
         ->Column('DateInserted', 'datetime')
         ->Set($Explicit, $Drop);
 
-// Tracks the actual awarding of badges
+// Describes a rank and associated values
 $Construct->Table('Rank')
         ->PrimaryKey('RankID')
         ->Column('Name', 'varchar(140)')
         ->Column('Description', 'varchar(255)', NULL)
         ->Column('Photo', 'varchar(255)', NULL)
         ->Column('PointsRequired', 'int', 0)
-        ->Column('Permissions', 'text', NULL)
+        ->Column('Permission', 'text', NULL)
         ->Column('Enabled', 'tinyint(1)', '1')
         ->Set($Explicit, $Drop);
+
+// Tracks the current rank a user has
+$Construct->Table('User')
+        ->Column('CountBadges', 'int', 0)
+        ->Column('RankID', 'int', 0)
+        ->Set();
 
 // Add activity types for Badge and Rank awards
 if ($SQL->GetWhere('ActivityType', array('Name' => 'BadgeAward'))->NumRows() == 0)

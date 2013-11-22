@@ -43,6 +43,10 @@ class BadgeModel extends Gdn_Model {
     return self::$_Badges;
   }
   
+  /**
+   * Total number of badges in the system
+   * @return int
+   */
   public function GetBadgeCount() {
     return count($this->GetBadges());
   }
@@ -254,6 +258,15 @@ class BadgeModel extends Gdn_Model {
             ->Where('ba.UserID', $UserID)
             ->Get()
             ->Result(DATASET_TYPE_ARRAY);
+  }
+  
+  public function GetUserBadgeAwardCount($UserID) {
+    return $this->SQL
+            ->Select()
+            ->From('Badge b')
+            ->Join('BadgeAward ba', 'ba.BadgeID = b.BadgeID', 'left')
+            ->Where('ba.UserID', $UserID)
+            ->GetCount();
   }
   
   /**

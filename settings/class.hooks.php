@@ -61,6 +61,18 @@ class YagaHooks implements Gdn_IPlugin {
 
     echo Wrap($String, 'div', array('class' => 'DataCounts'));
   }
+  
+  /**
+   * Add the badge count into the user info module
+   * 
+   * @param UserInfoModule $Sender
+   */
+  public function UserInfoModule_OnBasicInfo_Handler($Sender) {
+    $UserID = $Sender->User->UserID;
+    $BadgeCount = Yaga::BadgeModel()->GetUserBadgeAwardCount($UserID);
+    echo '<dt class="Badges">Badges</dt> ';
+    echo '<dd class="Badges">' . $BadgeCount . '</dd>';
+  }
 
   /**
    * @todo document

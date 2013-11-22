@@ -34,16 +34,10 @@ echo $this->Form->Errors();
   </li>
   <li>
     <?php
-    echo $this->Form->Label('Permissions', 'Permissions');
-    echo $this->Form->Dropdown('Permissions', $this->Data('Permissions'), array('multiple' => 'multiple'));
+    echo $this->Form->Label('Permission Award', 'Permission');
+    echo $this->Form->Dropdown('Permission', $this->Data('Permissions'), array('IncludeNULL' => TRUE));
     ?>
   </li>
-<!--  <li>
-    <?php
-//    echo '<strong>'.T('Check all permissions that apply to this role:').'</strong>';
-//    echo $this->Form->CheckBoxGridGroups($this->PermissionData, 'Permissions');
-    ?>
-  </li>-->
   <li>
     <?php
     echo $this->Form->Label('Points Required', 'PointsRequired');

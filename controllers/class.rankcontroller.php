@@ -61,13 +61,11 @@ class RankController extends DashboardController {
 
     $this->Title(T('Add Rank'));
     $Edit = FALSE;
-    $Permissions = Gdn::PermissionModel()->GetPermissionsEdit(0);
     if($RankID) {
       $this->Rank = $this->RankModel->GetRank($RankID);
       $this->Form->AddHidden('RankID', $RankID);
       $Edit = TRUE;
       $this->Title(T('Edit Rank'));
-      $Permissions = $this->Rank->Permissions;
     }
     
      // Load up all permissions
@@ -100,9 +98,6 @@ class RankController extends DashboardController {
 
         $this->Form->SetFormValue('Photo', $Parts['SaveName']);
       }
-      
-      decho($this->Form->FormValues());
-      die();
 
       if($this->Form->Save()) {
         if($Edit) {

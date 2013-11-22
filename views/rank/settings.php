@@ -12,9 +12,9 @@ echo Wrap(Anchor('Add Rank', 'yaga/rank/add', array('class' => 'SmallButton')), 
       <th>Image</th>
       <th>Name</th>
       <th>Description</th>
-      <th>Rule</th>
-      <th>Award Value</th>
-      <th>Active</th>
+      <th>Points Required</th>
+      <th>Permission Award</th>
+      <th>Auto Award</th>
       <th>Options</th>
     </tr>
   </thead>
@@ -33,8 +33,8 @@ echo Wrap(Anchor('Add Rank', 'yaga/rank/add', array('class' => 'SmallButton')), 
       }
       $Row .= Wrap($Rank->Name, 'td');
       $Row .= Wrap($Rank->Description, 'td');
-      $Row .= Wrap($Rules[$Rank->RuleClass], 'td');
-      $Row .= Wrap($Rank->AwardValue, 'td');
+      $Row .= Wrap($Rank->PointsRequired, 'td');
+      $Row .= Wrap($Rank->Permission, 'td');
       $ToggleText = ($Rank->Enabled) ? T('Enabled') : T('Disabled');
       $ActiveClass = ($Rank->Enabled) ? 'Active' : 'InActive';
       $Row .= Wrap(Wrap(Anchor($ToggleText, 'yaga/rank/toggle/' . $Rank->RankID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
