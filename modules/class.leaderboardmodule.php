@@ -22,6 +22,7 @@ class LeaderBoardModule extends Gdn_Module {
             ->Join('UserPoints up', 'u.UserID = up.UserID')
             ->Where('up.SlotType', $SlotType)
             ->Where('up.TimeSlot', gmdate('Y-m-d', Gdn_Statistics::TimeSlotStamp($SlotType)))
+            ->Where('up.Source', 'Total')
             ->OrderBy('up.Points', 'desc')
             ->Limit(10, 0)
             ->Get()
