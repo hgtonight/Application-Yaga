@@ -23,6 +23,7 @@ class LeaderBoardModule extends Gdn_Module {
             ->Where('up.SlotType', $SlotType)
             ->Where('up.Source', 'Total')
             ->OrderBy('up.TimeSlot', 'desc')
+            ->OrderBy('up.Points', 'desc')
             ->Limit(10, 0)
             ->Get()
             ->Result();
