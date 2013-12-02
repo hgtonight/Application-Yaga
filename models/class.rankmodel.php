@@ -111,6 +111,10 @@ class RankModel extends Gdn_Model {
     }
   }
   
+  public function UpdateRank($Points, $UserID) {
+    
+  }
+  
   /**
    * Set a user's rank and record some activity if it was a promotion
    * 
