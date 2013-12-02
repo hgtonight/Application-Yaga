@@ -17,7 +17,7 @@ class LeaderBoardModule extends Gdn_Module {
   public function GetData($SlotType = 'a') {
     // Get the leaderboard data
     $Leaders = Gdn::SQL()
-            ->Select('up.Points as Points, u.*')
+            ->Select('up.Points as YagaPoints, u.*')
             ->From('User u')
             ->Join('UserPoints up', 'u.UserID = up.UserID')
             ->Where('up.SlotType', $SlotType)
