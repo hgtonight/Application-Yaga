@@ -274,34 +274,6 @@ li.Buried:hover:before {
    width: 20px;
 }
 
-/* OLD "Best Of" */
-.ReactionFilters {
-   margin: 8px 0;
-}
-.ReactionFilters .ReactButton {
-   opacity: 1;  
-   margin-right: 6px;
-}
-.ReactionFilters .ReactButton .ReactSprite {
-   background-image: url('reaction-sprites-color.png') !important;
-}
-.ReactionFilters .ReactLabel {
-   padding-left: 4px;
-}
-.BestOfData .DataList .Item:first-child {
-   border-top: 1px solid #BEC8CC;
-}
-/* End "Best Of" */
-
-
-#infscr-loading {
-    text-align: center;
-}
-#infscr-loading img {
-    margin: 0 auto;
-}
-/* End "Best Of" */
-
 /* iPad/iPhone */
 @media only screen and (device-width: 768px),
 only screen and (max-device-width: 480px) {
@@ -504,8 +476,7 @@ input + .ReactSprite {
 .ReactClose { background-position: -364px -100px; }
 
 /* Switch to the white icons when hovering over a menuitem sprite */
-.MenuItems a:hover .ReactSprite,
-.MenuItems a:hover .Sprite {
+.MenuItems a:hover .ReactSprite {
    background-image: url('images/action-sprites-white.png');
 }
 /* Switch to bordered icons for user reaction overlays */
