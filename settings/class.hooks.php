@@ -7,8 +7,6 @@
  */
 class YagaHooks implements Gdn_IPlugin {
 
-  static $_ReactionModel = NULL;
-
   /**
    * Add the settings page links
    *
@@ -48,11 +46,12 @@ class YagaHooks implements Gdn_IPlugin {
     echo Wrap(T('Yaga.Reactions', 'Reactions'), 'h2', array('class' => 'H'));
 
     // insert the reaction totals in the profile
-    $Actions = $this->_ReactionModel->GetActions();
+    $ReactionModel = Yaga::ReactionModel();
+    $Actions = $ReactionModel->GetActions();
     $String = '';
     foreach($Actions as $Action) {
       $Selected = ($ActionID == $Action->ActionID) ? ' Selected' : '';
-      $Count = $this->_ReactionModel->GetUserReactionCount($User->UserID, $Action->ActionID);
+      $Count = $ReactionModel->GetUserReactionCount($User->UserID, $Action->ActionID);
       $TempString = Wrap(Wrap(Gdn_Format::BigNumber($Count), 'span', array('title' => $Count)), 'span', array('class' => 'Yaga_ReactionCount CountTotal'));
       $TempString .= Wrap($Action->Name, 'span', array('class' => 'Yaga_ReactionName CountLabel'));
 
@@ -70,13 +69,14 @@ class YagaHooks implements Gdn_IPlugin {
   public function UserInfoModule_OnBasicInfo_Handler($Sender) {
     $UserID = $Sender->User->UserID;
     $BadgeCount = Yaga::BadgeModel()->GetUserBadgeAwardCount($UserID);
-    echo '<dt class="Badges">Badges</dt> ';
+    echo '<dt class="Badges">'. T('Yaga.Badges', 'Badges') .'</dt> ';
     echo '<dd class="Badges">' . $BadgeCount . '</dd>';
   }
 
   /**
    * @todo document
    * @todo Add a pager
+   * @todo call the best of controller to take this on
    * @param type $Sender
    * @param type $UserReference
    * @param type $Username
@@ -325,13 +325,22 @@ class YagaHooks implements Gdn_IPlugin {
    * @param object $Sender
    */
   public function ProfileController_BeforeProfileOptions_Handler($Sender) {
-    if(Gdn::Session()->IsValid() && CheckPermission('Yaga.Badges.Add')) {
-      //decho($Sender->EventArguments);
-      $Sender->EventArguments['ProfileOptions'][] = array(
-          'Text' => Sprite('SpModeratorActivities') . ' ' . T('Give Badge'),
-          'Url' => '/badge/award/' . $Sender->User->UserID,
-          'CssClass' => 'Popup'
-      );
+    if(Gdn::Session()->IsValid()) {
+      if(CheckPermission('Yaga.Badges.Add')) {
+        $Sender->EventArguments['ProfileOptions'][] = array(
+            'Text' => Sprite('SpRibbon') . ' ' . T('Give Badge'),
+            'Url' => '/badge/award/' . $Sender->User->UserID,
+            'CssClass' => 'Popup'
+        );
+      }
+      
+      if(CheckPermission('Yaga.Ranks.Add')) {
+        $Sender->EventArguments['ProfileOptions'][] = array(
+            'Text' => Sprite('SpModeratorActivities') . ' ' . T('Promote'),
+            'Url' => '/rank/promote/' . $Sender->User->UserID,
+            'CssClass' => 'Popup'
+        );
+      }
     }
   }
 
@@ -458,12 +467,14 @@ class YagaHooks implements Gdn_IPlugin {
   public function ActivityController_Render_Before($Sender) {
     $this->_AddResources($Sender);
     
-    // add leaderboard modules to the activity page
-    $Module = new LeaderBoardModule();
-    $Module->GetData('w');
-    $Sender->AddModule($Module);
-    $Module = new LeaderBoardModule();
-    $Sender->AddModule($Module);
+    if(C('Yaga.LeaderBoard.Enabled', FALSE)) {
+      // add leaderboard modules to the activity page
+      $Module = new LeaderBoardModule();
+      $Module->GetData('w');
+      $Sender->AddModule($Module);
+      $Module = new LeaderBoardModule();
+      $Sender->AddModule($Module);
+    }
   }
 
   /**
@@ -565,10 +576,6 @@ class YagaHooks implements Gdn_IPlugin {
    * @param object $Sender
    */
   private function _AddResources($Sender) {
-    if(empty($this->_ReactionModel)) {
-      $this->_ReactionModel = new ReactionModel();
-    }
-
     $Sender->AddCssFile('reactions.css', 'yaga');
   }
 

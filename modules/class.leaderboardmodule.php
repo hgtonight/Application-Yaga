@@ -25,7 +25,7 @@ class LeaderBoardModule extends Gdn_Module {
             ->Where('up.TimeSlot', gmdate('Y-m-d', Gdn_Statistics::TimeSlotStamp($SlotType)))
             ->Where('up.Source', 'Total')
             ->OrderBy('up.Points', 'desc')
-            ->Limit(10, 0)
+            ->Limit(C('Yaga.LeaderBoard.Limit', 10), 0)
             ->Get()
             ->Result();
     

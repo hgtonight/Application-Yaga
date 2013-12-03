@@ -50,7 +50,9 @@ class ConfigureController extends DashboardController {
     $ConfigModule->Initialize(array(
       'Yaga.Reactions.Enabled' => array('LabelCode' => 'Use Reactions', 'Control' => 'Checkbox'),
       'Yaga.Badges.Enabled' => array('LabelCode' => 'Use Badges', 'Control' => 'Checkbox'),
-      'Yaga.Ranks.Enabled' => array('LabelCode' => 'Use Ranks', 'Control' => 'Checkbox')
+      'Yaga.Ranks.Enabled' => array('LabelCode' => 'Use Ranks', 'Control' => 'Checkbox'),
+      'Yaga.LeaderBoard.Enabled' => array('LabelCode' => 'Show leaderboard on activity page', 'Control' => 'Checkbox'),
+      'Yaga.LeaderBoard.Limit' => array('LabelCode' => 'Maximum number of leaders to show', 'Control' => 'Textbox', 'Options' => array('Size' => 45, 'class' => 'SmallInput'))
     ));
     $this->AddSideMenu('configure');
     $this->SetData('Title', 'Gamification Settings');
