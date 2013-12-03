@@ -16,3 +16,4 @@ Yet Another Gamification Application
 * Translate every static string
 * Document
 * Finish inline ToDos
+* Move badge count to user table column

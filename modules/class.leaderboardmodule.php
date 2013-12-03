@@ -5,7 +5,8 @@
  * Renders a leaderboard in the panel detailing points earned of all time
  */
 class LeaderBoardModule extends Gdn_Module {
-
+  protected $Title = FALSE;
+  
   public function __construct($Sender = '') {
     parent::__construct($Sender);
   }
@@ -47,11 +48,11 @@ class LeaderBoardModule extends Gdn_Module {
   }
   
   public function ToString() {
-    if(!$this->Data) {
+    if(!$this->Data && !$this->Title) {
       $this->GetData();      
     }
     
-    if($this->Visible) {
+    if($this->Visible && count($this->Data)) {
       $ViewPath = $this->FetchViewLocation('leaderboard', 'yaga');
       $String = '';
       ob_start();
