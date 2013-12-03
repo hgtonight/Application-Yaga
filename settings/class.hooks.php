@@ -350,7 +350,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param object $Sender
    */
   public function DiscussionController_AfterDiscussionBody_Handler($Sender) {
-    if(!Gdn::Session()->CheckPermission('Yaga.Reactions.View')) {
+    if(!Gdn::Session()->CheckPermission('Yaga.Reactions.View') || !C('Yaga.Reactions.Enabled')) {
       return;
     }
     $Type = 'discussion';
@@ -363,7 +363,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param object $Sender
    */
   public function DiscussionController_AfterCommentBody_Handler($Sender) {
-    if(!Gdn::Session()->CheckPermission('Yaga.Reactions.View')) {
+    if(!Gdn::Session()->CheckPermission('Yaga.Reactions.View') || !C('Yaga.Reactions.Enabled')) {
       return;
     }
     $Type = 'comment';
@@ -379,9 +379,7 @@ class YagaHooks implements Gdn_IPlugin {
     if(C('Yaga.Reactions.Enabled') == FALSE) {
       return;
     }
-
-    $Sender->AddJsFile('reactions.js', 'yaga');
-    $Sender->AddCssFile('reactions.css', 'yaga');
+    
     // check to see if allowed to add reactions
     if(!Gdn::Session()->CheckPermission('Yaga.Reactions.Add')) {
       return;
@@ -430,21 +428,6 @@ class YagaHooks implements Gdn_IPlugin {
     }
   }
 
-  /**
-   * Inject rank based permissions into the session object
-   * @todo document
-   * @todo actually inject the rank permissions
-   * @param type $Sender
-   */
-  public function UserModel_AfterGetSession_Handler($Sender) {
-    $User = $Sender->EventArguments['User'];
-    $TempPerms = unserialize($User->Permissions);
-    if(!in_array('Inject.Permission.View', $TempPerms)) {
-      $TempPerms[] = 'Inject.Permission.View';
-    }
-    $User->Permissions = serialize($TempPerms);
-  }
-  
   /**
    * Insert JS and CSS files into the appropiate controllers
    */
