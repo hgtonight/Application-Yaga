@@ -31,12 +31,12 @@ class HasMentioned implements YagaRule{
   }
   
   public function Description() {
-    $Description = T('This rule checks a users comment for mentions. If the user mentions someone, this will return true.');
+    $Description = T('Yaga.Rules.HasMentioned.Desc');
     return $Description;
     
   }
   
   public function Name() {
-    return T('Mention');
+    return T('Yaga.Rules.HasMentioned');
   }
 }

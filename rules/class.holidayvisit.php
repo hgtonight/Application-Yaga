@@ -33,7 +33,7 @@ class HolidayVisit implements YagaRule {
       $Days[$i] = $i;
     }
     
-    $String = $Form->Label(T('Holiday date'), 'HolidayVisit');
+    $String = $Form->Label('Holiday date', 'HolidayVisit');
     $String .= $Form->DropDown('Month', $Months);
     $String .= $Form->DropDown('Day', $Days);
     return $String;
@@ -44,12 +44,12 @@ class HolidayVisit implements YagaRule {
   }
   
   public function Description() {
-    $Description = T('This rule checks a users visit date against the target date. If they visited on the same day of the year, it is awarded.');
+    $Description = T('Yaga.Rules.HolidayVisit.Desc');
     return $Description;
     
   }
   
   public function Name() {
-    return T('Holiday Visit');
+    return T('Yaga.Rules.HolidayVisit');
   }
 }

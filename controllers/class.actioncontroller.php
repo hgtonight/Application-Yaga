@@ -41,7 +41,7 @@ class ActionController extends DashboardController {
     $this->Permission('Yaga.Reactions.Manage');
     $this->AddSideMenu('action/settings');
 
-    $this->Title(T('Manage Reactions'));
+    $this->Title(T('Yaga.ManageReactions'));
 
     // Get list of actions from the model and pass to the view
     $this->SetData('Actions', $this->ActionModel->GetActions());
@@ -60,12 +60,12 @@ class ActionController extends DashboardController {
     $this->Form->SetModel($this->ActionModel);
     
     $Edit = FALSE;
-    $this->Title(T('Add Action'));
+    $this->Title(T('Yaga.AddAction'));
     if($ActionID) {
       $this->Action = $this->ActionModel->GetAction($ActionID);
       $this->Form->AddHidden('ActionID', $ActionID);
       $Edit = TRUE;
-      $this->Title(T('Edit Action'));
+      $this->Title(T('Yaga.EditAction'));
     }
     
     // TODO: Autoload these, or something
@@ -109,11 +109,11 @@ class ActionController extends DashboardController {
                             Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'div', array('class' => 'Preview Reactions')), 'div', array('class' => 'Action')), 'li', array('id' => 'Action_' . $Action->ActionID));
         if($Edit) {
           $this->JsonTarget('#Action_' . $this->Action->ActionID, $NewActionRow, 'ReplaceWith');
-          $this->InformMessage(T('Action updated successfully!'));
+          $this->InformMessage(T('Yaga.ActionUpdated'));
         }
         else {
           $this->JsonTarget('#Actions', $NewActionRow, 'Append');
-          $this->InformMessage(T('Action added successfully!'));
+          $this->InformMessage(T('Yaga.ActionAdded'));
         }
       }
     }

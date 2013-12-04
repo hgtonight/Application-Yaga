@@ -36,9 +36,9 @@ class CommentMarathon implements YagaRule {
         'year' => T('Years')
     );
     
-    $String = $Form->Label(T('Number of Comments'), 'Comment Marathon');
+    $String = $Form->Label('Number of Comments', 'CommentMarathon');
     $String .= $Form->Textbox('Target');
-    $String .= $Form->Label(T('Time Frame'));
+    $String .= $Form->Label('Time Frame');
     $String .= $Form->Textbox('Duration');
     $String .= $Form->DropDown('Period', $Lengths);    
     
@@ -50,12 +50,12 @@ class CommentMarathon implements YagaRule {
   }
   
   public function Description() {
-    $Description = T('This rule checks a users comment count within the past duratio. If it is a greater than or equal to the target, it will return true.');
+    $Description = T('Yaga.Rules.CommentMarathon.Desc');
     return $Description;
     
   }
   
   public function Name() {
-    return T('Comment Marathon');
+    return T('Yaga.Rules.CommentMarathon');
   }
 }

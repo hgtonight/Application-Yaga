@@ -27,7 +27,7 @@ class LengthOfService implements YagaRule {
         'year' => T('Years')
     );
     
-    $String = $Form->Label(T('Time Served'), 'LengthOfService');
+    $String = $Form->Label('Time Served', 'LengthOfService');
     $String .= $Form->Textbox('Duration');
     $String .= $Form->DropDown('Period', $Lengths);
     
@@ -39,12 +39,12 @@ class LengthOfService implements YagaRule {
   }
   
   public function Description() {
-    $Description = T('This rule checks a users join date against the current date. It will return true if the account is older than the specified number of days, weeks, or years.');
+    $Description = T('Yaga.Rules.LengthOfService.Desc');
     return $Description;
     
   }
   
   public function Name() {
-    return T('Length of Service');
+    return T('Yaga.Rules.LengthOfService');
   }
 }

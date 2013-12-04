@@ -26,9 +26,9 @@ class ReflexComment implements YagaRule{
   }
     
   public function Form($Form) {
-    $String = $Form->Label(T('Time to Comment'), 'ReflexComment');
+    $String = $Form->Label('Time to Comment', 'ReflexComment');
     $String .= $Form->Textbox('Seconds');
-    $String .= T(' seconds.');
+    $String .= ' ' . T('seconds.');
 
     return $String; 
   }
@@ -38,12 +38,12 @@ class ReflexComment implements YagaRule{
   }
   
   public function Description() {
-    $Description = T('This rule checks if a comment is placed within x seconds. If it is, this will return true.');
+    $Description = T('Yaga.Rules.ReflexComment.Desc');
     return $Description;
     
   }
   
   public function Name() {
-    return T('Comment on New Discussion Quickly');
+    return T('Yaga.Rules.ReflexComment');
   }
 }

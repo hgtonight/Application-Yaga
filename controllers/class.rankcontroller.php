@@ -40,7 +40,7 @@ class RankController extends DashboardController {
     $this->Permission('Yaga.Ranks.Manage');
     $this->AddSideMenu('rank/settings');
 
-    $this->Title(T('Manage Ranks'));
+    $this->Title(T('Yaga.ManageRanks'));
 
     // Get list of ranks from the model and pass to the view
     $this->SetData('Ranks', $this->RankModel->GetRanks());
@@ -59,13 +59,13 @@ class RankController extends DashboardController {
     $this->AddSideMenu('rank/settings');
     $this->Form->SetModel($this->RankModel);
 
-    $this->Title(T('Add Rank'));
+    $this->Title(T('Yaga.AddRank'));
     $Edit = FALSE;
     if($RankID) {
       $this->Rank = $this->RankModel->GetRank($RankID);
       $this->Form->AddHidden('RankID', $RankID);
       $Edit = TRUE;
-      $this->Title(T('Edit Rank'));
+      $this->Title(T('Yaga.EditRank'));
     }
     
      // Load up all permissions
@@ -101,10 +101,10 @@ class RankController extends DashboardController {
 
       if($this->Form->Save()) {
         if($Edit) {
-          $this->InformMessage(T('Rank updated successfully!'));
+          $this->InformMessage(T('Yaga.RankUpdated'));
         }
         else {
-          $this->InformMessage(T('Rank added successfully!'));
+          $this->InformMessage(T('Yaga.RankAdded'));
         }
         Redirect('/yaga/rank/settings');
       }
@@ -181,7 +181,7 @@ class RankController extends DashboardController {
 
       if (Gdn::Session()->ValidateTransientKey($TransientKey)) {
          $this->RankModel->SetField($RankID, 'Photo', NULL);
-         $this->InformMessage(T('Rank photo has been deleted.'));
+         $this->InformMessage(T('Yaga.RankPhotoDeleted'));
       }
 
       if ($this->_DeliveryType == DELIVERY_TYPE_ALL) {
@@ -206,7 +206,7 @@ class RankController extends DashboardController {
 
     // Only allow awarding if some ranks exist
     if(!$this->RankModel->GetRankCount()) {
-      throw new Gdn_UserException(T('You cannot promote users without any ranks defined.'));
+      throw new Gdn_UserException(T('Yaga.Error.NoRanks'));
     }
 
     $UserModel = Gdn::UserModel();
@@ -232,7 +232,7 @@ class RankController extends DashboardController {
       if($Validation->Validate($this->Request->Post())) {
         $FormValues = $this->Form->FormValues();
         if($this->RankModel->UserHasRank($FormValues['UserID'], $FormValues['RankID'])) {
-          $this->Form->AddError($User->Name . T(' already has this rank!'), 'RankID');
+          $this->Form->AddError(sprintf(T('Yaga.RankAlreadyAttained'), $User->Name), 'RankID');
           // Need to respecify the user id
           $this->Form->AddHidden('UserID', $User->UserID);
         }

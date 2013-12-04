@@ -19,13 +19,13 @@ class YagaHooks implements Gdn_IPlugin {
     $Menu->AddItem($Section, $Section, FALSE, $Attrs);
     $Menu->AddLink($Section, T('Settings'), 'configure', 'Garden.Settings.Manage');
     if(C('Yaga.Reactions.Enabled')) {
-      $Menu->AddLink($Section, T('Reactions'), 'action/settings', 'Yaga.Reactions.Manage');
+      $Menu->AddLink($Section, T('Yaga.Reactions'), 'action/settings', 'Yaga.Reactions.Manage');
     }
     if(C('Yaga.Badges.Enabled')) {
-      $Menu->AddLink($Section, T('Badges'), 'badge/settings', 'Yaga.Badges.Manage');
+      $Menu->AddLink($Section, T('Yaga.Badges'), 'badge/settings', 'Yaga.Badges.Manage');
     }
     if(C('Yaga.Ranks.Enabled')) {
-      $Menu->AddLink($Section, T('Ranks'), 'rank/settings', 'Yaga.Ranks.Manage');
+      $Menu->AddLink($Section, T('Yaga.Ranks'), 'rank/settings', 'Yaga.Ranks.Manage');
     }
   }
 
@@ -91,8 +91,8 @@ class YagaHooks implements Gdn_IPlugin {
 
     // Tell the ProfileController what tab to load
 	$Sender->GetUserInfo($UserReference, $Username, $UserID);
-    $Sender->_SetBreadcrumbs(T('Reactions'), UserUrl($Sender->User, '', 'reactions'));
-    $Sender->SetTabView(T('Reactions'), 'reactions', 'profile', 'Yaga');
+    $Sender->_SetBreadcrumbs(T('Yaga.Reactions'), UserUrl($Sender->User, '', 'reactions'));
+    $Sender->SetTabView(T('Yaga.Reactions'), 'reactions', 'profile', 'Yaga');
     
     $Sender->AddJsFile('jquery.expander.js');
     $Sender->AddJsFile('reactions.js', 'yaga');
@@ -309,13 +309,13 @@ class YagaHooks implements Gdn_IPlugin {
    */
   public function ProfileController_AfterPreferencesDefined_Handler($Sender) {
     if(C('Yaga.Badges.Enabled')) {
-      $Sender->Preferences['Notifications']['Email.Badges'] = T('Notify me when I earn a badge.');
-      $Sender->Preferences['Notifications']['Popup.Badges'] = T('Notify me when I earn a badge.');
+      $Sender->Preferences['Notifications']['Email.Badges'] = T('Yaga.Notifications.Badges');
+      $Sender->Preferences['Notifications']['Popup.Badges'] = T('Yaga.Notifications.Badges');
     }
 
     if(C('Yaga.Ranks.Enabled')) {
-      $Sender->Preferences['Notifications']['Email.Ranks'] = T('Notify me when I am promoted in rank.');
-      $Sender->Preferences['Notifications']['Popup.Ranks'] = T('Notify me when I am promoted in rank.');
+      $Sender->Preferences['Notifications']['Email.Ranks'] = T('Yaga.Notifications.Ranks');
+      $Sender->Preferences['Notifications']['Popup.Ranks'] = T('Yaga.Notifications.Ranks');
     }
   }
 
@@ -328,7 +328,7 @@ class YagaHooks implements Gdn_IPlugin {
     if(Gdn::Session()->IsValid()) {
       if(CheckPermission('Yaga.Badges.Add')) {
         $Sender->EventArguments['ProfileOptions'][] = array(
-            'Text' => Sprite('SpRibbon') . ' ' . T('Give Badge'),
+            'Text' => Sprite('SpRibbon') . ' ' . T('Yaga.Badge.Award'),
             'Url' => '/badge/award/' . $Sender->User->UserID,
             'CssClass' => 'Popup'
         );
@@ -336,7 +336,7 @@ class YagaHooks implements Gdn_IPlugin {
       
       if(CheckPermission('Yaga.Ranks.Add')) {
         $Sender->EventArguments['ProfileOptions'][] = array(
-            'Text' => Sprite('SpModeratorActivities') . ' ' . T('Promote'),
+            'Text' => Sprite('SpModeratorActivities') . ' ' . T('Yaga.Rank.Promote'),
             'Url' => '/rank/promote/' . $Sender->User->UserID,
             'CssClass' => 'Popup'
         );

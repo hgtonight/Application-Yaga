@@ -5,11 +5,11 @@
 $Rules = RulesController::GetRules();
 
 if(property_exists($this, 'Badge')) {
-  echo Wrap(T('Edit Badge'), 'h1');
+  echo Wrap(T('Yaga.EditBadge'), 'h1');
   $RuleClass = $this->Badge->RuleClass;
 }
 else {
-  echo Wrap(T('Add Badge'), 'h1');
+  echo Wrap(T('Yaga.AddBadge'), 'h1');
   reset($Rules);
   $RuleClass = key($Rules);
 }

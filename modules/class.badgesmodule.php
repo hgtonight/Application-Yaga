@@ -19,10 +19,10 @@ class BadgesModule extends Gdn_Module {
     }
     
     if(Gdn::Session()->UserID == $UserID) {
-      $this->Title = T('My Badges');
+      $this->Title = T('Yaga.MyBadges');
     }
     else {
-      $this->Title = T('Badges');
+      $this->Title = T('Yaga.Badges');
     }
     
     $BadgeModel = new BadgeModel();

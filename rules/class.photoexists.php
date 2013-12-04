@@ -27,12 +27,12 @@ class PhotoExists implements YagaRule {
   }
   
   public function Description() {
-    $Description = T('This rule returns true if the user has uploaded a profile photo.');
+    $Description = T('Yaga.Rules.PhotoExists.Desc');
     return $Description;
     
   }
   
   public function Name() {
-    return T('User has Avatar');
+    return T('Yaga.Rules.PhotoExists');
   }
 }

@@ -14,7 +14,7 @@ foreach($this->Data('Badges') as $Badge) {
   
   if($Badge->UserID == Gdn::Session()->UserID) {
     $ReadClass = '';
-    $AwardDescription = T('You earned this badge ') . Gdn_Format::Date($Badge->DateInserted, 'html') . T(' from ') . $Badge->InsertUserName;
+    $AwardDescription = sprintf(T('Yaga.Badge.Earned.Format'), Gdn_Format::Date($Badge->DateInserted, 'html'), $Badge->InsertUserName);
     if($Badge->Reason) {
       $AwardDescription .= ': "' . $Badge->Reason . '"';
     }

@@ -41,9 +41,9 @@ class AwardCombo implements YagaRule {
         'year' => T('Years')
     );
     
-    $String = $Form->Label(T('Number of Badge Types'), 'AwardCombo');
+    $String = $Form->Label('Number of Badge Types', 'AwardCombo');
     $String .= $Form->Textbox('Target');
-    $String .= $Form->Label(T('Time Frame'));
+    $String .= $Form->Label('Time Frame');
     $String .= $Form->Textbox('Duration');
     $String .= $Form->DropDown('Period', $Lengths);    
     
@@ -55,12 +55,12 @@ class AwardCombo implements YagaRule {
   }
   
   public function Description() {
-    $Description = T('This rule checks a users badge award type count within the past day. If it is a greater than or equal to the target, it will return true.');
+    $Description = T('Yaga.Rules.AwardCombo.Desc');
     return $Description;
     
   }
   
   public function Name() {
-    return T('Award Combo');
+    return T('Yaga.Rules.AwardCombo');
   }
 }

@@ -1,10 +1,10 @@
 <?php if(!defined('APPLICATION')) exit();
 /* Copyright 2013 Zachary Doll */
 if(property_exists($this, 'Action')) {
-  echo Wrap(T('Edit Action'), 'h1');
+  echo Wrap(T('Yaga.EditAction'), 'h1');
 }
 else {
-  echo Wrap(T('Add Action'), 'h1');
+  echo Wrap(T('Yaga.AddAction'), 'h1');
 }
 
 $OriginalCssClass = $this->Form->GetValue('CssClass');
@@ -54,7 +54,7 @@ echo $this->Form->Errors();
     <span><?php echo T('Advanced Settings'); ?></span>
     <div>
         <?php
-        echo $this->Form->Label('CSS Class', 'CssClass');
+        echo $this->Form->Label('Css Class', 'CssClass');
         echo $this->Form->TextBox('CssClass');
         ?>
       </div>

@@ -41,7 +41,7 @@ class NewbieComment implements YagaRule{
         'year' => T('Years')
     );
     
-    $String = $Form->Label(T('User Newbness'), 'NewbieComment');
+    $String = $Form->Label('User Newbness', 'NewbieComment');
     $String .= $Form->Textbox('Duration');
     $String .= $Form->DropDown('Period', $Lengths);
 
@@ -53,12 +53,12 @@ class NewbieComment implements YagaRule{
   }
   
   public function Description() {
-    $Description = T('This rule checks if a comment is placed on a newbs first discussion. If it is, this will return true.');
+    $Description = T('Yaga.Rules.NewbieComment.Desc');
     return $Description;
     
   }
   
   public function Name() {
-    return T("Comment on New User's Discussion");
+    return T('Yaga.Rules.NewbieComment');
   }
 }

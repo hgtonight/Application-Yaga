@@ -72,7 +72,7 @@ class RulesController extends YagaController {
       $this->RenderData($Data);
     }
     else {
-      $this->RenderException(new Gdn_UserException(T('Rule not found.')));
+      $this->RenderException(new Gdn_UserException(T('Yaga.Error.Rule404')));
     }
   }
 }

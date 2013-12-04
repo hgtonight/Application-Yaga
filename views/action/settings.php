@@ -3,10 +3,10 @@
 
 // TODO: Consider using a reusable help_functions file like core
 echo Wrap($this->Title(), 'h1');
-echo Wrap(Wrap(T('Add or edit the available actions that can be used as reactions.'), 'div'), 'div', array('class' => 'Wrap'));
-echo Wrap(Anchor(T('Add Action'), 'yaga/action/add', array('class' => 'Popup SmallButton')), 'div', array('class' => 'Wrap'));
+echo Wrap(Wrap(T('Yaga.Actions.Settings.Desc'), 'div'), 'div', array('class' => 'Wrap'));
+echo Wrap(Anchor(T('Yaga.AddAction'), 'yaga/action/add', array('class' => 'Popup SmallButton')), 'div', array('class' => 'Wrap'));
 ?>
-<h3><?php echo T('Current Reactions'); ?></h3>
+<h3><?php echo T('Yaga.Actions.Current'); ?></h3>
 <ol id="Actions" class="Sortable">
   <?php
   foreach($this->Data('Actions') as $Action) {

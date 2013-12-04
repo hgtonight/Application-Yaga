@@ -40,11 +40,11 @@ class CommentCount implements YagaRule{
         'gte' => T('more than or equal to:')        
     );
     
-    $String = $Form->Label(T('Total comments'), 'CommentCount');
-    $String .= T('User has ');
+    $String = $Form->Label('Total comments', 'CommentCount');
+    $String .= T('User has') . ' ';
     $String .= $Form->DropDown('Comparison', $Comparisons);
     $String .= $Form->Textbox('Target');
-    $String .= T(' comments');
+    $String .= ' ' . T('comments');
 
     return $String; 
   }
@@ -54,12 +54,12 @@ class CommentCount implements YagaRule{
   }
   
   public function Description() {
-    $Description = T('This rule checks a users total comment count against the criteria. If the user has more comments than the criteria, this will return true.');
+    $Description = T('Yaga.Rules.CommentCount.Desc');
     return $Description;
     
   }
   
   public function Name() {
-    return T('Comment Count Total');
+    return T('Yaga.Rules.CommentCount');
   }
 }

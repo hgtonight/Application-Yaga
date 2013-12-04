@@ -32,16 +32,16 @@ class LeaderBoardModule extends Gdn_Module {
     $this->Data = $Leaders;
     switch($SlotType) {
       case 'a':
-        $this->Title = T('All Time Leaders');
+        $this->Title = T('Yaga.LeaderBoard.AllTime');
         break;
       case 'w':
-        $this->Title = T("This Week's Leaders");
+        $this->Title = T('Yaga.LeaderBoard.Week');
         break;
       case 'm':
-        $this->Title = T("This Month's Leaders");
+        $this->Title = T('Yaga.LeaderBoard.Month');
         break;
       case 'y':
-        $this->Title = T("This Years's Leaders");
+        $this->Title = T('Yaga.LeaderBoard.Year');
         break;
     }
     

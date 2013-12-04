@@ -18,21 +18,21 @@ echo '<div class="Badge-Earned">';
 if($UserBadgeAward) {
   echo Wrap(
           UserPhoto(Gdn::Session()->User) .
-          T('You earned this badge') . ' ' .
+          T('Yaga.Badge.Earned') . ' ' .
           Wrap(Gdn_Format::Date($UserBadgeAward->DateInserted, 'html'), 'span', array('class' => 'DateReceived')),
           'div',
           array('class' => 'EarnedThisBadge'));
 }
 
 if($AwardCount) {
-  echo Wrap(Plural($AwardCount, '%s person has earned this badge.', '%s people have earned this badge.'), 'p', array('class' => 'BadgeCountDisplay'));
+  echo Wrap(Plural($AwardCount, 'Yaga.Badge.EarnedBySingle', 'Yaga.Badge.EarnedByPlural'), 'p', array('class' => 'BadgeCountDisplay'));
 }
 else {
-  echo Wrap(T('Nobody has earned this badge yet.'), 'p');
+  echo Wrap(T('Yaga.Badge.EarnedByNone'), 'p');
 }
 
 if($RecentAwards) {
-  echo Wrap(T('Most recent recipients'), 'h2');
+  echo Wrap(T('Yaga.Badge.RecentRecipients'), 'h2');
   echo '<div class="RecentRecipients">';
   foreach($RecentAwards as $Award) {
     $User = UserBuilder($Award);

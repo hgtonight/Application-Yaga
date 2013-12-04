@@ -37,12 +37,12 @@ class BestOfController extends Gdn_Controller {
    * This renders out the full list of badges
    */
   public function All() {
-    $this->Title(T('Best of Everything'));
+    $this->Title(T('Yaga.BestOfEverything'));
     $Module = new PromotedContentModule();
     $Module->Selector = 'Score';
     
     $this->SetData('Module', $Module);
-    $this->Title(T('Best Of...'));
+    $this->Title(T('Yaga.BestOf'));
     $this->Render('all');
   }
 }

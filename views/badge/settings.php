@@ -4,8 +4,8 @@
 $Rules = $this->Data('Rules');
 
 echo Wrap($this->Title(), 'h1');
-echo Wrap(Wrap(T('Add or edit the available badges that can be earned.'), 'div'), 'div', array('class' => 'Wrap'));
-echo Wrap(Anchor(T('Add Badge'), 'yaga/badge/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
+echo Wrap(Wrap(T('Yaga.Badges.Settings.Desc'), 'div'), 'div', array('class' => 'Wrap'));
+echo Wrap(Anchor(T('Yaga.AddBadge'), 'yaga/badge/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
 
 ?>
 <table id="Badges" class="AltRows">

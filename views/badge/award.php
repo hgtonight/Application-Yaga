@@ -5,18 +5,18 @@ $Badges = $this->Data('Badges');
 $Username = $this->Data('Username', 'Unknown');
 
 echo '<div id="UserBadgeForm">';
-echo Wrap(T('Give a Badge to ') . $Username, 'h1');
+echo Wrap(sprintf(T('Yaga.Badge.GiveTo'), $Username), 'h1');
 echo $this->Form->Open();
 echo $this->Form->Errors();
 
 echo Wrap(
       Wrap(
-        $this->Form->Label('Badge', 'BadgeID') .
+        $this->Form->Label('Yaga.Badge', 'BadgeID') .
         $this->Form->Dropdown('BadgeID', $Badges),
         'li') .
     
       Wrap(
-        $this->Form->Label('Reason (optional)', 'Reason') .
+        $this->Form->Label('Yaga.Reason', 'Reason') .
         $this->Form->TextBox('Reason', array('Multiline' => TRUE)),
         'li') .
       Wrap(
@@ -25,6 +25,6 @@ echo Wrap(
         'ul'
 );
 
-echo $this->Form->Close('Give Badge');
+echo $this->Form->Close('Yaga.Badge.Award');
 
 echo '</div>';
