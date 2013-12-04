@@ -17,15 +17,15 @@ class YagaHooks implements Gdn_IPlugin {
     $Section = 'Gamification';
     $Attrs = array('class' => $Section);
     $Menu->AddItem($Section, $Section, FALSE, $Attrs);
-    $Menu->AddLink($Section, 'Settings', 'configure', 'Garden.Settings.Manage');
+    $Menu->AddLink($Section, T('Settings'), 'configure', 'Garden.Settings.Manage');
     if(C('Yaga.Reactions.Enabled')) {
-      $Menu->AddLink($Section, 'Reactions', 'action/settings', 'Yaga.Reactions.Manage');
+      $Menu->AddLink($Section, T('Reactions'), 'action/settings', 'Yaga.Reactions.Manage');
     }
     if(C('Yaga.Badges.Enabled')) {
-      $Menu->AddLink($Section, 'Badges', 'badge/settings', 'Yaga.Badges.Manage');
+      $Menu->AddLink($Section, T('Badges'), 'badge/settings', 'Yaga.Badges.Manage');
     }
     if(C('Yaga.Ranks.Enabled')) {
-      $Menu->AddLink($Section, 'Ranks', 'rank/settings', 'Yaga.Ranks.Manage');
+      $Menu->AddLink($Section, T('Ranks'), 'rank/settings', 'Yaga.Ranks.Manage');
     }
   }
 
@@ -92,7 +92,7 @@ class YagaHooks implements Gdn_IPlugin {
     // Tell the ProfileController what tab to load
 	$Sender->GetUserInfo($UserReference, $Username, $UserID);
     $Sender->_SetBreadcrumbs(T('Reactions'), UserUrl($Sender->User, '', 'reactions'));
-    $Sender->SetTabView('Reactions', 'reactions', 'profile', 'Yaga');
+    $Sender->SetTabView(T('Reactions'), 'reactions', 'profile', 'Yaga');
     
     $Sender->AddJsFile('jquery.expander.js');
     $Sender->AddJsFile('reactions.js', 'yaga');

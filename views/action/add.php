@@ -51,7 +51,7 @@ echo $this->Form->Errors();
     ?>
   </li>
   <li id="AdvancedActionSettings">
-    <span>Advanced Settings</span>
+    <span><?php echo T('Advanced Settings'); ?></span>
     <div>
         <?php
         echo $this->Form->Label('CSS Class', 'CssClass');

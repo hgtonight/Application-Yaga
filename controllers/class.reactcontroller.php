@@ -48,7 +48,7 @@ class ReactController extends Gdn_Controller {
     
     // Make sure the action exists and the user is allowed to react    
     if(!$Action) {
-      throw new Gdn_UserException('Invalid Action');
+      throw new Gdn_UserException(T('Invalid Action'));
     }
     
     if(!Gdn::Session()->CheckPermission($Action->Permission)) {
@@ -62,13 +62,13 @@ class ReactController extends Gdn_Controller {
       $Anchor = '#Discussion_' . $DiscussionID . ' .ReactMenu';
     }
     else {
-      throw new Gdn_UserException('Invalid ID');
+      throw new Gdn_UserException(T('Invalid ID'));
     }
     
     $UserID = Gdn::Session()->UserID;
     
     if($Discussion->InsertUserID == $UserID) {
-      throw new Gdn_UserException('You cannot react to your own content.');
+      throw new Gdn_UserException(T('You cannot react to your own content.'));
     }
 
     // It has passed through the gauntlet
@@ -93,7 +93,7 @@ class ReactController extends Gdn_Controller {
     
     // Make sure the action exists and the user is allowed to react    
     if(!$Action) {
-      throw new Gdn_UserException('Invalid Action');
+      throw new Gdn_UserException(T('Invalid Action'));
     }
     
     if(!Gdn::Session()->CheckPermission($Action->Permission)) {
@@ -107,13 +107,13 @@ class ReactController extends Gdn_Controller {
       $Anchor = '#Comment_' . $CommentID . ' .ReactMenu';
     }
     else {
-      throw new Gdn_UserException('Invalid ID');
+      throw new Gdn_UserException(T('Invalid ID'));
     }
     
     $UserID = Gdn::Session()->UserID;
     
     if($Comment->InsertUserID == $UserID) {
-      throw new Gdn_UserException('You cannot react to your own content.');
+      throw new Gdn_UserException(T('You cannot react to your own content.'));
     }
 
     // It has passed through the gauntlet
@@ -138,7 +138,7 @@ class ReactController extends Gdn_Controller {
     
     // Make sure the action exists and the user is allowed to react    
     if(!$Action) {
-      throw new Gdn_UserException('Invalid Action');
+      throw new Gdn_UserException(T('Invalid Action'));
     }
     
     if(!Gdn::Session()->CheckPermission($Action->Permission)) {
@@ -152,13 +152,13 @@ class ReactController extends Gdn_Controller {
       $Anchor = '#Activity_' . $ActivityID . ' .ReactMenu';
     }
     else {
-      throw new Gdn_UserException('Invalid ID');
+      throw new Gdn_UserException(T('Invalid ID'));
     }
     
     $UserID = Gdn::Session()->UserID;
     
     if($Activity['ActivityUserID'] == $UserID) {
-      throw new Gdn_UserException('You cannot react to your own content.');
+      throw new Gdn_UserException(T('You cannot react to your own content.'));
     }
 
     // It has passed through the gauntlet

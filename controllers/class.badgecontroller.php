@@ -40,7 +40,7 @@ class BadgeController extends DashboardController {
     $this->Permission('Yaga.Badges.Manage');
     $this->AddSideMenu('badge/settings');
 
-    $this->Title('Manage Badges');
+    $this->Title(T('Manage Badges'));
 
     // Get list of badges from the model and pass to the view
     $this->SetData('Badges', $this->BadgeModel->GetBadges());
@@ -62,7 +62,7 @@ class BadgeController extends DashboardController {
 
     // Only allow editing if some rules exist
     if(!RulesController::GetRules()) {
-      throw new Gdn_UserException('You cannot add or edit badges without rules!');
+      throw new Gdn_UserException(T('You cannot add or edit badges without rules!'));
     }
 
     $Edit = FALSE;
@@ -111,10 +111,10 @@ class BadgeController extends DashboardController {
       $this->Form->SetFormValue('RuleCriteria', $SerializedCriteria);
       if($this->Form->Save()) {
         if($Edit) {
-          $this->InformMessage('Badge updated successfully!');
+          $this->InformMessage(T('Badge updated successfully!'));
         }
         else {
-          $this->InformMessage('Badge added successfully!');
+          $this->InformMessage(T('Badge added successfully!'));
         }
         Redirect('/yaga/badge/settings');
       }
@@ -153,7 +153,7 @@ class BadgeController extends DashboardController {
    */
   public function Toggle($BadgeID) {
     if(!$this->Request->IsPostBack()) {
-      throw PermissionException('Javascript');
+      throw new Gdn_UserException(T('That must be done via Javascript'));
     }
     $this->Permission('Yaga.Badges.Manage');
     $this->AddSideMenu('badge/settings');
@@ -216,7 +216,7 @@ class BadgeController extends DashboardController {
 
     // Only allow awarding if some badges exist
     if(!$this->BadgeModel->GetBadgeCount()) {
-      throw ForbiddenException('award badges without any badges defined');
+      throw new Gdn_UserException(T('You cannot award badges without any badges defined.'));
     }
 
     $UserModel = Gdn::UserModel();

@@ -145,7 +145,7 @@ class RankModel extends Gdn_Model {
             'RecordType' => 'Rank',
             'RecordID' => $RankID,
             'Route' => '/ranks/detail/' . $Rank->RankID . '/' . Gdn_Format::Url($Rank->Name),
-            'HeadlineFormat' => '{RegardingUserID,You} have been promoted to {Data.Name,text}.',
+            'HeadlineFormat' => T('Yaga.HeadlineFormat.Promoted', '{RegardingUserID,You} have been promoted to {Data.Name,text}.'),
             'Data' => array(
                'Name' => $Rank->Name
             ),

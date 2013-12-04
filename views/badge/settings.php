@@ -4,20 +4,20 @@
 $Rules = $this->Data('Rules');
 
 echo Wrap($this->Title(), 'h1');
-echo Wrap(Wrap('Add or edit the available badges that can be earned.', 'div'), 'div', array('class' => 'Wrap'));
-echo Wrap(Anchor('Add Badge', 'yaga/badge/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
+echo Wrap(Wrap(T('Add or edit the available badges that can be earned.'), 'div'), 'div', array('class' => 'Wrap'));
+echo Wrap(Anchor(T('Add Badge'), 'yaga/badge/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
 
 ?>
 <table id="Badges" class="AltRows">
   <thead>
     <tr>
-      <th>Image</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Rule</th>
-      <th>Award Value</th>
-      <th>Active</th>
-      <th>Options</th>
+      <th><?php echo T('Image'); ?></th>
+      <th><?php echo T('Name'); ?></th>
+      <th><?php echo T('Description'); ?></th>
+      <th><?php echo T('Rule'); ?></th>
+      <th><?php echo T('Award Value'); ?></th>
+      <th><?php echo T('Active'); ?></th>
+      <th><?php echo T('Options'); ?></th>
     </tr>
   </thead>
   <tbody>

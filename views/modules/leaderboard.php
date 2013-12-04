@@ -2,7 +2,7 @@
 /* Copyright 2013 Zachary Doll */
 
 echo '<div class="Box Leaderboard">';
-echo '<h4>' . T($this->Title) . '</h4>';
+echo '<h4>' . $this->Title . '</h4>';
 echo '<ul class="PanelInfo">';
 foreach($this->Data as $Leader) {
  

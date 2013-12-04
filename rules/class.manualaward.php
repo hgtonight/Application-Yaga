@@ -23,14 +23,12 @@ class ManualAward implements YagaRule {
   }
   
   public function Description() {
-    $Description = 'This rule will <strong>never</strong> be awarded <em>automatically</em> and should be kept disabled. Use it for custom badges you want to hand out manually.';
+    $Description = T('This rule will <strong>never</strong> be awarded <em>automatically</em> and should be kept disabled. Use it for badges you want to hand out manually.');
     return $Description;
     
   }
   
   public function Name() {
-    return 'Manual Award';
+    return T('Manual Award');
   }
 }
-
-?>

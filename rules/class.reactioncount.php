@@ -36,8 +36,8 @@ class ReactionCount implements YagaRule{
       $Reactions[$Action->ActionID] = $Action->Name;
     }
     
-    $String = $Form->Label('Total reactions', 'ReactionCount');
-    $String .= 'User has ';
+    $String = $Form->Label(T('Total reactions'), 'ReactionCount');
+    $String .= T('User has ');
     $String .= $Form->Textbox('Target');
     $String .= $Form->DropDown('ActionID', $Reactions);
     
@@ -49,14 +49,12 @@ class ReactionCount implements YagaRule{
   }
   
   public function Description() {
-    $Description = 'This rule checks a users reaction count against the target. It will return true once the user has as many or more than the given reactions count.';
+    $Description = T('This rule checks a users reaction count against the target. It will return true once the user has as many or more than the given reactions count.');
     return $Description;
     
   }
   
   public function Name() {
-    return 'Reaction Count Total';
+    return T('Reaction Count Total');
   }
 }
-
-?>

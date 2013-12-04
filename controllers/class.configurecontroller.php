@@ -55,7 +55,7 @@ class ConfigureController extends DashboardController {
       'Yaga.LeaderBoard.Limit' => array('LabelCode' => 'Maximum number of leaders to show', 'Control' => 'Textbox', 'Options' => array('Size' => 45, 'class' => 'SmallInput'))
     ));
     $this->AddSideMenu('configure');
-    $this->SetData('Title', 'Gamification Settings');
+    $this->Title(T('Yaga.Settings', 'Gamification Settings'));
     $this->ConfigurationModule = $ConfigModule;
     $ConfigModule->RenderAll();
   }

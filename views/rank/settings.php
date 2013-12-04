@@ -2,20 +2,20 @@
 /* Copyright 2013 Zachary Doll */
 
 echo Wrap($this->Title(), 'h1');
-echo Wrap(Wrap('Add or edit the available ranks that can be earned.', 'div'), 'div', array('class' => 'Wrap'));
-echo Wrap(Anchor('Add Rank', 'yaga/rank/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
+echo Wrap(Wrap(T('Add or edit the available ranks that can be earned.'), 'div'), 'div', array('class' => 'Wrap'));
+echo Wrap(Anchor(T('Add Rank'), 'yaga/rank/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
 
 ?>
 <table id="Actions" class="AltRows">
   <thead>
     <tr>
-      <th>Image</th>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Points Required</th>
-      <th>Permission Award</th>
-      <th>Auto Award</th>
-      <th>Options</th>
+      <th><?php echo T('Image'); ?></th>
+      <th><?php echo T('Name'); ?></th>
+      <th><?php echo T('Description'); ?></th>
+      <th><?php echo T('Points Required'); ?></th>
+      <th><?php echo T('Permission Award'); ?></th>
+      <th><?php echo T('Auto Award'); ?></th>
+      <th><?php echo T('Options'); ?></th>
     </tr>
   </thead>
   <tbody>

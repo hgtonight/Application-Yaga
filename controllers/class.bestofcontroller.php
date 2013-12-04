@@ -42,7 +42,7 @@ class BestOfController extends Gdn_Controller {
     $Module->Selector = 'Score';
     
     $this->SetData('Module', $Module);
-    $this->Title(T('Best Of'));
+    $this->Title(T('Best Of...'));
     $this->Render('all');
   }
 }

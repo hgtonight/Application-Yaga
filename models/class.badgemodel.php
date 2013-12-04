@@ -188,7 +188,7 @@ class BadgeModel extends Gdn_Model {
             'RecordType' => 'Badge',
             'RecordID' => $BadgeID,
             'Route' => '/badges/detail/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name),
-            'HeadlineFormat' => '{RegardingUserID,You} earned the <a href="{Url,html}">{Data.Name,text}</a> badge.',
+            'HeadlineFormat' => T('Yaga.HeadlineFormat.BadgeEarned', '{RegardingUserID,You} earned the <a href="{Url,html}">{Data.Name,text}</a> badge.'),
             'Data' => array(
                'Name' => $Badge->Name
             ),

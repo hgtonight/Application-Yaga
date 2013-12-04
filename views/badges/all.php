@@ -14,7 +14,7 @@ foreach($this->Data('Badges') as $Badge) {
   
   if($Badge->UserID == Gdn::Session()->UserID) {
     $ReadClass = '';
-    $AwardDescription = 'You earned this badge ' . Gdn_Format::Date($Badge->DateInserted, 'html') . ' from ' . $Badge->InsertUserName;
+    $AwardDescription = T('You earned this badge ') . Gdn_Format::Date($Badge->DateInserted, 'html') . T(' from ') . $Badge->InsertUserName;
     if($Badge->Reason) {
       $AwardDescription .= ': "' . $Badge->Reason . '"';
     }

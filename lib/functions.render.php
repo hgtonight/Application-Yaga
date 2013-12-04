@@ -13,7 +13,7 @@
  * @param bool $Echo Should it be echoed?
  * @return mixed String if $Echo is false, TRUE otherwise
  */
-if(!function_exists('RenderActions')) {
+if(!function_exists('RenderReactions')) {
 
   function RenderReactions($ID, $Type, $Echo = TRUE) {
     $Reactions = Yaga::ReactionModel()->GetAllReactions($ID, $Type);
@@ -46,7 +46,7 @@ if(!function_exists('RenderActions')) {
  * @param int $ID
  * @param enum $Type 'discussion', 'activity', or 'comment'
  */
-if(!function_exists('RenderActions')) {
+if(!function_exists('RenderReactionRecord')) {
 
   function RenderReactionRecord($ID, $Type) {
     $Reactions = Yaga::ReactionModel()->GetAllReactions($ID, $Type);

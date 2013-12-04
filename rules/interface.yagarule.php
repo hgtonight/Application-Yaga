@@ -47,4 +47,3 @@ interface YagaRule {
    */
   public function Description();
 }
-?>

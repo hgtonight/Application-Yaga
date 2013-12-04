@@ -101,10 +101,10 @@ class RankController extends DashboardController {
 
       if($this->Form->Save()) {
         if($Edit) {
-          $this->InformMessage('Rank updated successfully!');
+          $this->InformMessage(T('Rank updated successfully!'));
         }
         else {
-          $this->InformMessage('Rank added successfully!');
+          $this->InformMessage(T('Rank added successfully!'));
         }
         Redirect('/yaga/rank/settings');
       }
@@ -206,7 +206,7 @@ class RankController extends DashboardController {
 
     // Only allow awarding if some ranks exist
     if(!$this->RankModel->GetRankCount()) {
-      throw ForbiddenException('award ranks without any ranks defined');
+      throw new Gdn_UserException(T('You cannot promote users without any ranks defined.'));
     }
 
     $UserModel = Gdn::UserModel();
