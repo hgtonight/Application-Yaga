@@ -68,15 +68,10 @@ class RankController extends DashboardController {
       $this->Title(T('Yaga.EditRank'));
     }
     
-     // Load up all permissions
-    $PermissionModel = new PermissionModel();
-    $Permissions = $PermissionModel->PermissionColumns();
-    unset($Permissions['PermissionID']);
-    $PermissionKeys = array_keys($Permissions);
-    $PermissionList = array_combine($PermissionKeys, $PermissionKeys);
-    $this->SetData('Permissions', $PermissionList);
-    
-    //$this->SetData('PermissionData', $Permissions, true);
+     // Load up all roles
+    $RoleModel = new RoleModel();
+    $Roles = $RoleModel->GetArray();
+    $this->SetData('Roles', $Roles);
     
     if($this->Form->IsPostBack() == FALSE) {
       if(property_exists($this, 'Rank')) {

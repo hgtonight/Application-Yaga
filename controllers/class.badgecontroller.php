@@ -67,9 +67,13 @@ class BadgeController extends DashboardController {
 
     $Edit = FALSE;
     if($BadgeID) {
+      $this->Title(T('Yaga.EditBadge'));
       $this->Badge = $this->BadgeModel->GetBadge($BadgeID);
       $this->Form->AddHidden('BadgeID', $BadgeID);
       $Edit = TRUE;
+    }
+    else {
+      $this->Title(T('Yaga.AddBadge'));
     }
 
     if($this->Form->IsPostBack() == FALSE) {

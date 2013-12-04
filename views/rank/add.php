@@ -3,23 +3,10 @@
 
 echo Wrap($this->Title(), 'h1');
 
-echo $this->Form->Open(array('enctype' => 'multipart/form-data', 'class' => 'Rank'));
+echo $this->Form->Open();
 echo $this->Form->Errors();
 ?>
 <ul>
-  <li>
-    <?php
-    echo $this->Form->Label('Photo', 'PhotoUpload');
-    $Photo = $this->Form->GetValue('Photo');
-    if($Photo) {
-      echo Img(Gdn_Upload::Url($Photo));
-      echo '<br />'.Anchor(T('Delete Photo'), 
-        CombinePaths(array('rank/deletephoto', $this->Rank->RankID, Gdn::Session()->TransientKey())), 
-      'SmallButton Danger PopConfirm');
-    }
-    echo $this->Form->Input('PhotoUpload', 'file');
-    ?>
-  </li>
   <li>
     <?php
     echo $this->Form->Label('Name', 'Name');
@@ -34,14 +21,14 @@ echo $this->Form->Errors();
   </li>
   <li>
     <?php
-    echo $this->Form->Label('Permission Award', 'Permission');
-    echo $this->Form->Dropdown('Permission', $this->Data('Permissions'), array('IncludeNULL' => TRUE));
+    echo $this->Form->Label('Role Award', 'Role');
+    echo $this->Form->Dropdown('Role', $this->Data('Roles'), array('IncludeNULL' => TRUE));
     ?>
   </li>
   <li>
     <?php
-    echo $this->Form->Label('Points Required', 'PointsRequired');
-    echo $this->Form->TextBox('PointsRequired');
+    echo $this->Form->Label('Points Required', 'Level');
+    echo $this->Form->TextBox('Level');
     ?>
   </li>
   <li>

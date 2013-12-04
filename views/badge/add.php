@@ -3,16 +3,14 @@
 
 // Gnab the rules so we can render the first criteria form by default
 $Rules = RulesController::GetRules();
+$RuleClass = key($Rules);
 
+// Use the defined rule class if we are editing
 if(property_exists($this, 'Badge')) {
-  echo Wrap(T('Yaga.EditBadge'), 'h1');
   $RuleClass = $this->Badge->RuleClass;
 }
-else {
-  echo Wrap(T('Yaga.AddBadge'), 'h1');
-  reset($Rules);
-  $RuleClass = key($Rules);
-}
+
+echo Wrap($this->Title(), 'h1');
 
 echo $this->Form->Open(array('enctype' => 'multipart/form-data', 'class' => 'Badge'));
 echo $this->Form->Errors();

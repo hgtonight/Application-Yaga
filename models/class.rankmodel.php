@@ -36,7 +36,7 @@ class RankModel extends Gdn_Model {
       self::$_Ranks = $this->SQL
               ->Select()
               ->From('Rank')
-              ->OrderBy('PointsRequired')
+              ->OrderBy('Level')
               ->Get()
               ->Result();
     }
@@ -53,7 +53,7 @@ class RankModel extends Gdn_Model {
               ->Select()
               ->From('Rank')
               ->Where('Enabled', TRUE)
-              ->OrderBy('PointsRequired')
+              ->OrderBy('Level')
               ->Get()
               ->Result();
   }
@@ -134,17 +134,16 @@ class RankModel extends Gdn_Model {
         
       $OldRank = $this->GetRank($User->RankID);
       
-      if($OldRank->PointsRequired <= $NewRank->PointsRequired) {
+      if($OldRank->Level <= $NewRank->Level) {
         $ActivityModel = new ActivityModel();
         
         $Activity = array(
             'ActivityType' => 'RankPromotion',
             'ActivityUserID' => Gdn::Session()->UserID,
             'RegardingUserID' => $UserID,
-            'Photo' => '/uploads/' . $Rank->Photo,
+            'Photo' => C('Yaga.Rank.PromotionPhoto'),
             'RecordType' => 'Rank',
             'RecordID' => $RankID,
-            'Route' => '/ranks/detail/' . $Rank->RankID . '/' . Gdn_Format::Url($Rank->Name),
             'HeadlineFormat' => T('Yaga.HeadlineFormat.Promoted'),
             'Data' => array(
                'Name' => $Rank->Name

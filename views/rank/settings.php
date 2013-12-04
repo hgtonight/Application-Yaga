@@ -9,7 +9,6 @@ echo Wrap(Anchor(T('Yaga.AddRank'), 'yaga/rank/add', array('class' => 'SmallButt
 <table id="Actions" class="AltRows">
   <thead>
     <tr>
-      <th><?php echo T('Image'); ?></th>
       <th><?php echo T('Name'); ?></th>
       <th><?php echo T('Description'); ?></th>
       <th><?php echo T('Points Required'); ?></th>
@@ -24,17 +23,10 @@ echo Wrap(Anchor(T('Yaga.AddRank'), 'yaga/rank/add', array('class' => 'SmallButt
     foreach($this->Data('Ranks') as $Rank) {
       $Alt = $Alt ? '' : 'Alt';
       $Row = '';
-      // TODO: Show image in pop up rather than linking to it
-      if($Rank->Photo) {
-        $Row .= Wrap(Anchor(Img(Gdn_Upload::Url($Rank->Photo), array('class' => 'RankPhoto')), Gdn_Upload::Url($Rank->Photo)), 'td');
-      }
-      else {
-        $Row .= Wrap(T('None'), 'td');
-      }
       $Row .= Wrap($Rank->Name, 'td');
       $Row .= Wrap($Rank->Description, 'td');
-      $Row .= Wrap($Rank->PointsRequired, 'td');
-      $Row .= Wrap($Rank->Permission, 'td');
+      $Row .= Wrap($Rank->Level, 'td');
+      $Row .= Wrap($Rank->Role, 'td');
       $ToggleText = ($Rank->Enabled) ? T('Enabled') : T('Disabled');
       $ActiveClass = ($Rank->Enabled) ? 'Active' : 'InActive';
       $Row .= Wrap(Wrap(Anchor($ToggleText, 'yaga/rank/toggle/' . $Rank->RankID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
