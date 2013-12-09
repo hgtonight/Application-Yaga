@@ -158,7 +158,7 @@ class RankController extends DashboardController {
 
     $Slider = Wrap(Wrap(Anchor($ToggleText, 'yaga/rank/toggle/' . $Rank->RankID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
     $this->RankModel->EnableRank($RankID, $Enable);
-    $this->JsonTarget('#RankID_' . $RankID . ' td:nth-child(7)', $Slider, 'ReplaceWith');
+    $this->JsonTarget('#RankID_' . $RankID . ' td:nth-child(5)', $Slider, 'ReplaceWith');
     $this->Render('Blank', 'Utility', 'Dashboard');
   }
 

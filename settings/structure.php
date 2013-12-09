@@ -71,7 +71,7 @@ $Construct->Table('Rank')
 // Tracks the current rank a user has
 $Construct->Table('User')
         ->Column('CountBadges', 'int', 0)
-        ->Column('RankID', 'int', 0)
+        ->Column('RankID', 'int', TRUE)
         ->Set();
 
 // Add activity types for Badge and Rank awards

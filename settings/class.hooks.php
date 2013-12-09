@@ -60,16 +60,16 @@ class YagaHooks implements Gdn_IPlugin {
 
     echo Wrap($String, 'div', array('class' => 'DataCounts'));
   }
-  
+
   /**
    * Add the badge count into the user info module
-   * 
+   *
    * @param UserInfoModule $Sender
    */
   public function UserInfoModule_OnBasicInfo_Handler($Sender) {
     $UserID = $Sender->User->UserID;
     $BadgeCount = Yaga::BadgeModel()->GetUserBadgeAwardCount($UserID);
-    echo '<dt class="Badges">'. T('Yaga.Badges', 'Badges') .'</dt> ';
+    echo '<dt class="Badges">' . T('Yaga.Badges', 'Badges') . '</dt> ';
     echo '<dd class="Badges">' . $BadgeCount . '</dd>';
   }
 
@@ -86,225 +86,295 @@ class YagaHooks implements Gdn_IPlugin {
    */
   public function ProfileController_Reactions_Create($Sender, $UserReference = '', $Username = '', $ActionID = '', $Page = '', $UserID = '') {
     $Expiry = 60;
-    
+
     $Sender->EditMode(FALSE);
 
     // Tell the ProfileController what tab to load
-	$Sender->GetUserInfo($UserReference, $Username, $UserID);
+    $Sender->GetUserInfo($UserReference, $Username, $UserID);
     $Sender->_SetBreadcrumbs(T('Yaga.Reactions'), UserUrl($Sender->User, '', 'reactions'));
     $Sender->SetTabView(T('Yaga.Reactions'), 'reactions', 'profile', 'Yaga');
-    
+
     $Sender->AddJsFile('jquery.expander.js');
     $Sender->AddJsFile('reactions.js', 'yaga');
     $Sender->AddDefinition('ExpandText', T('(more)'));
     $Sender->AddDefinition('CollapseText', T('(less)'));
-      
+
     $PageSize = Gdn::Config('Vanilla.Discussions.PerPage', 30);
     list($Offset, $Limit) = OffsetLimit($Page, $PageSize);
 
+    // TODO make the model handle caching
     // Check cache
     $CacheKey = "yaga.profile.reactions.{$ActionID}";
     $Content = Gdn::Cache()->Get($CacheKey);
-      
-      if ($Content == Gdn_Cache::CACHEOP_FAILURE) {
-         
-         // Get matching Discussions
-        $Type = 'discussion';
-         $Discussions = Gdn::SQL()->Select('d.*')
-            ->From('Discussion d')
-                 ->Join('Reaction r', 'd.DiscussionID = r.ParentID')
-            //->Where('r.ParentAuthorID', $UserReference)
-                 ->Where('d.InsertUserID', $UserReference)
-                 ->Where('r.ActionID', $ActionID)
-            //     ->Where('r.ParentType', $Type)
-            ->OrderBy('r.DateInserted', 'DESC')
-            ->Limit($Limit)
-             ->Get()->Result(DATASET_TYPE_ARRAY);
 
-         // Get matching Comments
-         $Comments = Gdn::SQL()->Select('c.*')
-            ->From('Comment c')
-                 ->Join('Reaction r', 'c.CommentID = r.ParentID')
-            //->Where('r.ParentAuthorID', 'c.InsertUserID')
-            //     ->Where('r.ParentType', '\'comment\'')
-                 ->Where('c.InsertUserID', $UserReference)
-                 ->Where('r.ActionID', $ActionID)
-            //     ->Where('r.ParentType', $Type)
-            ->OrderBy('r.DateInserted', 'DESC')
-            ->Limit($Limit)
-             ->Get()->Result(DATASET_TYPE_ARRAY);
-         
-         $this->JoinCategory($Comments);
-         
-         // Interleave
-         $Content = $this->Union('DateInserted', array(
-            'Discussion'   => $Discussions, 
-            'Comment'      => $Comments
-         ));
-         $this->Prepare($Content);
-         
-         // Add result to cache
-         Gdn::Cache()->Store($CacheKey, $Content, array(
-            Gdn_Cache::FEATURE_EXPIRY  => $Expiry
-         ));
-      }
-      
-      $this->Security($Content);
-      $this->Condense($Content, $Limit);
+    if($Content == Gdn_Cache::CACHEOP_FAILURE) {
+
+      // Get matching Discussions
+      $Type = 'discussion';
+      $Discussions = Gdn::SQL()->Select('d.*')
+                      ->From('Discussion d')
+                      ->Join('Reaction r', 'd.DiscussionID = r.ParentID')
+                      //->Where('r.ParentAuthorID', $UserReference)
+                      ->Where('d.InsertUserID', $UserReference)
+                      ->Where('r.ActionID', $ActionID)
+                      //     ->Where('r.ParentType', $Type)
+                      ->OrderBy('r.DateInserted', 'DESC')
+                      ->Limit($Limit)
+                      ->Get()->Result(DATASET_TYPE_ARRAY);
+
+      // Get matching Comments
+      $Comments = Gdn::SQL()->Select('c.*')
+                      ->From('Comment c')
+                      ->Join('Reaction r', 'c.CommentID = r.ParentID')
+                      //->Where('r.ParentAuthorID', 'c.InsertUserID')
+                      //     ->Where('r.ParentType', '\'comment\'')
+                      ->Where('c.InsertUserID', $UserReference)
+                      ->Where('r.ActionID', $ActionID)
+                      //     ->Where('r.ParentType', $Type)
+                      ->OrderBy('r.DateInserted', 'DESC')
+                      ->Limit($Limit)
+                      ->Get()->Result(DATASET_TYPE_ARRAY);
+
+      $this->JoinCategory($Comments);
+
+      // Interleave
+      $Content = $this->Union('DateInserted', array(
+          'Discussion' => $Discussions,
+          'Comment' => $Comments
+      ));
+      $this->Prepare($Content);
+
+      // Add result to cache
+      Gdn::Cache()->Store($CacheKey, $Content, array(
+          Gdn_Cache::FEATURE_EXPIRY => $Expiry
+      ));
+    }
+
+    $this->Security($Content);
+    $this->Condense($Content, $Limit);
 
     // Deliver JSON data if necessary
-    if ($Sender->DeliveryType() != DELIVERY_TYPE_ALL && $Offset > 0) {
-       $Sender->SetJson('LessRow', $Sender->Pager->ToString('less'));
-       $Sender->SetJson('MoreRow', $Sender->Pager->ToString('more'));
-       $Sender->View = 'reactions';
+    if($Sender->DeliveryType() != DELIVERY_TYPE_ALL && $Offset > 0) {
+      $Sender->SetJson('LessRow', $Sender->Pager->ToString('less'));
+      $Sender->SetJson('MoreRow', $Sender->Pager->ToString('more'));
+      $Sender->View = 'reactions';
     }
 
     $Sender->SetData('Content', $Content);
-    
+
     // Set the HandlerType back to normal on the profilecontroller so that it fetches it's own views
     $Sender->HandlerType = HANDLER_TYPE_NORMAL;
 
     // Do not show discussion options
     $Sender->ShowOptions = FALSE;
 
-    if ($Sender->Head) {
-       $Sender->Head->AddTag('meta', array('name' => 'robots', 'content' => 'noindex,noarchive'));
+    if($Sender->Head) {
+      $Sender->Head->AddTag('meta', array('name' => 'robots', 'content' => 'noindex,noarchive'));
     }
 
     // Render the ProfileController
     $Sender->Render();
   }
-   
-   /**
-    * Attach CategoryID to Comments
-    * @todo move somewhere else
-    * @param array $Comments
-    */
-   protected function JoinCategory(&$Comments) {
-      $DiscussionIDs = array();
-      
-      foreach ($Comments as &$Comment) {
-         $DiscussionIDs[$Comment['DiscussionID']] = TRUE;
-      }
-      $DiscussionIDs = array_keys($DiscussionIDs);
-      
-      $Discussions = Gdn::SQL()->Select('d.*')
-         ->From('Discussion d')
-         ->WhereIn('DiscussionID', $DiscussionIDs)
-         ->Get()->Result(DATASET_TYPE_ARRAY);
-      
-      $DiscussionsByID = array();
-      foreach ($Discussions as $Discussion) {
-         $DiscussionsByID[$Discussion['DiscussionID']] = $Discussion;
-      }
-      unset(${$Discussions});
-      
-      foreach ($Comments as &$Comment) {
-         $Comment['Discussion'] = $DiscussionsByID[$Comment['DiscussionID']];
-         $Comment['CategoryID'] = GetValueR('Discussion.CategoryID', $Comment);
-      }
-   }
-   
-   /**
-    * Interleave two or more result arrays by a common field
-    * @todo move somewhere else
-    * @param string $Field
-    * @param array $Sections Array of result arrays
-    * @return array
-    */
-   protected function Union($Field, $Sections) {
-      if (!is_array($Sections)) return;
-      
-      $Interleaved = array();
-      foreach ($Sections as $SectionType => $Section) {
-         if (!is_array($Section)) continue;
-         
-         foreach ($Section as $Item) {
-            $ItemField = GetValue($Field, $Item);
-            $Interleaved[$ItemField] = array_merge($Item, array('ItemType' => $SectionType));
-            
-            ksort($Interleaved);
-         }
-      }
-      
-      $Interleaved = array_reverse($Interleaved);
-      return $Interleaved;
-   }
-   
-   /**
-    * Pre-process content into a uniform format for output
-    * @todo move somewhere else
-    * @param Array $Content By reference
-    */
-   protected function Prepare(&$Content) {
-      
-      foreach ($Content as &$ContentItem) {
-         $ContentType = GetValue('ItemType', $ContentItem);
-         
-         $Replacement = array();
-         $Fields = array('DiscussionID', 'CategoryID', 'DateInserted', 'DateUpdated', 'InsertUserID', 'Body', 'Format', 'ItemType');
-         
-         switch (strtolower($ContentType)) {
-            case 'comment':
-               $Fields = array_merge($Fields, array('CommentID'));
-               
-               // Comment specific
-               $Replacement['Name'] = GetValueR('Discussion.Name', $ContentItem);
-               break;
-            
-            case 'discussion':
-               $Fields = array_merge($Fields, array('Name', 'Type'));
-               break;
-         }
-         
-         $Fields = array_fill_keys($Fields, TRUE);
-         $Common = array_intersect_key($ContentItem, $Fields);
-         $Replacement = array_merge($Replacement, $Common);
-         $ContentItem = $Replacement;
-         
-         // Attach User
-         $UserID = GetValue('InsertUserID', $ContentItem);
-         $User = Gdn::UserModel()->GetID($UserID);
-         $ContentItem['Author'] = $User;
-      }
-   }
-   
-   /**
-    * Strip out content that this user is not allowed to see
-    * @todo move somewhere else
-    * @param array $Content Content array, by reference
-    */
-   protected function Security(&$Content) {
-      if (!is_array($Content)) return;
-      $Content = array_filter($Content, array($this, 'SecurityFilter'));
-   }
-   
-   protected function SecurityFilter($ContentItem) {
-      $CategoryID = GetValue('CategoryID', $ContentItem, NULL);
-      if (is_null($CategoryID) || $CategoryID === FALSE)
-         return FALSE;
 
-      $Category = CategoryModel::Categories($CategoryID);
-      $CanView = GetValue('PermsDiscussionsView', $Category);
-      if (!$CanView)
-         return FALSE;
-      
-      return TRUE;
-   }
-   
-   /**
-    * Condense an interleaved content list down to the required size
-    * @todo move somewhere else
-    * @param array $Content
-    * @param array $Limit
-    */
-   protected function Condense(&$Content, $Limit) {
-      $Content = array_slice($Content, 0, $Limit);
-   }
-  
+  /**
+   * Attach CategoryID to Comments
+   * @todo move somewhere else
+   * @param array $Comments
+   */
+  protected function JoinCategory(&$Comments) {
+    $DiscussionIDs = array();
+
+    foreach($Comments as &$Comment) {
+      $DiscussionIDs[$Comment['DiscussionID']] = TRUE;
+    }
+    $DiscussionIDs = array_keys($DiscussionIDs);
+
+    $Discussions = Gdn::SQL()->Select('d.*')
+                    ->From('Discussion d')
+                    ->WhereIn('DiscussionID', $DiscussionIDs)
+                    ->Get()->Result(DATASET_TYPE_ARRAY);
+
+    $DiscussionsByID = array();
+    foreach($Discussions as $Discussion) {
+      $DiscussionsByID[$Discussion['DiscussionID']] = $Discussion;
+    }
+    unset(${$Discussions});
+
+    foreach($Comments as &$Comment) {
+      $Comment['Discussion'] = $DiscussionsByID[$Comment['DiscussionID']];
+      $Comment['CategoryID'] = GetValueR('Discussion.CategoryID', $Comment);
+    }
+  }
+
+  /**
+   * Interleave two or more result arrays by a common field
+   * @todo move somewhere else
+   * @param string $Field
+   * @param array $Sections Array of result arrays
+   * @return array
+   */
+  protected function Union($Field, $Sections) {
+    if(!is_array($Sections))
+      return;
+
+    $Interleaved = array();
+    foreach($Sections as $SectionType => $Section) {
+      if(!is_array($Section))
+        continue;
+
+      foreach($Section as $Item) {
+        $ItemField = GetValue($Field, $Item);
+        $Interleaved[$ItemField] = array_merge($Item, array('ItemType' => $SectionType));
+
+        ksort($Interleaved);
+      }
+    }
+
+    $Interleaved = array_reverse($Interleaved);
+    return $Interleaved;
+  }
+
+  /**
+   * Pre-process content into a uniform format for output
+   * @todo move somewhere else
+   * @param Array $Content By reference
+   */
+  protected function Prepare(&$Content) {
+
+    foreach($Content as &$ContentItem) {
+      $ContentType = GetValue('ItemType', $ContentItem);
+
+      $Replacement = array();
+      $Fields = array('DiscussionID', 'CategoryID', 'DateInserted', 'DateUpdated', 'InsertUserID', 'Body', 'Format', 'ItemType');
+
+      switch(strtolower($ContentType)) {
+        case 'comment':
+          $Fields = array_merge($Fields, array('CommentID'));
+
+          // Comment specific
+          $Replacement['Name'] = GetValueR('Discussion.Name', $ContentItem);
+          break;
+
+        case 'discussion':
+          $Fields = array_merge($Fields, array('Name', 'Type'));
+          break;
+      }
+
+      $Fields = array_fill_keys($Fields, TRUE);
+      $Common = array_intersect_key($ContentItem, $Fields);
+      $Replacement = array_merge($Replacement, $Common);
+      $ContentItem = $Replacement;
+
+      // Attach User
+      $UserID = GetValue('InsertUserID', $ContentItem);
+      $User = Gdn::UserModel()->GetID($UserID);
+      $ContentItem['Author'] = $User;
+    }
+  }
+
+  /**
+   * Strip out content that this user is not allowed to see
+   * @todo move somewhere else
+   * @param array $Content Content array, by reference
+   */
+  protected function Security(&$Content) {
+    if(!is_array($Content))
+      return;
+    $Content = array_filter($Content, array($this, 'SecurityFilter'));
+  }
+
+  protected function SecurityFilter($ContentItem) {
+    $CategoryID = GetValue('CategoryID', $ContentItem, NULL);
+    if(is_null($CategoryID) || $CategoryID === FALSE)
+      return FALSE;
+
+    $Category = CategoryModel::Categories($CategoryID);
+    $CanView = GetValue('PermsDiscussionsView', $Category);
+    if(!$CanView)
+      return FALSE;
+
+    return TRUE;
+  }
+
+  /**
+   * Condense an interleaved content list down to the required size
+   * @todo move somewhere else
+   * @param array $Content
+   * @param array $Limit
+   */
+  protected function Condense(&$Content, $Limit) {
+    $Content = array_slice($Content, 0, $Limit);
+  }
+
+  public function UserModel_GivePoints_Handler($Sender) {
+    $UserID = $Sender->EventArguments['UserID'];
+    $UserModel = Gdn::UserModel();
+    $User = $UserModel->GetID($UserID);
+    $Points = $Sender->EventArguments['Points'];
+
+    $RankModel = Yaga::RankModel();
+
+    $Rank = $RankModel->GetRankByPoints($Points);
+
+    if($Rank && $Rank->RankID != $User->RankID) {
+      // Only promote automatically
+      $OldRank = $RankModel->GetID($User->RankID);
+      if($OldRank->Level <= $Rank->Level) {
+        // Throw up a promotion activity
+        $ActivityModel = new ActivityModel();
+
+        $Activity = array(
+            'ActivityType' => 'RankPromotion',
+            'ActivityUserID' => $UserID,
+            'RegardingUserID' => $UserID,
+            'Photo' => C('Yaga.Ranks.Photo'),
+            'RecordType' => 'Rank',
+            'RecordID' => $Rank->RankID,
+            'HeadlineFormat' => T('Yaga.HeadlineFormat.Promoted'),
+            'Data' => array(
+                'Name' => $Rank->Name
+            ),
+            'Story' => $Rank->Description
+        );
+
+        $ActivityModel->Queue($Activity);
+
+        // Notify the user of the award
+        $Activity['NotifyUserID'] = $UserID;
+        $Activity['Emailed'] = ActivityModel::SENT_PENDING;
+        $ActivityModel->Queue($Activity, 'Ranks', array('Force' => TRUE));
+
+        $ActivityModel->SaveQueue();
+
+        // Update the rank id
+        $UserModel->SetField($UserID, 'RankID', $Rank->RankID);
+
+        // Get the user's roles
+        $CurrentRoleData = $UserModel->GetRoles($UserID);
+        $CurrentRoleIDs = ConsolidateArrayValuesByKey($CurrentRoleData->Result(), 'RoleID');
+        
+        // Remove the old roles
+        $TempRoleIDs = array_diff($CurrentRoleIDs, array($OldRank->Role));
+
+        // Add our selected roles
+        $NewRoleIDs = array_unique(array_merge($TempRoleIDs, array($Rank->Role)));
+
+        // Set the combined roles
+        if($NewRoleIDs != $CurrentRoleIDs) {
+          $UserModel->SaveRoles($UserID, $NewRoleIDs);
+        }
+      }
+    }
+  }
+
+  /**
+   * Transparently inject the rank permissions a user has earned
+   *
+   */
+
   /**
    * Add the badge and rank notification options
-   * 
+   *
    * @param object $Sender
    */
   public function ProfileController_AfterPreferencesDefined_Handler($Sender) {
@@ -320,21 +390,21 @@ class YagaHooks implements Gdn_IPlugin {
   }
 
   /**
-   * Add the Award Badge option to the profile controller
+   * Add the Award Badge and Promote options to the profile controller
    *
    * @param object $Sender
    */
   public function ProfileController_BeforeProfileOptions_Handler($Sender) {
     if(Gdn::Session()->IsValid()) {
-      if(CheckPermission('Yaga.Badges.Add')) {
+      if(C('Yaga.Badges.Enabled') && CheckPermission('Yaga.Badges.Add')) {
         $Sender->EventArguments['ProfileOptions'][] = array(
             'Text' => Sprite('SpRibbon') . ' ' . T('Yaga.Badge.Award'),
             'Url' => '/badge/award/' . $Sender->User->UserID,
             'CssClass' => 'Popup'
         );
       }
-      
-      if(CheckPermission('Yaga.Ranks.Add')) {
+
+      if(C('Yaga.Ranks.Enabled') && CheckPermission('Yaga.Ranks.Add')) {
         $Sender->EventArguments['ProfileOptions'][] = array(
             'Text' => Sprite('SpModeratorActivities') . ' ' . T('Yaga.Rank.Promote'),
             'Url' => '/rank/promote/' . $Sender->User->UserID,
@@ -379,7 +449,7 @@ class YagaHooks implements Gdn_IPlugin {
     if(C('Yaga.Reactions.Enabled') == FALSE) {
       return;
     }
-    
+
     // check to see if allowed to add reactions
     if(!Gdn::Session()->CheckPermission('Yaga.Reactions.Add')) {
       return;
@@ -389,8 +459,17 @@ class YagaHooks implements Gdn_IPlugin {
     $Type = $Sender->EventArguments['RecordType'];
     $ID = $Sender->EventArguments['RecordID'];
 
+    if(array_key_exists('Author', $Sender->EventArguments)) {
+      $Author = $Sender->EventArguments['Author'];
+      $AuthorID = $Author->UserID;
+    }
+    else {
+      $Discussion = $Sender->EventArguments['Discussion'];
+      $AuthorID = $Discussion->InsertUserID;
+    }
+
     // Users shouldn't be able to react to their own content
-    if(Gdn::Session()->UserID != $Sender->EventArguments['Author']->UserID) {
+    if(Gdn::Session()->UserID != $AuthorID) {
       RenderReactions($ID, $Type);
     }
   }
@@ -446,10 +525,10 @@ class YagaHooks implements Gdn_IPlugin {
   public function CommentController_Render_Before($Sender) {
     $this->_AddResources($Sender);
   }
-  
+
   public function ActivityController_Render_Before($Sender) {
     $this->_AddResources($Sender);
-    
+
     if(C('Yaga.LeaderBoard.Enabled', FALSE)) {
       // add leaderboard modules to the activity page
       $Module = new LeaderBoardModule();
@@ -470,7 +549,7 @@ class YagaHooks implements Gdn_IPlugin {
   public function DiscussionModel_AfterSaveDiscussion_Handler($Sender) {
     $this->_AwardBadges($Sender, 'DiscussionModel_AfterSaveDiscussion');
   }
-  
+
   public function CommentModel_BeforeNotification_Handler($Sender) {
     $this->_AwardBadges($Sender, 'CommentModel_BeforeNotification');
   }
@@ -494,7 +573,7 @@ class YagaHooks implements Gdn_IPlugin {
   public function BadgeModel_AfterBadgeAward_Handler($Sender) {
     $this->_AwardBadges($Sender, 'BadgeModel_AfterBadgeAward');
   }
-  
+
   public function Base_AfterConnection_Handler($Sender) {
     $this->_AwardBadges($Sender, 'Base_AfterConnection');
   }
@@ -523,8 +602,7 @@ class YagaHooks implements Gdn_IPlugin {
 
     $Rules = array();
     foreach($Badges as $Badge) {
-      if($Badge->Enabled
-              && $Badge->UserID != $UserID) {
+      if($Badge->Enabled && $Badge->UserID != $UserID) {
         // The user doesn't have this badge
         $Class = $Badge->RuleClass;
         $Criteria = (object) unserialize($Badge->RuleCriteria);

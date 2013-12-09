@@ -73,6 +73,18 @@ class RankModel extends Gdn_Model {
                     ->FirstRow();
     return $Rank;
   }
+  
+  public function GetRankByPoints($Points) {
+    $Rank = $this->SQL
+                    ->Select()
+                    ->From('Rank')
+                    ->Where('Level <=', $Points)
+                    ->Where('Enabled', '1')
+                    ->OrderBy('Level', 'Desc')
+                    ->Get()
+                    ->FirstRow();
+    return $Rank;
+  }
 
   /**
    * Convenience function to determin if a rank id currently exists

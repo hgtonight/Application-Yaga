@@ -8,6 +8,7 @@ class Yaga {
 
   protected static $_ReactionModel = NULL;
   protected static $_BadgeModel = NULL;
+  protected static $_RankModel = NULL;
   
   /**
    * Get a reference to the reaction model
@@ -20,7 +21,7 @@ class Yaga {
       return self::$_ReactionModel;
    }
    
-   /**
+  /**
    * Get a reference to the badge model
    * @return ReactionModel
    */
@@ -29,5 +30,16 @@ class Yaga {
          self::$_BadgeModel = new BadgeModel();
       }
       return self::$_BadgeModel;
+   }
+   
+  /**
+   * Get a reference to the rank model
+   * @return RankModel
+   */
+  public static function RankModel() {
+      if (is_null(self::$_RankModel)) {
+         self::$_RankModel = new RankModel();
+      }
+      return self::$_RankModel;
    }
 }
