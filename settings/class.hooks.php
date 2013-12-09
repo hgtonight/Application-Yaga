@@ -306,7 +306,17 @@ class YagaHooks implements Gdn_IPlugin {
     $Content = array_slice($Content, 0, $Limit);
   }
 
+  /**
+   * Check for promotions on received points.
+   * 
+   * @param type $Sender
+   * @return type
+   */
   public function UserModel_GivePoints_Handler($Sender) {
+    // Don't check for promotions if we aren't using ranks
+    if(!C('Yaga.Ranks.Enabled')) {
+      return;
+    }
     $UserID = $Sender->EventArguments['UserID'];
     $UserModel = Gdn::UserModel();
     $User = $UserModel->GetID($UserID);
@@ -327,7 +337,7 @@ class YagaHooks implements Gdn_IPlugin {
             'ActivityType' => 'RankPromotion',
             'ActivityUserID' => $UserID,
             'RegardingUserID' => $UserID,
-            'Photo' => C('Yaga.Ranks.Photo'),
+            'Photo' => 'uploads' . DS . C('Yaga.Ranks.Photo'),
             'RecordType' => 'Rank',
             'RecordID' => $Rank->RankID,
             'HeadlineFormat' => T('Yaga.HeadlineFormat.Promoted'),

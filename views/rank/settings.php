@@ -2,6 +2,23 @@
 /* Copyright 2013 Zachary Doll */
 
 echo Wrap($this->Title(), 'h1');
+
+echo $this->Form->Open(array('enctype' => 'multipart/form-data', 'class' => 'Badge'));
+echo $this->Form->Errors();
+?>
+<div class="Aside">
+    <?php
+    echo $this->Form->Label('Photo', 'PhotoUpload');
+    $Photo = C('Yaga.Ranks.Photo');
+    if($Photo) {
+      echo Img(Gdn_Upload::Url($Photo));
+      echo '<br />'.Anchor(T('Delete Photo'), 'rank/deletephoto', 'SmallButton Danger PopConfirm');
+    }
+    echo $this->Form->Input('PhotoUpload', 'file');
+    echo $this->Form->Close('Save');
+?>
+</div> <?php
+
 echo Wrap(Wrap(T('Yaga.Ranks.Settings.Desc'), 'div'), 'div', array('class' => 'Wrap'));
 echo Wrap(Anchor(T('Yaga.AddRank'), 'yaga/rank/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
 

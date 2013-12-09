@@ -44,6 +44,27 @@ class RankController extends DashboardController {
 
     // Get list of ranks from the model and pass to the view
     $this->SetData('Ranks', $this->RankModel->GetRanks());
+    
+    if($this->Form->IsPostBack() == TRUE) {
+      // Handle the photo upload
+      $Upload = new Gdn_Upload();
+      $TmpImage = $Upload->ValidateUpload('PhotoUpload', FALSE);
+
+      if($TmpImage) {
+        // Generate the target image name
+        $TargetImage = $Upload->GenerateTargetName(PATH_UPLOADS);
+        $ImageBaseName = pathinfo($TargetImage, PATHINFO_BASENAME);
+
+        // Save the uploaded image
+        $Parts = $Upload->SaveAs($TmpImage, 'ranks/' . $ImageBaseName);
+
+        SaveToConfig('Yaga.Ranks.Photo', $Parts['SaveName']);
+        
+        if(C('Yaga.Ranks.Photo') == $Parts['SaveName']) {
+          $this->InformMessage(T('Yaga.Rank.PhotoUploaded'));
+        }
+      }
+    }
 
     $this->Render();
   }
