@@ -89,12 +89,6 @@
    margin: 5px 0;
    text-align: center;
 }
-/*.DataCounts a {
-   color: #000;
-}
-.DataCounts a:hover {
-   color: #ff0084;
-}*/
 .CountTotal {
    display: block;
    line-height: 100%;
@@ -140,67 +134,7 @@
     border: solid 2px rgba(55, 173, 227, .2);
     padding: 4px
 }
-li.Buried {
-    padding: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    cursor: pointer;
-}
-.Buried, .Buried a {
-    color: #aaa;
-    font-size: 12px;
-}
-.Buried .Author .ProfilePhoto {
-    height: 21px;
-    width: 21px;
-    margin: 0 3px 0 0;
-    opacity: .4;
-}
-.Buried .Reactions {
-    display: none;
-}
-li.Buried * {
-   display: inline;
-   margin: 0;
-   white-space: nowrap;
-   padding-top: 0;
-   padding-bottom: 0;
-}
-.Buried br {
-   display: none;
-}
-.Buried .Item-BodyWrap,
-.Buried .Options,
-.Buried .Signature,
-.Buried .RecordReactions {
-    display: none;
-}
-li.Buried:hover:before {
-    content: "Post is buried, click here to show the rest.";
-    display: block;
-    position: absolute;
-    background: rgba(0,0,0,.75);
-    color: #fff;
-    text-shadow: 0 1px 1px #000;
-    width: 100%;
-    height: 100%;
-    left: 0;
-    top: 0;
-    text-align: center;
-    vertical-align: middle;
-    line-height: 40px; /* approx, could cause problems */
-}
-/*.Promoted {
-    box-shadow: inset 0 80px 600px #fffcdc;
-    border-top: solid 1px #fff;
-}
-.Promoted .Message {
-    font-size: 110%;
-}
-.Promoted .Author .ProfilePhotoMedium {
-    box-shadow: 0px -1px 8px #fff;
-}*/
+
 /* Menu stuff */
 .Flyout.Flags {
     top: 25px;
@@ -278,104 +212,6 @@ li.Buried:hover:before {
 @media only screen and (device-width: 768px),
 only screen and (max-device-width: 480px) {
    .Item .Reactions > * { visibility: visible; }
-}
-
-/** Best of tiling stuff. **/
-
-.Tile {
-   float: left;
-   width: 278px;
-   border: solid 1px #ddd;
-   margin: 5px;
-   padding: 10px;
-   border-radius: 2px;
-   
-   -webkit-transition: opacity .3s ease-in-out;
-   -moz-transition: opacity .3s ease-in-out;
-   -o-transition: opacity .3s ease-in-out;
-   -ms-transition: opacity .3s ease-in-out;
-   transition: opacity .3s ease-in-out;
-}
-
-.Tile > h3 {
-   margin-top: 0;
-   line-height: 1.2;
-}
-
-.Tile .Image img,
-.Tile .Body img{
-   max-width: 100% !important;
-   float: none !important;
-   margin: 0 auto 10px !important;
-   display: block;
-}
-
-.Tile .AuthorWrap {
-   margin: 0 -10px -10px;
-   padding: 10px;
-   background: rgba(0,0,0,.03);
-}
-
-.Tile .AuthorWrap .ProfilePhoto {
-   height: 32px;
-   width: 32px;
-}
-
-.Tile .Reactions {
-   margin: 0;
-   line-height: 1.6;
-}
-
-.Tile .ReactButton {
-   position: relative;
-}
-
-.Tile .Message {
-   margin: 0;
-}
-
-.Tile .ReactLabel {
-   display: none;
-   background: #fff;
-   color: #000;
-   white-space: nowrap;
-   position: absolute;
-   line-height: 1;
-   padding: 3px 6px 4px;
-   left: -4px;
-   top: -23px;
-}
-
-.Tile .Reactions .Bullet,
-.Tile .Reactions .Count {
-   display: none;
-}
-
-/**** Transitions ****/
-
-.masonry,
-.masonry .masonry-brick {
-  -webkit-transition-duration: 0.7s;
-     -moz-transition-duration: 0.7s;
-      -ms-transition-duration: 0.7s;
-       -o-transition-duration: 0.7s;
-          transition-duration: 0.7s;
-}
-
-.masonry {
-  -webkit-transition-property: height, width;
-     -moz-transition-property: height, width;
-      -ms-transition-property: height, width;
-       -o-transition-property: height, width;
-          transition-property: height, width;
-}
-
-.masonry .masonry-brick {
-  -webkit-transition-property: left, right, top;
-     -moz-transition-property: left, right, top;
-      -ms-transition-property: left, right, top;
-       -o-transition-property: left, right, top;
-          transition-property: left, right, top;
 }
 
 /* Imported from style.css for backward compatibility */
@@ -482,53 +318,4 @@ input + .ReactSprite {
 /* Switch to bordered icons for user reaction overlays */
 .UserReactionWrap .ReactSprite {
    background-image: url('images/action-sprites-bordered.png');
-}
-
-/* Settings view */
-#ActionIcons {
-  width: 300px;
-}
-
-#ActionIcons img {
-  padding: 6px;
-  cursor: pointer;
-}
-
-#Actions li {
-  border: 1px solid #e0e0e0;
-  border-right: none;
-  cursor: move;
-  margin: -1px 0 0 -1px;
-  background-color: #ffffff;
-  padding: 10px;
-}
-
-#Actions li.Placeholder {
-  background-color: #cfcfcf; 
-}
-
-#Actions h4 {
-  padding: 0px;
-}
-
-#Actions .Action {
-  display: inline-block;
-}
-#Actions .Tools {
-  display: inline-block;
-  vertical-align: top;
-}
-.Reactions.Preview {
-  font-size: 14px;
-  margin-top: 10px;
-  text-align: left;
-}
-
-#AdvancedActionSettings {
-  cursor: pointer;
-}
-
-#AdvancedActionSettings span {
-  text-align: right;
-  width: 250px;
 }

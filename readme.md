@@ -3,7 +3,7 @@ Yet Another Gamification Application
 
 ## To Do
 
-* Use roles to as rank rewards
+* ~~Use ranks to use role rewards~~
 * Aggregate Rule Support
 * Add rules vino suggested (DiscussionPageLength, DiscussionBodyLength, PostReactionCount, PostReactionComboCount, CakeDay, Necroposting, ComboDateTimes)
 * Move badge count to user table column
@@ -11,7 +11,7 @@ Yet Another Gamification Application
 * Also show the reaction record
 * Rule tooltip help
 * Rework badge settings page to streamline badges of the same rule type
-* Figure out how to reduce the width of popups
+* ~~Figure out how to reduce the width of popups~~
 * ~~Fixed leaderboard module to support time windows~~
 * Create/find reusable badge images
 * Import/Export badges/reactions/ranks
@@ -20,4 +20,6 @@ Yet Another Gamification Application
 * Mention who gave you the badge on the badge detail page
 * Document
 * Finish inline ToDos
+* Refactor reaction CSS
+* Refactor all models to get rid of uneeded/duplicate methods
 * Best Of... Controller

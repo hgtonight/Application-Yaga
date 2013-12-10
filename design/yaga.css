@@ -1,5 +1,60 @@
 /* Copyright 2013 Zachary Doll */
+
+/* Panel Icon */
+/* TODO: Use my own icon? */
 #Panel div.Gamification h4 {
  background-position: 164px -841px; 
 }
 
+.Yaga div.Popup div.Body {
+  max-width: 300px;
+}
+
+/* Reaction Specific Settings view */
+#ActionIcons {
+  width: 255px;
+}
+
+#ActionIcons img {
+  padding: 6px;
+  cursor: pointer;
+}
+
+#Actions li {
+  border: 1px solid #e0e0e0;
+  border-right: none;
+  cursor: move;
+  margin: -1px 0 0 -1px;
+  background-color: #ffffff;
+  padding: 10px;
+}
+
+#Actions li.Placeholder {
+  background-color: #cfcfcf; 
+}
+
+#Actions h4 {
+  padding: 0px;
+}
+
+#Actions .Action {
+  display: inline-block;
+}
+#Actions .Tools {
+  display: inline-block;
+  vertical-align: top;
+}
+.Reactions.Preview {
+  font-size: 14px;
+  margin-top: 10px;
+  text-align: left;
+}
+
+#AdvancedActionSettings {
+  cursor: pointer;
+}
+
+#AdvancedActionSettings span {
+  text-align: right;
+  width: 250px;
+}
