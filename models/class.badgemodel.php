@@ -11,13 +11,13 @@
  */
 
 class BadgeModel extends Gdn_Model {
-  
+
   /**
    * Used as a cache
    * @var DataSet
    */
   private static $_Badges = NULL;
-  
+
   /**
    * Defines the related database table name.
    */
@@ -27,8 +27,8 @@ class BadgeModel extends Gdn_Model {
 
   /**
    * Returns a list of all badges
-   * 
-   * @return DataSet 
+   *
+   * @return DataSet
    */
   public function GetBadges() {
     if(empty(self::$_Badges)) {
@@ -41,7 +41,7 @@ class BadgeModel extends Gdn_Model {
     }
     return self::$_Badges;
   }
-  
+
   /**
    * Total number of badges in the system
    * @return int
@@ -52,7 +52,7 @@ class BadgeModel extends Gdn_Model {
 
   /**
    * Returns a list of currently enabled badges
-   * 
+   *
    * @return DataSet
    */
   public function GetEnabledBadges() {
@@ -64,10 +64,10 @@ class BadgeModel extends Gdn_Model {
               ->Get()
               ->Result();
   }
-  
+
   /**
    * Returns data for a specific badge
-   * 
+   *
    * @param int $BadgeID
    * @return DataSet
    */
@@ -83,7 +83,7 @@ class BadgeModel extends Gdn_Model {
 
   /**
    * Returns the last inserted badge
-   * 
+   *
    * @return DataSet
    */
   public function GetNewestBadge() {
@@ -95,13 +95,13 @@ class BadgeModel extends Gdn_Model {
                     ->FirstRow();
     return $Badge;
   }
-  
+
   public function GetBadgeAwardCount($BadgeID) {
     $Wheres = array('BadgeID' => $BadgeID);
     return $this->SQL
             ->GetCount('BadgeAward', $Wheres);
   }
-  
+
   public function GetRecentBadgeAwards($BadgeID, $Limit = 15) {
     return $this->SQL
             ->Select('ba.UserID, ba.DateInserted, u.Name, u.Photo, u.Gender, u.Email')
@@ -116,7 +116,7 @@ class BadgeModel extends Gdn_Model {
 
   /**
    * Convenience function to determin if a badge id currently exists
-   * 
+   *
    * @param int $BadgeID
    * @return bool
    */
@@ -127,7 +127,7 @@ class BadgeModel extends Gdn_Model {
 
   /**
    * Enable or disable a badge
-   * 
+   *
    * @param int $BadgeID
    * @param bool $Enable
    */
@@ -142,21 +142,52 @@ class BadgeModel extends Gdn_Model {
 
   /**
    * Remove a badge and associated awards
-   * 
+   *
    * @param int $BadgeID
    */
   public function DeleteBadge($BadgeID) {
-    if($this->BadgeExists($BadgeID)) {
-      $this->SQL->Delete('Badge', array('BadgeID' => $BadgeID));
-      $this->SQL->Delete('BadgeAward', array('BadgeID' => $BadgeID));
+    $Badge = $this->GetBadge($BadgeID);
+    if(!empty($Badge)) {
+      try {
+        $this->Database->BeginTransaction();
+        // Delete the badge
+        $this->SQL->Delete('Badge', array('BadgeID' => $BadgeID));
+
+        // Find the affected users
+        $UserIDSet = $this->SQL->Select('UserID')
+                ->From('BadgeAward')
+                ->Where('BadgeID', $BadgeID)
+                ->Get()
+                ->Result();
+
+        $UserIDs = ConsolidateArrayValuesByKey($UserIDSet, 'UserID');
+
+        // Decrement their badge count
+        $this->SQL->Update('User')
+                ->Set('CountBadges', 'CountBadges - 1', FALSE)
+                ->Where('UserID', $UserIDs)
+                ->Put();
+        
+        // Remove the award rows
+        $this->SQL->Delete('BadgeAward', array('BadgeID' => $BadgeID));
+        
+        $this->Database->CommitTransaction();
+      } catch(Exception $Ex) {
+        $this->Database->RollbackTransaction();
+        throw $Ex;
+      }
+      // Remove their points
+      foreach($UserIDs as $UserID) {
+        UserModel::GivePoints($UserID, -1 * $Badge->AwardValue, 'Badge');
+      }
       return TRUE;
     }
     return FALSE;
   }
-  
+
   /**
    * Award a badge to a user and record some activity
-   * 
+   *
    * @param int $BadgeID
    * @param int $UserID This is the user that should get the award
    * @param int $InsertUserID This is the user that gave the award
@@ -173,14 +204,20 @@ class BadgeModel extends Gdn_Model {
             'Reason' => $Reason,
             'DateInserted' => date(DATE_ISO8601)
         ));
-        
+
         // Record the points for this badge
         UserModel::GivePoints($UserID, $Badge->AwardValue, 'Badge');
-        
+
+        // Increment the user's badge count
+        $this->SQL->Update('User')
+         ->Set('CountBadges', 'CountBadges + 1', FALSE)
+         ->Where('UserID', $UserID)
+         ->Put();
+
         // Record some activity
         $Badge = $this->GetBadge($BadgeID);
         $ActivityModel = new ActivityModel();
-        
+
         $Activity = array(
             'ActivityType' => 'BadgeAward',
             'ActivityUserID' => Gdn::Session()->UserID,
@@ -195,26 +232,26 @@ class BadgeModel extends Gdn_Model {
             ),
             'Story' => $Badge->Description
          );
-         
+
          $ActivityModel->Queue($Activity);
-         
+
          // Notify the user of the award
          $Activity['NotifyUserID'] = $UserID;
          $Activity['Emailed'] = ActivityModel::SENT_PENDING;
          $ActivityModel->Queue($Activity, 'Badges', array('Force' => TRUE));
-         
+
          $ActivityModel->SaveQueue();
-         
+
          $this->EventArguments['UserID'] = $UserID;
          $this->FireEvent('AfterBadgeAward');
       }
-    } 
+    }
   }
-  
+
   /**
-   * Returns how many badges the user has of this particular id. It should only 
+   * Returns how many badges the user has of this particular id. It should only
    * ever be 1 or zero.
-   * 
+   *
    * @param int $UserID
    * @param int $BadgeID
    * @return int
@@ -227,10 +264,10 @@ class BadgeModel extends Gdn_Model {
             ->Where('UserID', $UserID)
             ->GetCount();
   }
-  
+
   /**
    * Returns the badges a user already has
-   * 
+   *
    * @param int $UserID
    * @return array
    */
@@ -244,10 +281,10 @@ class BadgeModel extends Gdn_Model {
             ->Get()
             ->FirstRow();
   }
-  
+
   /**
    * Returns the badges a user already has
-   * 
+   *
    * @param int $UserID
    * @return array
    */
@@ -260,7 +297,7 @@ class BadgeModel extends Gdn_Model {
             ->Get()
             ->Result(DATASET_TYPE_ARRAY);
   }
-  
+
   public function GetUserBadgeAwardCount($UserID) {
     return $this->SQL
             ->Select()
@@ -269,10 +306,10 @@ class BadgeModel extends Gdn_Model {
             ->Where('ba.UserID', $UserID)
             ->GetCount();
   }
-  
+
   /**
    * Returns the full list of badges and the associated user awards if applicable
-   * 
+   *
    * @param int $UserID
    * @return DataSet
    */
@@ -288,10 +325,10 @@ class BadgeModel extends Gdn_Model {
             ->OrderBy('b.BadgeID', 'Desc')
             ->Get();
   }
-  
+
   /**
    * Returns the list of unobtained but enabled badges for a specific user
-   * 
+   *
    * @param int $UserID
    * @param bool $Enabled Description
    * @return DataSet

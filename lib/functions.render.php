@@ -9,7 +9,7 @@
  * reactions an item has received
  *
  * @param int $ID
- * @param enum $Type 'discussion', 'activity', or 'comment'
+ * @param string $Type 'discussion', 'activity', or 'comment'
  * @param bool $Echo Should it be echoed?
  * @return mixed String if $Echo is false, TRUE otherwise
  */
@@ -44,7 +44,7 @@ if(!function_exists('RenderReactions')) {
 /**
  * Renders the reaction record for a specific item
  * @param int $ID
- * @param enum $Type 'discussion', 'activity', or 'comment'
+ * @param string $Type 'discussion', 'activity', or 'comment'
  */
 if(!function_exists('RenderReactionRecord')) {
 

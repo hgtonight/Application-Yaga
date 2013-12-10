@@ -67,7 +67,7 @@ class ReactionModel extends Gdn_Model {
    * Returns the reactions associated with the specified user content.
    * 
    * @param int $ID
-   * @param enum $Type is the kind of ID. Valid: comment, discussion, activity
+   * @param string $Type is the kind of ID. Valid: comment, discussion, activity
    */
   public function GetAllReactions($ID, $Type) {
     if(in_array($Type, array('discussion', 'comment', 'activity')) && $ID > 0) {
@@ -114,7 +114,7 @@ class ReactionModel extends Gdn_Model {
    * Gets reactions for a specific record with $ID and of $Type
    * 
    * @param int $ID the parent ID
-   * @param enum $Type valid entries are 'discussion', 'comment', and 'activity'
+   * @param string $Type valid entries are 'discussion', 'comment', and 'activity'
    */
   public function GetReactions($ID, $Type) {
     return $this->SQL->
@@ -131,7 +131,7 @@ class ReactionModel extends Gdn_Model {
    * Return a list of reactions a user has received
    * 
    * @param int $ID
-   * @param enum $Type activity, comment, discussion
+   * @param string $Type activity, comment, discussion
    * @param int $UserID
    * @return DataSet
    */
@@ -170,7 +170,7 @@ class ReactionModel extends Gdn_Model {
    * Events: AfterReactionSave
    * 
    * @param int $ID
-   * @param enum $Type activity, comment, discussion
+   * @param string $Type activity, comment, discussion
    * @param int $AuthorID
    * @param int $UserID
    * @param int $ActionID

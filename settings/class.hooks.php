@@ -67,10 +67,8 @@ class YagaHooks implements Gdn_IPlugin {
    * @param UserInfoModule $Sender
    */
   public function UserInfoModule_OnBasicInfo_Handler($Sender) {
-    $UserID = $Sender->User->UserID;
-    $BadgeCount = Yaga::BadgeModel()->GetUserBadgeAwardCount($UserID);
     echo '<dt class="Badges">' . T('Yaga.Badges', 'Badges') . '</dt> ';
-    echo '<dd class="Badges">' . $BadgeCount . '</dd>';
+    echo '<dd class="Badges">' . $Sender->User->CountBadges . '</dd>';
   }
 
   /**
@@ -592,7 +590,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param string $Hook The rule hooks to check
    */
   private function _AwardBadges($Sender, $Hook) {
-    if(!C('Yaga.Badges.Enabled', FALSE)) {
+    if(!C('Yaga.Badges.Enabled')) {
       return;
     }
 
@@ -604,7 +602,7 @@ class YagaHooks implements Gdn_IPlugin {
     $UserModel = new UserModel();
     $User = $UserModel->GetID($UserID);
 
-    $BadgeModel = new BadgeModel();
+    $BadgeModel = Yaga::BadgeModel();
     $Badges = $BadgeModel->GetAllBadgesUserAwards($UserID);
 
     $Rules = array();
