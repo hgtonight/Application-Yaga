@@ -2,9 +2,8 @@
 /* Copyright 2013 Zachary Doll */
 
 /**
- * Describes ranks and the associated rule criteria
+ * Describes ranks and their associated requirements/rewards
  *
- * @todo Consider splitting into two models
  * Events:
  *
  * @package Yaga
@@ -120,7 +119,9 @@ class RankModel extends Gdn_Model {
   public function DeleteRank($RankID) {
     if($this->RankExists($RankID)) {
       $this->SQL->Delete('Rank', array('RankID' => $RankID));
+      return TRUE;
     }
+    return FALSE;
   }
   
   public function UpdateRank($Points, $UserID) {

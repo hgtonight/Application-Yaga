@@ -51,8 +51,6 @@ class BadgesController extends Gdn_Controller {
     // Get list of badges from the model and pass to the view
     $this->SetData('Badges', $this->BadgeModel->GetAllBadgesUserAwards($UserID));
     
-    // TODO: Add leaderboard module
-    
     $this->Render('all');
   }
   

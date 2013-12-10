@@ -93,8 +93,8 @@ class ActionModel extends Gdn_Model {
   public function DeleteAction($ActionID, $ReplacementID = NULL) {
     if($this->ActionExists($ActionID)) {
       $this->SQL->Delete('Action', array('ActionID' => $ActionID));
-      // TODO: Ask the user if they want to delete reactions or lump them in
-      // with another action
+
+      // replace the reaction table to move reactions to a new action
       if($ReplacementID && $this->ActionExists($ReplacementID)) {
         $this->SQL->Update('Reaction')
                 ->Set('ActionID', $ReplacementID)
@@ -103,7 +103,9 @@ class ActionModel extends Gdn_Model {
       else {
         $this->SQL->Delete('Reaction', array('ActionID' => $ActionID));
       }
+      return TRUE;
     }
+    return FALSE;
   }
   
   public function SaveSort($SortArray) {

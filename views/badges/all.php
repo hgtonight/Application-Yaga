@@ -24,7 +24,7 @@ foreach($this->Data('Badges') as $Badge) {
     $Row .= Img(Gdn_Upload::Url($Badge->Photo), array('class' => 'BadgePhoto'));
   }
   else {
-    $Row .= Img('tododefault', array('class' => 'BadgePhoto'));
+    $Row .= Img('applications/yaga/design/images/default_badge.png', array('class' => 'BadgePhoto'));
   }
 
   $Row .= Wrap(

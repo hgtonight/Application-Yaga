@@ -4,7 +4,6 @@
 /**
  * Describes badges and the associated rule criteria
  *
- * @todo Consider splitting into two models
  * Events:
  *
  * @package Yaga
@@ -150,7 +149,9 @@ class BadgeModel extends Gdn_Model {
     if($this->BadgeExists($BadgeID)) {
       $this->SQL->Delete('Badge', array('BadgeID' => $BadgeID));
       $this->SQL->Delete('BadgeAward', array('BadgeID' => $BadgeID));
+      return TRUE;
     }
+    return FALSE;
   }
   
   /**

@@ -68,7 +68,7 @@ class ActionController extends DashboardController {
       $this->Title(T('Yaga.EditAction'));
     }
     
-    // TODO: Autoload these, or something
+    // This is just a list of all the images in the action icons folder
     $this->SetData('Icons', array('Happy', 'Happy2', 'Smiley', 'Smiley2', 'Tongue', 'Tongue2', 'Sad', 'Sad2', 'Wink', 'Wink2', 'Grin', 'Shocked', 'Confused', 'Confused2', 'Neutral', 'Neutral2', 'Wondering', 'Wondering2', 'PointUp', 'PointRight', 'PointDown', 'PointLeft', 'ThumbsUp', 'ThumbsUp2', 'Shocked2', 'Evil', 'Evil2', 'Angry', 'Angry2', 'Heart', 'Heart2', 'HeartBroken', 'Star', 'Star2', 'Grin2', 'Cool', 'Cool2', 'Question', 'Notification', 'Warning', 'Spam', 'Blocked', 'Eye', 'Eye2', 'EyeBlocked', 'Flag', 'BrightnessMedium', 'QuotesLeft', 'Music', 'Pacman', 'Bullhorn', 'Rocket', 'Fire', 'Hammer', 'Target', 'Lightning', 'Shield', 'CheckmarkCircle', 'Lab', 'Leaf', 'Dashboard', 'Droplet', 'Feed', 'Support', 'Hammer2', 'Wand', 'Cog', 'Gift', 'Trophy', 'Magnet', 'Switch', 'Globe', 'Bookmark', 'Bookmarks', 'Star3', 'Info', 'Info2', 'CancelCircle', 'Checkmark', 'Close'));
     
     // Load up all permissions
@@ -95,18 +95,9 @@ class ActionController extends DashboardController {
         else {
           $Action = $this->ActionModel->GetNewestAction();
         }
-        $NewActionRow = Wrap(
-            Wrap(
-                    Anchor(T('Edit'), 'yaga/action/edit/' . $Action->ActionID, array('class' => 'Popup SmallButton')) . Anchor(T('Delete'), 'yaga/action/delete/' . $Action->ActionID, array('class' => 'Hijack SmallButton')), 'div', array('class' => 'Tools')) .
-            Wrap(
-                    Wrap($Action->Name, 'h4') .
-                    Wrap(
-                            Wrap($Action->Description, 'span') . ' ' .
-                            Wrap(Plural($Action->AwardValue, '%s Point', '%s Points'), 'span'), 'div', array('class' => 'Meta')) .
-                    Wrap(
-                            Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID . ' ' . $Action->CssClass)) .
-                            WrapIf(rand(0, 18), 'span', array('class' => 'Count')) .
-                            Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'div', array('class' => 'Preview Reactions')), 'div', array('class' => 'Action')), 'li', array('id' => 'Action_' . $Action->ActionID));
+        
+        $NewActionRow = ActionRow($Action);
+        
         if($Edit) {
           $this->JsonTarget('#Action_' . $this->Action->ActionID, $NewActionRow, 'ReplaceWith');
           $this->InformMessage(T('Yaga.ActionUpdated'));
@@ -131,15 +122,34 @@ class ActionController extends DashboardController {
   /**
    * Remove the action via model.
    * 
-   * @todo Consider adding a confirmation page when not using JS
    * @param int $ActionID
    */
   public function Delete($ActionID) {
-    $this->Permission('Yaga.Reactions.Manage');
-    
-    $this->ActionModel->DeleteAction($ActionID);
+    $Action = $this->ActionModel->GetID($ActionID);
 
-    redirect('action/settings');
+    if(!$Action) {
+      throw NotFoundException(T('Yaga.Action'));
+    }
+
+    $this->Permission('Yaga.Reactions.Manage');
+
+    if($this->Form->IsPostBack()) {
+      if(!$this->ActionModel->DeleteAction($ActionID)) {
+        $this->Form->AddError(sprintf(T('Yaga.Error.DeleteFailed'), T('Yaga.Action')));
+      }
+
+      if($this->Form->ErrorCount() == 0) {
+        if($this->_DeliveryType === DELIVERY_TYPE_ALL) {
+          Redirect('action/settings');
+        }
+
+        $this->JsonTarget('#ActionID_' . $ActionID, NULL, 'SlideUp');
+      }
+    }
+
+    $this->AddSideMenu('badge/settings');
+    $this->SetData('Title', T('Delete Reaction'));
+    $this->Render();
   }
   
   public function Sort() {

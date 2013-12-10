@@ -17,7 +17,7 @@ class YagaHooks implements Gdn_IPlugin {
     $Section = 'Gamification';
     $Attrs = array('class' => $Section);
     $Menu->AddItem($Section, $Section, FALSE, $Attrs);
-    $Menu->AddLink($Section, T('Settings'), 'configure', 'Garden.Settings.Manage');
+    $Menu->AddLink($Section, T('Settings'), 'yaga/settings', 'Garden.Settings.Manage');
     if(C('Yaga.Reactions.Enabled')) {
       $Menu->AddLink($Section, T('Yaga.Reactions'), 'action/settings', 'Yaga.Reactions.Manage');
     }
@@ -74,23 +74,22 @@ class YagaHooks implements Gdn_IPlugin {
   }
 
   /**
-   * @todo document
-   * @todo Add a pager
-   * @todo call the best of controller to take this on
-   * @param type $Sender
-   * @param type $UserReference
-   * @param type $Username
-   * @param type $ActionID
-   * @param type $Page
-   * @param type $UserID
+   * This method shows the latest discussions/comments a user has posted that
+   * received the specified action
+   * 
+   * @param ProfileController $Sender
+   * @param int $UserReference
+   * @param string $Username
+   * @param int $ActionID
+   * @param int $Page
    */
-  public function ProfileController_Reactions_Create($Sender, $UserReference = '', $Username = '', $ActionID = '', $Page = '', $UserID = '') {
+  public function ProfileController_Reactions_Create($Sender, $UserReference = '', $Username = '', $ActionID = '', $Page = '') {
     $Expiry = 60;
 
     $Sender->EditMode(FALSE);
 
     // Tell the ProfileController what tab to load
-    $Sender->GetUserInfo($UserReference, $Username, $UserID);
+    $Sender->GetUserInfo($UserReference, $Username);
     $Sender->_SetBreadcrumbs(T('Yaga.Reactions'), UserUrl($Sender->User, '', 'reactions'));
     $Sender->SetTabView(T('Yaga.Reactions'), 'reactions', 'profile', 'Yaga');
 
@@ -102,7 +101,6 @@ class YagaHooks implements Gdn_IPlugin {
     $PageSize = Gdn::Config('Vanilla.Discussions.PerPage', 30);
     list($Offset, $Limit) = OffsetLimit($Page, $PageSize);
 
-    // TODO make the model handle caching
     // Check cache
     $CacheKey = "yaga.profile.reactions.{$ActionID}";
     $Content = Gdn::Cache()->Get($CacheKey);
@@ -178,7 +176,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Attach CategoryID to Comments
-   * @todo move somewhere else
+   * 
    * @param array $Comments
    */
   protected function JoinCategory(&$Comments) {
@@ -208,7 +206,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Interleave two or more result arrays by a common field
-   * @todo move somewhere else
+   * 
    * @param string $Field
    * @param array $Sections Array of result arrays
    * @return array
@@ -236,7 +234,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Pre-process content into a uniform format for output
-   * @todo move somewhere else
+   * 
    * @param Array $Content By reference
    */
   protected function Prepare(&$Content) {
@@ -274,7 +272,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Strip out content that this user is not allowed to see
-   * @todo move somewhere else
+   * 
    * @param array $Content Content array, by reference
    */
   protected function Security(&$Content) {
@@ -298,7 +296,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Condense an interleaved content list down to the required size
-   * @todo move somewhere else
+   * 
    * @param array $Content
    * @param array $Limit
    */
@@ -590,7 +588,6 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * This is the dispatcher to check badge awards
-   * @todo Optimize this by caching the rules... or something
    *
    * @param string $Hook The rule hooks to check
    */
@@ -677,21 +674,4 @@ class YagaHooks implements Gdn_IPlugin {
     $Version = ArrayValue('Version', ArrayValue('Yaga', $ApplicationInfo, array()), 'Undefined');
     SaveToConfig('Yaga.Version', $Version);
   }
-
-  /**
-   * Special function automatically run upon clicking 'Disable' on your application.
-   * @todo Determine if I need to do anything on disable.
-   */
-  public function OnDisable() {
-
-  }
-
-  /**
-   * Special function automatically run upon clicking 'Remove' on your application.
-   * @todo Determine if I need to do anything on removal.
-   */
-  public function CleanUp() {
-
-  }
-
 }

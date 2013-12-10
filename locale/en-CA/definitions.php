@@ -4,6 +4,7 @@ $Definition['Yaga.Reason'] = 'Reason (optional)';
 
 // Actions
 $Definition['Yaga.Reactions'] = 'Reactions';
+$Definition['Yaga.Action'] = 'Action';
 $Definition['Yaga.Actions.Current'] = 'Current Reactions';
 $Definition['Yaga.ManageReactions'] = 'Manage Reactions';
 $Definition['Yaga.AddAction'] = 'Add Action';
@@ -11,6 +12,7 @@ $Definition['Yaga.EditAction'] = 'Edit Action';
 $Definition['Yaga.ActionUpdated'] = 'Action updated successfully!';
 $Definition['Yaga.ActionAdded'] = 'Action added successfully!';
 $Definition['Yaga.InvalidAction'] = 'Invalid Action';
+$Definition['Yaga.InvalidReactType'] = 'Invalid React Target';
 $Definition['Yaga.InvalidID'] = 'Invalid ID';
 $Definition['Yaga.Actions.Settings.Desc'] = 'Add or edit the available actions that can be used as reactions.';
 
@@ -63,6 +65,7 @@ $Definition['Yaga.Error.Rule404'] = 'Rule not found.';
 $Definition['Yaga.Error.NoBadges'] = 'You cannot award badges without any badges defined.';
 $Definition['Yaga.Error.NoRanks'] = 'You cannot promote users without any ranks defined.';
 $Definition['Yaga.Error.NeedJS'] = 'That must be done via Javascript';
+$Definition['Yaga.Error.DeleteFailed'] = 'Failed to delete %s';
 
 // Activities
 $Definition['Yaga.HeadlineFormat.BadgeEarned'] = '{RegardingUserID,You} earned the <a href="{Url,html}">{Data.Name,text}</a> badge.';

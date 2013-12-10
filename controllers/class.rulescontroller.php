@@ -8,7 +8,7 @@
  * @since 1.0
  * @package Yaga
  */
-class RulesController extends YagaController {
+class RulesController extends Gdn_Controller {
 
   /**
    * May be used in the future.

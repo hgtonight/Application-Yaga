@@ -2,7 +2,6 @@
 include_once 'interface.yagarule.php';
 /**
  * This rule awards badges when the user connects social accounts
- * @todo test this on a live db
  *
  * @author Zachary Doll
  * @since 1.0

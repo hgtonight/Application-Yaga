@@ -137,16 +137,34 @@ class BadgeController extends DashboardController {
   /**
    * Remove the badge via model.
    *
-   * @todo Consider adding a confirmation page when not using JS
    * @param int $BadgeID
    */
   public function Delete($BadgeID) {
+    $Badge = $this->BadgeModel->GetID($BadgeID);
+
+    if(!$Badge) {
+      throw NotFoundException(T('Yaga.Badge'));
+    }
+
     $this->Permission('Yaga.Badges.Manage');
+
+    if($this->Form->IsPostBack()) {
+      if(!$this->BadgeModel->DeleteBadge($BadgeID)) {
+        $this->Form->AddError(sprintf(T('Yaga.Error.DeleteFailed'), T('Yaga.Badge')));
+      }
+
+      if($this->Form->ErrorCount() == 0) {
+        if($this->_DeliveryType === DELIVERY_TYPE_ALL) {
+          Redirect('badge/settings');
+        }
+
+        $this->JsonTarget('#BadgeID_' . $BadgeID, NULL, 'SlideUp');
+      }
+    }
+
     $this->AddSideMenu('badge/settings');
-
-    $this->BadgeModel->DeleteBadge($BadgeID);
-
-    redirect('badge/settings');
+    $this->SetData('Title', T('Delete Badge'));
+    $this->Render();
   }
 
   /**

@@ -26,13 +26,15 @@ echo Wrap(Anchor(T('Yaga.AddBadge'), 'yaga/badge/add', array('class' => 'SmallBu
     foreach($this->Data('Badges') as $Badge) {
       $Alt = $Alt ? '' : 'Alt';
       $Row = '';
-      // TODO: Show image in pop up rather than linking to it
+
       if($Badge->Photo) {
-        $Row .= Wrap(Anchor(Img(Gdn_Upload::Url($Badge->Photo), array('class' => 'BadgePhoto')), Gdn_Upload::Url($Badge->Photo)), 'td');
+        $BadgePhoto = Img(Gdn_Upload::Url($Badge->Photo), array('class' => 'BadgePhoto'));
       }
       else {
-        $Row .= Wrap(T('None'), 'td');
+        $BadgePhoto = Img('applications/yaga/design/images/default_badge.png', array('class' => 'BadgePhoto'));
       }
+      
+      $Row .= Wrap(Anchor($BadgePhoto, '/badges/detail/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name), array('title' => T('Yaga.Badge.DetailLink'))), 'td');
       $Row .= Wrap($Badge->Name, 'td');
       $Row .= Wrap($Badge->Description, 'td');
       $Row .= Wrap($Rules[$Badge->RuleClass], 'td');
@@ -40,7 +42,7 @@ echo Wrap(Anchor(T('Yaga.AddBadge'), 'yaga/badge/add', array('class' => 'SmallBu
       $ToggleText = ($Badge->Enabled) ? T('Enabled') : T('Disabled');
       $ActiveClass = ($Badge->Enabled) ? 'Active' : 'InActive';
       $Row .= Wrap(Wrap(Anchor($ToggleText, 'yaga/badge/toggle/' . $Badge->BadgeID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
-      $Row .= Wrap(Anchor(T('Edit'), 'yaga/badge/edit/' . $Badge->BadgeID, array('class' => 'SmallButton')) . Anchor(T('Delete'), 'yaga/badge/delete/' . $Badge->BadgeID, array('class' => 'Danger PopConfirm SmallButton')), 'td');
+      $Row .= Wrap(Anchor(T('Edit'), 'yaga/badge/edit/' . $Badge->BadgeID, array('class' => 'SmallButton')) . Anchor(T('Delete'), 'yaga/badge/delete/' . $Badge->BadgeID, array('class' => 'Danger Popup SmallButton')), 'td');
       echo Wrap($Row, 'tr', array('id' => 'BadgeID_' . $Badge->BadgeID, 'data-badgeid' => $Badge->BadgeID, 'class' => $Alt));
     }
     ?>

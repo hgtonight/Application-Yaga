@@ -139,16 +139,34 @@ class RankController extends DashboardController {
   /**
    * Remove the rank via model.
    *
-   * @todo Consider adding a confirmation page when not using JS
    * @param int $RankID
    */
   public function Delete($RankID) {
+    $Rank = $this->RankModel->GetID($RankID);
+
+    if(!$Rank) {
+      throw NotFoundException(T('Yaga.Rank'));
+    }
+
     $this->Permission('Yaga.Ranks.Manage');
+
+    if($this->Form->IsPostBack()) {
+      if(!$this->RankModel->DeleteRank($RankID)) {
+        $this->Form->AddError(sprintf(T('Yaga.Error.DeleteFailed'), T('Yaga.Rank')));
+      }
+
+      if($this->Form->ErrorCount() == 0) {
+        if($this->_DeliveryType === DELIVERY_TYPE_ALL) {
+          Redirect('rank/settings');
+        }
+
+        $this->JsonTarget('#RankID_' . $RankID, NULL, 'SlideUp');
+      }
+    }
+
     $this->AddSideMenu('rank/settings');
-
-    $this->RankModel->DeleteRank($RankID);
-
-    redirect('rank/settings');
+    $this->SetData('Title', T('Delete Rank'));
+    $this->Render();
   }
 
   /**

@@ -111,9 +111,10 @@ class ReactionModel extends Gdn_Model {
   }
   
   /**
-   * @todo document this
-   * @param type $ID
-   * @param type $Type
+   * Gets reactions for a specific record with $ID and of $Type
+   * 
+   * @param int $ID the parent ID
+   * @param enum $Type valid entries are 'discussion', 'comment', and 'activity'
    */
   public function GetReactions($ID, $Type) {
     return $this->SQL->
@@ -232,12 +233,13 @@ class ReactionModel extends Gdn_Model {
   }
   
   /**
-   * @todo document
-   * @param type $ID
-   * @param type $Type
-   * @param type $UserID
-   * @param type $Score
-   * @return boolean
+   * This updates the items score for future use in ranking and a best of controller
+   * 
+   * @param int $ID The items ID
+   * @param string $Type The type of the item (only supports 'discussion' and 'comment'
+   * @param int $UserID The user that is scoring the item
+   * @param int $Score What they give it
+   * @return boolean Whether or not the the request was successful
    */
   private function SetUserScore($ID, $Type, $UserID, $Score) {
     $Model = FALSE;
@@ -254,6 +256,10 @@ class ReactionModel extends Gdn_Model {
     
     if($Model) {
       $Model->SetUserScore($ID, $UserID, $Score);
+      return TRUE;
+    }
+    else {
+      return FALSE;
     }
   }
 }

@@ -3,8 +3,6 @@ include_once 'interface.yagarule.php';
 /**
  * This rule awards badges when a user mentions another user in a discussion, 
  * comment, or activity
- * 
- * @todo Implement HasMentioned rule
  *
  * @author Zachary Doll
  * @since 1.0

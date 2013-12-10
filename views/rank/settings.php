@@ -47,7 +47,7 @@ echo Wrap(Anchor(T('Yaga.AddRank'), 'yaga/rank/add', array('class' => 'SmallButt
       $ToggleText = ($Rank->Enabled) ? T('Enabled') : T('Disabled');
       $ActiveClass = ($Rank->Enabled) ? 'Active' : 'InActive';
       $Row .= Wrap(Wrap(Anchor($ToggleText, 'yaga/rank/toggle/' . $Rank->RankID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
-      $Row .= Wrap(Anchor(T('Edit'), 'yaga/rank/edit/' . $Rank->RankID, array('class' => 'SmallButton')) . Anchor(T('Delete'), 'yaga/rank/delete/' . $Rank->RankID, array('class' => 'Danger PopConfirm SmallButton')), 'td');
+      $Row .= Wrap(Anchor(T('Edit'), 'yaga/rank/edit/' . $Rank->RankID, array('class' => 'SmallButton')) . Anchor(T('Delete'), 'yaga/rank/delete/' . $Rank->RankID, array('class' => 'Danger Popup SmallButton')), 'td');
       echo Wrap($Row, 'tr', array('id' => 'RankID_' . $Rank->RankID, 'data-rankid' => $Rank->RankID, 'class' => $Alt));
     }
     ?>

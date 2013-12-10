@@ -68,3 +68,20 @@ if(!function_exists('RenderReactionRecord')) {
   }
 
 }
+
+if(!function_exists('ActionRow')) {
+  function ActionRow($Action) {
+    return Wrap(
+            Wrap(
+                    Anchor(T('Edit'), 'yaga/action/edit/' . $Action->ActionID, array('class' => 'Popup SmallButton')) . Anchor(T('Delete'), 'yaga/action/delete/' . $Action->ActionID, array('class' => 'Popup SmallButton')), 'div', array('class' => 'Tools')) .
+            Wrap(
+                    Wrap($Action->Name, 'h4') .
+                    Wrap(
+                            Wrap($Action->Description, 'span') . ' ' .
+                            Wrap(Plural($Action->AwardValue, '%s Point', '%s Points'), 'span'), 'div', array('class' => 'Meta')) .
+                    Wrap(
+                            Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID . ' ' . $Action->CssClass)) .
+                            WrapIf(rand(0, 18), 'span', array('class' => 'Count')) .
+                            Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'div', array('class' => 'Preview Reactions')), 'div', array('class' => 'Action')), 'li', array('id' => 'ActionID_' . $Action->ActionID));
+  }
+}
