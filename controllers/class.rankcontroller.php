@@ -189,14 +189,14 @@ class RankController extends DashboardController {
    * @param int $RankID
    * @param string $TransientKey
    */
-  public function DeletePhoto($RankID = FALSE, $TransientKey = '') {
+  public function DeletePhoto($TransientKey = '') {
       // Check permission
       $this->Permission('Garden.Ranks.Manage');
 
-      $RedirectUrl = 'yaga/rank/edit/'.$RankID;
+      $RedirectUrl = 'yaga/rank/settings';
 
       if (Gdn::Session()->ValidateTransientKey($TransientKey)) {
-         $this->RankModel->SetField($RankID, 'Photo', NULL);
+         SaveToConfig('Yaga.Ranks.Photo', NULL);
          $this->InformMessage(T('Yaga.RankPhotoDeleted'));
       }
 

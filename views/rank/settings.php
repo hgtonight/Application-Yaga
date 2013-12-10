@@ -12,7 +12,7 @@ echo $this->Form->Errors();
     $Photo = C('Yaga.Ranks.Photo');
     if($Photo) {
       echo Img(Gdn_Upload::Url($Photo));
-      echo '<br />'.Anchor(T('Delete Photo'), 'rank/deletephoto', 'SmallButton Danger PopConfirm');
+      echo '<br />'.Anchor(T('Delete Photo'), CombinePaths(array('rank/deletephoto', Gdn::Session()->TransientKey())), 'SmallButton Danger PopConfirm');
     }
     echo $this->Form->Input('PhotoUpload', 'file');
     echo $this->Form->Close('Save');
