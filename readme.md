@@ -8,7 +8,8 @@ Yet Another Gamification Application
 * ~~Fixed leaderboard module to support time windows~~
 * ~~Document~~
 * ~~Finish inline ToDos~~
-* Move badge count to user table column
+* ~~Move badge count to user table column~~
+* ~~Translate every static string~~
 * Create a badgeaward model
 * Fix reaction method on profile page to show more than one page of discussion/comments
 ** Also show the reaction record
@@ -17,7 +18,6 @@ Yet Another Gamification Application
 * Rework badge settings page to streamline badges of the same rule type
 * Create/find reusable badge images
 * Import/Export badges/reactions/ranks
-* ~~Translate every static string~~
 * Fix all badges page query to be right
 * Mention who gave you the badge on the badge detail page
 * Refactor reaction CSS
