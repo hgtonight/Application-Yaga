@@ -36,6 +36,7 @@ $Definition['Yaga.Badge.EarnedBySingle'] = '%s person has earned this badge.';
 $Definition['Yaga.Badge.EarnedByPlural'] = '%s people have earned this badge.';
 $Definition['Yaga.Badge.EarnedByNone'] = 'Nobody has earned this badge yet.';
 $Definition['Yaga.Badge.RecentRecipients'] = 'Most recent recipients';
+$Definition['Yaga.Badge.DetailLink'] = 'View statistics about this badge';
 
 // Ranks
 $Definition['Yaga.Ranks'] = 'Ranks';

@@ -28,22 +28,15 @@ class ReactController extends Gdn_Controller {
   }
 
   /**
-   * Render a blank page if no methods were specified in dispatch
-   */
-  public function Index() {
-    $this->Render('Blank', 'Utility', 'Dashboard');
-  }
-  
-  /**
-   * Makes the current user react to a specific discussion
+   * This determines if the current user can react on this item with this action
    * 
-   * @todo Consider merging with comment and activity methods
-   * @param int $DiscussionID
-   * @param int $ActionID The action to use
-   * @throws Gdn_UserException Any funny business and your inform messages will
-   * tell you!
+   * @param string $Type valid options are 'discussion', 'comment', and 'activity'
+   * @param int $ID
+   * @param int $ActionID
+   * @throws Gdn_UserException
    */
-  public function Discussion($DiscussionID, $ActionID) {
+  public function Index($Type, $ID, $ActionID) {
+    $Type = strtolower($Type);
     $Action = $this->ActionModel->GetAction($ActionID);
     
     // Make sure the action exists and the user is allowed to react    
@@ -55,11 +48,31 @@ class ReactController extends Gdn_Controller {
       throw PermissionException();
     }
     
-    $DiscussionModel = new DiscussionModel();
-    $Discussion = $DiscussionModel->GetID($DiscussionID);
+    switch($Type) {
+      case 'discussion':
+        $Model = new DiscussionModel();
+        $AnchorID = '#Discussion_';
+        $Key = 'InsertUserID';
+        break;
+      case 'comment':
+        $Model = new CommentModel();
+        $AnchorID = '#Comment_';
+        $Key = 'InsertUserID';
+        break;
+      case 'activity':
+        $Model = new ActivityModel();
+        $AnchorID = '#Activity_';
+        $Key = 'ActivityUserID';
+        break;
+      default:
+        throw new Gdn_UserException(T('Yaga.InvalidReactType'));
+        break;
+    }
     
-    if($Discussion) {
-      $Anchor = '#Discussion_' . $DiscussionID . ' .ReactMenu';
+    $Item = $Model->GetID($ID);
+
+    if($Item) {
+      $Anchor = $AnchorID . $ID . ' .ReactMenu';
     }
     else {
       throw new Gdn_UserException(T('Yaga.InvalidID'));
@@ -67,105 +80,30 @@ class ReactController extends Gdn_Controller {
     
     $UserID = Gdn::Session()->UserID;
     
-    if($Discussion->InsertUserID == $UserID) {
+    switch($Type) {
+      case 'comment':
+      case 'discussion':
+        $ItemOwnerID = $Item->InsertUserID;
+        break;
+      case 'activity':
+        $ItemOwnerID = $Item['ActivityUserID'];
+        break;
+      default:
+        throw new Gdn_UserException(T('Yaga.InvalidReactType'));
+        break;
+    }
+    
+    if($ItemOwnerID == $UserID) {
       throw new Gdn_UserException(T('Yaga.Error.ReactToOwn'));
     }
 
     // It has passed through the gauntlet
-    $this->ReactionModel->SetReaction($DiscussionID, 'discussion', $Discussion->InsertUserID, $UserID, $ActionID);
+    $this->ReactionModel->SetReaction($ID, $Type, $ItemOwnerID, $UserID, $ActionID);
     
-    $this->JsonTarget($Anchor, RenderReactions($DiscussionID, 'discussion', FALSE), 'ReplaceWith');
+    $this->JsonTarget($Anchor, RenderReactions($ID, $Type, FALSE), 'ReplaceWith');
     
+    // Don't render anything
     $this->Render('Blank', 'Utility', 'Dashboard');
   }
   
-  /**
-   * Makes the current user react to a specific comment
-   * 
-   * @todo Consider merging with discussion and activity methods 
-   * @param int $CommentID
-   * @param int $ActionID The action to use
-   * @throws Gdn_UserException Any funny business and your inform messages will
-   * tell you!
-   */
-  public function Comment($CommentID, $ActionID) {
-    $Action = $this->ActionModel->GetAction($ActionID);
-    
-    // Make sure the action exists and the user is allowed to react    
-    if(!$Action) {
-      throw new Gdn_UserException(T('Yaga.InvalidAction'));
-    }
-    
-    if(!Gdn::Session()->CheckPermission($Action->Permission)) {
-      throw PermissionException();
-    }
-    
-    $CommentModel = new CommentModel();
-    $Comment = $CommentModel->GetID($CommentID);
-    
-    if($Comment) {
-      $Anchor = '#Comment_' . $CommentID . ' .ReactMenu';
-    }
-    else {
-      throw new Gdn_UserException(T('Yaga.InvalidID'));
-    }
-    
-    $UserID = Gdn::Session()->UserID;
-    
-    if($Comment->InsertUserID == $UserID) {
-      throw new Gdn_UserException(T('Yaga.Error.ReactToOwn'));
-    }
-
-    // It has passed through the gauntlet
-    $this->ReactionModel->SetReaction($CommentID, 'comment', $Comment->InsertUserID, $UserID, $ActionID);
-    
-    $this->JsonTarget($Anchor, RenderReactions($CommentID, 'comment', FALSE), 'ReplaceWith');
-    
-    $this->Render('Blank', 'Utility', 'Dashboard');
-  }
-  
-  /**
-   * Makes the current user react to a specific activity
-   * 
-   * @todo Consider merging with discussion and comment methods 
-   * @param int $ActivityID
-   * @param int $ActionID The action to use
-   * @throws Gdn_UserException Any funny business and your inform messages will
-   * tell you!
-   */
-  public function Activity($ActivityID, $ActionID) {
-    $Action = $this->ActionModel->GetAction($ActionID);
-    
-    // Make sure the action exists and the user is allowed to react    
-    if(!$Action) {
-      throw new Gdn_UserException(T('Yaga.InvalidAction'));
-    }
-    
-    if(!Gdn::Session()->CheckPermission($Action->Permission)) {
-      throw PermissionException();
-    }
-    
-    $ActivityModel = new ActivityModel();
-    $Activity = $ActivityModel->GetID($ActivityID);
-
-    if($Activity) {
-      $Anchor = '#Activity_' . $ActivityID . ' .ReactMenu';
-    }
-    else {
-      throw new Gdn_UserException(T('Yaga.InvalidID'));
-    }
-    
-    $UserID = Gdn::Session()->UserID;
-    
-    if($Activity['ActivityUserID'] == $UserID) {
-      throw new Gdn_UserException(T('Yaga.Error.ReactToOwn'));
-    }
-
-    // It has passed through the gauntlet
-    $this->ReactionModel->SetReaction($ActivityID, 'activity', $Activity['ActivityUserID'], $UserID, $ActionID);
-    
-    $this->JsonTarget($Anchor, RenderReactions($ActivityID, 'activity', FALSE), 'ReplaceWith');
-    
-    $this->Render('Blank', 'Utility', 'Dashboard');
-  }
 }
