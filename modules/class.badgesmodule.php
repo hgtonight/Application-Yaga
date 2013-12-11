@@ -25,7 +25,7 @@ class BadgesModule extends Gdn_Module {
       $this->Title = T('Yaga.Badges');
     }
     
-    $BadgeModel = new BadgeModel();
+    $BadgeModel = Yaga::BadgeModel();
     $this->Data = $BadgeModel->GetUserBadgeAwards($UserID);
   }
 

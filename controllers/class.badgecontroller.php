@@ -13,7 +13,7 @@ class BadgeController extends DashboardController {
    * @var array These objects will be created on instantiation and available via
    * $this->ObjectName
    */
-  public $Uses = array('Form', 'BadgeModel');
+  public $Uses = array('Form', 'BadgeModel', 'BadgeAwardModel');
 
   /**
    * Make this look like a dashboard page and add the resources
@@ -43,7 +43,7 @@ class BadgeController extends DashboardController {
     $this->Title(T('Yaga.ManageBadges'));
 
     // Get list of badges from the model and pass to the view
-    $this->SetData('Badges', $this->BadgeModel->GetBadges());
+    $this->SetData('Badges', $this->BadgeModel->Get());
     $this->SetData('Rules', RulesController::GetRules());
 
     $this->Render();
@@ -68,7 +68,7 @@ class BadgeController extends DashboardController {
     $Edit = FALSE;
     if($BadgeID) {
       $this->Title(T('Yaga.EditBadge'));
-      $this->Badge = $this->BadgeModel->GetBadge($BadgeID);
+      $this->Badge = $this->BadgeModel->GetByID($BadgeID);
       $this->Form->AddHidden('BadgeID', $BadgeID);
       $Edit = TRUE;
     }
@@ -140,7 +140,7 @@ class BadgeController extends DashboardController {
    * @param int $BadgeID
    */
   public function Delete($BadgeID) {
-    $Badge = $this->BadgeModel->GetID($BadgeID);
+    $Badge = $this->BadgeModel->GetByID($BadgeID);
 
     if(!$Badge) {
       throw NotFoundException(T('Yaga.Badge'));
@@ -149,7 +149,7 @@ class BadgeController extends DashboardController {
     $this->Permission('Yaga.Badges.Manage');
 
     if($this->Form->IsPostBack()) {
-      if(!$this->BadgeModel->DeleteBadge($BadgeID)) {
+      if(!$this->BadgeModel->Delete($BadgeID)) {
         $this->Form->AddError(sprintf(T('Yaga.Error.DeleteFailed'), T('Yaga.Badge')));
       }
 
@@ -180,7 +180,7 @@ class BadgeController extends DashboardController {
     $this->Permission('Yaga.Badges.Manage');
     $this->AddSideMenu('badge/settings');
 
-    $Badge = $this->BadgeModel->GetBadge($BadgeID);
+    $Badge = $this->BadgeModel->GetByID($BadgeID);
 
     if($Badge->Enabled) {
       $Enable = FALSE;
@@ -194,7 +194,7 @@ class BadgeController extends DashboardController {
     }
 
     $Slider = Wrap(Wrap(Anchor($ToggleText, 'yaga/badge/toggle/' . $Badge->BadgeID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
-    $this->BadgeModel->EnableBadge($BadgeID, $Enable);
+    $this->BadgeModel->Enable($BadgeID, $Enable);
     $this->JsonTarget('#BadgeID_' . $BadgeID . ' td:nth-child(6)', $Slider, 'ReplaceWith');
     $this->Render('Blank', 'Utility', 'Dashboard');
   }
@@ -237,7 +237,7 @@ class BadgeController extends DashboardController {
     $this->AddSideMenu('badge/settings');
 
     // Only allow awarding if some badges exist
-    if(!$this->BadgeModel->GetBadgeCount()) {
+    if(!$this->BadgeModel->GetCount()) {
       throw new Gdn_UserException(T('Yaga.Error.NoBadges'));
     }
 
@@ -246,7 +246,7 @@ class BadgeController extends DashboardController {
 
     $this->SetData('Username', $User->Name);
 
-    $Badges = $this->BadgeModel->GetBadges();
+    $Badges = $this->BadgeModel->Get();
     $Badgelist = array();
     foreach($Badges as $Badge) {
       $Badgelist[$Badge->BadgeID] = $Badge->Name;

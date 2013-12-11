@@ -17,7 +17,6 @@ Yet Another Gamification Application
 * Rule tooltip help
 * Rework badge settings page to streamline badges of the same rule type
 * Create/find reusable badge images
-* Import/Export badges/reactions/ranks
 * Fix all badges page query to be right
 * Mention who gave you the badge on the badge detail page
 * Refactor reaction CSS
@@ -27,6 +26,7 @@ Yet Another Gamification Application
 
 
 ## New Features
+* Import/Export badges/reactions/ranks
+* Best Of... Controller
 * Save form inputs to cache as well as the elements in admin.badges.js
 * Implement moving of reactions to other action IDs on delete (much like categories right now)
-* Best Of... Controller

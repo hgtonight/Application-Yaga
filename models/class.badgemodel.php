@@ -30,7 +30,7 @@ class BadgeModel extends Gdn_Model {
    *
    * @return DataSet
    */
-  public function GetBadges() {
+  public function Get() {
     if(empty(self::$_Badges)) {
       self::$_Badges = $this->SQL
               ->Select()
@@ -46,8 +46,8 @@ class BadgeModel extends Gdn_Model {
    * Total number of badges in the system
    * @return int
    */
-  public function GetBadgeCount() {
-    return count($this->GetBadges());
+  public function GetCount() {
+    return count($this->Get());
   }
 
   /**
@@ -55,7 +55,7 @@ class BadgeModel extends Gdn_Model {
    *
    * @return DataSet
    */
-  public function GetEnabledBadges() {
+  public function GetEnabled() {
     return $this->SQL
               ->Select()
               ->From('Badge')
@@ -71,7 +71,7 @@ class BadgeModel extends Gdn_Model {
    * @param int $BadgeID
    * @return DataSet
    */
-  public function GetBadge($BadgeID) {
+  public function GetByID($BadgeID) {
     $Badge = $this->SQL
                     ->Select()
                     ->From('Badge')
@@ -86,7 +86,7 @@ class BadgeModel extends Gdn_Model {
    *
    * @return DataSet
    */
-  public function GetNewestBadge() {
+  public function GetNewest() {
     $Badge = $this->SQL
                     ->Select()
                     ->From('Badge')
@@ -96,32 +96,14 @@ class BadgeModel extends Gdn_Model {
     return $Badge;
   }
 
-  public function GetBadgeAwardCount($BadgeID) {
-    $Wheres = array('BadgeID' => $BadgeID);
-    return $this->SQL
-            ->GetCount('BadgeAward', $Wheres);
-  }
-
-  public function GetRecentBadgeAwards($BadgeID, $Limit = 15) {
-    return $this->SQL
-            ->Select('ba.UserID, ba.DateInserted, u.Name, u.Photo, u.Gender, u.Email')
-            ->From('BadgeAward ba')
-            ->Join('User u', 'ba.UserID = u.UserID')
-            ->Where('BadgeID', $BadgeID)
-            ->OrderBy('DateInserted', 'Desc')
-            ->Limit($Limit)
-            ->Get()
-            ->Result();
-  }
-
   /**
-   * Convenience function to determin if a badge id currently exists
+   * Convenience function to determine if a badge id currently exists
    *
    * @param int $BadgeID
    * @return bool
    */
-  public function BadgeExists($BadgeID) {
-    $temp = $this->GetBadge($BadgeID);
+  public function Exists($BadgeID) {
+    $temp = $this->GetByID($BadgeID);
     return !empty($temp);
   }
 
@@ -131,7 +113,7 @@ class BadgeModel extends Gdn_Model {
    * @param int $BadgeID
    * @param bool $Enable
    */
-  public function EnableBadge($BadgeID, $Enable) {
+  public function Enable($BadgeID, $Enable) {
     $Enable = (!$Enable) ? FALSE : TRUE;
     $this->SQL
             ->Update('Badge')
@@ -145,8 +127,8 @@ class BadgeModel extends Gdn_Model {
    *
    * @param int $BadgeID
    */
-  public function DeleteBadge($BadgeID) {
-    $Badge = $this->GetBadge($BadgeID);
+  public function Delete($BadgeID) {
+    $Badge = $this->GetByID($BadgeID);
     if(!empty($Badge)) {
       try {
         $this->Database->BeginTransaction();
@@ -183,165 +165,5 @@ class BadgeModel extends Gdn_Model {
       return TRUE;
     }
     return FALSE;
-  }
-
-  /**
-   * Award a badge to a user and record some activity
-   *
-   * @param int $BadgeID
-   * @param int $UserID This is the user that should get the award
-   * @param int $InsertUserID This is the user that gave the award
-   * @param string $Reason This is the reason the giver gave with the award
-   */
-  public function AwardBadge($BadgeID, $UserID, $InsertUserID = NULL, $Reason = '') {
-    $Badge = $this->GetBadge($BadgeID);
-    if(!empty($Badge)) {
-      if(!$this->UserHasBadge($UserID, $BadgeID)) {
-        $this->SQL->Insert('BadgeAward', array(
-            'BadgeID' => $BadgeID,
-            'UserID' => $UserID,
-            'InsertUserID' => $InsertUserID,
-            'Reason' => $Reason,
-            'DateInserted' => date(DATE_ISO8601)
-        ));
-
-        // Record the points for this badge
-        UserModel::GivePoints($UserID, $Badge->AwardValue, 'Badge');
-
-        // Increment the user's badge count
-        $this->SQL->Update('User')
-         ->Set('CountBadges', 'CountBadges + 1', FALSE)
-         ->Where('UserID', $UserID)
-         ->Put();
-
-        // Record some activity
-        $Badge = $this->GetBadge($BadgeID);
-        $ActivityModel = new ActivityModel();
-
-        $Activity = array(
-            'ActivityType' => 'BadgeAward',
-            'ActivityUserID' => Gdn::Session()->UserID,
-            'RegardingUserID' => $UserID,
-            'Photo' => '/uploads/' . $Badge->Photo,
-            'RecordType' => 'Badge',
-            'RecordID' => $BadgeID,
-            'Route' => '/badges/detail/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name),
-            'HeadlineFormat' => T('Yaga.HeadlineFormat.BadgeEarned'),
-            'Data' => array(
-               'Name' => $Badge->Name
-            ),
-            'Story' => $Badge->Description
-         );
-
-         $ActivityModel->Queue($Activity);
-
-         // Notify the user of the award
-         $Activity['NotifyUserID'] = $UserID;
-         $Activity['Emailed'] = ActivityModel::SENT_PENDING;
-         $ActivityModel->Queue($Activity, 'Badges', array('Force' => TRUE));
-
-         $ActivityModel->SaveQueue();
-
-         $this->EventArguments['UserID'] = $UserID;
-         $this->FireEvent('AfterBadgeAward');
-      }
-    }
-  }
-
-  /**
-   * Returns how many badges the user has of this particular id. It should only
-   * ever be 1 or zero.
-   *
-   * @param int $UserID
-   * @param int $BadgeID
-   * @return int
-   */
-  public function UserHasBadge($UserID, $BadgeID) {
-    return $this->SQL
-            ->Select()
-            ->From('BadgeAward')
-            ->Where('BadgeID', $BadgeID)
-            ->Where('UserID', $UserID)
-            ->GetCount();
-  }
-
-  /**
-   * Returns the badges a user already has
-   *
-   * @param int $UserID
-   * @return array
-   */
-  public function GetUserBadgeAward($UserID, $BadgeID) {
-    return $this->SQL
-            ->Select()
-            ->From('Badge b')
-            ->Join('BadgeAward ba', 'ba.BadgeID = b.BadgeID', 'left')
-            ->Where('b.BadgeID', $BadgeID)
-            ->Where('ba.UserID', $UserID)
-            ->Get()
-            ->FirstRow();
-  }
-
-  /**
-   * Returns the badges a user already has
-   *
-   * @param int $UserID
-   * @return array
-   */
-  public function GetUserBadgeAwards($UserID) {
-    return $this->SQL
-            ->Select()
-            ->From('Badge b')
-            ->Join('BadgeAward ba', 'ba.BadgeID = b.BadgeID', 'left')
-            ->Where('ba.UserID', $UserID)
-            ->Get()
-            ->Result(DATASET_TYPE_ARRAY);
-  }
-
-  public function GetUserBadgeAwardCount($UserID) {
-    return $this->SQL
-            ->Select()
-            ->From('Badge b')
-            ->Join('BadgeAward ba', 'ba.BadgeID = b.BadgeID', 'left')
-            ->Where('ba.UserID', $UserID)
-            ->GetCount();
-  }
-
-  /**
-   * Returns the full list of badges and the associated user awards if applicable
-   *
-   * @param int $UserID
-   * @return DataSet
-   */
-  public function GetAllBadgesUserAwards($UserID) {
-    return $this->SQL
-            ->Select('b.*, ba.UserID, ba.InsertUserID, ba.Reason, ba.DateInserted, ui.Name as InsertUserName')
-            ->From('Badge b')
-            ->Join('BadgeAward ba', 'ba.BadgeID = b.BadgeID', 'left')
-            ->Join('User ui', 'ba.InsertUserID = ui.UserID', 'left')
-            ->Where('ba.UserID', $UserID)
-            ->OrWhere('b.BadgeID is not null') // needed to get the full set of badges
-            ->GroupBy('b.BadgeID')
-            ->OrderBy('b.BadgeID', 'Desc')
-            ->Get();
-  }
-
-  /**
-   * Returns the list of unobtained but enabled badges for a specific user
-   *
-   * @param int $UserID
-   * @param bool $Enabled Description
-   * @return DataSet
-   */
-  public function GetBadgesToCheckForUser($UserID) {
-    return $this->SQL
-            ->Select()
-            ->From('Badge b')
-            ->Join('BadgeAward ba', 'b.BadgeID = ba.BadgeID', 'left')
-            ->Where('ba.UserID', $UserID)
-            ->Where('b.Enabled', 1)
-            //->OrWhere('b.BadgeID is not null') // needed to get the full set of badges
-            ->Get()
-            ->Result();
   }
 }
