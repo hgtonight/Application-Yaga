@@ -320,55 +320,13 @@ class YagaHooks implements Gdn_IPlugin {
 
     $RankModel = Yaga::RankModel();
 
-    $Rank = $RankModel->GetRankByPoints($Points);
-
+    $Rank = $RankModel->GetByPoints($Points);
+    
     if($Rank && $Rank->RankID != $User->RankID) {
       // Only promote automatically
-      $OldRank = $RankModel->GetID($User->RankID);
+      $OldRank = $RankModel->GetByID($User->RankID);
       if($OldRank->Level <= $Rank->Level) {
-        // Throw up a promotion activity
-        $ActivityModel = new ActivityModel();
-
-        $Activity = array(
-            'ActivityType' => 'RankPromotion',
-            'ActivityUserID' => $UserID,
-            'RegardingUserID' => $UserID,
-            'Photo' => 'uploads' . DS . C('Yaga.Ranks.Photo'),
-            'RecordType' => 'Rank',
-            'RecordID' => $Rank->RankID,
-            'HeadlineFormat' => T('Yaga.HeadlineFormat.Promoted'),
-            'Data' => array(
-                'Name' => $Rank->Name
-            ),
-            'Story' => $Rank->Description
-        );
-
-        $ActivityModel->Queue($Activity);
-
-        // Notify the user of the award
-        $Activity['NotifyUserID'] = $UserID;
-        $Activity['Emailed'] = ActivityModel::SENT_PENDING;
-        $ActivityModel->Queue($Activity, 'Ranks', array('Force' => TRUE));
-
-        $ActivityModel->SaveQueue();
-
-        // Update the rank id
-        $UserModel->SetField($UserID, 'RankID', $Rank->RankID);
-
-        // Get the user's roles
-        $CurrentRoleData = $UserModel->GetRoles($UserID);
-        $CurrentRoleIDs = ConsolidateArrayValuesByKey($CurrentRoleData->Result(), 'RoleID');
-        
-        // Remove the old roles
-        $TempRoleIDs = array_diff($CurrentRoleIDs, array($OldRank->Role));
-
-        // Add our selected roles
-        $NewRoleIDs = array_unique(array_merge($TempRoleIDs, array($Rank->Role)));
-
-        // Set the combined roles
-        if($NewRoleIDs != $CurrentRoleIDs) {
-          $UserModel->SaveRoles($UserID, $NewRoleIDs);
-        }
+        $RankModel->Set($Rank->RankID, $UserID, TRUE);
       }
     }
   }

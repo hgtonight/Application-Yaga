@@ -50,7 +50,8 @@ $Definition['Yaga.RankUpdated'] = 'Rank updated successfully!';
 $Definition['Yaga.RankAdded'] = 'Rank added successfully!';
 $Definition['Yaga.RankPhotoDeleted'] = 'Rank photo has been deleted.';
 $Definition['Yaga.RankAlreadyAttained'] = '%s already has this rank!';
-$Definition['Yaga.Rank.Award'] = 'Give Rank';
+$Definition['Yaga.Rank.Promote'] = 'Change Rank';
+$Definition['Yaga.Rank.RecordActivity'] = 'Record rank change to activity.';
 $Definition['Yaga.Ranks.Settings.Desc'] = 'Add or edit the available ranks that can be earned.';
 
 // Best Of...

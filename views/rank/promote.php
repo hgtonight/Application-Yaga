@@ -14,10 +14,9 @@ echo Wrap(
         $this->Form->Label('Yaga.Rank', 'RankID') .
         $this->Form->Dropdown('RankID', $Ranks),
         'li') .
-    
       Wrap(
-        $this->Form->Label('Yaga.Reason', 'Reason') .
-        $this->Form->TextBox('Reason', array('Multiline' => TRUE)),
+        $this->Form->Label('Activity', 'RecordActivity') .
+        $this->Form->CheckBox('RecordActivity', 'Yaga.Rank.RecordActivity'),
         'li') .
       Wrap(
               Anchor(T('Cancel'), 'rank/settings'),
@@ -25,6 +24,6 @@ echo Wrap(
         'ul'
 );
 
-echo $this->Form->Close('Yaga.Rank.Award');
+echo $this->Form->Close('Yaga.Rank.Promote');
 
 echo '</div>';

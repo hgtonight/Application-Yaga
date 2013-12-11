@@ -12,12 +12,13 @@ Yet Another Gamification Application
 * ~~Translate every static string~~
 * ~~Create a badgeaward model~~
 * ~~Fix all badges page query to be right~~
-* Finish rank promotion screen
+* ~~Finish rank promotion screen~~
+* Allow ranks to be permanent (don't auto promote)
 * Fix reaction method on profile page to show more than one page of discussion/comments
 ** Also show the reaction record
 ** Also refactor that method, really messy right now
 * Rule tooltip help
-* Rework badge settings page to streamline badges of the same rule type
+* Add pager to badge settings screen
 * Create/find reusable badge images
 * Mention who gave you the badge on the badge detail page
 * Refactor reaction CSS
@@ -27,7 +28,9 @@ Yet Another Gamification Application
 
 
 ## New Features
+* Stats page on the yaga settings page
 * Import/Export badges/reactions/ranks
 * Best Of... Controller
 * Save form inputs to cache as well as the elements in admin.badges.js
+* Rework badge settings page to streamline badges of the same rule type
 * Implement moving of reactions to other action IDs on delete (much like categories right now)

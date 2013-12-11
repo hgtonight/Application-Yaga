@@ -43,7 +43,7 @@ class RankController extends DashboardController {
     $this->Title(T('Yaga.ManageRanks'));
 
     // Get list of ranks from the model and pass to the view
-    $this->SetData('Ranks', $this->RankModel->GetRanks());
+    $this->SetData('Ranks', $this->RankModel->Get());
     
     if($this->Form->IsPostBack() == TRUE) {
       // Handle the photo upload
@@ -83,7 +83,7 @@ class RankController extends DashboardController {
     $this->Title(T('Yaga.AddRank'));
     $Edit = FALSE;
     if($RankID) {
-      $this->Rank = $this->RankModel->GetRank($RankID);
+      $this->Rank = $this->RankModel->GetByID($RankID);
       $this->Form->AddHidden('RankID', $RankID);
       $Edit = TRUE;
       $this->Title(T('Yaga.EditRank'));
@@ -142,7 +142,7 @@ class RankController extends DashboardController {
    * @param int $RankID
    */
   public function Delete($RankID) {
-    $Rank = $this->RankModel->GetID($RankID);
+    $Rank = $this->RankModel->GetByID($RankID);
 
     if(!$Rank) {
       throw NotFoundException(T('Yaga.Rank'));
@@ -151,7 +151,7 @@ class RankController extends DashboardController {
     $this->Permission('Yaga.Ranks.Manage');
 
     if($this->Form->IsPostBack()) {
-      if(!$this->RankModel->DeleteRank($RankID)) {
+      if(!$this->RankModel->Delete($RankID)) {
         $this->Form->AddError(sprintf(T('Yaga.Error.DeleteFailed'), T('Yaga.Rank')));
       }
 
@@ -182,7 +182,7 @@ class RankController extends DashboardController {
     $this->Permission('Yaga.Ranks.Manage');
     $this->AddSideMenu('rank/settings');
 
-    $Rank = $this->RankModel->GetRank($RankID);
+    $Rank = $this->RankModel->Get($RankID);
 
     if($Rank->Enabled) {
       $Enable = FALSE;
@@ -196,7 +196,7 @@ class RankController extends DashboardController {
     }
 
     $Slider = Wrap(Wrap(Anchor($ToggleText, 'yaga/rank/toggle/' . $Rank->RankID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
-    $this->RankModel->EnableRank($RankID, $Enable);
+    $this->RankModel->Enable($RankID, $Enable);
     $this->JsonTarget('#RankID_' . $RankID . ' td:nth-child(5)', $Slider, 'ReplaceWith');
     $this->Render('Blank', 'Utility', 'Dashboard');
   }
@@ -233,13 +233,13 @@ class RankController extends DashboardController {
     *
     * @param int $UserID
     */
-   public function Award($UserID) {
+   public function Promote($UserID) {
     // Check permission
     $this->Permission('Garden.Ranks.Add');
     $this->AddSideMenu('rank/settings');
 
     // Only allow awarding if some ranks exist
-    if(!$this->RankModel->GetRankCount()) {
+    if(!$this->RankModel->GetCount()) {
       throw new Gdn_UserException(T('Yaga.Error.NoRanks'));
     }
 
@@ -248,7 +248,7 @@ class RankController extends DashboardController {
 
     $this->SetData('Username', $User->Name);
 
-    $Ranks = $this->RankModel->GetRanks();
+    $Ranks = $this->RankModel->Get();
     $Ranklist = array();
     foreach($Ranks as $Rank) {
       $Ranklist[$Rank->RankID] = $Rank->Name;
@@ -265,14 +265,8 @@ class RankController extends DashboardController {
       $Validation->ApplyRule('RankID', 'ValidateRequired');
       if($Validation->Validate($this->Request->Post())) {
         $FormValues = $this->Form->FormValues();
-        if($this->RankModel->UserHasRank($FormValues['UserID'], $FormValues['RankID'])) {
-          $this->Form->AddError(sprintf(T('Yaga.RankAlreadyAttained'), $User->Name), 'RankID');
-          // Need to respecify the user id
-          $this->Form->AddHidden('UserID', $User->UserID);
-        }
-
         if($this->Form->ErrorCount() == 0) {
-          $this->RankModel->AwardRank($FormValues['RankID'], $FormValues['UserID'], Gdn::Session()->UserID, $FormValues['Reason']);
+          $this->RankModel->Set($FormValues['RankID'], $FormValues['UserID'], $FormValues['RecordActivity']);
 
           if($this->Request->Get('Target')) {
             $this->RedirectUrl = $this->Request->Get('Target');
