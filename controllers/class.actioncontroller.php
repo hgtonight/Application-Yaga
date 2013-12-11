@@ -44,7 +44,7 @@ class ActionController extends DashboardController {
     $this->Title(T('Yaga.ManageReactions'));
 
     // Get list of actions from the model and pass to the view
-    $this->SetData('Actions', $this->ActionModel->GetActions());
+    $this->SetData('Actions', $this->ActionModel->Get());
 
     $this->Render();
   }
@@ -62,7 +62,7 @@ class ActionController extends DashboardController {
     $Edit = FALSE;
     $this->Title(T('Yaga.AddAction'));
     if($ActionID) {
-      $this->Action = $this->ActionModel->GetAction($ActionID);
+      $this->Action = $this->ActionModel->GetByID($ActionID);
       $this->Form->AddHidden('ActionID', $ActionID);
       $Edit = TRUE;
       $this->Title(T('Yaga.EditAction'));
@@ -90,7 +90,7 @@ class ActionController extends DashboardController {
     else {
       if($this->Form->Save()) {
         if($Edit) {
-          $Action = $this->ActionModel->GetAction($this->Form->GetFormValue('ActionID'));
+          $Action = $this->ActionModel->GetByID($this->Form->GetFormValue('ActionID'));
         }
         else {
           $Action = $this->ActionModel->GetNewestAction();
@@ -134,7 +134,7 @@ class ActionController extends DashboardController {
     $this->Permission('Yaga.Reactions.Manage');
 
     if($this->Form->IsPostBack()) {
-      if(!$this->ActionModel->DeleteAction($ActionID)) {
+      if(!$this->ActionModel->Delete($ActionID)) {
         $this->Form->AddError(sprintf(T('Yaga.Error.DeleteFailed'), T('Yaga.Action')));
       }
 

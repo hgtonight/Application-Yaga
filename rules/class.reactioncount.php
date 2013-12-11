@@ -30,7 +30,7 @@ class ReactionCount implements YagaRule{
   
   public function Form($Form) {
     $ActionModel = new ActionModel();
-    $Actions = $ActionModel->GetActions();
+    $Actions = $ActionModel->Get();
     $Reactions = array();
     foreach($Actions as $Action) {
       $Reactions[$Action->ActionID] = $Action->Name;

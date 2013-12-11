@@ -28,7 +28,7 @@ class ActionModel extends Gdn_Model {
   /**
    * Returns a list of all available actions
    */
-  public function GetActions() {
+  public function Get() {
     if(empty(self::$_Actions)) {
       self::$_Actions = $this->SQL
               ->Select()
@@ -47,7 +47,7 @@ class ActionModel extends Gdn_Model {
    * @param int $ActionID
    * @return dataset
    */
-  public function GetAction($ActionID) {
+  public function GetByID($ActionID) {
     $Action = $this->SQL
                     ->Select()
                     ->From('Action')
@@ -78,8 +78,8 @@ class ActionModel extends Gdn_Model {
    * @param int $ActionID
    * @return bool
    */
-  public function ActionExists($ActionID) {
-    $temp = $this->GetAction($ActionID);
+  public function Exists($ActionID) {
+    $temp = $this->GetByID($ActionID);
     return !empty($temp);
   }
 
@@ -90,12 +90,12 @@ class ActionModel extends Gdn_Model {
    * @param int $ReplacementID what action ID existing reactions should report
    * to. Null will delete the associated reactions.
    */
-  public function DeleteAction($ActionID, $ReplacementID = NULL) {
-    if($this->ActionExists($ActionID)) {
+  public function Delete($ActionID, $ReplacementID = NULL) {
+    if($this->Exists($ActionID)) {
       $this->SQL->Delete('Action', array('ActionID' => $ActionID));
 
       // replace the reaction table to move reactions to a new action
-      if($ReplacementID && $this->ActionExists($ReplacementID)) {
+      if($ReplacementID && $this->Exists($ReplacementID)) {
         $this->SQL->Update('Reaction')
                 ->Set('ActionID', $ReplacementID)
                 ->Where('ActionID', $ActionID);
