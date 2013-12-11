@@ -142,42 +142,13 @@ class BadgeAwardModel extends Gdn_Model {
   }
 
   /**
-   * Returns the full list of badges and the associated user awards if applicable
-   *
-   * @param int $UserID
-   * @return DataSet
-   */
-  public function GetEarnedJoinAll($UserID) {
-    return $this->SQL
-            ->Select('b.*, ba.UserID, ba.InsertUserID, ba.Reason, ba.DateInserted, ui.Name as InsertUserName')
-            ->From('Badge b')
-            ->Join('BadgeAward ba', 'ba.BadgeID = b.BadgeID', 'left')
-            ->Join('User ui', 'ba.InsertUserID = ui.UserID', 'left')
-            ->Where('ba.UserID', $UserID)
-            ->OrWhere('b.BadgeID is not null') // needed to get the full set of badges
-            ->GroupBy('b.BadgeID')
-            ->OrderBy('b.BadgeID', 'Desc')
-            ->Get();
-  }
-  
-  public function GetEarned($UserID) {
-    return $this->SQL
-            ->Select('ba.*, ui.Name as InsertUserName')
-            ->From('BadgeAward ba')
-            ->Join('User ui', 'ba.InsertUserID = ui.UserID', 'left')
-            ->Where('ba.UserID', $UserID)
-            ->OrderBy('ba.DateInserted', 'Desc')
-            ->Get();
-  }
-
-  /**
    * Returns the list of unobtained but enabled badges for a specific user
    *
    * @param int $UserID
    * @param bool $Enabled Description
    * @return DataSet
    */
-  public function GetUnearned($UserID) {
+  public function GetUnobtained($UserID) {
     return $this->SQL
             ->Select()
             ->From('Badge b')

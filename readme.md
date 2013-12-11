@@ -11,7 +11,8 @@ Yet Another Gamification Application
 * ~~Move badge count to user table column~~
 * ~~Translate every static string~~
 * ~~Create a badgeaward model~~
-* Fix all badges page query to be right
+* ~~Fix all badges page query to be right~~
+* Finish rank promotion screen
 * Fix reaction method on profile page to show more than one page of discussion/comments
 ** Also show the reaction record
 ** Also refactor that method, really messy right now

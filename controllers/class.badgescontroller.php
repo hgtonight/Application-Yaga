@@ -48,8 +48,12 @@ class BadgesController extends Gdn_Controller {
     $this->Title(T('Yaga.AllBadges'));
 
     $UserID = Gdn::Session()->UserID;
+
     // Get list of badges from the model and pass to the view
-    $this->SetData('Badges', $this->BadgeAwardModel->GetEarnedJoinAll($UserID));
+    $AllBadges = $this->BadgeModel->GetWithEarned($UserID);
+
+    $this->SetData('Badges', $AllBadges);
+    //$this->SetData('Earned')
     
     $this->Render('all');
   }

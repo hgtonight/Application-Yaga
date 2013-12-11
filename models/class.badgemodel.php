@@ -149,10 +149,10 @@ class BadgeModel extends Gdn_Model {
                 ->Set('CountBadges', 'CountBadges - 1', FALSE)
                 ->Where('UserID', $UserIDs)
                 ->Put();
-        
+
         // Remove the award rows
         $this->SQL->Delete('BadgeAward', array('BadgeID' => $BadgeID));
-        
+
         $this->Database->CommitTransaction();
       } catch(Exception $Ex) {
         $this->Database->RollbackTransaction();
@@ -166,4 +166,23 @@ class BadgeModel extends Gdn_Model {
     }
     return FALSE;
   }
+
+  /**
+   * Get the full list of badges joined with the award data for a specific user
+   * This shouldn't really be here, but I can't think of a good place to put it
+   * 
+   * @param int $UserID
+   */
+  public function GetWithEarned($UserID) {
+    $Px = $this->Database->DatabasePrefix;
+    $Sql = 'select b.BadgeID, b.Name, b.Description, b.Photo, b.AwardValue, '
+            . 'ba.UserID, ba.InsertUserID, ba.Reason, ba.DateInserted, '
+            . 'ui.Name AS InsertUserName '
+            . "from {$Px}Badge as b "
+            . "left join {$Px}BadgeAward as ba ON b.BadgeID = ba.BadgeID and ba.UserID = :UserID "
+            . "left join {$Px}User as ui on ba.InsertUserID = ui.UserID";
+
+    return $this->Database->Query($Sql, array(':UserID' => $UserID))->Result();
+  }
+
 }
