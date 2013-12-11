@@ -34,7 +34,7 @@ class HolidayVisit implements YagaRule {
     }
     
     $String = $Form->Label('Holiday date', 'HolidayVisit');
-    $String .= $Form->DropDown('Month', $Months);
+    $String .= $Form->DropDown('Month', $Months) . ' ';
     $String .= $Form->DropDown('Day', $Days);
     return $String;
   }
@@ -45,8 +45,7 @@ class HolidayVisit implements YagaRule {
   
   public function Description() {
     $Description = T('Yaga.Rules.HolidayVisit.Desc');
-    return $Description;
-    
+    return Wrap($Description, 'div', array('class' => 'InfoMessage'));
   }
   
   public function Name() {

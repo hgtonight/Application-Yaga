@@ -21,7 +21,7 @@ class HasMentioned implements YagaRule{
   }
     
   public function Form($Form) {
-    return $this->Description();
+    return '';
   }
   
   public function Hooks() {
@@ -30,8 +30,7 @@ class HasMentioned implements YagaRule{
   
   public function Description() {
     $Description = T('Yaga.Rules.HasMentioned.Desc');
-    return $Description;
-    
+    return Wrap($Description, 'div', array('class' => 'InfoMessage'));
   }
   
   public function Name() {

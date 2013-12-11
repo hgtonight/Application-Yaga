@@ -10,6 +10,8 @@ if(property_exists($this, 'Badge')) {
   $RuleClass = $this->Badge->RuleClass;
 }
 
+$Rule = new $RuleClass();
+
 echo Wrap($this->Title(), 'h1');
 
 echo $this->Form->Open(array('enctype' => 'multipart/form-data', 'class' => 'Badge'));
@@ -47,12 +49,16 @@ echo $this->Form->Errors();
     echo $this->Form->Dropdown('RuleClass', $Rules);
     ?>
   </li>
+  <li id="Rule-Description">
+    <?php
+    echo $Rule->Description();
+    ?>
+  </li>
   <li id="Rule-Criteria">
   <?php
     // Save the Prefix for later
     $Prefix = $this->Form->InputPrefix;
     $this->Form->InputPrefix = $Prefix . '_Rules';
-    $Rule = new $RuleClass();
     echo $Rule->Form($this->Form);
     // Restore the prefix
     $this->Form->InputPrefix = $Prefix;

@@ -14,8 +14,9 @@ interface YagaRule {
    * @param UserObject $User the user object
    * @param stdClass $Criteria This is a standard object with properties that
    * match the criteria that were previously rendered
-   * @return int Represents the user that gets the award criteria. You may use True or
-   * False as shortcuts to award the user that did the check. False will not award any user
+   * @return int Represents the user that gets the award criteria. You may use
+   * True as a shortcut to award the user that did the check. False will not
+   * award any user
    */
   public function Award($Sender, $User, $Criteria);
   

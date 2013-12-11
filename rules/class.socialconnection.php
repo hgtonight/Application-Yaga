@@ -27,7 +27,7 @@ class SocialConnection implements YagaRule{
     );
     
     $String = $Form->Label('Social Networks', 'SocialConnection');
-    $String .= T('User has connect to: ');
+    $String .= T('User has connected to: ');
     $String .= $Form->DropDown('SocialNetwork', $SocialNetworks);
     
     return $String; 
@@ -39,8 +39,7 @@ class SocialConnection implements YagaRule{
   
   public function Description() {
     $Description = T('Yaga.Rules.SocialConnection.Desc');
-    return $Description;
-    
+    return Wrap($Description, 'div', array('class' => 'InfoMessage'));
   }
   
   public function Name() {

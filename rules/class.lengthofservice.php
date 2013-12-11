@@ -28,7 +28,7 @@ class LengthOfService implements YagaRule {
     );
     
     $String = $Form->Label('Time Served', 'LengthOfService');
-    $String .= $Form->Textbox('Duration');
+    $String .= $Form->Textbox('Duration', array('class' => 'SmallInput')) . ' ';
     $String .= $Form->DropDown('Period', $Lengths);
     
     return $String;
@@ -40,8 +40,7 @@ class LengthOfService implements YagaRule {
   
   public function Description() {
     $Description = T('Yaga.Rules.LengthOfService.Desc');
-    return $Description;
-    
+    return Wrap($Description, 'div', array('class' => 'InfoMessage'));
   }
   
   public function Name() {

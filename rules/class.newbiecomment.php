@@ -42,7 +42,7 @@ class NewbieComment implements YagaRule{
     );
     
     $String = $Form->Label('User Newbness', 'NewbieComment');
-    $String .= $Form->Textbox('Duration');
+    $String .= $Form->Textbox('Duration', array('class' => 'SmallInput')) . ' ';
     $String .= $Form->DropDown('Period', $Lengths);
 
     return $String; 
@@ -54,8 +54,7 @@ class NewbieComment implements YagaRule{
   
   public function Description() {
     $Description = T('Yaga.Rules.NewbieComment.Desc');
-    return $Description;
-    
+    return Wrap($Description, 'div', array('class' => 'InfoMessage'));
   }
   
   public function Name() {

@@ -42,9 +42,9 @@ class AwardCombo implements YagaRule {
     );
     
     $String = $Form->Label('Number of Badge Types', 'AwardCombo');
-    $String .= $Form->Textbox('Target');
+    $String .= $Form->Textbox('Target', array('class' => 'SmallInput'));
     $String .= $Form->Label('Time Frame');
-    $String .= $Form->Textbox('Duration');
+    $String .= $Form->Textbox('Duration', array('class' => 'SmallInput')) . ' ';
     $String .= $Form->DropDown('Period', $Lengths);    
     
     return $String;
@@ -56,8 +56,7 @@ class AwardCombo implements YagaRule {
   
   public function Description() {
     $Description = T('Yaga.Rules.AwardCombo.Desc');
-    return $Description;
-    
+    return Wrap($Description, 'div', array('class' => 'InfoMessage'));
   }
   
   public function Name() {

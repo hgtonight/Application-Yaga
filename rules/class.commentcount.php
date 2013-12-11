@@ -35,15 +35,14 @@ class CommentCount implements YagaRule{
     
   public function Form($Form) {
     $Comparisons = array(
-        'gt' => T('more than:'),
-        'lt' => T('less than:'),
-        'gte' => T('more than or equal to:')        
+        'gt' => T('More than:'),
+        'lt' => T('Less than:'),
+        'gte' => T('More than or:')        
     );
     
     $String = $Form->Label('Total comments', 'CommentCount');
-    $String .= T('User has') . ' ';
-    $String .= $Form->DropDown('Comparison', $Comparisons);
-    $String .= $Form->Textbox('Target');
+    $String .= $Form->DropDown('Comparison', $Comparisons) . ' ';
+    $String .= $Form->Textbox('Target', array('class' => 'SmallInput'));
     $String .= ' ' . T('comments');
 
     return $String; 
@@ -55,8 +54,7 @@ class CommentCount implements YagaRule{
   
   public function Description() {
     $Description = T('Yaga.Rules.CommentCount.Desc');
-    return $Description;
-    
+    return Wrap($Description, 'div', array('class' => 'InfoMessage'));
   }
   
   public function Name() {

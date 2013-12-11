@@ -37,15 +37,14 @@ class DiscussionCount implements YagaRule{
   
   public function Form($Form) {
     $Comparisons = array(
-        'gt' => T('more than:'),
-        'lt' => T('less than:'),
-        'gte' => T('more than or equal to:')
+        'gt' => T('More than:'),
+        'lt' => T('Less than:'),
+        'gte' => T('More than or:')
     );
     
     $String = $Form->Label('Total Discussions', 'DiscussionCount');
-    $String .= T('User has') . ' ';
-    $String .= $Form->DropDown('Comparison', $Comparisons);
-    $String .= $Form->Textbox('Target');
+    $String .= $Form->DropDown('Comparison', $Comparisons) . ' ';
+    $String .= $Form->Textbox('Target', array('class' => 'SmallInput'));
     $String .= ' ' . T('discussions');
     
     return $String;
@@ -57,8 +56,7 @@ class DiscussionCount implements YagaRule{
   
   public function Description() {
     $Description = T('Yaga.Rules.DiscussionCount.Desc');
-    return $Description;
-    
+    return Wrap($Description, 'div', array('class' => 'InfoMessage'));
   }
   
   public function Name() {

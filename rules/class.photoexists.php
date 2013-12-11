@@ -19,7 +19,7 @@ class PhotoExists implements YagaRule {
   }
   
   public function Form($Form) {
-    return $this->Description();
+    return '';
   }
   
   public function Hooks() {
@@ -28,8 +28,7 @@ class PhotoExists implements YagaRule {
   
   public function Description() {
     $Description = T('Yaga.Rules.PhotoExists.Desc');
-    return $Description;
-    
+    return Wrap($Description, 'div', array('class' => 'InfoMessage'));
   }
   
   public function Name() {

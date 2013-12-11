@@ -15,7 +15,7 @@ class ManualAward implements YagaRule {
   }
   
   public function Form($Form) {
-    return $this->Description();
+    return '';
   }
   
   public function Hooks() {
@@ -24,8 +24,7 @@ class ManualAward implements YagaRule {
   
   public function Description() {
     $Description = T('Yaga.Rules.ManualAward.Desc');
-    return $Description;
-    
+    return Wrap($Description, 'div', array('class' => 'AlertMessage'));
   }
   
   public function Name() {

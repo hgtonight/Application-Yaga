@@ -27,7 +27,7 @@ class ReflexComment implements YagaRule{
     
   public function Form($Form) {
     $String = $Form->Label('Time to Comment', 'ReflexComment');
-    $String .= $Form->Textbox('Seconds');
+    $String .= $Form->Textbox('Seconds', array('class' => 'SmallInput'));
     $String .= ' ' . T('seconds.');
 
     return $String; 
@@ -39,8 +39,7 @@ class ReflexComment implements YagaRule{
   
   public function Description() {
     $Description = T('Yaga.Rules.ReflexComment.Desc');
-    return $Description;
-    
+    return Wrap($Description, 'div', array('class' => 'InfoMessage'));
   }
   
   public function Name() {

@@ -24,16 +24,20 @@ jQuery(document).ready(function($) {
   $("form.Badge select[name='RuleClass']").focus(function() {
     // Save the current form to the current value's cache on focus
     var Rule = $(this).val();
-    var FormHtml = $('#Rule-Criteria').html();
+    var RuleForm = $('#Rule-Criteria').html();
+    var RuleDesc = $('#Rule-Description').html();
     if(!Cache.exists(Rule)) {
-      Cache.set(Rule, FormHtml);
+      Cache.set(Rule, {'Form' : RuleForm, 'Description' : RuleDesc});
     }
   }).change(function() {
     // Grab the form from cache or ajax on change
     var NewRule = $(this).val();
     if (Cache.exists(NewRule)) {
       $('#Rule-Criteria').fadeOut(function() {
-        $(this).html(Cache.get(NewRule)).fadeIn();
+        $(this).html(Cache.get(NewRule).Form).fadeIn();
+      });
+      $('#Rule-Description').fadeOut(function() {
+        $(this).html(Cache.get(NewRule).Description).fadeIn();
       });
     }
     else {
@@ -46,9 +50,12 @@ jQuery(document).ready(function($) {
         data: { 'DeliveryMethod' : 'JSON' },
         dataType: 'json',
         success: function(data) {
-          Cache.set(NewRule, data.CriteriaForm);
+          Cache.set(NewRule, {'Form' : data.CriteriaForm, 'Description' : data.Description});
           $('#Rule-Criteria').fadeOut(function() {
-            $(this).html(Cache.get(NewRule)).fadeIn();
+            $(this).html(Cache.get(NewRule).Form).fadeIn();
+          });
+          $('#Rule-Description').fadeOut(function() {
+            $(this).html(Cache.get(NewRule).Description).fadeIn();
           });
         },
         error: function(jqXHR) {
