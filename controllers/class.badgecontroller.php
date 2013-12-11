@@ -263,14 +263,14 @@ class BadgeController extends DashboardController {
       $Validation->ApplyRule('BadgeID', 'ValidateRequired');
       if($Validation->Validate($this->Request->Post())) {
         $FormValues = $this->Form->FormValues();
-        if($this->BadgeModel->UserHasBadge($FormValues['UserID'], $FormValues['BadgeID'])) {
+        if($this->BadgeAwardModel->Exists($FormValues['UserID'], $FormValues['BadgeID'])) {
           $this->Form->AddError(sprintf(T('Yaga.BadgeAlreadyAwarded'), $User->Name), 'BadgeID');
           // Need to respecify the user id
           $this->Form->AddHidden('UserID', $User->UserID);
         }
 
         if($this->Form->ErrorCount() == 0) {
-          $this->BadgeModel->AwardBadge($FormValues['BadgeID'], $FormValues['UserID'], Gdn::Session()->UserID, $FormValues['Reason']);
+          $this->BadgeAwardModel->Award($FormValues['BadgeID'], $FormValues['UserID'], Gdn::Session()->UserID, $FormValues['Reason']);
 
           if($this->Request->Get('Target')) {
             $this->RedirectUrl = $this->Request->Get('Target');

@@ -13,7 +13,7 @@ class BadgesController extends Gdn_Controller {
    * @var array These objects will be created on instantiation and available via
    * $this->ObjectName
    */
-  public $Uses = array('BadgeModel');
+  public $Uses = array('BadgeModel', 'BadgeAwardModel');
 
   public function Initialize() {
     parent::Initialize();
@@ -49,7 +49,7 @@ class BadgesController extends Gdn_Controller {
 
     $UserID = Gdn::Session()->UserID;
     // Get list of badges from the model and pass to the view
-    $this->SetData('Badges', $this->BadgeModel->GetAllBadgesUserAwards($UserID));
+    $this->SetData('Badges', $this->BadgeAwardModel->GetEarnedJoinAll($UserID));
     
     $this->Render('all');
   }
@@ -62,10 +62,10 @@ class BadgesController extends Gdn_Controller {
    */
   public function Detail($BadgeID, $Slug = NULL) {
     $UserID = Gdn::Session()->UserID;
-    $Badge = $this->BadgeModel->GetBadge($BadgeID);
-    $AwardCount = $this->BadgeModel->GetBadgeAwardCount($BadgeID);
-    $UserBadgeAward = $this->BadgeModel->GetUserBadgeAward($UserID, $BadgeID);
-    $RecentAwards = $this->BadgeModel->GetRecentBadgeAwards($BadgeID);
+    $Badge = $this->BadgeModel->GetByID($BadgeID);
+    $AwardCount = $this->BadgeAwardModel->GetCount($BadgeID);
+    $UserBadgeAward = $this->BadgeAwardModel->Exists($UserID, $BadgeID);
+    $RecentAwards = $this->BadgeAwardModel->GetRecent($BadgeID);
     
     if(!$Badge) {
       throw NotFoundException('Badge');

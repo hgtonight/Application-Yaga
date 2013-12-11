@@ -602,8 +602,8 @@ class YagaHooks implements Gdn_IPlugin {
     $UserModel = new UserModel();
     $User = $UserModel->GetID($UserID);
 
-    $BadgeModel = Yaga::BadgeModel();
-    $Badges = $BadgeModel->GetAllBadgesUserAwards($UserID);
+    $BadgeAwardModel = Yaga::BadgeAwardModel();
+    $Badges = $BadgeAwardModel->GetUnearned($UserID);
 
     $Rules = array();
     foreach($Badges as $Badge) {
@@ -629,7 +629,7 @@ class YagaHooks implements Gdn_IPlugin {
             else {
               $AwardedUserID = $UserID;
             }
-            $BadgeModel->AwardBadge($Badge->BadgeID, $AwardedUserID, $UserID);
+            $BadgeAwardModel->Award($Badge->BadgeID, $AwardedUserID, $UserID);
           }
         }
       }

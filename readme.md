@@ -10,14 +10,14 @@ Yet Another Gamification Application
 * ~~Finish inline ToDos~~
 * ~~Move badge count to user table column~~
 * ~~Translate every static string~~
-* Create a badgeaward model
+* ~~Create a badgeaward model~~
+* Fix all badges page query to be right
 * Fix reaction method on profile page to show more than one page of discussion/comments
 ** Also show the reaction record
 ** Also refactor that method, really messy right now
 * Rule tooltip help
 * Rework badge settings page to streamline badges of the same rule type
 * Create/find reusable badge images
-* Fix all badges page query to be right
 * Mention who gave you the badge on the badge detail page
 * Refactor reaction CSS
 * Refactor all models to get rid of uneeded/duplicate methods
