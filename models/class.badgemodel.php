@@ -41,6 +41,16 @@ class BadgeModel extends Gdn_Model {
     }
     return self::$_Badges;
   }
+  
+   public function GetLimit($Limit = FALSE, $Offset = FALSE) {
+      return $this->SQL
+              ->Select()
+              ->From('Badge')
+              ->OrderBy('BadgeID')
+              ->Limit($Limit, $Offset)
+              ->Get()
+              ->Result();
+  }
 
   /**
    * Total number of badges in the system

@@ -18,7 +18,7 @@ Yet Another Gamification Application
 ** Also show the reaction record
 ** Also refactor that method, really messy right now
 * Rule tooltip help
-* Add pager to badge settings screen
+* ~~Add pager to badge settings screen~~
 * Create/find reusable badge images
 * Mention who gave you the badge on the badge detail page
 * Refactor reaction CSS

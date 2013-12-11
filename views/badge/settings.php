@@ -48,3 +48,4 @@ echo Wrap(Anchor(T('Yaga.AddBadge'), 'yaga/badge/add', array('class' => 'SmallBu
     ?>
   </tbody>
 </table>
+<?php PagerModule::Write(array('Sender' => $this));
