@@ -133,15 +133,6 @@ class BadgeAwardModel extends Gdn_Model {
             ->Result($DataType);
   }
 
-  public function GetByUserCount($UserID) {
-    return $this->SQL
-            ->Select()
-            ->From('Badge b')
-            ->Join('BadgeAward ba', 'ba.BadgeID = b.BadgeID', 'left')
-            ->Where('ba.UserID', $UserID)
-            ->GetCount();
-  }
-
   /**
    * Returns the list of unobtained but enabled badges for a specific user
    *

@@ -47,21 +47,6 @@ class RankModel extends Gdn_Model {
   }
 
   /**
-   * Returns a list of currently enabled ranks
-   *
-   * @return DataSet
-   */
-  public function GetEnabled() {
-    return $this->SQL
-              ->Select()
-              ->From('Rank')
-              ->Where('Enabled', TRUE)
-              ->OrderBy('Level')
-              ->Get()
-              ->Result();
-  }
-
-  /**
    * Returns data for a specific rank
    *
    * @param int $RankID
@@ -116,7 +101,8 @@ class RankModel extends Gdn_Model {
    * @param int $RankID
    */
   public function Delete($RankID) {
-    if($this->RankExists($RankID)) {
+    $Rank = $this->GetByID($RankID);
+    if(!$Rank) {
       $this->SQL->Delete('Rank', array('RankID' => $RankID));
       return TRUE;
     }
@@ -180,22 +166,5 @@ class RankModel extends Gdn_Model {
     $this->EventArguments['Rank'] = $Rank;
     $this->EventArguments['UserID'] = $UserID;
     $this->FireEvent('AfterRankChange');
-  }
-
-  /**
-   * Returns how many ranks the user has of this particular id. It should only
-   * ever be 1 or zero.
-   *
-   * @param int $UserID
-   * @param int $RankID
-   * @return int
-   */
-  public function Exists($UserID, $RankID) {
-    return $this->SQL
-            ->Select()
-            ->From('RankAward')
-            ->Where('RankID', $RankID)
-            ->Where('UserID', $UserID)
-            ->GetCount();
   }
 }

@@ -47,7 +47,7 @@ class YagaHooks implements Gdn_IPlugin {
 
     // insert the reaction totals in the profile
     $ReactionModel = Yaga::ReactionModel();
-    $Actions = $ReactionModel->GetActions();
+    $Actions = Yaga::ActionModel()->Get();
     $String = '';
     foreach($Actions as $Action) {
       $Selected = ($ActionID == $Action->ActionID) ? ' Selected' : '';

@@ -38,12 +38,7 @@ class ReactionModel extends Gdn_Model {
    */
   public function GetActions() {
     if(empty(self::$_Actions)) {
-      self::$_Actions = $this->SQL
-              ->Select()
-              ->From('Action')
-              ->OrderBy('Sort')
-              ->Get()
-              ->Result();
+      self::$_Actions = Yaga::ActionModel()->Get();
     }
     return self::$_Actions;
   }
@@ -66,6 +61,7 @@ class ReactionModel extends Gdn_Model {
   /**
    * Returns the reactions associated with the specified user content.
    * 
+   * @todo Optimize this
    * @param int $ID
    * @param string $Type is the kind of ID. Valid: comment, discussion, activity
    */

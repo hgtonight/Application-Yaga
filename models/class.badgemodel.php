@@ -61,21 +61,6 @@ class BadgeModel extends Gdn_Model {
   }
 
   /**
-   * Returns a list of currently enabled badges
-   *
-   * @return DataSet
-   */
-  public function GetEnabled() {
-    return $this->SQL
-              ->Select()
-              ->From('Badge')
-              ->Where('Enabled', TRUE)
-              ->OrderBy('BadgeID')
-              ->Get()
-              ->Result();
-  }
-
-  /**
    * Returns data for a specific badge
    *
    * @param int $BadgeID
@@ -89,32 +74,6 @@ class BadgeModel extends Gdn_Model {
                     ->Get()
                     ->FirstRow();
     return $Badge;
-  }
-
-  /**
-   * Returns the last inserted badge
-   *
-   * @return DataSet
-   */
-  public function GetNewest() {
-    $Badge = $this->SQL
-                    ->Select()
-                    ->From('Badge')
-                    ->OrderBy('BadgeID', 'desc')
-                    ->Get()
-                    ->FirstRow();
-    return $Badge;
-  }
-
-  /**
-   * Convenience function to determine if a badge id currently exists
-   *
-   * @param int $BadgeID
-   * @return bool
-   */
-  public function Exists($BadgeID) {
-    $temp = $this->GetByID($BadgeID);
-    return !empty($temp);
   }
 
   /**
@@ -160,6 +119,10 @@ class BadgeModel extends Gdn_Model {
                 ->Where('UserID', $UserIDs)
                 ->Put();
 
+        // Remove their points
+        foreach($UserIDs as $UserID) {
+          UserModel::GivePoints($UserID, -1 * $Badge->AwardValue, 'Badge');
+        }
         // Remove the award rows
         $this->SQL->Delete('BadgeAward', array('BadgeID' => $BadgeID));
 
@@ -167,10 +130,6 @@ class BadgeModel extends Gdn_Model {
       } catch(Exception $Ex) {
         $this->Database->RollbackTransaction();
         throw $Ex;
-      }
-      // Remove their points
-      foreach($UserIDs as $UserID) {
-        UserModel::GivePoints($UserID, -1 * $Badge->AwardValue, 'Badge');
       }
       return TRUE;
     }

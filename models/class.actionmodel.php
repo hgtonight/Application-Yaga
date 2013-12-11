@@ -36,7 +36,6 @@ class ActionModel extends Gdn_Model {
               ->OrderBy('Sort')
               ->Get()
               ->Result();
-      //decho('Filling the action cache.');
     }
     return self::$_Actions;
   }

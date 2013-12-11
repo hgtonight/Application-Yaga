@@ -17,7 +17,7 @@ class AwardCombo implements YagaRule {
     
     $BadgeAwardModel = Yaga::BadgeAwardModel();
     $TargetDate = strtotime($Criteria->Duration . ' ' . $Criteria->Period . ' ago');
-    $Badges = $BadgeAwardModel->GetEarned($UserID);
+    $Badges = $BadgeAwardModel->GetByUser($UserID);
     
     $Types = array();
     foreach($Badges as $Badge) {
