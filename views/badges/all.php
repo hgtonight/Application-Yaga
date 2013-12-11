@@ -12,7 +12,7 @@ foreach($this->Data('Badges') as $Badge) {
   $AwardDescription = '';
   $ReadClass = ' Read';
   
-  if($Badge->UserID == Gdn::Session()->UserID) {
+  if($Badge->UserID) {
     $ReadClass = '';
     $AwardDescription = sprintf(T('Yaga.Badge.Earned.Format'), Gdn_Format::Date($Badge->DateInserted, 'html'), $Badge->InsertUserName);
     if($Badge->Reason) {
