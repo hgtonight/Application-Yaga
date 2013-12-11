@@ -13,14 +13,13 @@ Yet Another Gamification Application
 * ~~Create a badgeaward model~~
 * ~~Fix all badges page query to be right~~
 * ~~Finish rank promotion screen~~
-* Allow ranks to be permanent (don't auto promote)
+* ~~Allow ranks to be permanent (don't auto promote)~~
 * Fix reaction method on profile page to show more than one page of discussion/comments
 ** Also show the reaction record
 ** Also refactor that method, really messy right now
 * Rule tooltip help
 * ~~Add pager to badge settings screen~~
 * Create/find reusable badge images
-* Mention who gave you the badge on the badge detail page
 * Refactor reaction CSS
 * Refactor all models to get rid of uneeded/duplicate methods
 * Aggregate Rule Support

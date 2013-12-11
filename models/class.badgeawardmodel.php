@@ -113,7 +113,8 @@ class BadgeAwardModel extends Gdn_Model {
             ->From('BadgeAward')
             ->Where('BadgeID', $BadgeID)
             ->Where('UserID', $UserID)
-            ->GetCount();
+            ->Get()
+            ->FirstRow();
   }
 
   /**

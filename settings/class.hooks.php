@@ -316,10 +316,14 @@ class YagaHooks implements Gdn_IPlugin {
     $UserID = $Sender->EventArguments['UserID'];
     $UserModel = Gdn::UserModel();
     $User = $UserModel->GetID($UserID);
+    
+    // Don't try to promote if they are frozen
+    if(!$User->RankProgression) {
+      return;
+    }
+    
     $Points = $Sender->EventArguments['Points'];
-
     $RankModel = Yaga::RankModel();
-
     $Rank = $RankModel->GetByPoints($Points);
     
     if($Rank && $Rank->RankID != $User->RankID) {

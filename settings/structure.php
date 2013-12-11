@@ -72,6 +72,7 @@ $Construct->Table('Rank')
 $Construct->Table('User')
         ->Column('CountBadges', 'int', 0)
         ->Column('RankID', 'int', TRUE)
+        ->Column('RankProgression', 'tinyint(1)', '1')
         ->Set();
 
 // Add activity types for Badge and Rank awards

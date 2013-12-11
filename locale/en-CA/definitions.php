@@ -33,7 +33,7 @@ $Definition['Yaga.Badge.Award'] = 'Give Badge';
 $Definition['Yaga.Badge.GiveTo'] = 'Give a Badge to %s';
 $Definition['Yaga.Badges.Settings.Desc'] = 'Add or edit the available badges that can be earned.';
 $Definition['Yaga.Badge.Earned.Format'] = 'You earned this badge on %s from %s';
-$Definition['Yaga.Badge.Earned'] = 'You earned this badge';
+$Definition['Yaga.Badge.Earned'] = 'You earned this badge ';
 $Definition['Yaga.Badge.EarnedBySingle'] = '%s person has earned this badge.';
 $Definition['Yaga.Badge.EarnedByPlural'] = '%s people have earned this badge.';
 $Definition['Yaga.Badge.EarnedByNone'] = 'Nobody has earned this badge yet.';
@@ -50,9 +50,12 @@ $Definition['Yaga.RankUpdated'] = 'Rank updated successfully!';
 $Definition['Yaga.RankAdded'] = 'Rank added successfully!';
 $Definition['Yaga.RankPhotoDeleted'] = 'Rank photo has been deleted.';
 $Definition['Yaga.RankAlreadyAttained'] = '%s already has this rank!';
-$Definition['Yaga.Rank.Promote'] = 'Change Rank';
-$Definition['Yaga.Rank.RecordActivity'] = 'Record rank change to activity.';
+$Definition['Yaga.Rank.Promote'] = 'Edit Rank';
+$Definition['Yaga.Rank.Promote.Format'] = "Edit %s's Rank";
+$Definition['Yaga.Rank.RecordActivity'] = 'Record this rank edit to the public activity log.';
 $Definition['Yaga.Ranks.Settings.Desc'] = 'Add or edit the available ranks that can be earned.';
+$Definition['Yaga.Rank.Progression'] = 'Rank Progression';
+$Definition['Yaga.Rank.Progression.Desc'] = 'Allow user to automatically progress past this rank.';
 
 // Best Of...
 $Definition['Yaga.BestOfEverything'] = 'Best of Everything';

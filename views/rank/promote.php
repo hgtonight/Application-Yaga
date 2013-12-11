@@ -5,7 +5,7 @@ $Ranks = $this->Data('Ranks');
 $Username = $this->Data('Username', 'Unknown');
 
 echo '<div id="UserRankForm">';
-echo Wrap(T('Yaga.Rank.Promote') . ' ' . $Username, 'h1');
+echo Wrap(sprintf(T('Yaga.Rank.Promote.Format'), $Username), 'h1');
 echo $this->Form->Open();
 echo $this->Form->Errors();
 
@@ -19,11 +19,15 @@ echo Wrap(
         $this->Form->CheckBox('RecordActivity', 'Yaga.Rank.RecordActivity'),
         'li') .
       Wrap(
+        $this->Form->Label('Yaga.Rank.Progression', 'RankProgression') .
+        $this->Form->CheckBox('RankProgression', 'Yaga.Rank.Progression.Desc', array('Value' => 1, 'Checked' => 'checked')),
+        'li') .
+      Wrap(
               Anchor(T('Cancel'), 'rank/settings'),
               'li'),
         'ul'
 );
 
-echo $this->Form->Close('Yaga.Rank.Promote');
+echo $this->Form->Close('Save');
 
 echo '</div>';

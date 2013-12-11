@@ -267,7 +267,7 @@ class RankController extends DashboardController {
         $FormValues = $this->Form->FormValues();
         if($this->Form->ErrorCount() == 0) {
           $this->RankModel->Set($FormValues['RankID'], $FormValues['UserID'], $FormValues['RecordActivity']);
-
+          $UserModel->SetField($UserID, 'RankProgression', $FormValues['RankProgression']);
           if($this->Request->Get('Target')) {
             $this->RedirectUrl = $this->Request->Get('Target');
           }
