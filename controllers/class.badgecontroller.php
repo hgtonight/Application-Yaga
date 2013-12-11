@@ -112,6 +112,13 @@ class BadgeController extends DashboardController {
           $Criteria[$RealKey] = $Value;
         }
       }
+      
+      // Validate the criteria
+      $RuleClass = new $FormValues['RuleClass'];
+      $Rule = new $RuleClass();
+      
+      $Rule->Validate($Criteria, $this->Form);
+      
       $SerializedCriteria = serialize($Criteria);
       $this->Form->SetFormValue('RuleCriteria', $SerializedCriteria);
       if($this->Form->Save()) {

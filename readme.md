@@ -17,7 +17,7 @@ Yet Another Gamification Application
 * ~~Rule criteria form help~~
 * ~~Add pager to badge settings screen~~
 * Create/find reusable badge images
-* Add validation of rule criteria
+* ~~Add validation of rule criteria~~
 * Refactor reaction CSS
 * Refactor all models to get rid of uneeded/duplicate methods
 * Aggregate Rule Support

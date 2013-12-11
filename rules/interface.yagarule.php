@@ -35,6 +35,14 @@ interface YagaRule {
   public function Form($Form);
   
   /**
+   * This validates the submitted criteria and does what it wants with the form
+   * 
+   * @param array $Criteria
+   * @param Gdn_Form $Form
+   */
+  public function Validate($Criteria, $Form);
+  
+  /**
    * Returns a string representing a user friendly name of this rule.
    * 
    * @return string Name shown on forms

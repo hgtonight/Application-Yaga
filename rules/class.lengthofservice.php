@@ -34,6 +34,20 @@ class LengthOfService implements YagaRule {
     return $String;
   }
   
+  public function Validate($Criteria, $Form) {
+    $Validation = new Gdn_Validation();
+    $Validation->ApplyRules(array(
+        array(
+          'Name' => 'Duration', 'Validation' => array('Required', 'Integer')
+        ),
+        array(
+          'Name' => 'Period', 'Validation' => 'Required'
+        )
+    ));
+    $Validation->Validate($Criteria);
+    $Form->SetValidationResults($Validation->Results());
+  }
+  
   public function Hooks() {
     return array('Base_AfterSignIn');
   }

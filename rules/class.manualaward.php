@@ -17,7 +17,11 @@ class ManualAward implements YagaRule {
   public function Form($Form) {
     return '';
   }
-  
+
+  public function Validate($Criteria, $Form) {
+    return;
+  }
+
   public function Hooks() {
     return array();
   }

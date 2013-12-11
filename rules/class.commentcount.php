@@ -48,6 +48,19 @@ class CommentCount implements YagaRule{
     return $String; 
   }
   
+  public function Validate($Criteria, $Form) {
+    $Validation = new Gdn_Validation();
+    $Validation->ApplyRules(array(
+        array(
+          'Name' => 'Target', 'Validation' => array('Required', 'Integer')
+        ),
+        array(
+          'Name' => 'Comparison', 'Validation' => 'Required'
+        )        
+    ));
+    $Validation->Validate($Criteria);
+    $Form->SetValidationResults($Validation->Results());
+  }
   public function Hooks() {
     return array('CommentModel_AfterSaveComment');
   }

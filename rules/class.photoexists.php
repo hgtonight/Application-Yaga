@@ -22,6 +22,10 @@ class PhotoExists implements YagaRule {
     return '';
   }
   
+  public function Validate($Criteria, $Form) {
+    return;
+  }
+
   public function Hooks() {
     return array('UserModel_AfterSave');
   }
