@@ -6,10 +6,22 @@
  */
 class Yaga {
 
+  protected static $_ActionModel = NULL;
   protected static $_ReactionModel = NULL;
   protected static $_BadgeModel = NULL;
   protected static $_RankModel = NULL;
   protected static $_BadgeAwardModel = NULL;
+  
+  /**
+   * Get a reference to the action model
+   * @return ActionModel
+   */
+  public static function ActionModel() {
+      if (is_null(self::$_ActionModel)) {
+         self::$_ActionModel = new ActionModel();
+      }
+      return self::$_ActionModel;
+   }
   
   /**
    * Get a reference to the reaction model
@@ -24,7 +36,7 @@ class Yaga {
    
   /**
    * Get a reference to the badge model
-   * @return ReactionModel
+   * @return BadgeModel
    */
   public static function BadgeModel() {
       if (is_null(self::$_BadgeModel)) {
@@ -34,8 +46,8 @@ class Yaga {
    }
    
    /**
-   * Get a reference to the badge model
-   * @return ReactionModel
+   * Get a reference to the badge award model
+   * @return BadgeAwardModel
    */
   public static function BadgeAwardModel() {
       if (is_null(self::$_BadgeAwardModel)) {

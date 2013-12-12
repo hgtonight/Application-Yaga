@@ -100,7 +100,7 @@ class ReactController extends Gdn_Controller {
     // It has passed through the gauntlet
     $this->ReactionModel->Set($ID, $Type, $ItemOwnerID, $UserID, $ActionID);
     
-    $this->JsonTarget($Anchor, RenderReactions($ID, $Type, FALSE), 'ReplaceWith');
+    $this->JsonTarget($Anchor, RenderReactionList($ID, $Type, FALSE), 'ReplaceWith');
     
     // Don't render anything
     $this->Render('Blank', 'Utility', 'Dashboard');

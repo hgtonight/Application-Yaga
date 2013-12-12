@@ -15,14 +15,15 @@
  */
 if(!function_exists('RenderReactions')) {
 
-  function RenderReactions($ID, $Type, $Echo = TRUE) {
-    $Reactions = Yaga::ReactionModel()->Get($ID, $Type);
+  function RenderReactionList($ID, $Type, $Echo = TRUE) {
+    $Reactions = Yaga::ReactionModel()->GetList($ID, $Type);
     $ActionsString = '';
     foreach($Reactions as $Action) {
       if(CheckPermission($Action->Permission)) {
+        $CountString = ($Action->Count) ? $Action->Count : '';
         $ActionsString .= Anchor(
                 Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID . ' ' . $Action->CssClass)) .
-                WrapIf(count($Action->UserIDs), 'span', array('class' => 'Count')) .
+                WrapIf($CountString, 'span', array('class' => 'Count')) .
                 Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'react/' . $Type . '/' . $ID . '/' . $Action->ActionID, 'Hijack ReactButton'
         );
       }
@@ -49,21 +50,17 @@ if(!function_exists('RenderReactions')) {
 if(!function_exists('RenderReactionRecord')) {
 
   function RenderReactionRecord($ID, $Type) {
-    $Reactions = Yaga::ReactionModel()->Get($ID, $Type);
+    $Reactions = Yaga::ReactionModel()->GetRecord($ID, $Type);
     foreach($Reactions as $Reaction) {
-      if($Reaction->UserIDs) {
-        foreach($Reaction->UserIDs as $Index => $UserID) {
-          $User = Gdn::UserModel()->GetID($UserID);
-          $String = UserPhoto($User, array('Size' => 'Small'));
-          $String .= '<span class="ReactSprite Reaction-' . $Reaction->ActionID . ' ' . $Reaction->CssClass . '"></span>';
-          $Wrapttributes = array(
-              'class' => 'UserReactionWrap',
-              'data-userid' => $User->UserID,
-              'title' => $User->Name . ' - ' . $Reaction->Name . ' on ' . Gdn_Format::Date($Reaction->Dates[$Index], '%B %e, %Y')
-          );
-          echo Wrap($String, 'span', $Wrapttributes);
-        }
-      }
+      $User = Gdn::UserModel()->GetID($Reaction->UserID);
+      $String = UserPhoto($User, array('Size' => 'Small'));
+      $String .= '<span class="ReactSprite Reaction-' . $Reaction->ActionID . ' ' . $Reaction->CssClass . '"></span>';
+      $Wrapttributes = array(
+          'class' => 'UserReactionWrap',
+          'data-userid' => $User->UserID,
+          'title' => $User->Name . ' - ' . $Reaction->Name . ' on ' . Gdn_Format::Date($Reaction->DateInserted, '%B %e, %Y')
+      );
+      echo Wrap($String, 'span', $Wrapttributes);
     }
   }
 

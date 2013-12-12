@@ -25,49 +25,35 @@ class ReactionModel extends Gdn_Model {
     parent::__construct('Reaction');
   }
 
+  public function GetList($ID, $Type) {
+    $Px = $this->Database->DatabasePrefix;
+    $Sql = "select a.*, "
+            . "(select count(r.ReactionID) "
+            . "from {$Px}Reaction as r "
+            . "where r.ParentID = :ParentID and r.ParentType = :ParentType "
+            . "and r.ActionID = a.ActionID) as Count "
+            . "from {$Px}Action AS a "
+            . "order by a.Sort";
+
+    return $this->Database->Query($Sql, array(':ParentID' => $ID, ':ParentType' => $Type))->Result();
+  }
   /**
-   * Returns the reactions associated with the specified user content.
+   * Returns the reaction records associated with the specified user content.
    * 
-   * @todo Optimize this
    * @param int $ID
    * @param string $Type is the kind of ID. Valid: comment, discussion, activity
    */
-  public function Get($ID, $Type) {
+  public function GetRecord($ID, $Type) {
     if(in_array($Type, array('discussion', 'comment', 'activity')) && $ID > 0) {
-      $ReactionSet = array();
-      $ActionModel = Yaga::ActionModel();
-      if(empty(self::$_Reactions[$Type . $ID])) {
-        foreach($ActionModel->Get() as $Index => $Action) {
-          $ReactionSet[$Index]->ActionID = $Action->ActionID;
-          $ReactionSet[$Index]->Name = $Action->Name;
-          $ReactionSet[$Index]->Description = $Action->Description;
-          $ReactionSet[$Index]->Tooltip = $Action->Tooltip;
-          $ReactionSet[$Index]->CssClass = $Action->CssClass;
-          $ReactionSet[$Index]->AwardValue = $Action->AwardValue;
-          $ReactionSet[$Index]->Permission = $Action->Permission;
-          
-          $Reactions = $this->SQL
-                  ->Select('InsertUserID as UserID, DateInserted')
-                  ->From('Reaction')
-                  ->Where('ActionID', $Action->ActionID)
-                  ->Where('ParentID', $ID)
-                  ->Where('ParentType', $Type)
-                  ->Get()
-                  ->Result();
-          
-          foreach($Reactions as $Reaction) {
-            $ReactionSet[$Index]->UserIDs[] = $Reaction->UserID;
-            $ReactionSet[$Index]->Dates[] = $Reaction->DateInserted;
-          }
-          if(empty($ReactionSet[$Index]->UserIDs)) {
-            $ReactionSet[$Index]->UserIDs = array();
-          }
-            
-        }
-
-        self::$_Reactions[$Type . $ID] = $ReactionSet;
-      }
-      return self::$_Reactions[$Type . $ID];
+      return $this->SQL
+              ->Select('a.*, r.InsertUserID as UserID, r.DateInserted')
+              ->From('Action a')
+              ->Join('Reaction r', 'a.ActionID = r.ActionID')
+              ->Where('r.ParentID', $ID)
+              ->Where('r.ParentType', $Type)
+              ->OrderBy('r.DateInserted')
+              ->Get()
+              ->Result();
     }
     else {
       return NULL;
