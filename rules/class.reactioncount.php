@@ -17,7 +17,7 @@ class ReactionCount implements YagaRule{
     }
     
     $ReactionModel = new ReactionModel();
-    $Count = $ReactionModel->GetUserReactionCount($Sender->EventArguments['ParentUserID'], $ActionID);
+    $Count = $ReactionModel->GetUserCount($Sender->EventArguments['ParentUserID'], $ActionID);
     
     if($Count >= $Criteria->Target) {
       // Award the badge to the user that got the reaction

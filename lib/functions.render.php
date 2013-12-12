@@ -16,7 +16,7 @@
 if(!function_exists('RenderReactions')) {
 
   function RenderReactions($ID, $Type, $Echo = TRUE) {
-    $Reactions = Yaga::ReactionModel()->GetAllReactions($ID, $Type);
+    $Reactions = Yaga::ReactionModel()->Get($ID, $Type);
     $ActionsString = '';
     foreach($Reactions as $Action) {
       if(CheckPermission($Action->Permission)) {
@@ -49,7 +49,7 @@ if(!function_exists('RenderReactions')) {
 if(!function_exists('RenderReactionRecord')) {
 
   function RenderReactionRecord($ID, $Type) {
-    $Reactions = Yaga::ReactionModel()->GetAllReactions($ID, $Type);
+    $Reactions = Yaga::ReactionModel()->Get($ID, $Type);
     foreach($Reactions as $Reaction) {
       if($Reaction->UserIDs) {
         foreach($Reaction->UserIDs as $Index => $UserID) {

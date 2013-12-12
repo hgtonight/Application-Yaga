@@ -98,7 +98,7 @@ class ReactController extends Gdn_Controller {
     }
 
     // It has passed through the gauntlet
-    $this->ReactionModel->SetReaction($ID, $Type, $ItemOwnerID, $UserID, $ActionID);
+    $this->ReactionModel->Set($ID, $Type, $ItemOwnerID, $UserID, $ActionID);
     
     $this->JsonTarget($Anchor, RenderReactions($ID, $Type, FALSE), 'ReplaceWith');
     

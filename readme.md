@@ -19,7 +19,7 @@ Yet Another Gamification Application
 * Create/find reusable badge images
 * ~~Add validation of rule criteria~~
 * Refactor reaction CSS
-* Refactor all models to get rid of uneeded/duplicate methods
+* ~~Refactor all models to get rid of uneeded/duplicate methods~~
 * Aggregate Rule Support
 * Add rules vino suggested (DiscussionPageLength, DiscussionBodyLength, PostReactionCount, PostReactionComboCount, CakeDay, Necroposting, ComboDateTimes)
 * Fix reaction method on profile page to show more than one page of discussion/comments

@@ -51,7 +51,7 @@ class YagaHooks implements Gdn_IPlugin {
     $String = '';
     foreach($Actions as $Action) {
       $Selected = ($ActionID == $Action->ActionID) ? ' Selected' : '';
-      $Count = $ReactionModel->GetUserReactionCount($User->UserID, $Action->ActionID);
+      $Count = $ReactionModel->GetUserCount($User->UserID, $Action->ActionID);
       $TempString = Wrap(Wrap(Gdn_Format::BigNumber($Count), 'span', array('title' => $Count)), 'span', array('class' => 'Yaga_ReactionCount CountTotal'));
       $TempString .= Wrap($Action->Name, 'span', array('class' => 'Yaga_ReactionName CountLabel'));
 

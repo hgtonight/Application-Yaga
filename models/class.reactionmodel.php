@@ -19,43 +19,10 @@ class ReactionModel extends Gdn_Model {
   private static $_Reactions = array();
   
   /**
-   * Used as a cache for the available actions
-   * @var DataSet
-   */
-  private static $_Actions = NULL;
-  
-  /**
    * Defines the related database table name.
    */
   public function __construct() {
     parent::__construct('Reaction');
-  }
-
-  /**
-   * Returns a list of all available actions.
-   * 
-   * @return DataSet
-   */
-  public function GetActions() {
-    if(empty(self::$_Actions)) {
-      self::$_Actions = Yaga::ActionModel()->Get();
-    }
-    return self::$_Actions;
-  }
-  
-  /**
-   * Returns data for a specific action
-   * 
-   * @param int $ActionID
-   * @return DataSet
-   */
-  public function GetActionID($ActionID) {
-    return $this->SQL
-                    ->Select()
-                    ->From('Action')
-                    ->Where('ActionID', $ActionID)
-                    ->Get()
-                    ->FirstRow();
   }
 
   /**
@@ -65,11 +32,12 @@ class ReactionModel extends Gdn_Model {
    * @param int $ID
    * @param string $Type is the kind of ID. Valid: comment, discussion, activity
    */
-  public function GetAllReactions($ID, $Type) {
+  public function Get($ID, $Type) {
     if(in_array($Type, array('discussion', 'comment', 'activity')) && $ID > 0) {
       $ReactionSet = array();
+      $ActionModel = Yaga::ActionModel();
       if(empty(self::$_Reactions[$Type . $ID])) {
-        foreach($this->GetActions() as $Index => $Action) {
+        foreach($ActionModel->Get() as $Index => $Action) {
           $ReactionSet[$Index]->ActionID = $Action->ActionID;
           $ReactionSet[$Index]->Name = $Action->Name;
           $ReactionSet[$Index]->Description = $Action->Description;
@@ -105,23 +73,6 @@ class ReactionModel extends Gdn_Model {
       return NULL;
     }
   }
-  
-  /**
-   * Gets reactions for a specific record with $ID and of $Type
-   * 
-   * @param int $ID the parent ID
-   * @param string $Type valid entries are 'discussion', 'comment', and 'activity'
-   */
-  public function GetReactions($ID, $Type) {
-    return $this->SQL->
-            Select('a.ActionID, a.AwardValue, COUNT(a.ActionID) as Count')
-            ->From('Action a')
-            ->Join('Reaction r', 'a.ActionID = r.ActionID', 'left')
-            ->Where('r.ParentID', $ID)
-            ->Where('r.ParentType', $Type)
-            ->GroupBy('a.ActionID')
-            ->Get();    
-  }
 
   /**
    * Return a list of reactions a user has received
@@ -131,7 +82,7 @@ class ReactionModel extends Gdn_Model {
    * @param int $UserID
    * @return DataSet
    */
-  public function GetUserReaction($ID, $Type, $UserID) {
+  public function GetByUser($ID, $Type, $UserID) {
     return $this->SQL
             ->Select()
             ->From('Reaction')
@@ -149,7 +100,7 @@ class ReactionModel extends Gdn_Model {
    * @param int $ActionID
    * @return DataSet
    */
-  public function GetUserReactionCount($UserID, $ActionID) {
+  public function GetUserCount($UserID, $ActionID) {
     return $this->SQL
             ->Select()
             ->From('Reaction')
@@ -172,16 +123,17 @@ class ReactionModel extends Gdn_Model {
    * @param int $ActionID
    * @return DataSet
    */
-  public function SetReaction($ID, $Type, $AuthorID, $UserID, $ActionID) {
+  public function Set($ID, $Type, $AuthorID, $UserID, $ActionID) {
     // clear the cache
     unset(self::$_Reactions[$Type . $ID]);
 
     $EventArgs = array('ParentID' => $ID, 'ParentType' => $Type, 'ParentUserID' => $AuthorID, 'InsertUserID' => $UserID, 'ActionID' => $ActionID);
-    $NewAction = $this->GetActionID($ActionID);
+    $ActionModel = Yaga::ActionModel();
+    $NewAction = $ActionModel->GetByID($ActionID);
     $Points = $Score = $NewAction->AwardValue;
-    $CurrentReaction = $this->GetUserReaction($ID, $Type, $UserID);
+    $CurrentReaction = $this->GetByUser($ID, $Type, $UserID);
     if($CurrentReaction) {
-      $OldAction = $this->GetActionID($CurrentReaction->ActionID);
+      $OldAction = $ActionModel->GetByID($CurrentReaction->ActionID);
       
       if($ActionID == $CurrentReaction->ActionID) {
         // remove the record
