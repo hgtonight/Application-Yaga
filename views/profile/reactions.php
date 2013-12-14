@@ -61,4 +61,3 @@ foreach ($Contents as $Content) {
    </li> <?php
 }
 echo '</ul>';
-
