@@ -16,10 +16,12 @@ Yet Another Gamification Application
 * ~~Allow ranks to be permanent (don't auto promote)~~
 * ~~Rule criteria form help~~
 * ~~Add pager to badge settings screen~~
+* Configure guards on all reactions, badges, and ranks specific code
 * Create/find reusable badge images
 * ~~Add validation of rule criteria~~
 * Refactor reaction CSS
 * ~~Refactor all models to get rid of uneeded/duplicate methods~~
+* Fire events
 
 ## New Features
 * Stats page on the yaga settings page
