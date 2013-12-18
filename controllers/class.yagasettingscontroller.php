@@ -7,7 +7,7 @@
  * @since 1.0
  * @package Yaga
  */
-class SettingsController extends DashboardController {
+class YagaSettingsController extends DashboardController {
 
     /**
    * Make this look like a dashboard page and add the resources
@@ -17,6 +17,7 @@ class SettingsController extends DashboardController {
    */
   public function Initialize() {
     parent::Initialize();
+    $this->Application = 'Yaga';
     Gdn_Theme::Section('Dashboard');
     if ($this->Menu) {
       $this->Menu->HighlightRoute('/yaga/settings');
@@ -40,9 +41,10 @@ class SettingsController extends DashboardController {
       'Yaga.LeaderBoard.Enabled' => array('LabelCode' => 'Show leaderboard on activity page', 'Control' => 'Checkbox'),
       'Yaga.LeaderBoard.Limit' => array('LabelCode' => 'Maximum number of leaders to show', 'Control' => 'Textbox', 'Options' => array('Size' => 45, 'class' => 'SmallInput'))
     ));
-    $this->AddSideMenu('yaga/settings');
+    $this->AddSideMenu('yagasettings');
     $this->Title(T('Yaga.Settings'));
     $this->ConfigurationModule = $ConfigModule;
+    
     $ConfigModule->RenderAll();
   }
 }

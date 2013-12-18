@@ -22,6 +22,7 @@ class ReactController extends Gdn_Controller {
    */
   public function Initialize() {
     parent::Initialize();
+    $this->Application = 'Yaga';
     if(!$this->Request->IsPostBack()) {
       throw PermissionException('Javascript');
     }

@@ -10,3 +10,6 @@ $Configuration['Preferences']['Popup']['Badges'] = '1';
 $Configuration['Preferences']['Email']['Badges'] = '0';
 $Configuration['Preferences']['Popup']['Ranks'] = '1';
 $Configuration['Preferences']['Email']['Ranks'] = '1';
+
+$Configuration['Modules']['Yaga']['Panel'] = array('MeModule', 'UserBoxModule', 'ActivityFilterModule', 'UserPhotoModule', 'ProfileFilterModule', 'SideMenuModule', 'UserInfoModule', 'GuestModule', 'Ads');
+$Configuration['Modules']['Yaga']['Content'] = array('MessageModule', 'MeModule', 'UserBoxModule', 'ProfileOptionsModule', 'Notices', 'ActivityFilterModule', 'ProfileFilterModule', 'Content', 'Ads');

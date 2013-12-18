@@ -17,6 +17,7 @@ class BadgesController extends Gdn_Controller {
 
   public function Initialize() {
     parent::Initialize();
+    $this->Application = 'Yaga';
     $this->Head = new HeadModule($this);
     $this->AddJsFile('jquery.js');
     $this->AddJsFile('jquery-ui.js');

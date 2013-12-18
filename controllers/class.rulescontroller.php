@@ -18,6 +18,7 @@ class RulesController extends Gdn_Controller {
    */
   public function Initialize() {
     parent::Initialize();
+    $this->Application = 'Yaga';
   }
   
   /**

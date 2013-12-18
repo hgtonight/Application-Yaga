@@ -23,6 +23,7 @@ class RankController extends DashboardController {
    */
   public function Initialize() {
     parent::Initialize();
+    $this->Application = 'Yaga';
     Gdn_Theme::Section('Dashboard');
     if($this->Menu) {
       $this->Menu->HighlightRoute('/rank');
