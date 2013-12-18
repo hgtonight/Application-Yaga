@@ -1,134 +1,113 @@
 .Reactions {
-   position: relative;
-   font-size: 11px;
-   line-height: 18px;
+  position: relative;
+  font-size: 11px;
+  line-height: 18px;
+  margin: 15px 0 0 0;
 }
 
 .React {
-   position: absolute;
-   right: 0;
-   top: 0;
+  position: relative;
+  top: auto;
+  right: auto;
 }
 
 .ReactButton {
-   display: inline-block;
-   margin: 0 5px;
-   line-height: 18px;
-   vertical-align: top;
-   position: relative;
+  display: inline-block;
+  margin: 0 5px;
+  line-height: 18px;
+  vertical-align: top;
+  position: relative;
 }
 
 .UserReactionWrap {
-    position: relative;
-    line-height: 1;
-    display: inline-block;
-    margin-right: 3px;
+  position: relative;
+  line-height: 1;
+  display: inline-block;
+  margin-right: 3px;
 }
 
 .UserReactionWrap .ReactSprite {
-    position: absolute;
-    right: -2px;
-    bottom: -2px;
+  position: absolute;
+  right: -2px;
+  bottom: -2px;
+  background-image: url('images/action-sprites-bordered.png');
 }
 
 .Item:hover .Reactions a {
-   width: inherit;
-}
-
-.InProgress .ReactSprite {
-   background-image: none !Important;
-   background: transparent !Important;
-}
-
-.InProgress .Count {
-   visibility: hidden;
+  width: inherit;
 }
 
 .DataCounts {
-   margin: 5px 0;
-   text-align: center;
+  margin: 5px 0;
+  text-align: center;
 }
 
 .CountTotal {
-   display: block;
-   line-height: 100%;
-   font-size: 28px;
+  display: block;
+  line-height: 100%;
+  font-size: 28px;
 }
 
 .CountItemWrap {
-   width: 10%;
-   display: inline-block;
-}   
+  width: 10%;
+  display: inline-block;
+}
 
 .CountItem {
-   display: block;
-   text-align: center;
-   border: solid 2px transparent;
-   padding: 4px;
-   margin: 0 4px;
-   border-radius: 4px;
-   -moz-border-radius: 4px;
-   -webkit-border-radius: 4px;
-   white-space: nowrap;
-   overflow: visible;
+  display: block;
+  text-align: center;
+  border: solid 2px transparent;
+  padding: 4px;
+  margin: 0 4px;
+  border-radius: 4px;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  white-space: nowrap;
+  overflow: visible;
 }
 
 .CountItem.Selected {
-    background: rgba(55, 173, 227, 0.1);
-    border: solid 2px rgba(55, 173, 227, .2);
-    padding: 4px
+  background: rgba(55, 173, 227, 0.1);
+  border: solid 2px rgba(55, 173, 227, .2);
+  padding: 4px
 }
 
-/* Reaction Revamp */
-.Reactions .Bullet {
-    color: #999;
-}
-
-.React {
-    position: relative;
-    top: auto;
-    right: auto;
-}
-
-.Reactions {
-    margin: 15px 0 0 0;
-}
 .RecordReactions {
-    margin-top: 15px;
+  margin-top: 15px;
 }
 .RecordReactions + .Reactions {
-   margin-top: 0;
+  margin-top: 0;
 }
 
 .Reactions .Count {
-    font-size: 8px;
-    background: #555;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    margin-right: 4px;
-    vertical-align: top;
+  font-size: 8px;
+  background: #555;
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  margin-right: 4px;
+  vertical-align: top;
 }
 .Item .Reactions > * {
-    visibility: hidden;
+  visibility: hidden;
 }
 .Item .Reactions > *.Visible {
-    visibility: visible;
+  visibility: visible;
 }
 .Item.Open .Reactions > *,
-.Item:hover .Reactions > *, 
+.Item:hover .Reactions > *,
 .Item .Reactions > .FlagMenu {
-    visibility: visible;
+  visibility: visible;
 }
 
 .Reactions > a.React > .ReactSprite {
-   margin-right: 2px;
+  margin-right: 2px;
 }
 
 /* iPad/iPhone */
 @media only screen and (device-width: 768px),
 only screen and (max-device-width: 480px) {
-   .Item .Reactions > * { visibility: visible; }
+  .Item .Reactions > * { visibility: visible; }
 }
 
 /* Override default reactsprite styles from style.css to work with custom sheets */
@@ -144,7 +123,7 @@ only screen and (max-device-width: 480px) {
   background-repeat: no-repeat;
 }
 input + .ReactSprite {
-   vertical-align: middle;
+  vertical-align: middle;
 }
 
 .ReactHappy { background-position: -4px -4px; }
@@ -228,11 +207,6 @@ input + .ReactSprite {
 .ReactCheckmark { background-position: -340px -100px; }
 .ReactClose { background-position: -364px -100px; }
 
-/* Switch to the white icons when hovering over a menuitem sprite */
 .MenuItems a:hover .ReactSprite {
-   background-image: url('images/action-sprites-white.png');
-}
-/* Switch to bordered icons for user reaction overlays */
-.UserReactionWrap .ReactSprite {
-   background-image: url('images/action-sprites-bordered.png');
+  background-image: url('images/action-sprites-white.png');
 }
