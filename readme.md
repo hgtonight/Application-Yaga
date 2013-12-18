@@ -21,9 +21,8 @@ Yet Another Gamification Application
 * ~~Add validation of rule criteria~~
 * ~~Refactor reaction CSS~~
 * ~~Refactor all models to get rid of uneeded/duplicate methods~~
-* Fire events
 
-## New Features
+## Planned Features
 * Stats page on the yaga settings page
 * Import/Export badges/reactions/ranks
 * Best Of... Controller
