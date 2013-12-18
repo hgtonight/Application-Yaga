@@ -20,7 +20,7 @@ echo $this->Form->Errors();
 </div> <?php
 
 echo Wrap(Wrap(T('Yaga.Ranks.Settings.Desc'), 'div'), 'div', array('class' => 'Wrap'));
-echo Wrap(Anchor(T('Yaga.AddRank'), 'yaga/rank/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
+echo Wrap(Anchor(T('Yaga.AddRank'), 'rank/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
 
 ?>
 <table id="Actions" class="AltRows">
@@ -46,8 +46,8 @@ echo Wrap(Anchor(T('Yaga.AddRank'), 'yaga/rank/add', array('class' => 'SmallButt
       $Row .= Wrap($Rank->Role, 'td');
       $ToggleText = ($Rank->Enabled) ? T('Enabled') : T('Disabled');
       $ActiveClass = ($Rank->Enabled) ? 'Active' : 'InActive';
-      $Row .= Wrap(Wrap(Anchor($ToggleText, 'yaga/rank/toggle/' . $Rank->RankID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
-      $Row .= Wrap(Anchor(T('Edit'), 'yaga/rank/edit/' . $Rank->RankID, array('class' => 'SmallButton')) . Anchor(T('Delete'), 'yaga/rank/delete/' . $Rank->RankID, array('class' => 'Danger Popup SmallButton')), 'td');
+      $Row .= Wrap(Wrap(Anchor($ToggleText, 'rank/toggle/' . $Rank->RankID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
+      $Row .= Wrap(Anchor(T('Edit'), 'rank/edit/' . $Rank->RankID, array('class' => 'SmallButton')) . Anchor(T('Delete'), 'rank/delete/' . $Rank->RankID, array('class' => 'Danger Popup SmallButton')), 'td');
       echo Wrap($Row, 'tr', array('id' => 'RankID_' . $Rank->RankID, 'data-rankid' => $Rank->RankID, 'class' => $Alt));
     }
     ?>

@@ -123,7 +123,7 @@ class RankController extends DashboardController {
         else {
           $this->InformMessage(T('Yaga.RankAdded'));
         }
-        Redirect('/yaga/rank/settings');
+        Redirect('/rank/settings');
       }
     }
 
@@ -196,7 +196,7 @@ class RankController extends DashboardController {
       $ActiveClass = 'Active';
     }
 
-    $Slider = Wrap(Wrap(Anchor($ToggleText, 'yaga/rank/toggle/' . $Rank->RankID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
+    $Slider = Wrap(Wrap(Anchor($ToggleText, 'rank/toggle/' . $Rank->RankID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
     $this->RankModel->Enable($RankID, $Enable);
     $this->JsonTarget('#RankID_' . $RankID . ' td:nth-child(5)', $Slider, 'ReplaceWith');
     $this->Render('Blank', 'Utility', 'Dashboard');
@@ -212,7 +212,7 @@ class RankController extends DashboardController {
       // Check permission
       $this->Permission('Garden.Ranks.Manage');
 
-      $RedirectUrl = 'yaga/rank/settings';
+      $RedirectUrl = 'rank/settings';
 
       if (Gdn::Session()->ValidateTransientKey($TransientKey)) {
          SaveToConfig('Yaga.Ranks.Photo', NULL);

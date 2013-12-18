@@ -12,7 +12,7 @@ jQuery(document).ready(function($) {
     tolerance: 'pointer',
     update: function() {
       $.post(
-        gdn.url('/yaga/action/sort.json'),
+        gdn.url('action/sort.json'),
         {
           'SortArray': $('ol.Sortable').sortable('toArray'),
           'TransientKey': gdn.definition('TransientKey')

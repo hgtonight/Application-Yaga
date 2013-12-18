@@ -129,7 +129,7 @@ class BadgeController extends DashboardController {
         else {
           $this->InformMessage(T('Yaga.BadgeAdded'));
         }
-        Redirect('/yaga/badge/settings');
+        Redirect('/badge/settings');
       }
     }
 
@@ -202,7 +202,7 @@ class BadgeController extends DashboardController {
       $ActiveClass = 'Active';
     }
 
-    $Slider = Wrap(Wrap(Anchor($ToggleText, 'yaga/badge/toggle/' . $Badge->BadgeID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
+    $Slider = Wrap(Wrap(Anchor($ToggleText, 'badge/toggle/' . $Badge->BadgeID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
     $this->BadgeModel->Enable($BadgeID, $Enable);
     $this->JsonTarget('#BadgeID_' . $BadgeID . ' td:nth-child(6)', $Slider, 'ReplaceWith');
     $this->Render('Blank', 'Utility', 'Dashboard');
@@ -218,7 +218,7 @@ class BadgeController extends DashboardController {
       // Check permission
       $this->Permission('Garden.Badges.Manage');
 
-      $RedirectUrl = 'yaga/badge/edit/'.$BadgeID;
+      $RedirectUrl = 'badge/edit/'.$BadgeID;
 
       if (Gdn::Session()->ValidateTransientKey($TransientKey)) {
          $this->BadgeModel->SetField($BadgeID, 'Photo', NULL);

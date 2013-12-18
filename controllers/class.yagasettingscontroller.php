@@ -20,9 +20,9 @@ class YagaSettingsController extends DashboardController {
     $this->Application = 'Yaga';
     Gdn_Theme::Section('Dashboard');
     if ($this->Menu) {
-      $this->Menu->HighlightRoute('/yaga/settings');
+      $this->Menu->HighlightRoute('/yagasettings');
     }
-    $this->AddJsFile('yaga.js');
+    //$this->AddJsFile('yaga.js');
     $this->AddCssFile('yaga.css');
   }
 
