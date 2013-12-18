@@ -34,6 +34,9 @@ class YagaHooks implements Gdn_IPlugin {
    * @param object $Sender
    */
   public function ProfileController_AfterUserInfo_Handler($Sender) {
+    if(!C('Yaga.Reactions.Enabled')) {
+      return;
+    }
     $User = $Sender->User;
     $Method = $Sender->RequestMethod;
     if($Method == 'reactions') {
@@ -67,6 +70,9 @@ class YagaHooks implements Gdn_IPlugin {
    * @param UserInfoModule $Sender
    */
   public function UserInfoModule_OnBasicInfo_Handler($Sender) {
+    if(!C('Yaga.Badges.Enabled')) {
+      return;
+    }
     echo '<dt class="Badges">' . T('Yaga.Badges', 'Badges') . '</dt> ';
     echo '<dd class="Badges">' . $Sender->User->CountBadges . '</dd>';
   }
@@ -82,6 +88,9 @@ class YagaHooks implements Gdn_IPlugin {
    * @param int $Page
    */
   public function ProfileController_Reactions_Create($Sender, $UserReference = '', $Username = '', $ActionID = '') {
+    if(!C('Yaga.Reactions.Enabled')) {
+      return;
+    }
     $Sender->EditMode(FALSE);
 
     // Tell the ProfileController what tab to load
@@ -111,11 +120,6 @@ class YagaHooks implements Gdn_IPlugin {
 
     // Render the ProfileController
     $Sender->Render();
-  }
-
-  public function PromotedContentModule_SelectByActionID_Create($Sender, $Args) {
-    decho($Args);
-    die();
   }
 
   /**
@@ -150,11 +154,6 @@ class YagaHooks implements Gdn_IPlugin {
       }
     }
   }
-
-  /**
-   * Transparently inject the rank permissions a user has earned
-   *
-   */
 
   /**
    * Add the badge and rank notification options
@@ -264,6 +263,9 @@ class YagaHooks implements Gdn_IPlugin {
    * @param object $Sender
    */
   public function ActivityController_AfterActivityBody_Handler($Sender) {
+    if(!C('Yaga.Reactions.Enabled')) {
+      return;
+    }
     $Activity = $Sender->EventArguments['Activity'];
     $CurrentUserID = Gdn::Session()->UserID;
     $Type = 'activity';

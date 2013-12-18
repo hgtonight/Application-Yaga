@@ -16,7 +16,7 @@ Yet Another Gamification Application
 * ~~Allow ranks to be permanent (don't auto promote)~~
 * ~~Rule criteria form help~~
 * ~~Add pager to badge settings screen~~
-* Configure guards on all reactions, badges, and ranks specific code
+* ~~Configure guards on all reactions, badges, and ranks specific code~~
 * ~~Create/find reusable badge images~~
 * ~~Add validation of rule criteria~~
 * ~~Refactor reaction CSS~~
