@@ -9,16 +9,16 @@ $SQL = Gdn::Database()->SQL();
 
 // Insert stub actions
 $SQL->Insert('Action', array(
-    'Name' => 'Thumbs Up',
+    'Name' => 'Like',
     'Description' => 'I approve!',
     'Tooltip' => 'This indicates casual approval',
-    'CssClass' => '.ReactThumbsUp',
+    'CssClass' => 'ReactThumbsUp',
     'AwardValue' => 1
 ));
 $SQL->Insert('Action', array(
-    'Name' => 'Thumbs Down',
+    'Name' => 'Dislike',
     'Description' => 'I disapprove!',
     'Tooltip' => 'This indicates casual disapproval',
-    'CssClass' => '.ReactThumbsUp2',
+    'CssClass' => 'ReactThumbsUp2',
     'AwardValue' => -1
 ));

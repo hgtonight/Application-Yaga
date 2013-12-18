@@ -3,8 +3,8 @@
 $ApplicationInfo['Yaga'] = array(
     'Name' => 'Yet Another Gamification Application',
     'Description' => 'Yaga provides customizable reactions, badges, and ranks for your Vanilla forum software. Increase user activity by letting users react to content with emotions. Give users badges based on statistics and engagement in your community. Create and award custom badges for special events and recognition. Award Ranks which can confer different (configurable) permissions based on community perception and participation.',
-    'Version' => '0.1',
-    'RequiredApplications' => array('Vanilla' => '2.0'),
+    'Version' => '0.2',
+    'RequiredApplications' => array('Vanilla' => '2.1b2'),
     'RegisterPermissions' => array(
         'Yaga.Reactions.Add', // Can a user click on reactions?
         'Yaga.Reactions.Manage', // Can a user add/edit/delete actions?
@@ -16,7 +16,6 @@ $ApplicationInfo['Yaga'] = array(
         'Yaga.Ranks.Add', // Can a user assign ranks manually?
         'Yaga.Ranks.Manage', // Can a user adit/edit/delete ranks from the system?
         ),
-    'SetupController' => 'setup',
     'SettingsUrl' => '/yagasettings',
     'Author' => 'Zachary Doll',
     'AuthorEmail' => 'hgtonight@daklutz.com',
