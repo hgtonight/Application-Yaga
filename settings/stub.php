@@ -12,13 +12,13 @@ $SQL->Insert('Action', array(
     'Name' => 'Thumbs Up',
     'Description' => 'I approve!',
     'Tooltip' => 'This indicates casual approval',
-    'CssClass' => '.ReactLike',
+    'CssClass' => '.ReactThumbsUp',
     'AwardValue' => 1
 ));
 $SQL->Insert('Action', array(
     'Name' => 'Thumbs Down',
     'Description' => 'I disapprove!',
     'Tooltip' => 'This indicates casual disapproval',
-    'CssClass' => '.ReactDislike',
+    'CssClass' => '.ReactThumbsUp2',
     'AwardValue' => -1
 ));

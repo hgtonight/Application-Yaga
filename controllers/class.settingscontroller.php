@@ -2,20 +2,14 @@
 /* Copyright 2013 Zachary Doll */
 
 /**
- * This is the base class for controllers throughout the gamification applicati0n.
+ * This handles all the core settings for the gamification application.
  * 
  * @since 1.0
  * @package Yaga
  */
-class YagaController extends DashboardController {
+class SettingsController extends DashboardController {
 
-  /**
-   * @var array These objects will be created on instantiation and available via
-   * $this->ObjectName
-   */
-  public $Uses = array('Database', 'Form');
-
-  /**
+    /**
    * Make this look like a dashboard page and add the resources
    *
    * @since 1.0
@@ -32,16 +26,9 @@ class YagaController extends DashboardController {
   }
 
   /**
-   * Convenience reroute to settings
-   */
-  public function Index() {
-    $this->Settings();
-  }
-  
-  /**
    * A simple configuration page for the Yaga Application
    */
-  public function Settings() {
+  public function Index() {
     $this->Permission('Garden.Settings.Manage');
     
     $ConfigModule = new ConfigurationModule($this);
