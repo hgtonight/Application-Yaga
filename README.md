@@ -1,36 +1,12 @@
-# YAGA
-Yet Another Gamification Application
+Yaga
+====
+**Y**et **A**nother **G**amification **A**pplication is a Garden application that provides a gamification platform for other Garden applications. It integrates by default with Vanilla Forums. Out of the box, it provides Reactions, Badges, and Ranks.
 
-## To Do
+It is released under the GPLv3 and may be released under a different license _with permission_.
 
-* ~~Use ranks to use role rewards~~
-* ~~Figure out how to reduce the width of popups~~
-* ~~Fixed leaderboard module to support time windows~~
-* ~~Document~~
-* ~~Finish inline ToDos~~
-* ~~Move badge count to user table column~~
-* ~~Translate every static string~~
-* ~~Create a badgeaward model~~
-* ~~Fix all badges page query to be right~~
-* ~~Finish rank promotion screen~~
-* ~~Allow ranks to be permanent (don't auto promote)~~
-* ~~Rule criteria form help~~
-* ~~Add pager to badge settings screen~~
-* ~~Configure guards on all reactions, badges, and ranks specific code~~
-* ~~Create/find reusable badge images~~
-* ~~Add validation of rule criteria~~
-* ~~Refactor reaction CSS~~
-* ~~Refactor all models to get rid of uneeded/duplicate methods~~
-
-## Planned Features
-* Stats page on the yaga settings page
-* Import/Export badges/reactions/ranks
-* Best Of... Controller
-* Best Of... Profile filter
-* Save form inputs to cache as well as the elements in admin.badges.js
-* Rework badge settings page to streamline badges of the same rule type
-* Implement moving of reactions to other action IDs on delete (much like categories right now)
-* Aggregate Rule Support
-* Add rules vino suggested (DiscussionPageLength, DiscussionBodyLength, PostReactionCount, PostReactionComboCount, CakeDay, Necroposting, ComboDateTimes)
-* Fix reaction method on profile page to show more than one page of discussion/comments
-** Also show the reaction record
+Install
+=======
+1.	Create a folder called yaga in the vanilla/applications folder
+2.	Clone this repository into the yaga folder
+3.  Enable the application in your dashboard
+4.	Configure the Yaga application via the Gamification panel you will now find in the dashboard side panel
