@@ -85,7 +85,7 @@ class ActedModel extends Gdn_Model {
     foreach($Discussions as $Discussion) {
       $DiscussionsByID[$Discussion['DiscussionID']] = $Discussion;
     }
-    unset(${$Discussions});
+    unset($Discussions);
 
     foreach($Comments as &$Comment) {
       $Comment['Discussion'] = $DiscussionsByID[$Comment['DiscussionID']];
