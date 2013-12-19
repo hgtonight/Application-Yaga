@@ -14,7 +14,7 @@ echo Wrap(
         $this->Form->Label('Yaga.Badge', 'BadgeID') .
         $this->Form->Dropdown('BadgeID', $Badges),
         'li') .
-    
+
       Wrap(
         $this->Form->Label('Yaga.Reason', 'Reason') .
         $this->Form->TextBox('Reason', array('Multiline' => TRUE)),

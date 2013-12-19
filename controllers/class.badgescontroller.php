@@ -41,7 +41,7 @@ class BadgesController extends Gdn_Controller {
     //$this->Render('Blank', 'Utility', 'Dashboard');
     $this->All();
   }
-  
+
   /**
    * This renders out the full list of badges
    */
@@ -55,13 +55,13 @@ class BadgesController extends Gdn_Controller {
 
     $this->SetData('Badges', $AllBadges);
     //$this->SetData('Earned')
-    
+
     $this->Render('all');
   }
-  
+
   /**
    * Show some facets about a specific badge
-   * 
+   *
    * @param int $BadgeID
    * @param string $Slug
    */
@@ -71,18 +71,18 @@ class BadgesController extends Gdn_Controller {
     $AwardCount = $this->BadgeAwardModel->GetCount($BadgeID);
     $UserBadgeAward = $this->BadgeAwardModel->Exists($UserID, $BadgeID);
     $RecentAwards = $this->BadgeAwardModel->GetRecent($BadgeID);
-    
+
     if(!$Badge) {
       throw NotFoundException('Badge');
     }
-    
+
     $this->SetData('AwardCount', $AwardCount);
     $this->SetData('RecentAwards', $RecentAwards);
     $this->SetData('UserBadgeAward', $UserBadgeAward);
     $this->SetData('Badge', $Badge);
-    
+
     $this->Title(T('Yaga.ViewBadge') . $Badge->Name);
-    
+
     $this->Render();
   }
 }

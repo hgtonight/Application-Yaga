@@ -6,7 +6,7 @@
  */
 class LeaderBoardModule extends Gdn_Module {
   protected $Title = FALSE;
-  
+
   public function __construct($Sender = '') {
     parent::__construct($Sender);
   }
@@ -28,7 +28,7 @@ class LeaderBoardModule extends Gdn_Module {
             ->Limit(C('Yaga.LeaderBoard.Limit', 10), 0)
             ->Get()
             ->Result();
-    
+
     $this->Data = $Leaders;
     switch($SlotType) {
       case 'a':
@@ -44,14 +44,14 @@ class LeaderBoardModule extends Gdn_Module {
         $this->Title = T('Yaga.LeaderBoard.Year');
         break;
     }
-    
+
   }
-  
+
   public function ToString() {
     if(!$this->Data && !$this->Title) {
-      $this->GetData();      
+      $this->GetData();
     }
-    
+
     if($this->Visible && count($this->Data)) {
       $ViewPath = $this->FetchViewLocation('leaderboard', 'yaga');
       $String = '';

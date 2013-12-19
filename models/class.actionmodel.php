@@ -11,13 +11,13 @@
  */
 
 class ActionModel extends Gdn_Model {
-  
+
   /**
    * This is used as a cache.
    * @var object
    */
   private static $_Actions = NULL;
-  
+
   /**
    * Defines the related database table name.
    */
@@ -42,7 +42,7 @@ class ActionModel extends Gdn_Model {
 
   /**
    * Returns data for a specific action
-   * 
+   *
    * @param int $ActionID
    * @return dataset
    */
@@ -55,10 +55,10 @@ class ActionModel extends Gdn_Model {
                     ->FirstRow();
     return $Action;
   }
-  
+
   /**
    * Gets the last inserted Action
-   * 
+   *
    * @return DataSet
    */
   public function GetNewestAction() {
@@ -73,7 +73,7 @@ class ActionModel extends Gdn_Model {
 
   /**
    * Determine if a specified action exists
-   * 
+   *
    * @param int $ActionID
    * @return bool
    */
@@ -84,7 +84,7 @@ class ActionModel extends Gdn_Model {
 
   /**
    * Remove an action from the db
-   * 
+   *
    * @param int $ActionID
    * @param int $ReplacementID what action ID existing reactions should report
    * to. Null will delete the associated reactions.
@@ -106,7 +106,7 @@ class ActionModel extends Gdn_Model {
     }
     return FALSE;
   }
-  
+
   public function SaveSort($SortArray) {
     foreach($SortArray as $Index => $Action) {
       // remove the 'Action_' prefix

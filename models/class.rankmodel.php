@@ -41,7 +41,7 @@ class RankModel extends Gdn_Model {
     }
     return self::$_Ranks;
   }
-  
+
   public function GetCount() {
     return count($this->Get());
   }

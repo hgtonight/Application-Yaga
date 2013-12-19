@@ -17,7 +17,7 @@ class ActedModel extends Gdn_Model {
    */
   public function Get($UserID, $ActionID, $Limit = FALSE) {
     $Expiry = 600;
-    
+
     // Check cache
     $CacheKey = "yaga.profile.reactions.{$ActionID}";
     $Content = Gdn::Cache()->Get($CacheKey);
@@ -65,7 +65,7 @@ class ActedModel extends Gdn_Model {
 
   /**
    * Attach CategoryID to Comments
-   * 
+   *
    * @param array $Comments
    */
   protected function JoinCategory(&$Comments) {
@@ -95,7 +95,7 @@ class ActedModel extends Gdn_Model {
 
   /**
    * Interleave two or more result arrays by a common field
-   * 
+   *
    * @param string $Field
    * @param array $Sections Array of result arrays
    * @return array
@@ -123,7 +123,7 @@ class ActedModel extends Gdn_Model {
 
   /**
    * Pre-process content into a uniform format for output
-   * 
+   *
    * @param Array $Content By reference
    */
   protected function Prepare(&$Content) {
@@ -161,7 +161,7 @@ class ActedModel extends Gdn_Model {
 
   /**
    * Strip out content that this user is not allowed to see
-   * 
+   *
    * @param array $Content Content array, by reference
    */
   protected function Security(&$Content) {
@@ -185,7 +185,7 @@ class ActedModel extends Gdn_Model {
 
   /**
    * Condense an interleaved content list down to the required size
-   * 
+   *
    * @param array $Content
    * @param array $Limit
    */
