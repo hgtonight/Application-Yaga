@@ -12,7 +12,7 @@ class RulesController extends Gdn_Controller {
 
   /**
    * May be used in the future.
-   * 
+   *
    * @since 1.0
    * @access public
    */
@@ -20,22 +20,22 @@ class RulesController extends Gdn_Controller {
     parent::Initialize();
     $this->Application = 'Yaga';
   }
-  
+
   /**
    * This checks the cache for current rule set and expires once a day.
    * It loads all php files in the rules folder and selects only those that
    * implement the 'YagaRule' interface.
-   * 
+   *
    * @return array Rules that are currently available to use. The class names
    * are keys and the friendly names are values.
    */
   public static function GetRules() {
     $Rules = Gdn::Cache()->Get('Yaga.Badges.Rules');
     if($Rules === Gdn_Cache::CACHEOP_FAILURE) {
-      foreach(glob(PATH_APPLICATIONS . DS . 'yaga' . DS . 'rules' . DS . '*.php') as $filename) {
+      foreach(glob(PATH_APPLICATIONS . DS . 'yaga' . DS . 'library' . DS . 'rules' . DS . '*.php') as $filename) {
         include_once $filename;
       }
-      
+
       $TempRules = array();
       foreach(get_declared_classes() as $className) {
         if(in_array('YagaRule', class_implements($className))) {
@@ -51,13 +51,13 @@ class RulesController extends Gdn_Controller {
       }
       Gdn::Cache()->Store('Yaga.Badges.Rules', $Rules, array(Gdn_Cache::FEATURE_EXPIRY => C('Yaga.Rules.CacheExpire', 86400)));
     }
-    
+
     return unserialize($Rules);
   }
-  
+
   /**
    * This creates a new rule object in a safe way and renders its criteria form.
-   * 
+   *
    * @param string $RuleClass
    */
   public function GetCriteriaForm($RuleClass) {
