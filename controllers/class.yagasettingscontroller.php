@@ -3,7 +3,7 @@
 
 /**
  * This handles all the core settings for the gamification application.
- * 
+ *
  * @since 1.0
  * @package Yaga
  */
@@ -31,9 +31,9 @@ class YagaSettingsController extends DashboardController {
    */
   public function Index() {
     $this->Permission('Garden.Settings.Manage');
-    
+
     $ConfigModule = new ConfigurationModule($this);
-    
+
     $ConfigModule->Initialize(array(
       'Yaga.Reactions.Enabled' => array('LabelCode' => 'Use Reactions', 'Control' => 'Checkbox'),
       'Yaga.Badges.Enabled' => array('LabelCode' => 'Use Badges', 'Control' => 'Checkbox'),
@@ -44,7 +44,7 @@ class YagaSettingsController extends DashboardController {
     $this->AddSideMenu('yagasettings');
     $this->Title(T('Yaga.Settings'));
     $this->ConfigurationModule = $ConfigModule;
-    
+
     $ConfigModule->RenderAll();
   }
 }

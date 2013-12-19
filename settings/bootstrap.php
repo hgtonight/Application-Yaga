@@ -1,11 +1,11 @@
 <?php if (!defined('APPLICATION')) exit();
-// Load up the rules
+
+// Register Yaga library classes and interfaces in the autoloader
 $Map     = Gdn_Autoloader::MAP_LIBRARY;
 $Context = Gdn_Autoloader::CONTEXT_APPLICATION;
-$Path    = PATH_APPLICATIONS . DS . 'yaga' . DS . 'rules';
-$Options = array('Extension' => 'yaga', 'ClassFilter' => '*');
+$Path    = PATH_APPLICATIONS . DS . 'yaga' . DS . 'library';
+$Options = array('Extension' => 'yaga');
 
 Gdn_Autoloader::RegisterMap($Map, $Context, $Path, $Options);
 
-require_once(PATH_APPLICATIONS . DS . 'yaga' . DS . 'lib' . DS . 'class.yaga.php');
-require_once(PATH_APPLICATIONS . DS . 'yaga' . DS . 'lib' . DS . 'functions.render.php');
+require_once(PATH_APPLICATIONS . DS . 'yaga' . DS . 'library' . DS . 'functions.render.php');

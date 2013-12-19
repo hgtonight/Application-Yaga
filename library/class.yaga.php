@@ -11,7 +11,7 @@ class Yaga {
   protected static $_BadgeModel = NULL;
   protected static $_RankModel = NULL;
   protected static $_BadgeAwardModel = NULL;
-  
+
   /**
    * Get a reference to the action model
    * @return ActionModel
@@ -22,7 +22,7 @@ class Yaga {
       }
       return self::$_ActionModel;
    }
-  
+
   /**
    * Get a reference to the reaction model
    * @return ReactionModel
@@ -33,7 +33,7 @@ class Yaga {
       }
       return self::$_ReactionModel;
    }
-   
+
   /**
    * Get a reference to the badge model
    * @return BadgeModel
@@ -44,7 +44,7 @@ class Yaga {
       }
       return self::$_BadgeModel;
    }
-   
+
    /**
    * Get a reference to the badge award model
    * @return BadgeAwardModel
@@ -55,7 +55,7 @@ class Yaga {
       }
       return self::$_BadgeAwardModel;
    }
-   
+
   /**
    * Get a reference to the rank model
    * @return RankModel

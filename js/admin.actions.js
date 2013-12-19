@@ -25,16 +25,16 @@ jQuery(document).ready(function($) {
       );
     }
   });
-  
+
   // Wait to hide things after a popup reveal has happened
   $('body').on('popupReveal', function() {
-    
+
     // Hide the advanced settings
     $('#AdvancedActionSettings').children('div').hide();
     $('#AdvancedActionSettings span').click(function(){
       $(this).siblings().slideToggle();
     });
-    
+
     // If someone types in the class manually, deselect icons and select if needed
     $("input[name='CssClass']").on('input', function() {
       $('#ActionIcons img.Selected').removeClass('Selected');
@@ -44,7 +44,7 @@ jQuery(document).ready(function($) {
         $("#ActionIcons img[data-class='" + CurrentCssClass + "']").addClass('Selected');
       }
     });
-    
+
     $('#ActionIcons img').click(function() {
       var newCssClass = 'React' + $(this).attr('title');
       $("input[name='CssClass']").val(newCssClass);
@@ -52,7 +52,7 @@ jQuery(document).ready(function($) {
       $(this).addClass('Selected');
     });
   });
-  
+
   // If the form is already existing, trigger the event manually
   if($('#AdvancedActionSettings').length) {
     $('body').trigger('popupReveal');

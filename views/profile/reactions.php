@@ -9,11 +9,11 @@ foreach ($Contents as $Content) {
    if ($UserPhotoFirst === NULL) {
       $UserPhotoFirst = C('Vanilla.Comment.UserPhotoFirst', TRUE);
    }
-   
+
    $ContentType = GetValue('ItemType', $Content);
    $ContentID = GetValue("{$ContentType}ID", $Content);
    $Author = GetValue('Author', $Content);
-   
+
    switch (strtolower($ContentType)) {
       case 'comment':
          $ContentURL = CommentUrl($Content);

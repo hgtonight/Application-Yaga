@@ -11,7 +11,7 @@ foreach($this->Data('Badges') as $Badge) {
   $Row = '';
   $AwardDescription = '';
   $ReadClass = ' Read';
-  
+
   if($Badge->UserID) {
     $ReadClass = '';
     $AwardDescription = sprintf(T('Yaga.Badge.Earned.Format'), Gdn_Format::Date($Badge->DateInserted, 'html'), $Badge->InsertUserName);
@@ -19,7 +19,7 @@ foreach($this->Data('Badges') as $Badge) {
       $AwardDescription .= ': "' . $Badge->Reason . '"';
     }
   }
-  
+
   if($Badge->Photo) {
     $Row .= Img(Gdn_Upload::Url($Badge->Photo), array('class' => 'BadgePhoto'));
   }

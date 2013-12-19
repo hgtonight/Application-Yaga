@@ -45,7 +45,7 @@ class RankController extends DashboardController {
 
     // Get list of ranks from the model and pass to the view
     $this->SetData('Ranks', $this->RankModel->Get());
-    
+
     if($this->Form->IsPostBack() == TRUE) {
       // Handle the photo upload
       $Upload = new Gdn_Upload();
@@ -60,7 +60,7 @@ class RankController extends DashboardController {
         $Parts = $Upload->SaveAs($TmpImage, 'ranks/' . $ImageBaseName);
 
         SaveToConfig('Yaga.Ranks.Photo', $Parts['SaveName']);
-        
+
         if(C('Yaga.Ranks.Photo') == $Parts['SaveName']) {
           $this->InformMessage(T('Yaga.Rank.PhotoUploaded'));
         }
@@ -89,12 +89,12 @@ class RankController extends DashboardController {
       $Edit = TRUE;
       $this->Title(T('Yaga.EditRank'));
     }
-    
+
      // Load up all roles
     $RoleModel = new RoleModel();
     $Roles = $RoleModel->GetArray();
     $this->SetData('Roles', $Roles);
-    
+
     if($this->Form->IsPostBack() == FALSE) {
       if(property_exists($this, 'Rank')) {
         $this->Form->SetData($this->Rank);

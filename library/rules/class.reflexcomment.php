@@ -1,5 +1,5 @@
 <?php if(!defined('APPLICATION')) exit();
-include_once 'interface.yagarule.php';
+
 /**
  * This rule awards badges if a comment is placed on a discussion within a short amount of time
  *
@@ -24,15 +24,15 @@ class ReflexComment implements YagaRule{
       return FALSE;
     }
   }
-    
+
   public function Form($Form) {
     $String = $Form->Label('Time to Comment', 'ReflexComment');
     $String .= $Form->Textbox('Seconds', array('class' => 'SmallInput'));
     $String .= ' ' . T('seconds.');
 
-    return $String; 
+    return $String;
   }
-  
+
   public function Validate($Criteria, $Form) {
     $Validation = new Gdn_Validation();
     $Validation->ApplyRules(array(
@@ -47,12 +47,12 @@ class ReflexComment implements YagaRule{
   public function Hooks() {
     return array('CommentModel_BeforeNotification');
   }
-  
+
   public function Description() {
     $Description = T('Yaga.Rules.ReflexComment.Desc');
     return Wrap($Description, 'div', array('class' => 'InfoMessage'));
   }
-  
+
   public function Name() {
     return T('Yaga.Rules.ReflexComment');
   }

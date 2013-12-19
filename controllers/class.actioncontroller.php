@@ -35,7 +35,7 @@ class ActionController extends DashboardController {
 
   /**
    * Manage the available actions for reactions
-   * 
+   *
    * @param int $Page
    */
   public function Settings($Page = '') {
@@ -52,14 +52,14 @@ class ActionController extends DashboardController {
 
   /**
    * Edit an existing action or add a new one
-   * 
+   *
    * @param int $ActionID
    */
   public function Edit($ActionID = NULL) {
     $this->Permission('Yaga.Reactions.Manage');
     $this->AddSideMenu('action/settings');
     $this->Form->SetModel($this->ActionModel);
-    
+
     $Edit = FALSE;
     $this->Title(T('Yaga.AddAction'));
     if($ActionID) {
@@ -68,10 +68,10 @@ class ActionController extends DashboardController {
       $Edit = TRUE;
       $this->Title(T('Yaga.EditAction'));
     }
-    
+
     // This is just a list of all the images in the action icons folder
     $this->SetData('Icons', array('Happy', 'Happy2', 'Smiley', 'Smiley2', 'Tongue', 'Tongue2', 'Sad', 'Sad2', 'Wink', 'Wink2', 'Grin', 'Shocked', 'Confused', 'Confused2', 'Neutral', 'Neutral2', 'Wondering', 'Wondering2', 'PointUp', 'PointRight', 'PointDown', 'PointLeft', 'ThumbsUp', 'ThumbsUp2', 'Shocked2', 'Evil', 'Evil2', 'Angry', 'Angry2', 'Heart', 'Heart2', 'HeartBroken', 'Star', 'Star2', 'Grin2', 'Cool', 'Cool2', 'Question', 'Notification', 'Warning', 'Spam', 'Blocked', 'Eye', 'Eye2', 'EyeBlocked', 'Flag', 'BrightnessMedium', 'QuotesLeft', 'Music', 'Pacman', 'Bullhorn', 'Rocket', 'Fire', 'Hammer', 'Target', 'Lightning', 'Shield', 'CheckmarkCircle', 'Lab', 'Leaf', 'Dashboard', 'Droplet', 'Feed', 'Support', 'Hammer2', 'Wand', 'Cog', 'Gift', 'Trophy', 'Magnet', 'Switch', 'Globe', 'Bookmark', 'Bookmarks', 'Star3', 'Info', 'Info2', 'CancelCircle', 'Checkmark', 'Close'));
-    
+
     // Load up all permissions
     $PermissionModel = new PermissionModel();
     $Permissions = $PermissionModel->PermissionColumns();
@@ -79,7 +79,7 @@ class ActionController extends DashboardController {
     $PermissionKeys = array_keys($Permissions);
     $PermissionList = array_combine($PermissionKeys, $PermissionKeys);
     $this->SetData('Permissions', $PermissionList);
-    
+
     if($this->Form->IsPostBack() == FALSE) {
       if(property_exists($this, 'Action')) {
         $this->Form->SetData($this->Action);
@@ -96,9 +96,9 @@ class ActionController extends DashboardController {
         else {
           $Action = $this->ActionModel->GetNewestAction();
         }
-        
+
         $NewActionRow = ActionRow($Action);
-        
+
         if($Edit) {
           $this->JsonTarget('#Action_' . $this->Action->ActionID, $NewActionRow, 'ReplaceWith');
           $this->InformMessage(T('Yaga.ActionUpdated'));
@@ -122,7 +122,7 @@ class ActionController extends DashboardController {
 
   /**
    * Remove the action via model.
-   * 
+   *
    * @param int $ActionID
    */
   public function Delete($ActionID) {
@@ -152,11 +152,11 @@ class ActionController extends DashboardController {
     $this->SetData('Title', T('Delete Reaction'));
     $this->Render();
   }
-  
+
   public function Sort() {
       // Check permission
       $this->Permission('Garden.Reactions.Manage');
-      
+
       // Set delivery type to true/false
       $TransientKey = GetIncomingValue('TransientKey');
       if (Gdn::Request()->IsPostBack()) {
@@ -165,8 +165,8 @@ class ActionController extends DashboardController {
          $this->SetData('Result', TRUE);
          $this->SetData('Saves', $Saves);
       }
-         
-      // Renders true/false rather than template  
+
+      // Renders true/false rather than template
       $this->Render();
    }
 }

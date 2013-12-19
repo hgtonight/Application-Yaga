@@ -41,7 +41,7 @@ class BadgeModel extends Gdn_Model {
     }
     return self::$_Badges;
   }
-  
+
    public function GetLimit($Limit = FALSE, $Offset = FALSE) {
       return $this->SQL
               ->Select()
@@ -139,7 +139,7 @@ class BadgeModel extends Gdn_Model {
   /**
    * Get the full list of badges joined with the award data for a specific user
    * This shouldn't really be here, but I can't think of a good place to put it
-   * 
+   *
    * @param int $UserID
    */
   public function GetWithEarned($UserID) {

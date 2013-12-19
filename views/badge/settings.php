@@ -33,7 +33,7 @@ echo Wrap(Anchor(T('Yaga.AddBadge'), 'badge/add', array('class' => 'SmallButton'
       else {
         $BadgePhoto = Img('applications/yaga/design/images/default_badge.png', array('class' => 'BadgePhoto'));
       }
-      
+
       $Row .= Wrap(Anchor($BadgePhoto, '/badges/detail/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name), array('title' => T('Yaga.Badge.DetailLink'))), 'td');
       $Row .= Wrap($Badge->Name, 'td');
       $Row .= Wrap($Badge->Description, 'td');

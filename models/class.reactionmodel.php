@@ -3,21 +3,21 @@
 
 /**
  * Reactions are the actions a user takes against another user's content
- * 
+ *
  * Events: AfterReactionSave
- * 
+ *
  * @package Yaga
  * @since 1.0
  */
 
 class ReactionModel extends Gdn_Model {
-  
+
   /**
    * Used to cache the reactions
    * @var array
    */
   private static $_Reactions = array();
-  
+
   /**
    * Defines the related database table name.
    */
@@ -39,7 +39,7 @@ class ReactionModel extends Gdn_Model {
   }
   /**
    * Returns the reaction records associated with the specified user content.
-   * 
+   *
    * @param int $ID
    * @param string $Type is the kind of ID. Valid: comment, discussion, activity
    */
@@ -62,7 +62,7 @@ class ReactionModel extends Gdn_Model {
 
   /**
    * Return a list of reactions a user has received
-   * 
+   *
    * @param int $ID
    * @param string $Type activity, comment, discussion
    * @param int $UserID
@@ -78,10 +78,10 @@ class ReactionModel extends Gdn_Model {
             ->Get()
             ->FirstRow();
   }
-  
+
   /**
    * Return the count of reactions received by a user
-   * 
+   *
    * @param int $UserID
    * @param int $ActionID
    * @return DataSet
@@ -94,14 +94,14 @@ class ReactionModel extends Gdn_Model {
             ->Where('ParentAuthorID', $UserID)
             ->GetCount();
   }
-  
+
   /**
    * Sets a users reaction against another user's content. A user can only react
    * in one way to each unique piece of content. This function makes sure to
    * enforce this rule
-   * 
+   *
    * Events: AfterReactionSave
-   * 
+   *
    * @param int $ID
    * @param string $Type activity, comment, discussion
    * @param int $AuthorID
@@ -120,7 +120,7 @@ class ReactionModel extends Gdn_Model {
     $CurrentReaction = $this->GetByUser($ID, $Type, $UserID);
     if($CurrentReaction) {
       $OldAction = $ActionModel->GetByID($CurrentReaction->ActionID);
-      
+
       if($ActionID == $CurrentReaction->ActionID) {
         // remove the record
         $Reaction = $this->SQL->Delete('Reaction', array('ParentID' => $ID,
@@ -157,7 +157,7 @@ class ReactionModel extends Gdn_Model {
                       'DateInserted' => date(DATE_ISO8601)));
       $EventArgs['Exists'] = TRUE;
     }
-    
+
     // Update the parent item score
     $this->SetUserScore($ID, $Type, $UserID, $Score);
     // Give the user points commesurate with reaction activity
@@ -165,10 +165,10 @@ class ReactionModel extends Gdn_Model {
     $this->FireEvent('AfterReactionSave', $EventArgs);
     return $Reaction;
   }
-  
+
   /**
    * This updates the items score for future use in ranking and a best of controller
-   * 
+   *
    * @param int $ID The items ID
    * @param string $Type The type of the item (only supports 'discussion' and 'comment'
    * @param int $UserID The user that is scoring the item
@@ -187,7 +187,7 @@ class ReactionModel extends Gdn_Model {
         $Model = new CommentModel();
         break;
     }
-    
+
     if($Model) {
       $Model->SetUserScore($ID, $UserID, $Score);
       return TRUE;

@@ -19,7 +19,7 @@ var Cache = {
 };
 
 jQuery(document).ready(function($) {
-  
+
   // This handles retrieving and displaying the different rule criteria forms
   $("form.Badge select[name='RuleClass']").focus(function() {
     // Save the current form to the current value's cache on focus
@@ -60,9 +60,9 @@ jQuery(document).ready(function($) {
         },
         error: function(jqXHR) {
           gdn.informError(jqXHR);
-        }     
+        }
       });
     }
   });
-  
+
 });

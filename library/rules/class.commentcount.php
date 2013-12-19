@@ -1,5 +1,5 @@
 <?php if(!defined('APPLICATION')) exit();
-include_once 'interface.yagarule.php';
+
 /**
  * This rule awards badges based on a user's comment count
  *
@@ -29,25 +29,25 @@ class CommentCount implements YagaRule{
         }
         break;
     }
-    
+
     return $Result;
   }
-    
+
   public function Form($Form) {
     $Comparisons = array(
         'gt' => T('More than:'),
         'lt' => T('Less than:'),
-        'gte' => T('More than or:')        
+        'gte' => T('More than or:')
     );
-    
+
     $String = $Form->Label('Total comments', 'CommentCount');
     $String .= $Form->DropDown('Comparison', $Comparisons) . ' ';
     $String .= $Form->Textbox('Target', array('class' => 'SmallInput'));
     $String .= ' ' . T('comments');
 
-    return $String; 
+    return $String;
   }
-  
+
   public function Validate($Criteria, $Form) {
     $Validation = new Gdn_Validation();
     $Validation->ApplyRules(array(
@@ -56,7 +56,7 @@ class CommentCount implements YagaRule{
         ),
         array(
           'Name' => 'Comparison', 'Validation' => 'Required'
-        )        
+        )
     ));
     $Validation->Validate($Criteria);
     $Form->SetValidationResults($Validation->Results());
@@ -64,12 +64,12 @@ class CommentCount implements YagaRule{
   public function Hooks() {
     return array('CommentModel_AfterSaveComment');
   }
-  
+
   public function Description() {
     $Description = T('Yaga.Rules.CommentCount.Desc');
     return Wrap($Description, 'div', array('class' => 'InfoMessage'));
   }
-  
+
   public function Name() {
     return T('Yaga.Rules.CommentCount');
   }

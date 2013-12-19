@@ -17,14 +17,14 @@ class BadgesModule extends Gdn_Module {
     else {
       $UserID = Gdn::Session()->UserID;
     }
-    
+
     if(Gdn::Session()->UserID == $UserID) {
       $this->Title = T('Yaga.MyBadges');
     }
     else {
       $this->Title = T('Yaga.Badges');
     }
-    
+
     $BadgeAwardModel = Yaga::BadgeAwardModel();
     $this->Data = $BadgeAwardModel->GetByUser($UserID);
   }
