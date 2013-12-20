@@ -8,7 +8,7 @@ $ApplicationInfo['Yaga'] = array(
     'AuthorEmail' => 'hgtonight@daklutz.com',
     'AuthorUrl'   => 'http://www.daklutz.com',
     'License'     => 'GPLv3',
-    'SettingsUrl' => '/yagasettings',
+    'SettingsUrl' => '/settings/yaga',
 
     // Application requirements
     'RequiredApplications' => array('Vanilla' => '2.1b2'),
