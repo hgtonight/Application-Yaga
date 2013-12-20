@@ -21,7 +21,7 @@ $ git clone git://github.com/hgtonight/Application-Yaga.git yaga
 
 The latter option is only recommend if you're familiar with git.
 
-Once you've added the application to your Vanilla installation, you need to activate and configure it in the dashboard. Once activated, you will see a new "Gamification" menu in the dashboard sidebar where you can configure each individual part of the Yaga application.
+Once you've added the application to your Vanilla installation, you need to activate it in the dashboard. Once activated, you will see a new "Gamification" menu in the dashboard sidebar where you can configure each individual part of the Yaga application.
 
 ---
 Copyright 2013 © Zachary Doll
