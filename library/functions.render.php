@@ -22,7 +22,7 @@ if(!function_exists('RenderReactions')) {
       if(CheckPermission($Action->Permission)) {
         $CountString = ($Action->Count) ? $Action->Count : '';
         $ActionsString .= Anchor(
-                Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID . ' ' . $Action->CssClass)) .
+                Wrap('&nbsp;', 'span', array('class' => 'React-' . $Action->ActionID . ' reaction ' . $Action->CssClass)) .
                 WrapIf($CountString, 'span', array('class' => 'Count')) .
                 Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'react/' . $Type . '/' . $ID . '/' . $Action->ActionID, 'Hijack ReactButton'
         );

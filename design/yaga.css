@@ -22,7 +22,8 @@
   width: 255px;
 }
 
-#ActionIcons img {
+#ActionIcons .reaction {
+  display: inline-block;
   padding: 6px;
   cursor: pointer;
 }

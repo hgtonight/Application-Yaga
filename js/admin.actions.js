@@ -37,18 +37,18 @@ jQuery(document).ready(function($) {
 
     // If someone types in the class manually, deselect icons and select if needed
     $("input[name='CssClass']").on('input', function() {
-      $('#ActionIcons img.Selected').removeClass('Selected');
+      $('#ActionIcons .reaction.Selected').removeClass('Selected');
 
       var FindCssClass = $(this).val();
       if(FindCssClass.length) {
-        $("#ActionIcons img[data-class='" + CurrentCssClass + "']").addClass('Selected');
+        $("#ActionIcons .reaction[data-icon='" + CurrentCssClass + "']").addClass('Selected');
       }
     });
 
-    $('#ActionIcons img').click(function() {
-      var newCssClass = 'React' + $(this).attr('title');
+    $('#ActionIcons .reaction').click(function() {
+      var newCssClass = 'reaction-' + $(this).attr('title');
       $("input[name='CssClass']").val(newCssClass);
-      $('#ActionIcons img.Selected').removeClass('Selected');
+      $('#ActionIcons .reaction.Selected').removeClass('Selected');
       $(this).addClass('Selected');
     });
   });

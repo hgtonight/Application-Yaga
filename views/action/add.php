@@ -23,12 +23,12 @@ echo $this->Form->Errors();
     <?php
     echo $this->Form->Label('Icon');
     foreach($this->Data('Icons') as $Icon) {
-      $Class = 'React' . $Icon;
+      $Class = 'reaction-' . $Icon;
       $Selected = '';
       if($OriginalCssClass == $Class) {
-        $Selected = 'Selected';
+        $Selected = ' Selected';
       }
-      echo Img('applications' . DS . 'yaga' . DS . 'design' . DS . DS . 'images' . DS . 'action-icons' . DS . $Icon . '.png', array('title' => $Icon, 'data-class' => $Class, 'class' => $Selected));
+      echo Wrap('', 'span', array('title' => $Icon, 'data-icon' => $Icon, 'class' => 'reaction ' . $Class . $Selected));
     }
     ?>
   </li>
