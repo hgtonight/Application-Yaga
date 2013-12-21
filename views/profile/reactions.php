@@ -56,6 +56,11 @@ foreach ($Contents as $Content) {
          <div class="Message Expander">
           <?php echo Gdn_Format::To($Content['Body'], $Content['Format']); ?>
          </div>
+         <?php
+         if(Gdn::Session()->CheckPermission('Yaga.Reactions.View') || C('Yaga.Reactions.Enabled')) {
+            RenderReactionRecord($ContentID, strtolower($ContentType));
+         }
+         ?>
        </div>
      </div>
    </li> <?php
