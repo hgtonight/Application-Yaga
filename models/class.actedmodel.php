@@ -30,6 +30,7 @@ class ActedModel extends Gdn_Model {
                       ->Join('Reaction r', 'd.DiscussionID = r.ParentID')
                       ->Where('d.InsertUserID', $UserID)
                       ->Where('r.ActionID', $ActionID)
+                      ->Where('r.ParentType', 'discussion')
                       ->OrderBy('r.DateInserted', 'DESC')
                       ->Get()->Result(DATASET_TYPE_ARRAY);
 
@@ -39,6 +40,7 @@ class ActedModel extends Gdn_Model {
                       ->Join('Reaction r', 'c.CommentID = r.ParentID')
                       ->Where('c.InsertUserID', $UserID)
                       ->Where('r.ActionID', $ActionID)
+                      ->Where('r.ParentType', 'comment')
                       ->OrderBy('r.DateInserted', 'DESC')
                       ->Get()->Result(DATASET_TYPE_ARRAY);
 
