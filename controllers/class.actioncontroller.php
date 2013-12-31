@@ -70,7 +70,19 @@ class ActionController extends DashboardController {
     }
 
     // This is just a list of all the images in the action icons folder
-    $this->SetData('Icons', array('Happy', 'Happy2', 'Smiley', 'Smiley2', 'Tongue', 'Tongue2', 'Sad', 'Sad2', 'Wink', 'Wink2', 'Grin', 'Shocked', 'Confused', 'Confused2', 'Neutral', 'Neutral2', 'Wondering', 'Wondering2', 'PointUp', 'PointRight', 'PointDown', 'PointLeft', 'ThumbsUp', 'ThumbsUp2', 'Shocked2', 'Evil', 'Evil2', 'Angry', 'Angry2', 'Heart', 'Heart2', 'HeartBroken', 'Star', 'Star2', 'Grin2', 'Cool', 'Cool2', 'Question', 'Notification', 'Warning', 'Spam', 'Blocked', 'Eye', 'Eye2', 'EyeBlocked', 'Flag', 'BrightnessMedium', 'QuotesLeft', 'Music', 'Pacman', 'Bullhorn', 'Rocket', 'Fire', 'Hammer', 'Target', 'Lightning', 'Shield', 'CheckmarkCircle', 'Lab', 'Leaf', 'Dashboard', 'Droplet', 'Feed', 'Support', 'Hammer2', 'Wand', 'Cog', 'Gift', 'Trophy', 'Magnet', 'Switch', 'Globe', 'Bookmark', 'Bookmarks', 'Star3', 'Info', 'Info2', 'CancelCircle', 'Checkmark', 'Close'));
+    $this->SetData('Icons', array(
+      'happy', 'happy2', 'smiley', 'smiley2', 'tongue', 'tongue2', 'sad', 'sad2', 
+      'wink', 'wink2', 'grin', 'shocked', 'confused', 'confused2', 'neutral', 
+      'neutral2', 'wondering', 'wondering2', 'PointUp', 'PointRight', 'PointDown', 
+      'PointLeft', 'ThumbsUp', 'ThumbsUp2', 'shocked2', 'evil', 'evil2', 'angry', 
+      'angry2', 'heart', 'heart2', 'HeartBroken', 'star', 'star2', 'grin2', 'cool', 
+      'cool2', 'question', 'notification', 'warning', 'spam', 'blocked', 'eye', 
+      'eye2', 'EyeBlocked', 'flag', 'BrightnessMedium', 'QuotesLeft', 'music', 
+      'pacman', 'bullhorn', 'rocket', 'fire', 'hammer', 'target', 'lightning', 
+      'shield', 'CheckmarkCircle', 'lab', 'leaf', 'dashboard', 'droplet', 'feed', 
+      'support', 'hammer2', 'wand', 'cog', 'gift', 'trophy', 'magnet', 'switch', 
+      'globe', 'bookmark', 'bookmarks', 'star3', 'info', 'info2', 'CancelCircle', 
+      'checkmark', 'close'));
 
     // Load up all permissions
     $PermissionModel = new PermissionModel();
