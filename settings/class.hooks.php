@@ -8,6 +8,57 @@
 class YagaHooks implements Gdn_IPlugin {
 
   /**
+   * This handles all the core settings for the gamification application.
+   *
+   * @param SettingsController $Sender
+   */
+  public function SettingsController_Yaga_Create($Sender) {
+    $Sender->Application = 'Yaga';
+    Gdn_Theme::Section('Dashboard');
+    if ($Sender->Menu) {
+      $Sender->Menu->HighlightRoute('/settings/yaga');
+    }
+    //$Sender->AddJsFile('yaga.js');
+    $Sender->AddCssFile('yaga.css');
+
+    $Sender->Permission('Garden.Settings.Manage');
+
+    $ConfigModule = new ConfigurationModule($Sender);
+
+    $ConfigModule->Initialize(array(
+      'Yaga.Reactions.Enabled' => array(
+        'LabelCode' => 'Use Reactions',
+        'Control'   => 'Checkbox'
+      ),
+      'Yaga.Badges.Enabled' => array(
+        'LabelCode' => 'Use Badges',
+        'Control'   => 'Checkbox'
+      ),
+      'Yaga.Ranks.Enabled' => array(
+        'LabelCode' => 'Use Ranks',
+        'Control'   => 'Checkbox'
+      ),
+      'Yaga.LeaderBoard.Enabled' => array(
+        'LabelCode' => 'Show leaderboard on activity page',
+        'Control'   => 'Checkbox'
+      ),
+      'Yaga.LeaderBoard.Limit' => array(
+        'LabelCode' => 'Maximum number of leaders to show',
+        'Control'   => 'Textbox',
+        'Options'   => array(
+          'Size'  => 45,
+          'class' => 'SmallInput'
+        )
+      )
+    ));
+    $Sender->AddSideMenu('settings/yaga');
+    $Sender->Title(T('Yaga.Settings'));
+    $Sender->ConfigurationModule = $ConfigModule;
+
+    $ConfigModule->RenderAll();
+  }
+
+  /**
    * Add the settings page links
    *
    * @param Object $Sender
@@ -17,7 +68,7 @@ class YagaHooks implements Gdn_IPlugin {
     $Section = 'Gamification';
     $Attrs = array('class' => $Section);
     $Menu->AddItem($Section, $Section, FALSE, $Attrs);
-    $Menu->AddLink($Section, T('Settings'), 'yagasettings', 'Garden.Settings.Manage');
+    $Menu->AddLink($Section, T('Settings'), 'settings/yaga', 'Garden.Settings.Manage');
     if(C('Yaga.Reactions.Enabled')) {
       $Menu->AddLink($Section, T('Yaga.Reactions'), 'action/settings', 'Yaga.Reactions.Manage');
     }
