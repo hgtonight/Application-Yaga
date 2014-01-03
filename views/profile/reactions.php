@@ -57,7 +57,7 @@ foreach ($Contents as $Content) {
           <?php echo Gdn_Format::To($Content['Body'], $Content['Format']); ?>
          </div>
          <?php
-         if(Gdn::Session()->CheckPermission('Yaga.Reactions.View') || C('Yaga.Reactions.Enabled')) {
+         if(C('Yaga.Reactions.Enabled') && Gdn::Session()->CheckPermission('Yaga.Reactions.View')) {
             RenderReactionRecord($ContentID, strtolower($ContentType));
          }
          ?>
