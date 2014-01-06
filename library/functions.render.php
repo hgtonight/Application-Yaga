@@ -53,12 +53,13 @@ if(!function_exists('RenderReactionRecord')) {
     $Reactions = Yaga::ReactionModel()->GetRecord($ID, $Type);
     foreach($Reactions as $Reaction) {
       $User = Gdn::UserModel()->GetID($Reaction->UserID);
-      $String = UserPhoto($User, array('Size' => 'Small'));
+	  $DateTitle = $User->Name . ' - ' . $Reaction->Name . ' on ' . Gdn_Format::Date($Reaction->DateInserted, '%B %e, %Y');
+      $String = UserPhoto($User, array('Size' => 'Small', 'title' => $DateTitle));
       $String .= '<span class="ReactSprite Reaction-' . $Reaction->ActionID . ' ' . $Reaction->CssClass . '"></span>';
       $Wrapttributes = array(
           'class' => 'UserReactionWrap',
           'data-userid' => $User->UserID,
-          'title' => $User->Name . ' - ' . $Reaction->Name . ' on ' . Gdn_Format::Date($Reaction->DateInserted, '%B %e, %Y')
+          'title' => $DateTitle
       );
       echo Wrap($String, 'span', $Wrapttributes);
     }
