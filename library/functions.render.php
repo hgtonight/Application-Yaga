@@ -22,7 +22,7 @@ if(!function_exists('RenderReactions')) {
       if(CheckPermission($Action->Permission)) {
         $CountString = ($Action->Count) ? $Action->Count : '';
         $ActionsString .= Anchor(
-                Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID . ' ' . $Action->CssClass)) .
+                Wrap('&nbsp;', 'span', array('class' => 'React-' . $Action->ActionID . ' reaction ' . $Action->CssClass)) .
                 WrapIf($CountString, 'span', array('class' => 'Count')) .
                 Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'react/' . $Type . '/' . $ID . '/' . $Action->ActionID, 'Hijack ReactButton'
         );
@@ -78,7 +78,7 @@ if(!function_exists('ActionRow')) {
                             Wrap($Action->Description, 'span') . ' ' .
                             Wrap(Plural($Action->AwardValue, '%s Point', '%s Points'), 'span'), 'div', array('class' => 'Meta')) .
                     Wrap(
-                            Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID . ' ' . $Action->CssClass)) .
+                            Wrap('', 'span', array('class' => 'React-' . $Action->ActionID . ' reaction ' . $Action->CssClass)) .
                             WrapIf(rand(0, 18), 'span', array('class' => 'Count')) .
                             Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'div', array('class' => 'Preview Reactions')), 'div', array('class' => 'Action')), 'li', array('id' => 'ActionID_' . $Action->ActionID));
   }

@@ -473,6 +473,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param object $Sender
    */
   private function _AddResources($Sender) {
+    $Sender->AddCssFile('icomoon.css', 'yaga');
     $Sender->AddCssFile('reactions.css', 'yaga');
   }
 
