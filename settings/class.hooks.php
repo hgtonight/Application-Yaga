@@ -438,8 +438,8 @@ class YagaHooks implements Gdn_IPlugin {
 
     $Rules = array();
     foreach($Badges as $Badge) {
-      if($Badge->Enabled && $Badge->UserID != $UserID) {
-        // The user doesn't have this badge
+      // Is this badge enabled?
+      if($Badge->Enabled) {
         $Class = $Badge->RuleClass;
         $Criteria = (object) unserialize($Badge->RuleCriteria);
 

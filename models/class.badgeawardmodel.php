@@ -141,13 +141,15 @@ class BadgeAwardModel extends Gdn_Model {
    * @return DataSet
    */
   public function GetUnobtained($UserID) {
-    return $this->SQL
-            ->Select()
-            ->From('Badge b')
-            ->Join('BadgeAward ba', 'b.BadgeID = ba.BadgeID', 'left')
-            ->Where('ba.UserID', $UserID)
-            ->Where('b.Enabled', 1)
-            ->Get()
-            ->Result();
+    $Badges = BadgeModel::Get();
+    $Unobtained = array();
+
+    foreach ($Badges as $Badge) {
+      if(!$this->Exists($UserID, $Badge->BadgeID)) {
+        $Unobtained[] = $Badge;
+      }
+    }
+
+    return $Unobtained;
   }
 }
