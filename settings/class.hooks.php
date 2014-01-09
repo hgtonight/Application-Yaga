@@ -138,10 +138,16 @@ class YagaHooks implements Gdn_IPlugin {
    * @param int $ActionID
    * @param int $Page
    */
-  public function ProfileController_Reactions_Create($Sender, $UserReference = '', $Username = '', $ActionID = '') {
+  public function ProfileController_Reactions_Create($Sender, $UserReference = '', $Username = '', $ActionID = '', $Page = 0) {
     if(!C('Yaga.Reactions.Enabled')) {
       return;
     }
+
+    list($Offset, $Limit) = OffsetLimit($Page, C('Yaga.ReactedContent.PerPage', 5));
+    if(!is_numeric($Offset) || $Offset < 0) {
+      $Offset = 0;
+    }
+
     $Sender->EditMode(FALSE);
 
     // Tell the ProfileController what tab to load
@@ -155,7 +161,7 @@ class YagaHooks implements Gdn_IPlugin {
     $Sender->AddDefinition('CollapseText', T('(less)'));
 
     $Model = new ActedModel();
-    $Data = $Model->Get($Sender->User->UserID, $ActionID, Gdn::Config('Yaga.ReactedContent.PerPage', 5));
+    $Data = $Model->Get($Sender->User->UserID, $ActionID, $Limit, $Offset);
 
     $Sender->SetData('Content', $Data);
 
@@ -169,6 +175,16 @@ class YagaHooks implements Gdn_IPlugin {
       $Sender->Head->AddTag('meta', array('name' => 'robots', 'content' => 'noindex,noarchive'));
     }
 
+    $ReactionModel = Yaga::ReactionModel();
+    
+    // Build a pager
+    $PagerFactory = new Gdn_PagerFactory();
+    $Sender->Pager = $PagerFactory->GetPager('Pager', $Sender);
+    $Sender->Pager->ClientID = 'Pager';
+    $Sender->Pager->Configure(
+            $Offset, $Limit, $ReactionModel->GetUserCount($Sender->User->UserID, $ActionID), 'profile/reactions/' . $Sender->User->UserID . '/' . Gdn_Format::Url($Sender->User->Name) . '/' . $ActionID . '/%1$s/'
+    );
+    
     // Render the ProfileController
     $Sender->Render();
   }
@@ -421,20 +437,18 @@ class YagaHooks implements Gdn_IPlugin {
    * @param string $Hook The rule hooks to check
    */
   private function _AwardBadges($Sender, $Hook) {
-    if(!C('Yaga.Badges.Enabled')) {
+    $Session = Gdn::Session();
+    if(!C('Yaga.Badges.Enabled') || !$Session->IsValid()) {
       return;
     }
-
-    $Session = Gdn::Session();
-    if(!$Session->IsValid())
-      return;
 
     $UserID = $Session->UserID;
     $UserModel = new UserModel();
     $User = $UserModel->GetID($UserID);
 
+    $BadgeModel = Yaga::BadgeModel();
     $BadgeAwardModel = Yaga::BadgeAwardModel();
-    $Badges = $BadgeAwardModel->GetUnobtained($UserID);
+    $Badges = $BadgeModel->GetWithEarned($UserID);
 
     $Rules = array();
     foreach($Badges as $Badge) {

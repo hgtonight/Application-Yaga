@@ -15,7 +15,7 @@ class ActedModel extends Gdn_Model {
   /**
    * Returns a list of all available actions
    */
-  public function Get($UserID, $ActionID, $Limit = FALSE) {
+  public function Get($UserID, $ActionID, $Limit = FALSE, $Offset = 0) {
     $Expiry = 600;
 
     // Check cache
@@ -60,7 +60,7 @@ class ActedModel extends Gdn_Model {
     }
 
     $this->Security($Content);
-    $this->Condense($Content, $Limit);
+    $this->Condense($Content, $Limit, $Offset);
 
     return $Content;
   }
@@ -191,8 +191,8 @@ class ActedModel extends Gdn_Model {
    * @param array $Content
    * @param array $Limit
    */
-  protected function Condense(&$Content, $Limit) {
-    $Content = array_slice($Content, 0, $Limit);
+  protected function Condense(&$Content, $Limit, $Offset) {
+    $Content = array_slice($Content, $Offset, $Limit);
   }
 
 }

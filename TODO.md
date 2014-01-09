@@ -32,5 +32,5 @@ Yet Another Gamification Application
 * Implement moving of reactions to other action IDs on delete (much like categories right now)
 * Aggregate Rule Support
 * Add rules vino suggested (DiscussionPageLength, DiscussionBodyLength, PostReactionCount, PostReactionComboCount, CakeDay, Necroposting, ComboDateTimes)
-* Fix reaction method on profile page to show more than one page of discussion/comments
-** Also show the reaction record
+* ~~Fix reaction method on profile page to show more than one page of discussion/comments~~
+** ~~Also show the reaction record~~

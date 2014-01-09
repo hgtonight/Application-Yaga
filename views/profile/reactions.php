@@ -66,3 +66,5 @@ foreach ($Contents as $Content) {
    </li> <?php
 }
 echo '</ul>';
+
+echo $this->Pager->ToString('more');
