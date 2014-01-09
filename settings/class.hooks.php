@@ -57,6 +57,30 @@ class YagaHooks implements Gdn_IPlugin {
 
     $ConfigModule->RenderAll();
   }
+  
+  public function SettingsController_AfterRenderAsset_Handler($Sender) {
+    $EventArguments = $Sender->EventArguments;
+    if($EventArguments['AssetName'] == 'Content' && $Sender->OriginalRequestMethod == 'index') {
+      //echo 'Sweet sweet stats!';
+      $BadgeAwardModel = Yaga::BadgeAwardModel();
+      $ReactionModel = Yaga::ReactionModel();
+      
+      $BadgeCount = $BadgeAwardModel->GetCount();
+      $ReactionCount = $ReactionModel->GetCount();
+      echo Wrap('Yaga Statistics', 'h1');
+      echo Wrap(
+              Wrap(
+                      Wrap(
+                              'Badges' . Wrap($BadgeCount, 'strong'),
+                              'div'), 'li', array('class' => 'BadgeCount')) .
+              Wrap(
+                      Wrap(
+                              'Reactions' . Wrap($ReactionCount, 'strong'),
+                              'div'), 'li', array('class' => 'ReactionCount')),
+            'ul',
+            array('class' => 'StatsOverview'));
+    }
+  }
 
   /**
    * Add the settings page links

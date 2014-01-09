@@ -19,10 +19,14 @@ class BadgeAwardModel extends Gdn_Model {
     parent::__construct('BadgeAward');
   }
 
-  public function GetCount($BadgeID) {
-    $Wheres = array('BadgeID' => $BadgeID);
-    return $this->SQL
-            ->GetCount('BadgeAward', $Wheres);
+  public function GetCount($BadgeID = FALSE) {
+    if($BadgeID) {
+      $Wheres = array('BadgeID' => $BadgeID);
+    }
+    else {
+      $Wheres = array();
+    }
+    return $this->SQL->GetCount('BadgeAward', $Wheres);
   }
 
   public function GetRecent($BadgeID, $Limit = 15) {

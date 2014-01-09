@@ -23,7 +23,7 @@ Yet Another Gamification Application
 * ~~Refactor all models to get rid of uneeded/duplicate methods~~
 
 ## Planned Features
-* Stats page on the yaga settings page
+* ~~Stats page on the yaga settings page~~
 * Import/Export badges/reactions/ranks
 * Best Of... Controller
 * Best Of... Profile filter
