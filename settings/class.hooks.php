@@ -446,9 +446,8 @@ class YagaHooks implements Gdn_IPlugin {
     $UserModel = new UserModel();
     $User = $UserModel->GetID($UserID);
 
-    $BadgeModel = Yaga::BadgeModel();
     $BadgeAwardModel = Yaga::BadgeAwardModel();
-    $Badges = $BadgeModel->GetWithEarned($UserID);
+    $Badges = $BadgeAwardModel->GetUnobtained($UserID);
 
     $Rules = array();
     foreach($Badges as $Badge) {

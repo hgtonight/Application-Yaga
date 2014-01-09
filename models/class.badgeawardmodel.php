@@ -141,13 +141,12 @@ class BadgeAwardModel extends Gdn_Model {
    * @return DataSet
    */
   public function GetUnobtained($UserID) {
-    return $this->SQL
-            ->Select()
-            ->From('Badge b')
-            ->Join('BadgeAward ba', 'b.BadgeID = ba.BadgeID', 'left')
-            ->Where('ba.UserID', $UserID)
-            ->Where('b.Enabled', 1)
-            ->Get()
-            ->Result();
+    $Px = $this->Database->DatabasePrefix;
+    $Sql = 'select b.BadgeID, b.Enabled, b.RuleClass, b.RuleCriteria, '
+            . 'ba.UserID '
+            . "from {$Px}Badge as b "
+            . "left join {$Px}BadgeAward as ba ON b.BadgeID = ba.BadgeID and ba.UserID = :UserID ";
+
+    return $this->Database->Query($Sql, array(':UserID' => $UserID))->Result();
   }
 }
