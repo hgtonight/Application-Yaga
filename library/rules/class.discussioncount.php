@@ -10,8 +10,6 @@
 class DiscussionCount implements YagaRule{
 
   public function Award($Sender, $User, $Criteria) {
-    decho($User);
-
     $Result = FALSE;
     switch($Criteria->Comparison) {
       case 'gt':

@@ -16,7 +16,6 @@ echo Wrap(
 echo '<div class="Badge-Earned">';
 
 if($UserBadgeAward) {
-  decho($UserBadgeAward);
   echo Wrap(
           UserPhoto(Gdn::Session()->User) .
           T('Yaga.Badge.Earned') .
