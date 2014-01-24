@@ -173,7 +173,7 @@ input + .ReactSprite {
 .ReactEyeBlocked { background-position: -292px -52px; }
 .ReactFlag { background-position: -316px -52px; }
 .ReactBrightnessMedium { background-position: -340px -52px; }
-.ReactQuotesLeft { background-position: -364px -52px; }
+.ReactQuotesLeft, .ReactQuotes { background-position: -364px -52px; }
 .ReactMusic { background-position: -4px -76px; }
 .ReactPacman { background-position: -28px -76px; }
 .ReactBullhorn { background-position: -52px -76px; }
@@ -207,6 +207,16 @@ input + .ReactSprite {
 .ReactCheckmark { background-position: -340px -100px; }
 .ReactClose { background-position: -364px -100px; }
 
+/* Share icons need to be specified here to undo the override
+TODO: Bundle the big social network icons
+*/
+.ReactFacebook { background-position: -29px -124px; }
+.ReactTwitter { background-position: -53px -124px; }
+.ReactSprite.ReactFacebook, .ReactSprite.ReactTwitter {
+  background-image: url('images/sprites-14-000000.png');
+}
+
+  
 .MenuItems a:hover .ReactSprite {
   background-image: url('images/action-sprites-white.png');
 }
