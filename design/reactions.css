@@ -173,7 +173,7 @@ input + .ReactSprite {
 .ReactEyeBlocked { background-position: -292px -52px; }
 .ReactFlag { background-position: -316px -52px; }
 .ReactBrightnessMedium { background-position: -340px -52px; }
-.ReactQuotesLeft, .ReactQuotes { background-position: -364px -52px; }
+.ReactQuotesLeft, .ReactQuote { background-position: -364px -52px; }
 .ReactMusic { background-position: -4px -76px; }
 .ReactPacman { background-position: -28px -76px; }
 .ReactBullhorn { background-position: -52px -76px; }
