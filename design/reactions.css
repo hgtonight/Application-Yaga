@@ -212,8 +212,10 @@ TODO: Bundle the big social network icons
 */
 .ReactFacebook { background-position: -29px -124px; }
 .ReactTwitter { background-position: -53px -124px; }
-.ReactSprite.ReactFacebook, .ReactSprite.ReactTwitter {
-  background-image: url('images/sprites-14-000000.png');
+.ReactGooglePlus { background-position: -77px -124px; }
+
+.ReactSprite.ReactFacebook, .ReactSprite.ReactTwitter, .ReactSprite.ReactGooglePlus {
+  background-image: url('../../dashboard/design/images/sprites-14-000000.png');
 }
 
   
