@@ -153,3 +153,6 @@ $Definition['Yaga.Rules.ReflexComment'] = 'Comment on New Discussion Quickly';
 $Definition['Yaga.Rules.ReflexComment.Desc'] = "Award this badge if a comment is placed within x seconds of its discussion's creation.";
 $Definition['Yaga.Rules.SocialConnection'] = 'Social Connections';
 $Definition['Yaga.Rules.SocialConnection.Desc'] = 'Award this badge if the user has connected to the target social network.';
+$Definition['Yaga.Rules.NecroPost'] = 'Necro-Post Check';
+$Definition['Yaga.Rules.NecroPost.Desc'] = 'Award this badge if the user has commented on a dead discussion.';
+$Definition['Yaga.Rules.NecroPost.Criteria.Desc'] = 'How old is a dead disussion?';
