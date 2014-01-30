@@ -62,7 +62,7 @@ class CommentCount implements YagaRule{
     $Form->SetValidationResults($Validation->Results());
   }
   public function Hooks() {
-    return array('Base_AfterGetSession');
+    return array('Gdn_Dispatcher_AppStartup');
   }
 
   public function Description() {

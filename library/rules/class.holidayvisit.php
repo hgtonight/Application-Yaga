@@ -54,7 +54,7 @@ class HolidayVisit implements YagaRule {
   }
 
   public function Hooks() {
-    return array('Base_AfterGetSession');
+    return array('Gdn_Dispatcher_AppStartup');
   }
 
   public function Description() {
