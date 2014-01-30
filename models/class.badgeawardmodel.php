@@ -70,12 +70,16 @@ class BadgeAwardModel extends Gdn_Model {
          ->Where('UserID', $UserID)
          ->Put();
 
+        if(is_null($InsertUserID)) {
+          $InsertUserID = Gdn::Session()->UserID;
+        }
+
         // Record some activity
         $ActivityModel = new ActivityModel();
 
         $Activity = array(
             'ActivityType' => 'BadgeAward',
-            'ActivityUserID' => Gdn::Session()->UserID,
+            'ActivityUserID' => $InsertUserID,
             'RegardingUserID' => $UserID,
             'Photo' => '/uploads/' . $Badge->Photo,
             'RecordType' => 'Badge',
@@ -88,13 +92,15 @@ class BadgeAwardModel extends Gdn_Model {
             'Story' => $Badge->Description
          );
 
-         $ActivityModel->Queue($Activity);
+         // Create a public record
+         $ActivityModel->Queue($Activity, FALSE); // TODO: enable the grouped notifications after issue #1776 is resolved , array('GroupBy' => 'Route'));
+
 
          // Notify the user of the award
          $Activity['NotifyUserID'] = $UserID;
-         $Activity['Emailed'] = ActivityModel::SENT_PENDING;
-         $ActivityModel->Queue($Activity, 'Badges', array('Force' => TRUE));
+         $ActivityModel->Queue($Activity, 'BadgeAward', array('Force' => TRUE));
 
+		 // Actually save the activity
          $ActivityModel->SaveQueue();
 
          $this->EventArguments['UserID'] = $UserID;

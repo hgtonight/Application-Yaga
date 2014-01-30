@@ -253,13 +253,13 @@ class YagaHooks implements Gdn_IPlugin {
    */
   public function ProfileController_AfterPreferencesDefined_Handler($Sender) {
     if(C('Yaga.Badges.Enabled')) {
-      $Sender->Preferences['Notifications']['Email.Badges'] = T('Yaga.Notifications.Badges');
-      $Sender->Preferences['Notifications']['Popup.Badges'] = T('Yaga.Notifications.Badges');
+      $Sender->Preferences['Notifications']['Email.BadgeAward'] = T('Yaga.Notifications.Badges');
+      $Sender->Preferences['Notifications']['Popup.BadgeAward'] = T('Yaga.Notifications.Badges');
     }
 
     if(C('Yaga.Ranks.Enabled')) {
-      $Sender->Preferences['Notifications']['Email.Ranks'] = T('Yaga.Notifications.Ranks');
-      $Sender->Preferences['Notifications']['Popup.Ranks'] = T('Yaga.Notifications.Ranks');
+      $Sender->Preferences['Notifications']['Email.RankPromotion'] = T('Yaga.Notifications.Ranks');
+      $Sender->Preferences['Notifications']['Popup.RankPromotion'] = T('Yaga.Notifications.Ranks');
     }
   }
 
@@ -419,6 +419,10 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * Check for Badge Awards where appropriate
    */
+  public function Gdn_Dispatcher_AppStartup_Handler($Sender) {
+    $this->_AwardBadges($Sender, 'Gdn_Dispatcher_AppStartup');
+  }
+
   public function Base_AfterGetSession_Handler($Sender) {
     $this->_AwardBadges($Sender, 'Base_AfterGetSession');
   }
