@@ -216,7 +216,7 @@ class BadgeController extends DashboardController {
    */
   public function DeletePhoto($BadgeID = FALSE, $TransientKey = '') {
       // Check permission
-      $this->Permission('Garden.Badges.Manage');
+      $this->Permission('Yaga.Badges.Manage');
 
       $RedirectUrl = 'badge/edit/'.$BadgeID;
 
@@ -242,7 +242,7 @@ class BadgeController extends DashboardController {
     */
    public function Award($UserID) {
     // Check permission
-    $this->Permission('Garden.Badges.Add');
+    $this->Permission('Yaga.Badges.Add');
     $this->AddSideMenu('badge/settings');
 
     // Only allow awarding if some badges exist

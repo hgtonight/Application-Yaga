@@ -210,7 +210,7 @@ class RankController extends DashboardController {
    */
   public function DeletePhoto($TransientKey = '') {
       // Check permission
-      $this->Permission('Garden.Ranks.Manage');
+      $this->Permission('Yaga.Ranks.Manage');
 
       $RedirectUrl = 'rank/settings';
 
@@ -236,7 +236,7 @@ class RankController extends DashboardController {
     */
    public function Promote($UserID) {
     // Check permission
-    $this->Permission('Garden.Ranks.Add');
+    $this->Permission('Yaga.Ranks.Add');
     $this->AddSideMenu('rank/settings');
 
     // Only allow awarding if some ranks exist

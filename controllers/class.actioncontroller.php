@@ -155,7 +155,7 @@ class ActionController extends DashboardController {
 
   public function Sort() {
       // Check permission
-      $this->Permission('Garden.Reactions.Manage');
+      $this->Permission('Yaga.Reactions.Manage');
 
       // Set delivery type to true/false
       $TransientKey = GetIncomingValue('TransientKey');
