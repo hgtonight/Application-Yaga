@@ -3,14 +3,14 @@
 $ApplicationInfo['Yaga'] = array(
     'Name'        => 'Yet Another Gamification Application',
     'Description' => 'Yaga provides customizable reactions, badges, and ranks for your Vanilla forum software. Increase user activity by letting users react to content with emotions. Give users badges based on statistics and engagement in your community. Create and award custom badges for special events and recognition. Award Ranks which can confer different (configurable) permissions based on community perception and participation.',
-    'Version'     => '0.3.3',
-	'Url'         => 'http://github.com/hgtonight/application-yaga',
+    'Version'     => '0.3.4',
+	  'Url'         => 'http://github.com/hgtonight/application-yaga',
     'Author'      => 'Zachary Doll',
     'AuthorEmail' => 'hgtonight@daklutz.com',
     'AuthorUrl'   => 'http://www.daklutz.com',
     'License'     => 'GPLv3',
     'SettingsUrl' => '/settings/yaga',
-	'SettingsPermission' => 'Garden.Settings.Manage',
+	  'SettingsPermission' => 'Garden.Settings.Manage',
 
     // Application requirements
     'RequiredApplications' => array('Vanilla' => '2.1b2'),

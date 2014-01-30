@@ -419,6 +419,10 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * Check for Badge Awards where appropriate
    */
+  public function Base_AfterGetSession_Handler($Sender) {
+    $this->_AwardBadges($Sender, 'Base_AfterGetSession');
+  }
+  
   public function CommentModel_AfterSaveComment_Handler($Sender) {
     $this->_AwardBadges($Sender, 'CommentModel_AfterSaveComment');
   }
@@ -465,7 +469,13 @@ class YagaHooks implements Gdn_IPlugin {
     if(!C('Yaga.Badges.Enabled') || !$Session->IsValid()) {
       return;
     }
-
+    
+    if(Debug()) {
+      $Controller = Gdn::Controller();
+      if($Controller) {
+        $Controller->InformMessage("Checking for awards on $Hook");
+      }
+    }
     $UserID = $Session->UserID;
     $UserModel = new UserModel();
     $User = $UserModel->GetID($UserID);

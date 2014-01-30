@@ -63,7 +63,7 @@ class DiscussionCount implements YagaRule{
   }
 
   public function Hooks() {
-    return array('DiscussionModel_AfterSaveDiscussion');
+    return array('Base_AfterGetSession');
   }
 
   public function Description() {

@@ -27,7 +27,7 @@ class PhotoExists implements YagaRule {
   }
 
   public function Hooks() {
-    return array('UserModel_AfterSave');
+    return array('Base_AfterGetSession');
   }
 
   public function Description() {

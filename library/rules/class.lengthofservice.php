@@ -49,7 +49,7 @@ class LengthOfService implements YagaRule {
   }
 
   public function Hooks() {
-    return array('Base_AfterSignIn');
+    return array('Base_AfterGetSession');
   }
 
   public function Description() {
