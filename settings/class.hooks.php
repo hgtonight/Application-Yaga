@@ -419,48 +419,53 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * Check for Badge Awards where appropriate
    */
+  protected function InvokeAwardLogic($Sender, $Handler) {
+    $Handler = str_ireplace('_Handler', '', $Handler);
+    $this->_AwardBadges($Sender, $Handler);
+  }
+  
   public function Gdn_Dispatcher_AppStartup_Handler($Sender) {
-    $this->_AwardBadges($Sender, 'Gdn_Dispatcher_AppStartup');
+    $this->InvokeAwardLogic($Sender, __FUNCTION__);
   }
 
   public function Base_AfterGetSession_Handler($Sender) {
-    $this->_AwardBadges($Sender, 'Base_AfterGetSession');
+    $this->InvokeAwardLogic($Sender, __FUNCTION__);
   }
   
   public function CommentModel_AfterSaveComment_Handler($Sender) {
-    $this->_AwardBadges($Sender, 'CommentModel_AfterSaveComment');
+    $this->InvokeAwardLogic($Sender, __FUNCTION__);
   }
 
   public function DiscussionModel_AfterSaveDiscussion_Handler($Sender) {
-    $this->_AwardBadges($Sender, 'DiscussionModel_AfterSaveDiscussion');
+    $this->InvokeAwardLogic($Sender, __FUNCTION__);
   }
 
   public function CommentModel_BeforeNotification_Handler($Sender) {
-    $this->_AwardBadges($Sender, 'CommentModel_BeforeNotification');
+    $this->InvokeAwardLogic($Sender, __FUNCTION__);
   }
 
   public function DiscussionModel_BeforeNotification_Handler($Sender) {
-    $this->_AwardBadges($Sender, 'DiscussionModel_BeforeNotification');
+    $this->InvokeAwardLogic($Sender, __FUNCTION__);
   }
 
   public function Base_AfterSignIn_Handler($Sender) {
-    $this->_AwardBadges($Sender, 'Base_AfterSignIn');
+    $this->InvokeAwardLogic($Sender, __FUNCTION__);
   }
 
   public function UserModel_AfterSave_Handler($Sender) {
-    $this->_AwardBadges($Sender, 'UserModel_AfterSave');
+    $this->InvokeAwardLogic($Sender, __FUNCTION__);
   }
 
   public function ReactionModel_AfterReactionSave_Handler($Sender) {
-    $this->_AwardBadges($Sender, 'ReactionModel_AfterReactionSave');
+    $this->InvokeAwardLogic($Sender, __FUNCTION__);
   }
 
   public function BadgeAwardModel_AfterBadgeAward_Handler($Sender) {
-    $this->_AwardBadges($Sender, 'BadgeAwardModel_AfterBadgeAward');
+    $this->InvokeAwardLogic($Sender, __FUNCTION__);
   }
 
   public function Base_AfterConnection_Handler($Sender) {
-    $this->_AwardBadges($Sender, 'Base_AfterConnection');
+    $this->InvokeAwardLogic($Sender, __FUNCTION__);
   }
 
   /**
