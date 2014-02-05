@@ -23,5 +23,7 @@ The latter option is only recommend if you're familiar with git.
 
 Once you've added the application to your Vanilla installation, you need to activate it in the dashboard. Once activated, you will see a new "Gamification" menu in the dashboard sidebar where you can configure each individual part of the Yaga application.
 
+Finally, you need to delete the `/cache/locale_map.ini` file to force refresh the locale definitions.
+
 ---
-Copyright 2013 © Zachary Doll
+Copyright 2013 - 2014 © Zachary Doll
