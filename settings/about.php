@@ -9,7 +9,7 @@ $ApplicationInfo['Yaga'] = array(
     'AuthorEmail' => 'hgtonight@daklutz.com',
     'AuthorUrl'   => 'http://www.daklutz.com',
     'License'     => 'GPLv3',
-    'SettingsUrl' => '/settings/yaga',
+    'SettingsUrl' => '/yaga/settings',
 	  'SettingsPermission' => 'Garden.Settings.Manage',
 
     // Application requirements

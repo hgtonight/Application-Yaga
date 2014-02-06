@@ -8,56 +8,17 @@
 class YagaHooks implements Gdn_IPlugin {
 
   /**
-   * This handles all the core settings for the gamification application.
-   *
+   * Redirect any old links to proper settings page permanently
    * @param SettingsController $Sender
    */
   public function SettingsController_Yaga_Create($Sender) {
-    $Sender->Application = 'Yaga';
-    Gdn_Theme::Section('Dashboard');
-    if ($Sender->Menu) {
-      $Sender->Menu->HighlightRoute('/settings/yaga');
-    }
-    //$Sender->AddJsFile('yaga.js');
-    $Sender->AddCssFile('yaga.css');
-
-    $Sender->Permission('Garden.Settings.Manage');
-
-    $ConfigModule = new ConfigurationModule($Sender);
-
-    $ConfigModule->Initialize(array(
-      'Yaga.Reactions.Enabled' => array(
-        'LabelCode' => 'Use Reactions',
-        'Control'   => 'Checkbox'
-      ),
-      'Yaga.Badges.Enabled' => array(
-        'LabelCode' => 'Use Badges',
-        'Control'   => 'Checkbox'
-      ),
-      'Yaga.Ranks.Enabled' => array(
-        'LabelCode' => 'Use Ranks',
-        'Control'   => 'Checkbox'
-      ),
-      'Yaga.LeaderBoard.Enabled' => array(
-        'LabelCode' => 'Show leaderboard on activity page',
-        'Control'   => 'Checkbox'
-      ),
-      'Yaga.LeaderBoard.Limit' => array(
-        'LabelCode' => 'Maximum number of leaders to show',
-        'Control'   => 'Textbox',
-        'Options'   => array(
-          'Size'  => 45,
-          'class' => 'SmallInput'
-        )
-      )
-    ));
-    $Sender->AddSideMenu('settings/yaga');
-    $Sender->Title(T('Yaga.Settings'));
-    $Sender->ConfigurationModule = $ConfigModule;
-
-    $ConfigModule->RenderAll();
+    Redirect('yaga/settings', 301);
   }
   
+  /**
+   * Add Simple stats page to dashboard index
+   * @param SettingsController $Sender
+   */
   public function SettingsController_AfterRenderAsset_Handler($Sender) {
     $EventArguments = $Sender->EventArguments;
     if($EventArguments['AssetName'] == 'Content' && $Sender->OriginalRequestMethod == 'index') {
@@ -92,7 +53,7 @@ class YagaHooks implements Gdn_IPlugin {
     $Section = 'Gamification';
     $Attrs = array('class' => $Section);
     $Menu->AddItem($Section, $Section, FALSE, $Attrs);
-    $Menu->AddLink($Section, T('Settings'), 'settings/yaga', 'Garden.Settings.Manage');
+    $Menu->AddLink($Section, T('Settings'), 'yaga/settings', 'Garden.Settings.Manage');
     if(C('Yaga.Reactions.Enabled')) {
       $Menu->AddLink($Section, T('Yaga.Reactions'), 'action/settings', 'Yaga.Reactions.Manage');
     }
@@ -106,7 +67,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Display the reaction counts on the profile page
-   * @param object $Sender
+   * @param ProfileController $Sender
    */
   public function ProfileController_AfterUserInfo_Handler($Sender) {
     if(!C('Yaga.Reactions.Enabled')) {
@@ -216,8 +177,7 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * Check for promotions on received points.
    *
-   * @param type $Sender
-   * @return type
+   * @param UserModel $Sender
    */
   public function UserModel_GivePoints_Handler($Sender) {
     // Don't check for promotions if we aren't using ranks
@@ -249,7 +209,7 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * Add the badge and rank notification options
    *
-   * @param object $Sender
+   * @param ProfileController $Sender
    */
   public function ProfileController_AfterPreferencesDefined_Handler($Sender) {
     if(C('Yaga.Badges.Enabled')) {
@@ -266,7 +226,7 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * Add the Award Badge and Promote options to the profile controller
    *
-   * @param object $Sender
+   * @param ProfileController $Sender
    */
   public function ProfileController_BeforeProfileOptions_Handler($Sender) {
     if(Gdn::Session()->IsValid()) {
@@ -291,7 +251,7 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * Display a record of reactions after the first post
    *
-   * @param object $Sender
+   * @param DiscussionController $Sender
    */
   public function DiscussionController_AfterDiscussionBody_Handler($Sender) {
     if(!Gdn::Session()->CheckPermission('Yaga.Reactions.View') || !C('Yaga.Reactions.Enabled')) {
@@ -304,7 +264,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Display a record of reactions after comments
-   * @param object $Sender
+   * @param DiscussionController $Sender
    */
   public function DiscussionController_AfterCommentBody_Handler($Sender) {
     if(!Gdn::Session()->CheckPermission('Yaga.Reactions.View') || !C('Yaga.Reactions.Enabled')) {
@@ -317,7 +277,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Add action list to discussion items
-   * @param object $Sender
+   * @param DiscussionController $Sender
    */
   public function DiscussionController_AfterReactions_Handler($Sender) {
     if(C('Yaga.Reactions.Enabled') == FALSE) {
@@ -351,7 +311,7 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * Add the action list to any activity items that can be commented on
    *
-   * @param object $Sender
+   * @param ActivityController $Sender
    */
   public function ActivityController_AfterActivityBody_Handler($Sender) {
     if(!C('Yaga.Reactions.Enabled')) {
@@ -471,6 +431,7 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * This is the dispatcher to check badge awards
    *
+   * @param Object $Sender The sending object
    * @param string $Hook The rule hooks to check
    */
   private function _AwardBadges($Sender, $Hook) {
@@ -535,7 +496,7 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * Add global Yaga resources to all dashboard pages
    *
-   * @param type $Sender
+   * @param object $Sender
    */
   public function Base_Render_Before($Sender) {
     if($Sender->MasterView == 'admin') {
