@@ -2,12 +2,12 @@
 /* Copyright 2013 Zachary Doll */
 
 echo Wrap($this->Title(), 'h1');
+
+echo $this->Form->Open(array('enctype' => 'multipart/form-data', 'class' => 'Badge'));
+echo $this->Form->Errors();
 ?>
 <div class="Aside">
     <?php
-    echo $this->Form->Open(array('enctype' => 'multipart/form-data', 'class' => 'Badge'));
-    echo $this->Form->Errors();
-
     echo $this->Form->Label('Photo', 'PhotoUpload');
     $Photo = C('Yaga.Ranks.Photo');
     if($Photo) {
