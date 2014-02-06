@@ -379,66 +379,65 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * Check for Badge Awards where appropriate
    */
-  protected function InvokeAwardLogic($Sender, $Handler) {
-    $Handler = str_ireplace('_Handler', '', $Handler);
-    $this->_AwardBadges($Sender, $Handler);
-  }
-  
   public function Gdn_Dispatcher_AppStartup_Handler($Sender) {
-    $this->InvokeAwardLogic($Sender, __FUNCTION__);
+    $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
   public function Base_AfterGetSession_Handler($Sender) {
-    $this->InvokeAwardLogic($Sender, __FUNCTION__);
+    $this->_AwardBadges($Sender, __FUNCTION__);
   }
   
   public function CommentModel_AfterSaveComment_Handler($Sender) {
-    $this->InvokeAwardLogic($Sender, __FUNCTION__);
+    $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
   public function DiscussionModel_AfterSaveDiscussion_Handler($Sender) {
-    $this->InvokeAwardLogic($Sender, __FUNCTION__);
+    $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
   public function CommentModel_BeforeNotification_Handler($Sender) {
-    $this->InvokeAwardLogic($Sender, __FUNCTION__);
+    $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
   public function DiscussionModel_BeforeNotification_Handler($Sender) {
-    $this->InvokeAwardLogic($Sender, __FUNCTION__);
+    $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
   public function Base_AfterSignIn_Handler($Sender) {
-    $this->InvokeAwardLogic($Sender, __FUNCTION__);
+    $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
   public function UserModel_AfterSave_Handler($Sender) {
-    $this->InvokeAwardLogic($Sender, __FUNCTION__);
+    $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
   public function ReactionModel_AfterReactionSave_Handler($Sender) {
-    $this->InvokeAwardLogic($Sender, __FUNCTION__);
+    $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
   public function BadgeAwardModel_AfterBadgeAward_Handler($Sender) {
-    $this->InvokeAwardLogic($Sender, __FUNCTION__);
+    $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
   public function Base_AfterConnection_Handler($Sender) {
-    $this->InvokeAwardLogic($Sender, __FUNCTION__);
+    $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
   /**
    * This is the dispatcher to check badge awards
    *
    * @param Object $Sender The sending object
-   * @param string $Hook The rule hooks to check
+   * @param string $Handler The event handler to check associated rules for awards
+   * (e.g. BadgeAwardModel_AfterBadgeAward_Handler or Base_AfterConnection)
    */
-  private function _AwardBadges($Sender, $Hook) {
+  private function _AwardBadges($Sender, $Handler) {
     $Session = Gdn::Session();
     if(!C('Yaga.Badges.Enabled') || !$Session->IsValid()) {
       return;
     }
+    
+    // Let's us use __FUNCTION__ in the original hook
+    $Hook = str_ireplace('_Handler', '', $Handler); 
     
     if(Debug()) {
       $Controller = Gdn::Controller();
