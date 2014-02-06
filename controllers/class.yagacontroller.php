@@ -28,6 +28,8 @@ class YagaController extends DashboardController {
     if($this->Menu) {
       $this->Menu->HighlightRoute('/yaga');
     }
+    $this->AddSideMenu('yaga/settings');
+    
     $this->AddCssFile('yaga.css');
   }
   
@@ -44,7 +46,6 @@ class YagaController extends DashboardController {
    */
   public function Settings() {
     $this->Permission('Garden.Settings.Manage');
-    $this->AddSideMenu('yaga/settings');
     $this->Title(T('Yaga.Settings'));
 
     // Get list of actions from the model and pass to the view
@@ -82,10 +83,14 @@ class YagaController extends DashboardController {
   }
 
   public function Import() {
+    $this->Title(T('Yaga.Import'));
     // Todo: Implement
+    $this->Render('transport');
   }
   
   public function Export() {
+    $this->Title(T('Yaga.Export'));
     // Todo: Implement
+    $this->Render('transport');
   }
 }
