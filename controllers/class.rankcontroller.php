@@ -127,7 +127,7 @@ class RankController extends DashboardController {
       }
     }
 
-    $this->Render('add');
+    $this->Render('edit');
   }
 
   /**

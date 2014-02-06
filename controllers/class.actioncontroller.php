@@ -110,7 +110,7 @@ class ActionController extends DashboardController {
       }
     }
 
-    $this->Render('add');
+    $this->Render('edit');
   }
 
   /**
