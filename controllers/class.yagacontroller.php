@@ -93,49 +93,73 @@ class YagaController extends DashboardController {
 
   public function Export() {
     $this->Title(T('Yaga.Export'));
-    $Path = PATH_UPLOADS . DS . 'export ' . date('Y-m-d His') . '.yaga.gz';
-    $StartTime = microtime(TRUE);
-    $FileHandle = NULL;
-
-    if(function_exists('gzopen')) {
-      $FileHandle = gzopen($Path, 'wb');
+    
+    
+    if(class_exists('ZipArchive')) {
+      $this->_ExportAuto();
     }
     else {
-      $FileHandle = fopen($Path, 'wb');
+      $this->Form->AddError('You do not seem to have the minimum requirements to export your Yaga configuration automatically. Please reference manual_export.md for more information.');
     }
 
-    fwrite($FileHandle, 'Yaga Export: ' . C('Yaga.Version'));
-    fwrite($FileHandle, "\n\n");
-    fwrite($FileHandle, '// Exported Started: ' . date('Y-m-d H:i:s') . "\n\n");
-
+    $this->Render('transport');
+  }
+  
+  protected function _ExportAuto($Path = NULL) {
+    $StartTime = microtime(TRUE);
+    $Info = 'Yaga Export: ' . C('Yaga.Version', '??');
+    $Info .= "\nStart Date: " . date('Y-m-d H:i:s');
+    
+    
+    if(is_null($Path)) {
+      $Path = PATH_UPLOADS . DS . 'export' . date('Y-m-d His') . '.yaga.zip';
+    }
+    $FH = new ZipArchive();
+    
+    if($FH->open($Path, ZipArchive::CREATE) != TRUE) {
+      $this->Form->AddError('Unable to create archive; please check permissions at ' . $Path);
+      return FALSE;
+    }
+    
     $Actions = Yaga::ActionModel()->Get('Sort', 'asc');
     $Ranks = Yaga::RankModel()->Get('Level', 'asc');
     $Badges = Yaga::BadgeModel()->Get();
 
-    fwrite($FileHandle, "// Actions\n");
-    fwrite($FileHandle, json_encode($Actions) . "\n");
+    $FH->addFromString('actions.yaga', serialize($Actions));
+    $FH->addFromString('badges.yaga', serialize($Badges));
+    $FH->addFromString('ranks.yaga', serialize($Ranks));
 
-    fwrite($FileHandle, "\n// Ranks\n");
-    fwrite($FileHandle, json_encode($Ranks) . "\n");
-
-    fwrite($FileHandle, "\n// Badges\n");
-    fwrite($FileHandle, json_encode($Badges) . "\n");
-
+    $Images = array();
+    array_push($Images, C('Yaga.Ranks.Photo'), NULL);
+    foreach($Badges as $Badge) {
+      array_push($Images, $Badge->Photo);
+    }
+    
+    foreach($Images as $Image) {
+      if(!is_null($Image)) {
+        if($FH->addFile(PATH_UPLOADS . DS . $Image, 'images' . DS . $Image) != TRUE) {
+          $this->Form->AddError('Unable to add file: ' . PATH_UPLOADS . DS . $Image);
+          return FALSE;
+        }
+      }
+    }
+    
+    $Info .= "\nEnd Date: " . date('Y-m-d H:i:s');
+    
     $EndTime = microtime(TRUE);
     $TotalTime = $EndTime - $StartTime;
     $m = floor($TotalTime / 60);
     $s = $TotalTime - ($m * 60);
 
-    fwrite($FileHandle, "\n\n// Exported Completed: " . date('Y-m-d H:i:s') . sprintf(', Elapsed Time: %02d:%02.2f', $m, $s));
-
-    if(function_exists('gzopen')) {
-      gzclose($FileHandle);
+    $Info .= "\n" . sprintf('Elapsed Time: %02d:%02.2f', $m, $s);
+    
+    $FH->addFromString('info.yaga', $Info);
+    if($FH->close()) {
+      return TRUE;
     }
     else {
-      fclose($FileHandle);
+      $this->Form->AddError('Unable to save archive: ' . $FH->getStatusString());
+      return FALSE;
     }
-
-    $this->Render('transport');
   }
-
 }
