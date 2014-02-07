@@ -105,55 +105,79 @@ class YagaController extends DashboardController {
     $this->Render('transport');
   }
   
-  protected function _ExportAuto($Path = NULL) {
+  protected function _ExportAuto($Path = NULL, $Exclude = array()) {
     $StartTime = microtime(TRUE);
-    $Info = 'Yaga Export: ' . C('Yaga.Version', '??');
-    $Info .= "\nStart Date: " . date('Y-m-d H:i:s');
-    
+    $Info = new stdClass();
+    $Info->Version = C('Yaga.Version', '?.?');
+    $Info->StartDate = date('Y-m-d H:i:s');
     
     if(is_null($Path)) {
       $Path = PATH_UPLOADS . DS . 'export' . date('Y-m-d His') . '.yaga.zip';
     }
     $FH = new ZipArchive();
+    $Images = array();
+    $Hashes = array();
     
     if($FH->open($Path, ZipArchive::CREATE) != TRUE) {
-      $this->Form->AddError('Unable to create archive; please check permissions at ' . $Path);
+      $this->Form->AddError('Unable to create archive: ' . $FH->getStatusString());
       return FALSE;
     }
     
-    $Actions = Yaga::ActionModel()->Get('Sort', 'asc');
-    $Ranks = Yaga::RankModel()->Get('Level', 'asc');
-    $Badges = Yaga::BadgeModel()->Get();
-
-    $FH->addFromString('actions.yaga', serialize($Actions));
-    $FH->addFromString('badges.yaga', serialize($Badges));
-    $FH->addFromString('ranks.yaga', serialize($Ranks));
-
-    $Images = array();
-    array_push($Images, C('Yaga.Ranks.Photo'), NULL);
-    foreach($Badges as $Badge) {
-      array_push($Images, $Badge->Photo);
+    // Add actions
+    if($Exclude['actions'] == FALSE) {
+      $Info->Actions = 'actions.yaga';
+      $Actions = Yaga::ActionModel()->Get('Sort', 'asc');
+      $ActionData = serialize($Actions);
+      $FH->addFromString('actions.yaga', $ActionData);
+      array_push($Hashes, md5($ActionData));
     }
     
-    foreach($Images as $Image) {
-      if(!is_null($Image)) {
-        if($FH->addFile(PATH_UPLOADS . DS . $Image, 'images' . DS . $Image) != TRUE) {
-          $this->Form->AddError('Unable to add file: ' . PATH_UPLOADS . DS . $Image);
-          return FALSE;
-        }
+    // Add ranks and associated image
+    if($Exclude['ranks'] == FALSE) {
+      $Info->Ranks = 'ranks.yaga';
+      $Ranks = Yaga::RankModel()->Get('Level', 'asc');
+      $RankData = serialize($Ranks);
+      $FH->addFromString('ranks.yaga', $RankData);
+      array_push($Images, C('Yaga.Ranks.Photo'), NULL);
+      array_push($Hashes, md5($RankData));
+    }
+    
+    // Add badges and associated images
+    if($Exclude['badges'] == FALSE) {
+      $Info->Badges = 'badges.yaga';
+      $Badges = Yaga::BadgeModel()->Get();
+      $BadgeData = serialize($Badges);
+      $FH->addFromString('badges.yaga', $BadgeData);
+      aray_push($Hashes, md5($BadgeData));
+      foreach($Badges as $Badge) {
+        array_push($Images, $Badge->Photo);
       }
     }
     
-    $Info .= "\nEnd Date: " . date('Y-m-d H:i:s');
+    // Add in any images
+    foreach($Images as $Image) {
+      if(!is_null($Image)) {
+        if($FH->addFile(PATH_UPLOADS . DS . $Image, 'images' . DS . $Image) != TRUE) {
+          $this->Form->AddError('Unable to add file: ' . $FH->getStatusString());
+          return FALSE;
+        }
+        array_push($Hashes, md5($Image));
+      }
+    }
+    
+    // Save all the hashes
+    sort($Hashes);
+    $Info->MD5 = md5(implode(',', $Hashes));
+    $Info->EndDate = date('Y-m-d H:i:s');
     
     $EndTime = microtime(TRUE);
     $TotalTime = $EndTime - $StartTime;
     $m = floor($TotalTime / 60);
     $s = $TotalTime - ($m * 60);
 
-    $Info .= "\n" . sprintf('Elapsed Time: %02d:%02.2f', $m, $s);
+    $Info->ElapsedTime = sprintf('%02d:%02.2f', $m, $s);
     
-    $FH->addFromString('info.yaga', $Info);
+    $FH->setArchiveComment(serialize($Info));
     if($FH->close()) {
       return TRUE;
     }
