@@ -17,6 +17,10 @@
   padding: 10px;
 }
 
+.Yaga #Content h3 {
+  margin-top: 20px;
+}
+
 /* Reaction Specific Settings view */
 #ActionIcons {
   width: 255px;
