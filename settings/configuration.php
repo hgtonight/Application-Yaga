@@ -6,10 +6,10 @@ $Configuration['Yaga']['Reactions']['Enabled'] = TRUE;
 $Configuration['Yaga']['Badges']['Enabled'] = TRUE;
 $Configuration['Yaga']['Ranks']['Enabled'] = TRUE;
 
-$Configuration['Preferences']['Popup']['Badges'] = '1';
-$Configuration['Preferences']['Email']['Badges'] = '0';
-$Configuration['Preferences']['Popup']['Ranks'] = '1';
-$Configuration['Preferences']['Email']['Ranks'] = '1';
+$Configuration['Preferences']['Popup']['BadgeAward'] = '1';
+$Configuration['Preferences']['Email']['BadgeAward'] = '0';
+$Configuration['Preferences']['Popup']['RankPromotion'] = '1';
+$Configuration['Preferences']['Email']['RankPromotion'] = '1';
 
 $Configuration['Modules']['Yaga']['Panel'] = array('MeModule', 'UserBoxModule', 'ActivityFilterModule', 'UserPhotoModule', 'ProfileFilterModule', 'SideMenuModule', 'UserInfoModule', 'GuestModule', 'Ads');
 $Configuration['Modules']['Yaga']['Content'] = array('MessageModule', 'MeModule', 'UserBoxModule', 'ProfileOptionsModule', 'Notices', 'ActivityFilterModule', 'ProfileFilterModule', 'Content', 'Ads');
