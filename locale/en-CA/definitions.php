@@ -2,6 +2,15 @@
 $Definition['Yaga.Settings'] = 'Yaga Settings';
 $Definition['Yaga.Reason'] = 'Reason (optional)';
 
+// Transport
+$Definition['Yaga.Export'] = 'Export Yaga Configuration';
+$Definition['Yaga.Import'] = 'Import Yaga Configuration';
+$Definition['Yaga.Export.Desc'] = 'You can export your existing Yaga configuration for backup or transport purposes. Select which sections of your Yaga configuration should be exported.';
+$Definition['Yaga.Export.Success'] = 'Your Yaga configuration was successfully exported to: <strong>%s</strong>';
+$Definition['Yaga.Import.Desc'] = 'You can import a Yaga configuration to <strong>replace</strong> your current configuratio. Select which sections of your Yaga configuration should be <strong>overwritten</strong>.';
+$Definition['Yaga.Import.Success'] = 'You successfully overwrote your Yaga configuration with the contents of: <strong>%s</strong>';
+$Definition['Yaga.Transport.Return'] = 'Return to main Yaga settings page.';
+
 // Actions
 $Definition['Yaga.Reactions'] = 'Reactions';
 $Definition['Yaga.Action'] = 'Action';

@@ -87,25 +87,44 @@ class YagaController extends DashboardController {
 
   public function Import() {
     $this->Title(T('Yaga.Import'));
+    $this->SetData('TransportType', 'Import');
     // Todo: Implement
     $this->Render('transport');
   }
 
   public function Export() {
     $this->Title(T('Yaga.Export'));
-    
-    
-    if(class_exists('ZipArchive')) {
-      $this->_ExportAuto();
-    }
-    else {
-      $this->Form->AddError('You do not seem to have the minimum requirements to export your Yaga configuration automatically. Please reference manual_export.md for more information.');
-    }
+    $this->SetData('TransportType', 'Export');
 
+    if($this->Form->IsPostBack()) {
+      $FormValues = $this->Form->FormValues();
+      $Sections = $FormValues['Checkboxes'];
+      
+      // Figure out which boxes were checked
+      $Include = array();
+      foreach($Sections as $Section) {
+        $Include[$Section] = $FormValues[$Section];
+      }
+      if(count($Include)) {
+        if(class_exists('ZipArchive')) {
+          $Filename = $this->_ExportAuto($Include);
+          $this->SetData('TransportPath', $Filename);
+          $this->Render('transport-success');
+          return;
+        }
+        else {
+          $this->Form->AddError('You do not seem to have the minimum requirements to export your Yaga configuration automatically. Please reference manual_export.md for more information.');
+        }
+      }
+      else {
+        $this->Form->AddError('You must select at least one item to export.');
+      }
+      
+    }
     $this->Render('transport');
   }
   
-  protected function _ExportAuto($Path = NULL, $Exclude = array()) {
+  protected function _ExportAuto($Include = array(), $Path = NULL) {
     $StartTime = microtime(TRUE);
     $Info = new stdClass();
     $Info->Version = C('Yaga.Version', '?.?');
@@ -124,7 +143,7 @@ class YagaController extends DashboardController {
     }
     
     // Add actions
-    if($Exclude['actions'] == FALSE) {
+    if($Include['Actions']) {
       $Info->Actions = 'actions.yaga';
       $Actions = Yaga::ActionModel()->Get('Sort', 'asc');
       $ActionData = serialize($Actions);
@@ -133,7 +152,7 @@ class YagaController extends DashboardController {
     }
     
     // Add ranks and associated image
-    if($Exclude['ranks'] == FALSE) {
+    if($Include['Ranks']) {
       $Info->Ranks = 'ranks.yaga';
       $Ranks = Yaga::RankModel()->Get('Level', 'asc');
       $RankData = serialize($Ranks);
@@ -143,26 +162,29 @@ class YagaController extends DashboardController {
     }
     
     // Add badges and associated images
-    if($Exclude['badges'] == FALSE) {
+    if($Include['Badges']) {
       $Info->Badges = 'badges.yaga';
       $Badges = Yaga::BadgeModel()->Get();
       $BadgeData = serialize($Badges);
       $FH->addFromString('badges.yaga', $BadgeData);
-      aray_push($Hashes, md5($BadgeData));
+      array_push($Hashes, md5($BadgeData));
       foreach($Badges as $Badge) {
         array_push($Images, $Badge->Photo);
       }
     }
     
     // Add in any images
-    foreach($Images as $Image) {
-      if(!is_null($Image)) {
-        if($FH->addFile(PATH_UPLOADS . DS . $Image, 'images' . DS . $Image) != TRUE) {
-          $this->Form->AddError('Unable to add file: ' . $FH->getStatusString());
-          return FALSE;
-        }
-        array_push($Hashes, md5($Image));
+    $FilteredImages = array_filter($Images);
+    if(count($FilteredImages)) {
+      $FH->addEmptyDir('images');
+    }
+    
+    foreach($FilteredImages as $Image) {
+      if($FH->addFile(PATH_UPLOADS . DS . $Image, 'images' . DS . $Image) != TRUE) {
+        $this->Form->AddError('Unable to add file: ' . $FH->getStatusString());
+        return FALSE;
       }
+      array_push($Hashes, md5($Image));
     }
     
     // Save all the hashes
@@ -179,7 +201,7 @@ class YagaController extends DashboardController {
     
     $FH->setArchiveComment(serialize($Info));
     if($FH->close()) {
-      return TRUE;
+      return $Path;
     }
     else {
       $this->Form->AddError('Unable to save archive: ' . $FH->getStatusString());
