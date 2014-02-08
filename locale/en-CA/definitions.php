@@ -72,8 +72,8 @@ $Definition['Yaga.Error.NeedJS'] = 'That must be done via Javascript';
 $Definition['Yaga.Error.DeleteFailed'] = 'Failed to delete %s';
 
 // Activities
-$Definition['Yaga.HeadlineFormat.BadgeEarned'] = '{RegardingUserID,You} earned the <a href="{Url,html}">{Data.Name,text}</a> badge.';
-$Definition['Yaga.HeadlineFormat.Promoted'] = '{RegardingUserID,You} earned a promotion to {Data.Name,text}.';
+$Definition['Yaga.HeadlineFormat.BadgeEarned'] = '{ActivityUserID,You} earned the <a href="{Url,html}">{Data.Name,text}</a> badge.';
+$Definition['Yaga.HeadlineFormat.Promoted'] = '{ActivityUserID,You} earned a promotion to {Data.Name,text}.';
 
 // Leaderboard Module
 $Definition['Yaga.LeaderBoard.AllTime'] = 'All Time Leaders';

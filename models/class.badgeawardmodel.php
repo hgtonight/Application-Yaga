@@ -9,7 +9,6 @@
  * @package Yaga
  * @since 1.0
  */
-
 class BadgeAwardModel extends Gdn_Model {
 
   /**
@@ -31,14 +30,14 @@ class BadgeAwardModel extends Gdn_Model {
 
   public function GetRecent($BadgeID, $Limit = 15) {
     return $this->SQL
-            ->Select('ba.UserID, ba.DateInserted, u.Name, u.Photo, u.Gender, u.Email')
-            ->From('BadgeAward ba')
-            ->Join('User u', 'ba.UserID = u.UserID')
-            ->Where('BadgeID', $BadgeID)
-            ->OrderBy('DateInserted', 'Desc')
-            ->Limit($Limit)
-            ->Get()
-            ->Result();
+                    ->Select('ba.UserID, ba.DateInserted, u.Name, u.Photo, u.Gender, u.Email')
+                    ->From('BadgeAward ba')
+                    ->Join('User u', 'ba.UserID = u.UserID')
+                    ->Where('BadgeID', $BadgeID)
+                    ->OrderBy('DateInserted', 'Desc')
+                    ->Limit($Limit)
+                    ->Get()
+                    ->Result();
   }
 
   /**
@@ -66,9 +65,9 @@ class BadgeAwardModel extends Gdn_Model {
 
         // Increment the user's badge count
         $this->SQL->Update('User')
-         ->Set('CountBadges', 'CountBadges + 1', FALSE)
-         ->Where('UserID', $UserID)
-         ->Put();
+                ->Set('CountBadges', 'CountBadges + 1', FALSE)
+                ->Where('UserID', $UserID)
+                ->Put();
 
         if(is_null($InsertUserID)) {
           $InsertUserID = Gdn::Session()->UserID;
@@ -79,32 +78,30 @@ class BadgeAwardModel extends Gdn_Model {
 
         $Activity = array(
             'ActivityType' => 'BadgeAward',
-            'ActivityUserID' => $InsertUserID,
-            'RegardingUserID' => $UserID,
+            'ActivityUserID' => $UserID,
+            'RegardingUserID' => $InsertUserID,
             'Photo' => '/uploads/' . $Badge->Photo,
             'RecordType' => 'Badge',
             'RecordID' => $BadgeID,
             'Route' => '/badges/detail/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name),
             'HeadlineFormat' => T('Yaga.HeadlineFormat.BadgeEarned'),
             'Data' => array(
-               'Name' => $Badge->Name
+                'Name' => $Badge->Name
             ),
             'Story' => $Badge->Description
-         );
+        );
 
-         // Create a public record
-         $ActivityModel->Queue($Activity, FALSE); // TODO: enable the grouped notifications after issue #1776 is resolved , array('GroupBy' => 'Route'));
+        // Create a public record
+        $ActivityModel->Queue($Activity, FALSE); // TODO: enable the grouped notifications after issue #1776 is resolved , array('GroupBy' => 'Route'));
+        // Notify the user of the award
+        $Activity['NotifyUserID'] = $UserID;
+        $ActivityModel->Queue($Activity, 'BadgeAward', array('Force' => TRUE));
 
+        // Actually save the activity
+        $ActivityModel->SaveQueue();
 
-         // Notify the user of the award
-         $Activity['NotifyUserID'] = $UserID;
-         $ActivityModel->Queue($Activity, 'BadgeAward', array('Force' => TRUE));
-
-		 // Actually save the activity
-         $ActivityModel->SaveQueue();
-
-         $this->EventArguments['UserID'] = $UserID;
-         $this->FireEvent('AfterBadgeAward');
+        $this->EventArguments['UserID'] = $UserID;
+        $this->FireEvent('AfterBadgeAward');
       }
     }
   }
@@ -119,12 +116,12 @@ class BadgeAwardModel extends Gdn_Model {
    */
   public function Exists($UserID, $BadgeID) {
     return $this->SQL
-            ->Select()
-            ->From('BadgeAward')
-            ->Where('BadgeID', $BadgeID)
-            ->Where('UserID', $UserID)
-            ->Get()
-            ->FirstRow();
+                    ->Select()
+                    ->From('BadgeAward')
+                    ->Where('BadgeID', $BadgeID)
+                    ->Where('UserID', $UserID)
+                    ->Get()
+                    ->FirstRow();
   }
 
   /**
@@ -135,12 +132,12 @@ class BadgeAwardModel extends Gdn_Model {
    */
   public function GetByUser($UserID, $DataType = DATASET_TYPE_ARRAY) {
     return $this->SQL
-            ->Select()
-            ->From('Badge b')
-            ->Join('BadgeAward ba', 'ba.BadgeID = b.BadgeID', 'left')
-            ->Where('ba.UserID', $UserID)
-            ->Get()
-            ->Result($DataType);
+                    ->Select()
+                    ->From('Badge b')
+                    ->Join('BadgeAward ba', 'ba.BadgeID = b.BadgeID', 'left')
+                    ->Where('ba.UserID', $UserID)
+                    ->Get()
+                    ->Result($DataType);
   }
 
   /**
@@ -159,4 +156,5 @@ class BadgeAwardModel extends Gdn_Model {
 
     return $this->Database->Query($Sql, array(':UserID' => $UserID))->Result();
   }
+
 }
