@@ -11,6 +11,12 @@ echo Wrap(Wrap(T("Yaga.$TransportType.Desc"), 'div'), 'div', array('class' => 'W
 <ul>
   <li>
     <?php
+    echo $this->Form->Label('Yaga Transport File', 'FileUpload');
+    echo $this->Form->Input('FileUpload', 'file');
+    ?>
+  </li>
+  <li>
+    <?php
     echo $this->Form->Label('Yaga.Reactions', 'Actions');
     echo $this->Form->Checkbox('Actions');
     ?>
