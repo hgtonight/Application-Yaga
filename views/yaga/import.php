@@ -17,20 +17,20 @@ echo Wrap(Wrap(T("Yaga.$TransportType.Desc"), 'div'), 'div', array('class' => 'W
   </li>
   <li>
     <?php
-    echo $this->Form->Label('Yaga.Reactions', 'Actions');
-    echo $this->Form->Checkbox('Actions');
+    echo $this->Form->Label('Yaga.Reactions', 'Action');
+    echo $this->Form->Checkbox('Action');
     ?>
   </li>
   <li>
     <?php
-    echo $this->Form->Label('Yaga.Badges', 'Badges');
-    echo $this->Form->Checkbox('Badges');
+    echo $this->Form->Label('Yaga.Badges', 'Badge');
+    echo $this->Form->Checkbox('Badge');
     ?>
   </li>
   <li>
     <?php
-    echo $this->Form->Label('Yaga.Ranks', 'Ranks');
-    echo $this->Form->Checkbox('Ranks');
+    echo $this->Form->Label('Yaga.Ranks', 'Rank');
+    echo $this->Form->Checkbox('Rank');
     ?>
   </li>
 </ul>

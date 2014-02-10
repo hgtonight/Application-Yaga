@@ -87,17 +87,12 @@ class YagaController extends DashboardController {
   public function Import() {
     $this->Title(T('Yaga.Import'));
     $this->SetData('TransportType', 'Import');
-
+    
+    if(!class_exists('ZipArchive')) {
+      $this->Form->AddError('You do not seem to have the minimum requirements to import a Yaga configuration automatically. Please reference manual_transport.md for more information.');
+    }
+    
     if($this->Form->IsPostBack() == TRUE) {
-      $FormValues = $this->Form->FormValues();
-      $Sections = $FormValues['Checkboxes'];
-
-      // Figure out which boxes were checked
-      $Include = array();
-      foreach($Sections as $Section) {
-        $Include[$Section] = $FormValues[$Section];
-      }
-
       // Handle the file upload
       $Upload = new Gdn_Upload();
       $TmpZip = $Upload->ValidateUpload('FileUpload', FALSE);
@@ -111,49 +106,26 @@ class YagaController extends DashboardController {
         // Save the uploaded zip
         $Parts = $Upload->SaveAs($TmpZip, $BaseName);
         $ZipFile = PATH_UPLOADS . DS . $Parts['SaveName'];
+        $this->SetData('TransportPath', $ZipFile);
       }
 
+      $Include = $this->_FindIncludes();
       if(count($Include)) {
-        if(class_exists('ZipArchive')) {
-          $Info = $this->_ExtractZip($ZipFile);
-          if($Info !== FALSE) {
-            // Import the db entries
-            foreach($Include as $Key => $Value) {
-              decho($Key . ' => ' . $Value);
-              if($Value) {
-                $Data = unserialize(file_get_contents(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . $Info->$Key));
-                Gdn::SQL()->EmptyTable($Key);
-                $ModelName = $Key . 'Model';
-                $Model = Yaga::$ModelName();
-                foreach($Data as $Datum) {
-                  $Model->Insert((array)$Datum);
-                }
-              }
-            }
-            
-            // Copy over the image files
-            Gdn_FileSystem::Copy(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . 'images' . DS, PATH_UPLOADS . DS);
-                       
-            // Cleanup extracted files
-            Gdn_FileSystem::RemoveFolder(PATH_UPLOADS . DS . 'import' . DS . 'yaga');
-          }
-
-          if($this->Form->ErrorCount() == 0) {
-            $this->SetData('TransportPath', $ZipFile);
-            $this->Render('import-success');
-            return;
-          }
-        }
-        else {
-          $this->Form->AddError('You do not seem to have the minimum requirements to import a Yaga configuration automatically. Please reference manual_transport.md for more information.');
-        }
+        $Info = $this->_ExtractZip($ZipFile);
+        $this->_ImportData($Info, $Include);
+        Gdn_FileSystem::RemoveFolder(PATH_UPLOADS . DS . 'import' . DS . 'yaga');
       }
       else {
         $this->Form->AddError('You must select at least one item to import.');
       }
     }
-
-    $this->Render();
+    
+    if($this->Form->ErrorCount() == 0 && $this->Form->IsPostBack()) {
+      $this->Render('transport-success');
+    }
+    else {
+      $this->Render();
+    }
   }
 
   /**
@@ -163,46 +135,50 @@ class YagaController extends DashboardController {
     $this->Title(T('Yaga.Export'));
     $this->SetData('TransportType', 'Export');
 
-    if($this->Form->IsPostBack()) {
-      $FormValues = $this->Form->FormValues();
-      $Sections = $FormValues['Checkboxes'];
+    if(!class_exists('ZipArchive')) {
+      $this->Form->AddError('You do not seem to have the minimum requirements to export your Yaga configuration automatically. Please reference manual_transport.md for more information.');
+    }
 
-      // Figure out which boxes were checked
-      $Include = array();
-      foreach($Sections as $Section) {
-        $Include[$Section] = $FormValues[$Section];
-      }
+    if($this->Form->IsPostBack()) {
+      $Include = $this->_FindIncludes();
       if(count($Include)) {
-        if(class_exists('ZipArchive')) {
-          $Filename = $this->_ExportAuto($Include);
-          
-          if($this->Form->ErrorCount() == 0) {
-            $this->SetData('TransportPath', $Filename);
-            $this->Render('export-success');
-            return;
-          }
-        }
-        else {
-          $this->Form->AddError('You do not seem to have the minimum requirements to export your Yaga configuration automatically. Please reference manual_transport.md for more information.');
-        }
+        $Filename = $this->_ExportData($Include);
+        $this->SetData('TransportPath', $Filename);
       }
       else {
         $this->Form->AddError('You must select at least one item to export.');
       }
-
     }
-    $this->Render();
+
+    if($this->Form->ErrorCount() == 0 && $this->Form->IsPostBack()) {
+      $this->Render('transport-success');
+    }
+    else {
+      $this->Render();
+    }
   }
 
+  protected function _FindIncludes() {
+    $FormValues = $this->Form->FormValues();
+    $Sections = $FormValues['Checkboxes'];
+
+    // Figure out which boxes were checked
+    $Include = array();
+    foreach($Sections as $Section) {
+      $Include[$Section] = $FormValues[$Section];
+    }
+    return $Include;
+  }
+  
   /**
    * Creates a transport file for easily transferring Yaga configurations across
    * installs
-   * 
+   *
    * @param array An array containing the config areas to transfer
    * @param string Where to save the transport file
    * @return mixed False on failure, the path to the transport file on success
    */
-  protected function _ExportAuto($Include = array(), $Path = NULL) {
+  protected function _ExportData($Include = array(), $Path = NULL) {
     $StartTime = microtime(TRUE);
     $Info = new stdClass();
     $Info->Version = C('Yaga.Version', '?.?');
@@ -221,18 +197,20 @@ class YagaController extends DashboardController {
     }
 
     // Add actions
-    if($Include['Actions']) {
+    if($Include['Action']) {
       $Info->Action = 'actions.yaga';
       $Actions = Yaga::ActionModel()->Get('Sort', 'asc');
+      $this->SetData('ActionCount', count($Actions));
       $ActionData = serialize($Actions);
       $FH->addFromString('actions.yaga', $ActionData);
       $Hashes[] = md5($ActionData);
     }
 
     // Add ranks and associated image
-    if($Include['Ranks']) {
+    if($Include['Rank']) {
       $Info->Rank = 'ranks.yaga';
       $Ranks = Yaga::RankModel()->Get('Level', 'asc');
+      $this->SetData('RankCount', count($Ranks));
       $RankData = serialize($Ranks);
       $FH->addFromString('ranks.yaga', $RankData);
       array_push($Images, C('Yaga.Ranks.Photo'), NULL);
@@ -240,9 +218,10 @@ class YagaController extends DashboardController {
     }
 
     // Add badges and associated images
-    if($Include['Badges']) {
+    if($Include['Badge']) {
       $Info->Badge = 'badges.yaga';
       $Badges = Yaga::BadgeModel()->Get();
+      $this->SetData('BadgeCount', count($Badges));
       $BadgeData = serialize($Badges);
       $FH->addFromString('badges.yaga', $BadgeData);
       $Hashes[] = md5($BadgeData);
@@ -253,7 +232,9 @@ class YagaController extends DashboardController {
 
     // Add in any images
     $FilteredImages = array_filter($Images);
-    if(count($FilteredImages)) {
+    $ImageCount = count($FilteredImages);
+    $this->SetData('ImageCount', $ImageCount);
+    if($ImageCount > 0) {
       $FH->addEmptyDir('images');
     }
 
@@ -289,7 +270,7 @@ class YagaController extends DashboardController {
 
   /**
    * Extract the transport file and validate
-   * 
+   *
    * @param string The transport file path
    * @return boolean Whether or not the transport file was extracted successfully
    */
@@ -299,7 +280,6 @@ class YagaController extends DashboardController {
       // File does not exist
 		}
 
-    $Hashes = array();
     $ZipFile = new ZipArchive();
     $Result = $ZipFile->open($Filename);
     if($Result !== TRUE) {
@@ -310,7 +290,7 @@ class YagaController extends DashboardController {
     // Get the metadata from the comment
     $Comment = $ZipFile->comment;
     $MetaData = unserialize($Comment);
-    
+
     $Result = $ZipFile->extractTo(PATH_UPLOADS . DS . 'import' . DS . 'yaga');
     if($Result !== TRUE) {
       return FALSE;
@@ -330,8 +310,31 @@ class YagaController extends DashboardController {
   }
 
   /**
+   * Dumps the db tables, inserts data, and copies files on over
+   * @param stdClass The info object read in from the archive
+   * @param array Which tables should be overwritten
+   */
+  protected function _ImportData($Info, $Include) {
+    foreach($Include as $Key => $Value) {
+      if($Value) {
+        $Data = unserialize(file_get_contents(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . $Info->$Key));
+        Gdn::SQL()->EmptyTable($Key);
+        $ModelName = $Key . 'Model';
+        $Model = Yaga::$ModelName();
+        foreach($Data as $Datum) {
+          $Model->Insert((array)$Datum);
+        }
+        $this->SetData($Key . 'Count', $Model->GetCount());
+      }
+    }
+    if(Gdn_FileSystem::Copy(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . 'images' . DS, PATH_UPLOADS . DS) === FALSE) {
+      $this->Form->AddError('Unable to copy image files.');
+    }
+  }
+
+  /**
    * Inspects the Yaga transport files and calculates a checksum
-   * 
+   *
    * @param stdClass The metadata object read in from the transport file
    * @return boolean Whether or not the checksum is valid
    */
@@ -341,21 +344,22 @@ class YagaController extends DashboardController {
     if(property_exists($MetaData, 'Actions')) {
       $Hashes[] = md5_file(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . $MetaData->Actions);
     }
-    
+
     if(property_exists($MetaData, 'Badges')) {
       $Hashes[] = md5_file(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . $MetaData->Badges);
     }
-    
+
     if(property_exists($MetaData, 'Ranks')) {
       $Hashes[] = md5_file(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . $MetaData->Ranks);
     }
-    
+
     // Hash the image files
 		$Files = $this->_GetFiles(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . 'images');
+    $this->SetData('ImageCount', count($Files));
 		foreach($Files as $File) {
 			$Hashes[] = md5_file($File);
 		}
-    
+
     sort($Hashes);
 		$CalculatedChecksum = md5(implode(',', $Hashes));
 
@@ -380,6 +384,7 @@ class YagaController extends DashboardController {
       $FileName = $Directory . '/' . $File;
       if(is_dir($FileName)) {
           $Result = array_merge($Result, $this->_GetFiles($FileName));
+          continue;
       }
       $Result[] = $FileName;
     }
