@@ -89,7 +89,7 @@ class YagaController extends DashboardController {
     $this->Title(T('Yaga.Import'));
     $this->SetData('TransportType', 'Import');
     // Todo: Implement
-    $this->Render('transport');
+    $this->Render('import');
   }
 
   public function Export() {
@@ -121,7 +121,7 @@ class YagaController extends DashboardController {
       }
       
     }
-    $this->Render('transport');
+    $this->Render('export');
   }
   
   protected function _ExportAuto($Include = array(), $Path = NULL) {
