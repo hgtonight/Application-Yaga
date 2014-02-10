@@ -5,7 +5,7 @@ echo Wrap($this->Title(), 'h1');
 ?>
 <div class="Aside">
     <?php
-    echo $this->Form->Open(array('enctype' => 'multipart/form-data', 'class' => 'Badge'));
+    echo $this->Form->Open(array('enctype' => 'multipart/form-data', 'class' => 'Rank'));
     echo $this->Form->Errors();
 
     echo $this->Form->Label('Photo', 'PhotoUpload');
