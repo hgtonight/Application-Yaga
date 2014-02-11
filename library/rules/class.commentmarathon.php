@@ -31,6 +31,7 @@ class CommentMarathon implements YagaRule {
 
   public function Form($Form) {
     $Lengths = array(
+        'minutes' => T('Seconds')
         'day' => T('Days'),
         'week' => T('Weeks'),
         'year' => T('Years')
