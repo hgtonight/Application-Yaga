@@ -196,6 +196,14 @@ class YagaController extends DashboardController {
       return FALSE;
     }
 
+    // Add configuration items
+    $Info->Config = 'configs.yaga';
+    $Configs = Gdn::Config('Yaga', array());
+    unset($Configs['Version']);
+    $ConfigData = serialize($Configs);
+    $FH->addFromString('configs.yaga', $ConfigData);
+    $Hashes[] = md5($ConfigData);
+    
     // Add actions
     if($Include['Action']) {
       $Info->Action = 'actions.yaga';
@@ -276,15 +284,15 @@ class YagaController extends DashboardController {
    */
   protected function _ExtractZip($Filename) {
     if(!file_exists($Filename)) {
+      $this->Form->AddError('File does not exist.');
 			return FALSE;
-      // File does not exist
 		}
 
     $ZipFile = new ZipArchive();
     $Result = $ZipFile->open($Filename);
     if($Result !== TRUE) {
+      $this->Form->AddError('Unable to open archive.');
       return FALSE;
-      // Unable to open file
     }
 
     // Get the metadata from the comment
@@ -293,8 +301,8 @@ class YagaController extends DashboardController {
 
     $Result = $ZipFile->extractTo(PATH_UPLOADS . DS . 'import' . DS . 'yaga');
     if($Result !== TRUE) {
+      $this->Form->AddError('Unable to extract file.');
       return FALSE;
-      // Unable to extract file
     }
 
     $ZipFile->close();
@@ -304,17 +312,31 @@ class YagaController extends DashboardController {
       return $MetaData;
     }
     else {
+      $this->Form->AddError('Archive appears to be corrupt: Checksum is invalid.');
       return FALSE;
-      // Invalid checksum
     }
   }
 
   /**
-   * Dumps the db tables, inserts data, and copies files on over
+   * Overwrites Yaga configurations, dumps Yaga db tables, inserts data via the 
+   * model, and copies uploaded files to the server
+   * 
    * @param stdClass The info object read in from the archive
    * @param array Which tables should be overwritten
    */
   protected function _ImportData($Info, $Include) {
+    if(!$Info) {
+      return FALSE;
+    }
+    
+    // Import Configs
+    $Configs = unserialize(file_get_contents(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . $Info->Config));
+    $Configurations = $this->_NestedToDotNotation($Configs, 'Yaga');
+    foreach($Configurations as $Name => $Value) {
+      SaveToConfig($Name, $Value);
+    }
+    
+    // Import model data
     foreach($Include as $Key => $Value) {
       if($Value) {
         $Data = unserialize(file_get_contents(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . $Info->$Key));
@@ -327,9 +349,34 @@ class YagaController extends DashboardController {
         $this->SetData($Key . 'Count', $Model->GetCount());
       }
     }
+    
+    // Import uploaded files
     if(Gdn_FileSystem::Copy(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . 'images' . DS, PATH_UPLOADS . DS) === FALSE) {
       $this->Form->AddError('Unable to copy image files.');
     }
+  }
+  
+  /**
+   * Converted a nest config array into an array where indexes are the configuration
+   * strings and the value is the value
+   * 
+   * @param array The nested array
+   * @param string What should the configuration strings be prefixed with
+   * @return array
+   */
+  protected function _NestedToDotNotation($Configs, $Prefix = '') {
+    $ConfigStrings = array();
+    
+    foreach($Configs as $Name => $Value) {
+      if(is_array($Value)) {
+        $ConfigStrings = array_merge($ConfigStrings, $this->_NestedToDotNotation($Value, "$Prefix.$Name"));
+      }
+      else {
+        $ConfigStrings["$Prefix.$Name"] = $Value;
+      }
+    }
+    
+    return $ConfigStrings;
   }
 
   /**
@@ -340,17 +387,21 @@ class YagaController extends DashboardController {
    */
   protected function _ValidateChecksum($MetaData) {
     $Hashes = array();
+    
+    // Hash the config file
+    $Hashes[] = md5_file(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . $MetaData->Config);
+    
     // Hash the data files
-    if(property_exists($MetaData, 'Actions')) {
-      $Hashes[] = md5_file(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . $MetaData->Actions);
+    if(property_exists($MetaData, 'Action')) {
+      $Hashes[] = md5_file(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . $MetaData->Action);
     }
 
-    if(property_exists($MetaData, 'Badges')) {
-      $Hashes[] = md5_file(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . $MetaData->Badges);
+    if(property_exists($MetaData, 'Badge')) {
+      $Hashes[] = md5_file(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . $MetaData->Badge);
     }
 
-    if(property_exists($MetaData, 'Ranks')) {
-      $Hashes[] = md5_file(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . $MetaData->Ranks);
+    if(property_exists($MetaData, 'Rank')) {
+      $Hashes[] = md5_file(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . $MetaData->Rank);
     }
 
     // Hash the image files
@@ -362,8 +413,8 @@ class YagaController extends DashboardController {
 
     sort($Hashes);
 		$CalculatedChecksum = md5(implode(',', $Hashes));
-
-		if($CalculatedChecksum != $MetaData->MD5) {
+   
+    if($CalculatedChecksum != $MetaData->MD5) {
       return FALSE;
 		}
 		else {
