@@ -57,7 +57,7 @@ class RankController extends DashboardController {
         $ImageBaseName = pathinfo($TargetImage, PATHINFO_BASENAME);
 
         // Save the uploaded image
-        $Parts = $Upload->SaveAs($TmpImage, 'ranks/' . $ImageBaseName);
+        $Parts = $Upload->SaveAs($TmpImage, 'yaga' . DS . $ImageBaseName);
 
         SaveToConfig('Yaga.Ranks.Photo', $Parts['SaveName']);
 

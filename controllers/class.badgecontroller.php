@@ -99,7 +99,7 @@ class BadgeController extends DashboardController {
         $ImageBaseName = pathinfo($TargetImage, PATHINFO_BASENAME);
 
         // Save the uploaded image
-        $Parts = $Upload->SaveAs($TmpImage, 'badges/' . $ImageBaseName);
+        $Parts = $Upload->SaveAs($TmpImage, 'yaga' . DS . $ImageBaseName);
 
         $this->Form->SetFormValue('Photo', $Parts['SaveName']);
       }
