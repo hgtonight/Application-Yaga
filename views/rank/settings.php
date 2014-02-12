@@ -1,27 +1,35 @@
 <?php if (!defined('APPLICATION')) exit();
 /* Copyright 2013 Zachary Doll */
 
+$PhotoString = '';
+$DelButton = '';
+$Photo = C('Yaga.Ranks.Photo', FALSE);
+if($Photo) {
+  $PhotoString = Img(Gdn_Upload::Url($Photo));
+  $DelButton = Anchor(T('Delete Photo'), CombinePaths(array('rank/deletephoto', Gdn::Session()->TransientKey())), 'SmallButton Danger PopConfirm');
+}
+
 echo Wrap($this->Title(), 'h1');
-?>
-<div class="Aside">
-    <?php
-    echo $this->Form->Open(array('enctype' => 'multipart/form-data', 'class' => 'Rank'));
-    echo $this->Form->Errors();
 
-    echo $this->Form->Label('Photo', 'PhotoUpload');
-    $Photo = C('Yaga.Ranks.Photo');
-    if($Photo) {
-      echo Img(Gdn_Upload::Url($Photo));
-      echo '<br />'.Anchor(T('Delete Photo'), CombinePaths(array('rank/deletephoto', Gdn::Session()->TransientKey())), 'SmallButton Danger PopConfirm');
-    }
-    echo $this->Form->Input('PhotoUpload', 'file');
-    echo $this->Form->Close('Save');
-?>
-</div> <?php
+echo Wrap($PhotoString . 
+ $this->Form->Open(array('enctype' => 'multipart/form-data', 'class' => 'Rank')) .
+ $this->Form->Errors() .
+ Wrap(
+        Wrap(
+                $this->Form->Label('Photo', 'PhotoUpload') .
+                Wrap(
+                        T('Yaga.Rank.Photo.Desc'), 'div', array('class' => 'Info')
+                ) .
+                $DelButton .
+                $this->Form->Input('PhotoUpload', 'file') .
+                $this->Form->Button('Save', array('class' => 'SmallButton')), 'li'), 'ul') .
+ $this->Form->Close('', ' '), 'div', array('class' => 'Aside'));
 
-echo Wrap(Wrap(T('Yaga.Ranks.Settings.Desc'), 'div'), 'div', array('class' => 'Wrap'));
-echo Wrap(Anchor(T('Yaga.AddRank'), 'rank/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
-
+echo Wrap(
+        Wrap(T('Yaga.Ranks.Settings.Desc'), 'p') .
+        Wrap(Anchor(T('Yaga.AddRank'), 'rank/add', array('class' => 'SmallButton')), 'p'),
+        'div',
+        array('class' => 'Wrap'));
 ?>
 <table id="Actions" class="AltRows">
   <thead>

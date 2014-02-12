@@ -65,6 +65,7 @@ $Definition['Yaga.Rank.RecordActivity'] = 'Record this rank edit to the public a
 $Definition['Yaga.Ranks.Settings.Desc'] = 'Add or edit the available ranks that can be earned.';
 $Definition['Yaga.Rank.Progression'] = 'Rank Progression';
 $Definition['Yaga.Rank.Progression.Desc'] = 'Allow user to automatically progress past this rank.';
+$Definition['Yaga.Rank.Photo.Desc'] = 'This photo will be shown on activity posts and in notifications concerning rank progression.';
 
 // Best Of...
 $Definition['Yaga.BestOfEverything'] = 'Best of Everything';

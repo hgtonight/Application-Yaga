@@ -70,6 +70,27 @@
   width: 250px;
 }
 
+/* Rank Settings */
+.Rank .Aside {
+  /*margin: 20px;*/
+  border: medium none;
+  padding-left: 20px;
+  padding-top: 10px;
+  background: none;
+  border-left: solid 1px #EEEEEE;
+  max-width: none;
+}
+
+.Rank .Aside img {
+  float: left;
+  height: 100px;
+  margin-right: 20px;
+}
+
+.Rank.settings #Content form ul {
+  padding: 0px;
+}
+
 /* Dashboard Stats */
 ul.StatsOverview {
    text-align: center;
