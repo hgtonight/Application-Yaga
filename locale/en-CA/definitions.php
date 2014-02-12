@@ -3,6 +3,8 @@ $Definition['Yaga.Settings'] = 'Yaga Settings';
 $Definition['Yaga.Reason'] = 'Reason (optional)';
 
 // Transport
+$Definition['Yaga.Transport'] = 'Import / Export Configuration';
+$Definition['Yaga.Transport.Desc'] = 'You can use these tools to facilitate transport of your Yaga configuration across sites with a convenient single file transfer.';
 $Definition['Yaga.Export'] = 'Export Yaga Configuration';
 $Definition['Yaga.Import'] = 'Import Yaga Configuration';
 $Definition['Yaga.Export.Desc'] = 'You can export your existing Yaga configuration for backup or transport purposes. Select which sections of your Yaga configuration should be exported.';
