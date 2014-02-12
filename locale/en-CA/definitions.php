@@ -82,6 +82,16 @@ $Definition['Yaga.Error.NoBadges'] = 'You cannot award badges without any badges
 $Definition['Yaga.Error.NoRanks'] = 'You cannot promote users without any ranks defined.';
 $Definition['Yaga.Error.NeedJS'] = 'That must be done via Javascript';
 $Definition['Yaga.Error.DeleteFailed'] = 'Failed to delete %s';
+$Definition['Yaga.Error.TransportRequirements'] = 'You do not seem to have the minimum requirements to transport a Yaga configuration automatically. Please reference manual_transport.md for more information.';
+$Definition['Yaga.Error.Includes'] = 'You must select at least one item to transport.';
+$Definition['Yaga.Error.ArchiveCreate'] = 'Unable to create archive: %s';
+$Definition['Yaga.Error.AddFile'] ='Unable to add file: %s';
+$Definition['Yaga.Error.ArchiveSave'] = 'Unable to save archive: %s';
+$Defitition['Yaga.Error.FileDNE'] = 'File does not exist.';
+$Definition['Yaga.Error.ArchiveOpen'] = 'Unable to open archive.';
+$Definition['Yaga.Error.ArchiveExtract'] = 'Unable to extract file.';
+$Definition['Yaga.Error.ArchiveChecksum'] = 'Archive appears to be corrupt: Checksum is invalid.';
+$Definition['Yaga.Error.TransportCopy'] = 'Unable to copy image files.';
 
 // Activities
 $Definition['Yaga.HeadlineFormat.BadgeEarned'] = '{ActivityUserID,You} earned the <a href="{Url,html}">{Data.Name,text}</a> badge.';

@@ -89,7 +89,7 @@ class YagaController extends DashboardController {
     $this->SetData('TransportType', 'Import');
     
     if(!class_exists('ZipArchive')) {
-      $this->Form->AddError('You do not seem to have the minimum requirements to import a Yaga configuration automatically. Please reference manual_transport.md for more information.');
+      $this->Form->AddError(T('Yaga.Error.TransportRequirements'));
     }
     
     if($this->Form->IsPostBack() == TRUE) {
@@ -116,7 +116,7 @@ class YagaController extends DashboardController {
         Gdn_FileSystem::RemoveFolder(PATH_UPLOADS . DS . 'import' . DS . 'yaga');
       }
       else {
-        $this->Form->AddError('You must select at least one item to import.');
+        $this->Form->AddError(T('Yaga.Error.Includes'));
       }
     }
     
@@ -136,7 +136,7 @@ class YagaController extends DashboardController {
     $this->SetData('TransportType', 'Export');
 
     if(!class_exists('ZipArchive')) {
-      $this->Form->AddError('You do not seem to have the minimum requirements to export your Yaga configuration automatically. Please reference manual_transport.md for more information.');
+      $this->Form->AddError(T('Yaga.Error.TransportRequirements'));
     }
 
     if($this->Form->IsPostBack()) {
@@ -146,7 +146,7 @@ class YagaController extends DashboardController {
         $this->SetData('TransportPath', $Filename);
       }
       else {
-        $this->Form->AddError('You must select at least one item to export.');
+        $this->Form->AddError(T('Yaga.Error.Includes'));
       }
     }
 
@@ -192,7 +192,7 @@ class YagaController extends DashboardController {
     $Hashes = array();
 
     if($FH->open($Path, ZipArchive::CREATE) !== TRUE) {
-      $this->Form->AddError('Unable to create archive: ' . $FH->getStatusString());
+      $this->Form->AddError(sprintf(T('Yaga.Error.ArchiveCreate'), $FH->getStatusString()));
       return FALSE;
     }
 
@@ -248,7 +248,7 @@ class YagaController extends DashboardController {
 
     foreach($FilteredImages as $Image) {
       if($FH->addFile(PATH_UPLOADS . DS . $Image, 'images' . DS . $Image) !== TRUE) {
-        $this->Form->AddError('Unable to add file: ' . $FH->getStatusString());
+        $this->Form->AddError(sprintf(T('Yaga.Error.AddFile'), $FH->getStatusString()));
         return FALSE;
       }
       $Hashes[] = md5_file(PATH_UPLOADS . DS . $Image);
@@ -271,7 +271,7 @@ class YagaController extends DashboardController {
       return $Path;
     }
     else {
-      $this->Form->AddError('Unable to save archive: ' . $FH->getStatusString());
+      $this->Form->AddError(sprintf(T('Yaga.Error.ArchiveSave'), $FH->getStatusString()));
       return FALSE;
     }
   }
@@ -284,14 +284,14 @@ class YagaController extends DashboardController {
    */
   protected function _ExtractZip($Filename) {
     if(!file_exists($Filename)) {
-      $this->Form->AddError('File does not exist.');
+      $this->Form->AddError(T('Yaga.Error.FileDNE'));
 			return FALSE;
 		}
 
     $ZipFile = new ZipArchive();
     $Result = $ZipFile->open($Filename);
     if($Result !== TRUE) {
-      $this->Form->AddError('Unable to open archive.');
+      $this->Form->AddError(T('Yaga.Error.ArchiveOpen'));
       return FALSE;
     }
 
@@ -301,7 +301,7 @@ class YagaController extends DashboardController {
 
     $Result = $ZipFile->extractTo(PATH_UPLOADS . DS . 'import' . DS . 'yaga');
     if($Result !== TRUE) {
-      $this->Form->AddError('Unable to extract file.');
+      $this->Form->AddError(T('Yaga.Error.ArchiveExtract'));
       return FALSE;
     }
 
@@ -312,7 +312,7 @@ class YagaController extends DashboardController {
       return $MetaData;
     }
     else {
-      $this->Form->AddError('Archive appears to be corrupt: Checksum is invalid.');
+      $this->Form->AddError(T('Yaga.Error.ArchiveChecksum'));
       return FALSE;
     }
   }
@@ -352,7 +352,7 @@ class YagaController extends DashboardController {
     
     // Import uploaded files
     if(Gdn_FileSystem::Copy(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . 'images' . DS, PATH_UPLOADS . DS) === FALSE) {
-      $this->Form->AddError('Unable to copy image files.');
+      $this->Form->AddError(T('Yaga.Error.TransportCopy'));
     }
   }
   
