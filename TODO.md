@@ -24,7 +24,7 @@ Yet Another Gamification Application
 
 ## Planned Features
 * ~~Stats page on the yaga settings page~~
-* Import/Export badges/reactions/ranks
+* ~~Import/Export badges/reactions/ranks~~
 * Best Of... Controller
 * Best Of... Profile filter
 * Save form inputs to cache as well as the elements in admin.badges.js
