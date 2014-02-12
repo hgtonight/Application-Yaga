@@ -72,10 +72,8 @@
 
 /* Rank Settings */
 .Rank .Aside {
-  /*margin: 20px;*/
   border: medium none;
-  padding-left: 20px;
-  padding-top: 10px;
+  padding: 10px 20px 0px 20px;
   background: none;
   border-left: solid 1px #EEEEEE;
   max-width: none;
