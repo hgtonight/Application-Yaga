@@ -17,7 +17,7 @@ $ cd path-to-applications
 $ git clone git://github.com/hgtonight/Application-Yaga.git yaga
 ```
 
-> __NB:__ Make sure to double check that the installed folder is named `yaga`!
+> Make sure to double check that the installed folder is named `yaga`!
 
 The latter option is only recommend if you're familiar with git.
 
