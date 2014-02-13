@@ -178,3 +178,5 @@ $Definition['Yaga.Rules.SocialConnection.Desc'] = 'Award this badge if the user 
 $Definition['Yaga.Rules.NecroPost'] = 'Necro-Post Check';
 $Definition['Yaga.Rules.NecroPost.Desc'] = 'Award this badge if the user has commented on a dead discussion.';
 $Definition['Yaga.Rules.NecroPost.Criteria.Desc'] = 'How old is a dead disussion?';
+$Definition['Yaga.Rules.CakeDayPost'] = 'Cake Day Post';
+$Definition['Yaga.Rules.CakeDayPost.Desc'] = 'Award this badge if the user posts on their account anniversary.';

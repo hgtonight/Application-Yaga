@@ -394,6 +394,10 @@ class YagaHooks implements Gdn_IPlugin {
   public function DiscussionModel_AfterSaveDiscussion_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
   }
+  
+  public function ActivityModel_BeforeSaveComment_Handler($Sender) {
+    $this->_AwardBadges($Sender, __FUNCTION__);
+  }
 
   public function CommentModel_BeforeNotification_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
