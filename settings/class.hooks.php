@@ -449,6 +449,8 @@ class YagaHooks implements Gdn_IPlugin {
         $Controller->InformMessage("Checking for awards on $Hook");
       }
     }
+    
+    $UserID = $Session->UserID;
     $User = $Session->User;
     
     $BadgeAwardModel = Yaga::BadgeAwardModel();
