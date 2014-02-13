@@ -31,7 +31,7 @@ Yet Another Gamification Application
 * Rework badge settings page to streamline badges of the same rule type
 * Implement moving of reactions to other action IDs on delete (much like categories right now)
 * ~~Aggregate Rule Support (Use user meta instead)~~
-* Add rules vino suggested (DiscussionPageLength, DiscussionBodyLength, PostReactionCount, PostReactionComboCount, CakeDay, ~~Necroposting~~, ComboDateTimes)
+* Add rules vino suggested (~~DiscussionPageLength~~, ~~DiscussionBodyLength~~, PostReactionCount, PostReactionComboCount, ~~CakeDay~~, ~~Necroposting~~, ComboDateTimes)
 * ~~Fix reaction method on profile page to show more than one page of discussion/comments~~
 ** ~~Also show the reaction record~~
 * Add support for cleaning up the the db via the dba model/controller
