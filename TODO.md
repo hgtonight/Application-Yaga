@@ -35,3 +35,4 @@ Yet Another Gamification Application
 * ~~Fix reaction method on profile page to show more than one page of discussion/comments~~
 ** ~~Also show the reaction record~~
 * Add support for cleaning up the the db via the dba model/controller
+* Move planned features to the issues tracker on github
