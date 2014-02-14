@@ -186,3 +186,6 @@ $Definition['Yaga.Rules.DiscussionPageCount.Criteria.Desc'] = 'How many pages?';
 $Definition['Yaga.Rules.DiscussionBodyLength'] = 'OP Length';
 $Definition['Yaga.Rules.DiscussionBodyLength.Desc'] = 'Award this badge if the user has a discussion that reaches the target number of characters. Make sure you enter a number less than or equal to %s.';
 $Definition['Yaga.Rules.DiscussionBodyLength.Criteria.Desc'] = 'How many characters?';
+$Definition['Yaga.Rules.QnAAnserCount'] = 'Accepted Answers (QnA Plugin required)';
+$Definition['Yaga.Rules.QnAAnserCount.Desc'] = 'Award this badge if the user has accepted answers that fit the criteria.';
+$Definition['Yaga.Rules.QnAAnserCount.Criteria.Desc'] = 'How many accepted answers?';
