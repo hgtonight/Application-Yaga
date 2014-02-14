@@ -40,10 +40,9 @@ class CommentCount implements YagaRule{
         'gte' => T('More than or:')
     );
 
-    $String = $Form->Label('Total comments', 'CommentCount');
+    $String = $Form->Label('Yaga.Rules.CommentCount.Criteria.Head', 'CommentCount');
     $String .= $Form->DropDown('Comparison', $Comparisons) . ' ';
     $String .= $Form->Textbox('Target', array('class' => 'SmallInput'));
-    $String .= ' ' . T('comments');
 
     return $String;
   }

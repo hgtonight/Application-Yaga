@@ -41,7 +41,7 @@ class NewbieComment implements YagaRule{
         'year' => T('Years')
     );
 
-    $String = $Form->Label('User Newbness', 'NewbieComment');
+    $String = $Form->Label('Yaga.Rules.NewbieComment.Criteria.Head', 'NewbieComment');
     $String .= $Form->Textbox('Duration', array('class' => 'SmallInput')) . ' ';
     $String .= $Form->DropDown('Period', $Lengths);
 

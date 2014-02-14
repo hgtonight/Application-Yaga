@@ -26,8 +26,7 @@ class SocialConnection implements YagaRule{
         'Facebook' => 'Facebook'
     );
 
-    $String = $Form->Label('Social Networks', 'SocialConnection');
-    $String .= T('User has connected to: ');
+    $String = $Form->Label('Yaga.Rules.SocialConnection.Criteria.Head', 'SocialConnection');
     $String .= $Form->DropDown('SocialNetwork', $SocialNetworks);
 
     return $String;

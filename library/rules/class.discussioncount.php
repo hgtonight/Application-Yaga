@@ -40,10 +40,9 @@ class DiscussionCount implements YagaRule{
         'gte' => T('More than or:')
     );
 
-    $String = $Form->Label('Total Discussions', 'DiscussionCount');
+    $String = $Form->Label('Yaga.Rules.DiscussionCount.Criteria.Head', 'DiscussionCount');
     $String .= $Form->DropDown('Comparison', $Comparisons) . ' ';
     $String .= $Form->Textbox('Target', array('class' => 'SmallInput'));
-    $String .= ' ' . T('discussions');
 
     return $String;
   }

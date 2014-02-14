@@ -27,7 +27,7 @@ class LengthOfService implements YagaRule {
         'year' => T('Years')
     );
 
-    $String = $Form->Label('Time Served', 'LengthOfService');
+    $String = $Form->Label('Yaga.Rules.LengthOfService.Criteria.Head', 'LengthOfService');
     $String .= $Form->Textbox('Duration', array('class' => 'SmallInput')) . ' ';
     $String .= $Form->DropDown('Period', $Lengths);
 

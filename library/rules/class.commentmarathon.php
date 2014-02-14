@@ -36,7 +36,7 @@ class CommentMarathon implements YagaRule {
         'year' => T('Years')
     );
 
-    $String = $Form->Label('Number of Comments', 'CommentMarathon');
+    $String = $Form->Label('Yaga.Rules.CommentMarathon.Criteria.Head', 'CommentMarathon');
     $String .= $Form->Textbox('Target', array('class' => 'SmallInput'));
     $String .= $Form->Label('Time Frame');
     $String .= $Form->Textbox('Duration', array('class' => 'SmallInput')) . ' ';

@@ -41,7 +41,7 @@ class AwardCombo implements YagaRule {
         'year' => T('Years')
     );
 
-    $String = $Form->Label('Number of Badge Types', 'AwardCombo');
+    $String = $Form->Label('Yaga.Rules.AwardCombo.Criteria.Head', 'AwardCombo');
     $String .= $Form->Textbox('Target', array('class' => 'SmallInput'));
     $String .= $Form->Label('Time Frame');
     $String .= $Form->Textbox('Duration', array('class' => 'SmallInput')) . ' ';

@@ -40,7 +40,7 @@ class QnAAnserCount implements YagaRule{
         'gte' => T('More than or:')
     );
 
-    $String = $Form->Label('Yaga.Rules.QnAAnserCount.Criteria.Desc', 'QnAAnserCount');
+    $String = $Form->Label('Yaga.Rules.QnAAnserCount.Criteria.Head', 'QnAAnserCount');
     $String .= $Form->DropDown('Comparison', $Comparisons) . ' ';
     $String .= $Form->Textbox('Target', array('class' => 'SmallInput'));
 

@@ -36,8 +36,7 @@ class ReactionCount implements YagaRule{
       $Reactions[$Action->ActionID] = $Action->Name;
     }
 
-    $String = $Form->Label('Total Reactions', 'ReactionCount');
-    $String .= T('User has') . ' ';
+    $String = $Form->Label('Yaga.Rules.ReactionCount.Criteria.Head', 'ReactionCount');
     $String .= $Form->Textbox('Target', array('class' => 'SmallInput')) . ' ';
     $String .= $Form->DropDown('ActionID', $Reactions);
 

@@ -33,7 +33,7 @@ class HolidayVisit implements YagaRule {
       $Days[$i] = $i;
     }
 
-    $String = $Form->Label('Holiday date', 'HolidayVisit');
+    $String = $Form->Label('Yaga.Rules.HolidayVisit.Criteria.Head', 'HolidayVisit');
     $String .= $Form->DropDown('Month', $Months) . ' ';
     $String .= $Form->DropDown('Day', $Days);
     return $String;
