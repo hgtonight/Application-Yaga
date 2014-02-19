@@ -53,4 +53,8 @@ class DiscussionPageCount implements YagaRule{
   public function Name() {
     return T('Yaga.Rules.DiscussionPageCount');
   }
+  
+  public function Interacts() {
+    return FALSE;
+  }
 }

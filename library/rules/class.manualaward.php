@@ -34,4 +34,8 @@ class ManualAward implements YagaRule {
   public function Name() {
     return T('Yaga.Rules.ManualAward');
   }
+  
+  public function Interacts() {
+    return FALSE;
+  }
 }

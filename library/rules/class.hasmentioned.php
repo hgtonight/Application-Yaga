@@ -40,4 +40,8 @@ class HasMentioned implements YagaRule{
   public function Name() {
     return T('Yaga.Rules.HasMentioned');
   }
+  
+  public function Interacts() {
+    return FALSE;
+  }
 }

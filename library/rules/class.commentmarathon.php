@@ -22,7 +22,7 @@ class CommentMarathon implements YagaRule {
             ->FirstRow();
 
     if($Count->Count >= $Target) {
-      return $User->UserID;
+      return TRUE;
     }
     else {
       return FALSE;
@@ -73,5 +73,9 @@ class CommentMarathon implements YagaRule {
 
   public function Name() {
     return T('Yaga.Rules.CommentMarathon');
+  }
+  
+  public function Interacts() {
+    return FALSE;
   }
 }

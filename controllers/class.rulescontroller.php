@@ -54,6 +54,31 @@ class RulesController extends Gdn_Controller {
 
     return unserialize($Rules);
   }
+  
+  public static function GetInteractionRules() {
+    $Rules = Gdn::Cache()->Get('Yaga.Badges.InteractionRules');
+    if($Rules === Gdn_Cache::CACHEOP_FAILURE) {
+      $AllRules = RulesController::GetRules();
+
+      $TempRules = array();
+      foreach($AllRules as $ClassName => $Name) {
+        $Rule = new $ClassName();
+        if($Rule->Interacts()) {
+          $TempRules[$ClassName] = $Name;
+        }
+      }
+      if(empty($TempRules)) {
+        $Rules = serialize(FALSE);
+      }
+      else{
+        $Rules = serialize($TempRules);
+      }
+      
+      Gdn::Cache()->Store('Yaga.Badges.InteractionRules', $Rules, array(Gdn_Cache::FEATURE_EXPIRY => C('Yaga.Rules.CacheExpire', 86400)));
+    }
+
+    return unserialize($Rules);
+  }
 
   /**
    * This creates a new rule object in a safe way and renders its criteria form.

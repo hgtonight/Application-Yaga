@@ -74,4 +74,8 @@ class NewbieComment implements YagaRule{
   public function Name() {
     return T('Yaga.Rules.NewbieComment');
   }
+  
+  public function Interacts() {
+    return FALSE;
+  }
 }

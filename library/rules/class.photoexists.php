@@ -38,4 +38,8 @@ class PhotoExists implements YagaRule {
   public function Name() {
     return T('Yaga.Rules.PhotoExists');
   }
+  
+  public function Interacts() {
+    return FALSE;
+  }
 }

@@ -55,4 +55,8 @@ class ReflexComment implements YagaRule{
   public function Name() {
     return T('Yaga.Rules.ReflexComment');
   }
+  
+  public function Interacts() {
+    return FALSE;
+  }
 }

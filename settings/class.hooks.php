@@ -455,23 +455,25 @@ class YagaHooks implements Gdn_IPlugin {
     
     $BadgeAwardModel = Yaga::BadgeAwardModel();
     $Badges = $BadgeAwardModel->GetUnobtained($UserID);
-
+    
+    $InteractionRules = RulesController::GetInteractionRules();
+    
     $Rules = array();
     foreach($Badges as $Badge) {
-      if($Badge->Enabled && $Badge->UserID != $UserID) {
-        // The user doesn't have this badge
-        $Class = $Badge->RuleClass;
-        $Criteria = (object) unserialize($Badge->RuleCriteria);
-
+      // The badge award needs to be processed
+      if(($Badge->Enabled && $Badge->UserID != $UserID)
+              || array_key_exists($Badge->RuleClass, $InteractionRules)) {
         // Create a rule object if needed
+        $Class = $Badge->RuleClass;
         if(!in_array($Class, $Rules)) {
           $Rule = new $Class();
           $Rules[$Class] = $Rule;
         }
 
-        // execute the Calculated
         $Rule = $Rules[$Class];
+        // Only check awards for rules that use this hook
         if(in_array($Hook, $Rule->Hooks())) {
+          $Criteria = (object) unserialize($Badge->RuleCriteria);
           $Result = $Rule->Award($Sender, $User, $Criteria);
           if($Result) {
             if(is_numeric($Result)) {

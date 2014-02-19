@@ -50,4 +50,8 @@ class DiscussionBodyLength implements YagaRule{
   public function Name() {
     return T('Yaga.Rules.DiscussionBodyLength');
   }
+  
+  public function Interacts() {
+    return FALSE;
+  }
 }

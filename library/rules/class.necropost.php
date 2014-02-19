@@ -67,4 +67,8 @@ class NecroPost implements YagaRule {
   public function Name() {
     return T('Yaga.Rules.NecroPost');
   }
+  
+  public function Interacts() {
+    return FALSE;
+  }
 }

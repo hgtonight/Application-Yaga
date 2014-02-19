@@ -73,4 +73,8 @@ class DiscussionCount implements YagaRule{
   public function Name() {
     return T('Yaga.Rules.DiscussionCount');
   }
+  
+  public function Interacts() {
+    return FALSE;
+  }
 }

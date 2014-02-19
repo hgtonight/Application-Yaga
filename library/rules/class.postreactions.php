@@ -69,8 +69,4 @@ class ReactionCount implements YagaRule{
   public function Name() {
     return T('Yaga.Rules.ReactionCount');
   }
-  
-  public function Interacts() {
-    return TRUE;
-  }
 }

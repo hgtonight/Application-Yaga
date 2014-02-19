@@ -60,4 +60,8 @@ class LengthOfService implements YagaRule {
   public function Name() {
     return T('Yaga.Rules.LengthOfService');
   }
+  
+  public function Interacts() {
+    return FALSE;
+  }
 }

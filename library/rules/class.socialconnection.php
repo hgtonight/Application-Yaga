@@ -55,4 +55,8 @@ class SocialConnection implements YagaRule{
   public function Name() {
     return T('Yaga.Rules.SocialConnection');
   }
+  
+  public function Interacts() {
+    return FALSE;
+  }
 }

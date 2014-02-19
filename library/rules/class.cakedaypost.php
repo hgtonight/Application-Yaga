@@ -50,4 +50,8 @@ class CakeDayPost implements YagaRule {
   public function Name() {
     return T('Yaga.Rules.CakeDayPost');
   }
+  
+  public function Interacts() {
+    return FALSE;
+  }
 }

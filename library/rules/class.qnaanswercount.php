@@ -72,4 +72,8 @@ class QnAAnserCount implements YagaRule{
   public function Name() {
     return T('Yaga.Rules.QnAAnserCount');
   }
+  
+  public function Interacts() {
+    return FALSE;
+  }
 }

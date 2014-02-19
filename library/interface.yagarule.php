@@ -12,7 +12,7 @@ interface YagaRule {
    * This performs the grunt work of an award rule. Given an expected criteria,
    * it determines if a specific user meets muster.
    *
-   * @param UserObject $User the user object
+   * @param UserObject $User the user object of the calling user
    * @param stdClass $Criteria This is a standard object with properties that
    * match the criteria that were previously rendered
    * @return int Represents the user that gets the award criteria. You may use
@@ -56,4 +56,13 @@ interface YagaRule {
    * @return string The description
    */
   public function Description();
+  
+  /**
+   * Returns a bool representing whether the Award function can award a user
+   * other than the calling user. Rules that depend on interaction should return 
+   * true.
+   * 
+   * @return bool Whether or not interactions need to be checked
+   */
+  public function Interacts();
 }

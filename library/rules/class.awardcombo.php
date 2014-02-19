@@ -80,4 +80,8 @@ class AwardCombo implements YagaRule {
   public function Name() {
     return T('Yaga.Rules.AwardCombo');
   }
+  
+  public function Interacts() {
+    return TRUE;
+  }
 }

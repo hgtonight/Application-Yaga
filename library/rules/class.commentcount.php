@@ -72,4 +72,8 @@ class CommentCount implements YagaRule{
   public function Name() {
     return T('Yaga.Rules.CommentCount');
   }
+  
+  public function Interacts() {
+    return FALSE;
+  }
 }

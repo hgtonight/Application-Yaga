@@ -65,4 +65,8 @@ class HolidayVisit implements YagaRule {
   public function Name() {
     return T('Yaga.Rules.HolidayVisit');
   }
+  
+  public function Interacts() {
+    return FALSE;
+  }
 }
