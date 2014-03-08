@@ -4,7 +4,7 @@ $Definition['Yaga.Reason'] = 'Grund (optional)';
 
 // Transport
 $Definition['Yaga.Transport'] = 'Einstellungensdatei importieren / exportieren';
-$Definition['Yaga.Transport.Desc'] = 'Du kannst deine gesamte Yaga-Einstellungen in einer Datei abspeichern und übertragen.';
+$Definition['Yaga.Transport.Desc'] = 'Du kannst deine gesamten Yaga-Einstellungen in einer Datei abspeichern und übertragen.';
 $Definition['Yaga.Export'] = 'Export Yaga-Einstellungen';
 $Definition['Yaga.Import'] = 'Import Yaga-Einstellungen';
 $Definition['Yaga.Export.Desc'] = 'Hier kannst du deine Yaga-Einstellungen zu Backup- oder Transportzwecken exportieren. Wähle aus, welche Teile exportiert werden sollen..';
@@ -47,9 +47,9 @@ $Definition['Yaga.Badge.Earned.Format'] = 'Du hast eine Auszeichnung für %s von
 $Definition['Yaga.Badge.Earned'] = 'Du hast diese Auszeichnung erhalten';
 $Definition['Yaga.Badge.EarnedBySingle'] = '%s Benutzer hat diese Auszeichnung.';
 $Definition['Yaga.Badge.EarnedByPlural'] = '%s Benutzer haben diese Auszeichnung.';
-$Definition['Yaga.Badge.EarnedByNone'] = 'Diese auszeichnung hat bislang noch niemand erhalten.';
+$Definition['Yaga.Badge.EarnedByNone'] = 'Diese Auszeichnung hat bislang noch niemand erhalten.';
 $Definition['Yaga.Badge.RecentRecipients'] = 'Kürzlich ausgezeichnete Benutzer';
-$Definition['Yaga.Badge.DetailLink'] = 'Statistik zu dieser auszeichnung';
+$Definition['Yaga.Badge.DetailLink'] = 'Statistik zu dieser Auszeichnung';
 
 // Ranks
 $Definition['Yaga.Ranks'] = 'Ränge';
@@ -158,7 +158,7 @@ $Definition['Yaga.Rules.CommentMarathon.Desc'] = 'Diese Auszeichnung vergeben, w
 $Definition['Yaga.Rules.DiscussionCount'] = 'Diskussionen';
 $Definition['Yaga.Rules.DiscussionCount.Desc'] = 'Diese Auszeichnung vergeben, wenn die Anzahl der vom Nutzer gestarteten Diskussionen das Zielkriterium erreicht oder überschreitet.';
 $Definition['Yaga.Rules.HasMentioned'] = 'Erwähnung';
-$Definition['Yaga.Rules.HasMentioned.Desc'] = 'Award this badge if the user mentions someone. Mentions are in the form of `@Benutzername`.';
+$Definition['Yaga.Rules.HasMentioned.Desc'] = 'Diese Auszeichnung verleihen, wenn der Benutzer jemanden mit @ erwähnt.';
 $Definition['Yaga.Rules.HolidayVisit'] = 'Feiertag';
 $Definition['Yaga.Rules.HolidayVisit.Desc'] = 'Diese Auszeichnung verleihen, wenn der Benutzer die Seite an einem bestimmten Feiertag besucht.';
 $Definition['Yaga.Rules.LengthOfService'] = 'Verbrachte Zeit';
