@@ -53,11 +53,11 @@ class PostReactions implements YagaRule {
 
     $ActionList = '';
     foreach($Actions as $Action) {
-      $ActionList .= Wrap(sprintf(T("# of %s's:"), $Action->Name) . ' ' . $Form->Textbox('ActionID_' . $Action->ActionID, array('class' => 'SmallInput')), 'li');
+      $ActionList .= Wrap(sprintf(T('Yaga.Rules.PostReactions.LabelFormat'), $Action->Name) . ' ' . $Form->Textbox('ActionID_' . $Action->ActionID, array('class' => 'SmallInput')), 'li');
     }
 
     if($ActionList == '') {
-      $String .= 'No actions defined.';
+      $String .= T('Yaga.Error.NoActions');
     }
     else {
       $String .= Wrap($ActionList, 'ul');
