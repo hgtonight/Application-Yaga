@@ -13,7 +13,8 @@
 class ActedModel extends Gdn_Model {
 
   /**
-   * Returns a list of all available actions
+   * Returns a list of all posts by a specific user that has received at least
+   * one of the specified actions.
    */
   public function Get($UserID, $ActionID, $Limit = FALSE, $Offset = 0) {
     $Expiry = 600;

@@ -11,8 +11,13 @@ class ReflexComment implements YagaRule{
 
   public function Award($Sender, $User, $Criteria) {
     $Discussion = $Sender->EventArguments['Discussion'];
-    $Comment = $Sender->EventArguments['Comment'];
-    $DiscussionDate = strtotime($Discussion->DateInserted);
+	$Comment = $Sender->EventArguments['Comment'];
+    
+	// Don't award a user for commenting on their own discussion
+    if($Discussion->InsertUserID == $User->UserID) {
+	  return FALSE;
+	}
+	$DiscussionDate = strtotime($Discussion->DateInserted);
     $CommentDate = strtotime($Comment['DateInserted']);
 
     $Difference = $CommentDate - $DiscussionDate;
