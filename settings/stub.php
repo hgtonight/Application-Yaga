@@ -22,6 +22,14 @@ $SQL->Insert('Action', array(
     'CssClass' => 'ReactThumbsUp2',
     'AwardValue' => -1
 ));
+$SQL->Insert('Action', array(
+    'Name' => 'Promote',
+    'Description' => 'This post deserves to be featured on the best of page!',
+    'Tooltip' => 'Click me if this content should be featured.',
+    'CssClass' => 'ReactPointUp',
+    'AwardValue' => 5,
+    'Permission' => 'Garden.Curation.Manage'
+));
 
 // Insert stub badge
 $SQL->Insert('Badge', array(
