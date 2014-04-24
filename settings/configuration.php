@@ -12,4 +12,6 @@ $Configuration['Preferences']['Popup']['RankPromotion'] = '1';
 $Configuration['Preferences']['Email']['RankPromotion'] = '1';
 
 $Configuration['Modules']['Yaga']['Panel'] = array('MeModule', 'UserBoxModule', 'ActivityFilterModule', 'UserPhotoModule', 'ProfileFilterModule', 'SideMenuModule', 'UserInfoModule', 'GuestModule', 'Ads');
-$Configuration['Modules']['Yaga']['Content'] = array('MessageModule', 'MeModule', 'UserBoxModule', 'ProfileOptionsModule', 'Notices', 'ActivityFilterModule', 'ProfileFilterModule', 'Content', 'Ads');
+$Configuration['Modules']['Yaga']['Content'] = array('MessageModule', 'MeModule', 'UserBoxModule', 'ProfileOptionsModule', 'Notices', 'ActivityFilterModule', 'ProfileFilterModule', 'BestFilterModule', 'Content', 'Ads');
+
+$Configuration['Yaga']['BestContent']['PerPage'] = 10;

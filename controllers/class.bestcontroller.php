@@ -1,5 +1,5 @@
 <?php if(!defined('APPLICATION')) exit();
-/* Copyright 2013 Zachary Doll */
+/* Copyright 2014 Zachary Doll */
 
 /**
  * This is all the frontend pages dealing with badges
@@ -7,13 +7,19 @@
  * @since 1.0
  * @package Yaga
  */
-class BadgesController extends Gdn_Controller {
+class BestController extends Gdn_Controller {
 
+  /**
+   * The list of content the filters want to show
+   * @var array
+   */
+  protected $_Content = array();
+  
   /**
    * @var array These objects will be created on instantiation and available via
    * $this->ObjectName
    */
-  public $Uses = array('BadgeModel', 'BadgeAwardModel');
+  public $Uses = array('ActedModel');
 
   public function Initialize() {
     parent::Initialize();
@@ -25,64 +31,78 @@ class BadgesController extends Gdn_Controller {
     $this->AddJsFile('jquery.popup.js');
     $this->AddJsFile('global.js');
     $this->AddCssFile('style.css');
-    $this->AddCssFile('badges.css');
-    $this->AddModule('BadgesModule');
-    $Module = new LeaderBoardModule();
-    $Module->GetData('w');
-    $this->AddModule($Module);
-    $Module = new LeaderBoardModule();
-    $this->AddModule($Module);
+    $this->AddCssFile('reactions.css');
+    $this->AddModule('BestFilterModule');
+    $this->AddModule('NewDiscussionModule');
+    $this->AddModule('DiscussionFilterModule');
   }
 
   /**
-   * Render a blank page if no methods were specified in dispatch
+   * Default to showing the best of all time
    */
-  public function Index() {
-    //$this->Render('Blank', 'Utility', 'Dashboard');
-    $this->All();
+  public function Index($Page = 0) {
+    list($Offset, $Limit) = $this->_TranslatePage($Page);    
+    $this->Title(T('Yaga.BestContent.Recent'));
+    $this->_Content = $this->ActedModel->GetRecent('week', $Limit, $Offset);
+    $this->_BuildPager($Offset, $Limit, '/best/%1$s/');
+    $this->SetData('ActiveFilter', 'Recent');
+    $this->Render('index');
   }
-
+  
   /**
-   * This renders out the full list of badges
+   * Get the highest scoring content from all time
    */
-  public function All() {
-    $this->Title(T('Yaga.AllBadges'));
-
-    $UserID = Gdn::Session()->UserID;
-
-    // Get list of badges from the model and pass to the view
-    $AllBadges = $this->BadgeModel->GetWithEarned($UserID);
-
-    $this->SetData('Badges', $AllBadges);
-    //$this->SetData('Earned')
-
-    $this->Render('all');
+  public function AllTime($Page = 0) {
+    list($Offset, $Limit) = $this->_TranslatePage($Page); 
+    $this->Title(T('Yaga.BestContent.AllTime'));
+    $this->_Content = $this->ActedModel->GetBest(NULL, $Limit, $Offset);
+    $this->_BuildPager($Offset, $Limit, '/best/alltime/%1$s/');
+    $this->SetData('ActiveFilter', 'AllTime');
+    $this->Render('index');
   }
-
+  
   /**
-   * Show some facets about a specific badge
-   *
-   * @param int $BadgeID
-   * @param string $Slug
+   * Get the latest promoted content
    */
-  public function Detail($BadgeID, $Slug = NULL) {
-    $UserID = Gdn::Session()->UserID;
-    $Badge = $this->BadgeModel->GetByID($BadgeID);
-    $AwardCount = $this->BadgeAwardModel->GetCount($BadgeID);
-    $UserBadgeAward = $this->BadgeAwardModel->Exists($UserID, $BadgeID);
-    $RecentAwards = $this->BadgeAwardModel->GetRecent($BadgeID);
-
-    if(!$Badge) {
-      throw NotFoundException('Badge');
+  public function Action($ID = NULL, $Page = 0) {
+    if(is_null($ID) || !is_numeric($ID)) {
+      $this->Index($Page);
+      return;
     }
-
-    $this->SetData('AwardCount', $AwardCount);
-    $this->SetData('RecentAwards', $RecentAwards);
-    $this->SetData('UserBadgeAward', $UserBadgeAward);
-    $this->SetData('Badge', $Badge);
-
-    $this->Title(T('Yaga.ViewBadge') . $Badge->Name);
-
-    $this->Render();
+    $ActionModel = Yaga::ActionModel();
+    $Action = $ActionModel->GetByID($ID);
+    if(!$Action) {
+      $this->Index($Page);
+      return;
+    }
+    
+    list($Offset, $Limit) = $this->_TranslatePage($Page);
+    $this->Title(sprintf(T('Yaga.BestContent.Action'), $Action->Name));
+    $this->_Content = $this->ActedModel->GetAction($ID, $Limit, $Offset);
+    $this->_BuildPager($Offset, $Limit, '/best/action/' . $ID . '/%1$s/');
+    $this->SetData('ActiveFilter', $ID);
+    $this->Render('index');
+  }
+  
+  protected function _TranslatePage($Page) {
+    list($Offset, $Limit) = OffsetLimit($Page, C('Yaga.BestContent.PerPage'));
+    if(!is_numeric($Offset) || $Offset < 0) {
+      $Offset = 0;
+    }
+    return array($Offset, $Limit);
+  }
+  
+  protected function _BuildPager($Offset, $Limit, $Link) {
+    $PagerFactory = new Gdn_PagerFactory();
+    $this->Pager = $PagerFactory->GetPager('MorePager', $this);
+    $this->Pager->MoreCode = 'More';
+    $this->Pager->LessCode = 'Newer Content';
+    $this->Pager->ClientID = 'Pager';
+    $this->Pager->Configure(
+       $Offset,
+       $Limit,
+       FALSE,
+       'profile/notifications/%1$s/'
+    );
   }
 }

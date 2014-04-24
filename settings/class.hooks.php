@@ -1,9 +1,8 @@
 <?php if(!defined('APPLICATION')) exit();
+/* Copyright 2013-2014 Zachary Doll */
 
 /**
- * A special function that is automatically run upon enabling your application.
- *
- * Remember to rename this to FooHooks, where 'Foo' is you app's short name.
+ * A collection of hooks that are enabled when Yaga is.
  */
 class YagaHooks implements Gdn_IPlugin {
 
@@ -14,7 +13,7 @@ class YagaHooks implements Gdn_IPlugin {
   public function SettingsController_Yaga_Create($Sender) {
     Redirect('yaga/settings', 301);
   }
-  
+
   /**
    * Add Simple stats page to dashboard index
    * @param SettingsController $Sender
@@ -25,7 +24,7 @@ class YagaHooks implements Gdn_IPlugin {
       //echo 'Sweet sweet stats!';
       $BadgeAwardModel = Yaga::BadgeAwardModel();
       $ReactionModel = Yaga::ReactionModel();
-      
+
       $BadgeCount = $BadgeAwardModel->GetCount();
       $ReactionCount = $ReactionModel->GetCount();
       echo Wrap('Yaga Statistics', 'h1');
@@ -63,6 +62,14 @@ class YagaHooks implements Gdn_IPlugin {
     if(C('Yaga.Ranks.Enabled')) {
       $Menu->AddLink($Section, T('Yaga.Ranks'), 'rank/settings', 'Yaga.Ranks.Manage');
     }
+  }
+  
+  public function Base_AfterDiscussionFilters_Handler($Sender) {
+    if(!C('Yaga.Reactions.Enabled')) {
+      return;
+    }
+    
+    echo Wrap(Anchor(Sprite('SpBestOf') . ' ' . T('Yaga.BestContent'), '/best'), 'li', array('class' => $Sender->ControllerName == 'bestcontroller' ? 'Best Active' : 'Best'));
   }
 
   /**
@@ -161,7 +168,7 @@ class YagaHooks implements Gdn_IPlugin {
     }
 
     $ReactionModel = Yaga::ReactionModel();
-    
+
     // Build a pager
     $PagerFactory = new Gdn_PagerFactory();
     $Sender->Pager = $PagerFactory->GetPager('Pager', $Sender);
@@ -169,9 +176,76 @@ class YagaHooks implements Gdn_IPlugin {
     $Sender->Pager->Configure(
             $Offset, $Limit, $ReactionModel->GetUserCount($Sender->User->UserID, $ActionID), 'profile/reactions/' . $Sender->User->UserID . '/' . Gdn_Format::Url($Sender->User->Name) . '/' . $ActionID . '/%1$s/'
     );
-    
+
     // Render the ProfileController
     $Sender->Render();
+  }
+  
+  /**
+   * This method shows the highest scoring discussions/comments a user has ever posted
+   *
+   * @param ProfileController $Sender
+   * @param int $UserReference
+   * @param string $Username
+   * @param int $Page
+   */
+  public function ProfileController_Best_Create($Sender, $UserReference = '', $Username = '', $Page = 0) {
+    if(!C('Yaga.Reactions.Enabled')) {
+      return;
+    }
+
+    list($Offset, $Limit) = OffsetLimit($Page, C('Yaga.BestContent.PerPage', 10));
+    if(!is_numeric($Offset) || $Offset < 0) {
+      $Offset = 0;
+    }
+
+    $Sender->EditMode(FALSE);
+
+    // Tell the ProfileController what tab to load
+    $Sender->GetUserInfo($UserReference, $Username);
+    $Sender->_SetBreadcrumbs(T('Yaga.BestContent'), UserUrl($Sender->User, '', 'best'));
+    $Sender->SetTabView(T('Yaga.BestContent'), 'best', 'profile', 'Yaga');
+
+    $Sender->AddJsFile('jquery.expander.js');
+    $Sender->AddJsFile('reactions.js', 'yaga');
+    $Sender->AddDefinition('ExpandText', T('(more)'));
+    $Sender->AddDefinition('CollapseText', T('(less)'));
+
+    $Model = new ActedModel();
+    $Data = $Model->GetBest($Sender->User->UserID, $Limit, $Offset);
+
+    $Sender->SetData('Content', $Data);
+
+    // Set the HandlerType back to normal on the profilecontroller so that it fetches it's own views
+    $Sender->HandlerType = HANDLER_TYPE_NORMAL;
+
+    // Do not show discussion options
+    $Sender->ShowOptions = FALSE;
+
+    if($Sender->Head) {
+      $Sender->Head->AddTag('meta', array('name' => 'robots', 'content' => 'noindex,noarchive'));
+    }
+
+    // Build a pager
+    $PagerFactory = new Gdn_PagerFactory();
+    $Sender->Pager = $PagerFactory->GetPager('Pager', $Sender);
+    $Sender->Pager->ClientID = 'Pager';
+    $Sender->Pager->Configure(
+            $Offset, $Limit, FALSE, 'profile/best/' . $Sender->User->UserID . '/' . Gdn_Format::Url($Sender->User->Name) . '/%1$s/'
+    );
+
+    // Render the ProfileController
+    $Sender->Render();
+  }
+
+  /**
+   * Add a best content tab on a user's profile
+   * @param ProfileController $Sender
+   */
+  public function ProfileController_AddProfileTabs_Handler($Sender) {
+    if(is_object($Sender->User) && $Sender->User->UserID > 0) {
+      $Sender->AddProfileTab(Sprite('SpBestOf') . ' ' . T('Yaga.BestContent'), 'profile/best/' . $Sender->User->UserID . '/' . urlencode($Sender->User->Name));
+    }
   }
 
   /**
@@ -386,7 +460,7 @@ class YagaHooks implements Gdn_IPlugin {
   public function Base_AfterGetSession_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
   }
-  
+
   public function CommentModel_AfterSaveComment_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
   }
@@ -394,7 +468,7 @@ class YagaHooks implements Gdn_IPlugin {
   public function DiscussionModel_AfterSaveDiscussion_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
   }
-  
+
   public function ActivityModel_BeforeSaveComment_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
   }
@@ -439,25 +513,25 @@ class YagaHooks implements Gdn_IPlugin {
     if(!C('Yaga.Badges.Enabled') || !$Session->IsValid()) {
       return;
     }
-    
+
     // Let's us use __FUNCTION__ in the original hook
-    $Hook = str_ireplace('_Handler', '', $Handler); 
-    
+    $Hook = str_ireplace('_Handler', '', $Handler);
+
     if(Debug()) {
       $Controller = Gdn::Controller();
       if($Controller) {
         $Controller->InformMessage("Checking for awards on $Hook");
       }
     }
-    
+
     $UserID = $Session->UserID;
     $User = $Session->User;
-    
+
     $BadgeAwardModel = Yaga::BadgeAwardModel();
     $Badges = $BadgeAwardModel->GetUnobtained($UserID);
-    
+
     $InteractionRules = RulesController::GetInteractionRules();
-    
+
     $Rules = array();
     foreach($Badges as $Badge) {
       // The badge award needs to be processed

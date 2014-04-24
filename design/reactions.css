@@ -222,3 +222,7 @@ TODO: Bundle the big social network icons
 .MenuItems a:hover .ReactSprite {
   background-image: url('images/action-sprites-white.png');
 }
+
+#Content .BoxFilter.BoxBestFilter {
+  display: block;
+}

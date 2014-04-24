@@ -1,7 +1,7 @@
 <?php if(!defined('APPLICATION')) exit();
-/* Copyright 2013 Zachary Doll */
+/* Copyright 2014 Zachary Doll */
 
-$Contents = $this->Data('Content');
+$Contents = $this->_Content;
 
 echo '<ul class="DataList Compact BlogList">';
 foreach ($Contents as $Content) {
@@ -67,4 +67,4 @@ foreach ($Contents as $Content) {
 }
 echo '</ul>';
 
-echo $this->Pager->ToString('more');
+echo $this->Pager->ToString();

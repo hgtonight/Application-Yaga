@@ -69,10 +69,11 @@ $Definition['Yaga.Rank.Progression'] = 'Rank Progression';
 $Definition['Yaga.Rank.Progression.Desc'] = 'Allow user to automatically progress past this rank.';
 $Definition['Yaga.Rank.Photo.Desc'] = 'This photo will be shown on activity posts and in notifications concerning rank progression.';
 
-// Best Of...
-$Definition['Yaga.BestOfEverything'] = 'Best of Everything';
-$Definition['Yaga.BestOf'] = 'Best Of...';
-$Definition['Promoted Content'] = 'Promoted Content';
+// Best Content
+$Definition['Yaga.BestContent'] = 'Best Of...';
+$Definition['Yaga.BestContent.Recent'] = 'Best Recent Content';
+$Definition['Yaga.BestContent.AllTime'] = 'Best Content of All Time';
+$Definition['Yaga.BestContent.Action'] = 'Best %s Content';
 
 // Error Strings
 $Definition['Yaga.Error.ReactToOwn'] = 'You cannot react to your own content.';

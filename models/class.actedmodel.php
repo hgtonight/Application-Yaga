@@ -1,5 +1,5 @@
-<?php if (!defined('APPLICATION')) exit();
-/* Copyright 2013 Zachary Doll */
+<?php if(!defined('APPLICATION')) exit();
+/* Copyright 2013-2014 Zachary Doll */
 
 /**
  * Describe the user content that has been acted upon
@@ -9,25 +9,51 @@
  * @package Yaga
  * @since 1.0
  */
-
 class ActedModel extends Gdn_Model {
+
+  /**
+   * How long in seconds this table should be cached. Defaults to 10 minutes
+   * @var int
+   */
+  protected $_Expiry = 600;
+
+  /**
+   * Convenience function to save some typing. Gets the basic 'best' query set
+   * up in an SQL driver and returns it
+   * @param string $Table Discussion or Comment
+   * @return Gdn_SQLDriver
+   */
+  private function _BaseSQL($Table = 'Discussion') {
+    switch($Table) {
+      case 'Comment':
+        $SQL = Gdn::SQL()->Select('c.*')
+                ->From('Comment c')
+                ->Where('c.Score is not null')
+                ->OrderBy('c.Score', 'DESC');
+        break;
+      default:
+      case 'Discussion':
+        $SQL = Gdn::SQL()->Select('d.*')
+                ->From('Discussion d')
+                ->Where('d.Score is not null')
+                ->OrderBy('d.Score', 'DESC');
+        break;
+    }
+    return $SQL;
+  }
 
   /**
    * Returns a list of all posts by a specific user that has received at least
    * one of the specified actions.
    */
-  public function Get($UserID, $ActionID, $Limit = FALSE, $Offset = 0) {
-    $Expiry = 600;
-
-    // Check cache
-    $CacheKey = "yaga.profile.reactions.{$ActionID}";
+  public function Get($UserID, $ActionID, $Limit = NULL, $Offset = 0) {
+    $CacheKey = "yaga.profile.reactions.{$UserID}.{$ActionID}";
     $Content = Gdn::Cache()->Get($CacheKey);
 
     if($Content == Gdn_Cache::CACHEOP_FAILURE) {
 
       // Get matching Discussions
-      $Discussions = Gdn::SQL()->Select('d.*')
-                      ->From('Discussion d')
+      $Discussions = $this->_BaseSQL('Discussion')
                       ->Join('Reaction r', 'd.DiscussionID = r.ParentID')
                       ->Where('d.InsertUserID', $UserID)
                       ->Where('r.ActionID', $ActionID)
@@ -36,8 +62,7 @@ class ActedModel extends Gdn_Model {
                       ->Get()->Result(DATASET_TYPE_ARRAY);
 
       // Get matching Comments
-      $Comments = Gdn::SQL()->Select('c.*')
-                      ->From('Comment c')
+      $Comments = $this->_BaseSQL('Comment')
                       ->Join('Reaction r', 'c.CommentID = r.ParentID')
                       ->Where('c.InsertUserID', $UserID)
                       ->Where('r.ActionID', $ActionID)
@@ -56,7 +81,133 @@ class ActedModel extends Gdn_Model {
 
       // Add result to cache
       Gdn::Cache()->Store($CacheKey, $Content, array(
-          Gdn_Cache::FEATURE_EXPIRY => $Expiry
+          Gdn_Cache::FEATURE_EXPIRY => $this->_Expiry
+      ));
+    }
+
+    $this->Security($Content);
+    $this->Condense($Content, $Limit, $Offset);
+
+    return $Content;
+  }
+
+  /**
+   *
+   * @param type $ActionID
+   * @param type $Limit
+   * @param type $Offset
+   * @return type
+   */
+  public function GetAction($ActionID, $Limit = NULL, $Offset = 0) {
+    $CacheKey = "yaga.best.actions.{$ActionID}";
+    $Content = Gdn::Cache()->Get($CacheKey);
+
+    if($Content == Gdn_Cache::CACHEOP_FAILURE) {
+
+      // Get matching Discussions
+      $Discussions = $this->_BaseSQL('Discussion')
+                      ->Join('Reaction r', 'd.DiscussionID = r.ParentID')
+                      ->Where('r.ActionID', $ActionID)
+                      ->Where('r.ParentType', 'discussion')
+                      ->OrderBy('r.DateInserted', 'DESC')
+                      ->Get()->Result(DATASET_TYPE_ARRAY);
+
+      // Get matching Comments
+      $Comments = $this->_BaseSQL('Comment')
+                      ->Join('Reaction r', 'c.CommentID = r.ParentID')
+                      ->Where('r.ActionID', $ActionID)
+                      ->Where('r.ParentType', 'comment')
+                      ->OrderBy('r.DateInserted', 'DESC')
+                      ->Get()->Result(DATASET_TYPE_ARRAY);
+
+      $this->JoinCategory($Comments);
+
+      // Interleave
+      $Content = $this->Union('DateInserted', array(
+          'Discussion' => $Discussions,
+          'Comment' => $Comments
+      ));
+      $this->Prepare($Content);
+
+      // Add result to cache
+      Gdn::Cache()->Store($CacheKey, $Content, array(
+          Gdn_Cache::FEATURE_EXPIRY => $this->_Expiry
+      ));
+    }
+
+    $this->Security($Content);
+    $this->Condense($Content, $Limit, $Offset);
+
+    return $Content;
+  }
+
+  /**
+   * Returns a list of all posts by a specific user ordered by highest score
+   */
+  public function GetBest($UserID = NULL, $Limit = NULL, $Offset = 0) {
+    $CacheKey = "yaga.profile.best.{$UserID}";
+    $Content = Gdn::Cache()->Get($CacheKey);
+
+    if($Content == Gdn_Cache::CACHEOP_FAILURE) {
+      $SQL = $this->_BaseSQL('Discussion');
+      if(!is_null($UserID)) {
+        $SQL = $SQL->Where('d.InsertUserID', $UserID);
+      }
+      $Discussions = $SQL->Get()->Result(DATASET_TYPE_ARRAY);
+
+      $SQL = $this->_BaseSQL('Comment');
+      if(!is_null($UserID)) {
+        $SQL = $SQL->Where('c.InsertUserID', $UserID);
+      }
+      $Comments = $SQL->Get()->Result(DATASET_TYPE_ARRAY);
+
+      $this->JoinCategory($Comments);
+
+      // Interleave
+      $Content = $this->Union('Score', array(
+          'Discussion' => $Discussions,
+          'Comment' => $Comments
+      ));
+      $this->Prepare($Content);
+
+      Gdn::Cache()->Store($CacheKey, $Content, array(
+          Gdn_Cache::FEATURE_EXPIRY => $this->_Expiry
+      ));
+    }
+
+    $this->Security($Content);
+    $this->Condense($Content, $Limit, $Offset);
+
+    return $Content;
+  }
+
+  /**
+   * Returns a list of all recent scored posts ordered by highest score
+   */
+  public function GetRecent($Timespan = 'week', $Limit = NULL, $Offset = 0) {
+    $CacheKey = "yaga.best.last.{$Timespan}";
+    $Content = Gdn::Cache()->Get($CacheKey);
+
+    if($Content == Gdn_Cache::CACHEOP_FAILURE) {
+      $TargetDate = date('Y-m-d H:i:s', strtotime("1 {$Timespan} ago"));
+
+      $SQL = $this->_BaseSQL('Discussion');
+      $Discussions = $SQL->Where('d.DateUpdated >', $TargetDate)->Get()->Result(DATASET_TYPE_ARRAY);
+
+      $SQL = $this->_BaseSQL('Comment');
+      $Comments = $SQL->Where('c.DateUpdated >', $TargetDate)->Get()->Result(DATASET_TYPE_ARRAY);
+
+      $this->JoinCategory($Comments);
+
+      // Interleave
+      $Content = $this->Union('Score', array(
+          'Discussion' => $Discussions,
+          'Comment' => $Comments
+      ));
+      $this->Prepare($Content);
+
+      Gdn::Cache()->Store($CacheKey, $Content, array(
+          Gdn_Cache::FEATURE_EXPIRY => $this->_Expiry
       ));
     }
 

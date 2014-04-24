@@ -69,10 +69,11 @@ $Definition['Yaga.Rank.Progression'] = 'Rang-Sequenz';
 $Definition['Yaga.Rank.Progression.Desc'] = 'Benutzer können von diesem Rang zum nächsten fortschreiten.';
 $Definition['Yaga.Rank.Photo.Desc'] = 'Dieses Bild wird in den Aktivitäten und Benachrichtigung beim Fortschritt zum nächsten Rang gezeigt.';
 
-// Best Of...
-$Definition['Yaga.BestOfEverything'] = 'Best of des Forums';
-$Definition['Yaga.BestOf'] = 'Best Of...';
-$Definition['Promoted Content'] = 'Ausgezeichnete Inhalte';
+// Best Content
+$Definition['Yaga.BestContent'] = 'Best Of...';
+$Definition['Yaga.BestContent.Recent'] = 'Best Recent Content';
+$Definition['Yaga.BestContent.AllTime'] = 'Best Content of All Time';
+$Definition['Yaga.BestContent.Action'] = 'Best %s Content';
 
 // Error Strings
 $Definition['Yaga.Error.ReactToOwn'] = 'Du kannst auf deine eigenen Beiträge nicht reagieren.';
