@@ -1,6 +1,6 @@
 # Yaga
 
-__Y__et __A__nother __G__amification __A__pplication is a Garden application that provides a gamification platform for other Garden applications. It integrates by default with Vanilla Forums. Out of the box, it provides Reactions, Badges, and Ranks.
+**Y**et **A**nother **G**amification **A**pplication is a Garden application that provides a gamification platform for other Garden applications. It integrates by default with Vanilla Forums. Out of the box, it provides Reactions, Badges, and Ranks.
 
 It is released under the GPLv3 and may be released under a different license _**with permission**_.
 
