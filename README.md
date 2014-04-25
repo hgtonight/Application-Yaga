@@ -1,6 +1,6 @@
 # Yaga
 
-**Y**et **A**nother **G**amification **A**pplication is a Garden application that provides a gamification platform for other Garden applications. It integrates by default with Vanilla Forums. Out of the box, it provides Reactions, Badges, and Ranks.
+**Y**&#8203;et **A**&#8203;nother **G**&#8203;amification **A**&#8203;pplication is a Garden application that provides a gamification platform for other Garden applications. It integrates by default with Vanilla Forums. Out of the box, it provides Reactions, Badges, and Ranks.
 
 It is released under the GPLv3 and may be released under a different license _**with permission**_.
 
@@ -9,7 +9,7 @@ It is released under the GPLv3 and may be released under a different license _**
 
 To get up and running with Yaga, either:
 
-* __[Download the latest stable release](http://vanillaforums.org/get/yaga-application)__
+* [Download the latest stable release](http://vanillaforums.org/get/yaga-application)
 * Clone the repository into the `applications` directory:
 
 ```sh
