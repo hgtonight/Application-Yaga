@@ -63,12 +63,12 @@ class YagaHooks implements Gdn_IPlugin {
       $Menu->AddLink($Section, T('Yaga.Ranks'), 'rank/settings', 'Yaga.Ranks.Manage');
     }
   }
-  
+
   public function Base_AfterDiscussionFilters_Handler($Sender) {
     if(!C('Yaga.Reactions.Enabled')) {
       return;
     }
-    
+
     echo Wrap(Anchor(Sprite('SpBestOf') . ' ' . T('Yaga.BestContent'), '/best'), 'li', array('class' => $Sender->ControllerName == 'bestcontroller' ? 'Best Active' : 'Best'));
   }
 
@@ -180,7 +180,7 @@ class YagaHooks implements Gdn_IPlugin {
     // Render the ProfileController
     $Sender->Render();
   }
-  
+
   /**
    * This method shows the highest scoring discussions/comments a user has ever posted
    *
@@ -504,7 +504,7 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * This is the dispatcher to check badge awards
    *
-   * @param Object $Sender The sending object
+   * @param mixed $Sender The sending object
    * @param string $Handler The event handler to check associated rules for awards
    * (e.g. BadgeAwardModel_AfterBadgeAward_Handler or Base_AfterConnection)
    */
@@ -566,7 +566,7 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * Add the appropriate resources for each controller
    *
-   * @param object $Sender
+   * @param Gdn_Controller $Sender
    */
   private function _AddResources($Sender) {
     $Sender->AddCssFile('reactions.css', 'yaga');
@@ -575,11 +575,31 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * Add global Yaga resources to all dashboard pages
    *
-   * @param object $Sender
+   * @param Gdn_Controller $Sender
    */
   public function Base_Render_Before($Sender) {
     if($Sender->MasterView == 'admin') {
       $Sender->AddCssFile('yaga.css', 'yaga');
+    }
+  }
+
+  /**
+   * Add update routines to the DBA controller
+   *
+   * @param DbaController $Sender
+   */
+  public function DbaController_CountJobs_Handler($Sender) {
+    $Counts = array(
+        'BadgeAward' => array('CountBadges')
+    );
+
+    foreach($Counts as $Table => $Columns) {
+      foreach($Columns as $Column) {
+        $Name = "Recalculate $Table.$Column";
+        $Url = "/dba/counts.json?" . http_build_query(array('table' => $Table, 'column' => $Column));
+
+        $Sender->Data['Jobs'][$Name] = $Url;
+      }
     }
   }
 

@@ -157,4 +157,31 @@ class BadgeAwardModel extends Gdn_Model {
     return $this->Database->Query($Sql, array(':UserID' => $UserID))->Result();
   }
 
+  /**
+   * Used by the DBA controller to update the denormalized badge count on the
+   * user table via dba/counts
+   * @param string $Column
+   * @param int $UserID
+   * @return boolean
+   * @throws Gdn_UserException
+   */
+  public function Counts($Column, $UserID = NULL) {
+    if($UserID) {
+      $Where = array('UserID' => $UserID);
+    }
+    else {
+      $Where = NULL;
+    }
+    
+    $Result = array('Complete' => TRUE);
+    switch($Column) {
+      case 'CountBadges':
+        Gdn::Database()->Query(DBAModel::GetCountSQL('count', 'User', 'BadgeAward', 'CountBadges', 'BadgeAwardID', 'UserID', 'UserID', $Where));
+        break;
+      default:
+        throw new Gdn_UserException("Unknown column $Column");
+    }
+    return $Result;
+  }
+
 }
