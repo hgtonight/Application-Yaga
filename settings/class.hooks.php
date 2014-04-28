@@ -584,6 +584,69 @@ class YagaHooks implements Gdn_IPlugin {
   }
 
   /**
+    * Delete all of the Yaga related information for a specific user.
+    * @param int $UserID The ID of the user to delete.
+    * @param array $Options An array of options:
+    *  - DeleteMethod: One of delete, wipe, or NULL
+    * @since 1.0
+    */
+   protected function DeleteUserData($UserID, $Options = array(), &$Data = NULL) {
+    $SQL = Gdn::SQL();
+
+    $DeleteMethod = GetValue('DeleteMethod', $Options, 'delete');
+    if($DeleteMethod == 'delete') {
+      // Remove neutral/negative reactions
+      $Actions = Yaga::ActionModel()->GetWhere(array('AwardValue <' => 1))->Result();
+      foreach($Actions as $Negative) {
+        Gdn::UserModel()->GetDelete('Reactions', array('InsertUserID' => $UserID, 'ActionID' => $Negative->ActionID), $Data); 
+      }
+    }
+    else if($DeleteMethod == 'wipe') {
+      // Completely remove reactions
+      Gdn::UserModel()->GetDelete('Reactions', array('InsertUserID' => $UserID), $Data);
+    }
+    else {
+      // Leave reactions
+    }
+    
+    // Remove the reactions they have received
+    Gdn::UserModel()->GetDelete('BadgeAward', array('ParentAuthorID' => $UserID), $Data);
+
+    // Remove their badges
+    Gdn::UserModel()->GetDelete('BadgeAward', array('UserID' => $UserID), $Data);
+    
+    // Blank the user's yaga information
+    $SQL->Update('User')
+            ->Set(array(
+                'CountBadges' => 0,
+                'RankID' => NULL,
+                'RankProgression' => 0
+            ))
+            ->Where('UserID', $UserID)
+            ->Put();
+    
+    // Trigger a system wide point recount
+    // TODO: Look into point re-calculation
+  }
+
+  /**
+	 * Remove Yaga data when deleting a user.
+    *
+    * @since 1.0
+    * @package Yaga
+    *
+    * @param UserModel $Sender UserModel.
+    */
+   public function UserModel_BeforeDeleteUser_Handler($Sender) {
+      $UserID = GetValue('UserID', $Sender->EventArguments);
+      $Options = GetValue('Options', $Sender->EventArguments, array());
+      $Options = is_array($Options) ? $Options : array();
+      $Content =& $Sender->EventArguments['Content'];
+
+      $this->DeleteUserData($UserID, $Options, $Content);
+   }
+
+  /**
    * Add update routines to the DBA controller
    *
    * @param DbaController $Sender
