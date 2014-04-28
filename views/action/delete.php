@@ -1,15 +1,20 @@
-<?php if (!defined('APPLICATION')) exit(); ?>
+<?php if(!defined('APPLICATION')) exit();
 
-<h1><?php echo $this->Data('Title'); ?></h1>
+$ActionName = $this->Data('ActionName');
+$OtherActions = $this->Data('OtherActions', NULL);
 
-<?php
+echo Wrap($this->Data('Title'), 'h1');
+
 echo $this->Form->Open();
 echo $this->Form->Errors();
 
-echo '<div class="P">'.sprintf(T('Are you sure you want to delete this %s?'), T('Yaga.Action')).'</div>';
+echo Wrap(
+        $this->Form->Checkbox('Move', sprintf(T('Yaga.Action.Move'), $ActionName)) . ' ' . $this->Form->DropDown('ReplacementID', $OtherActions), 'div', array('class' => 'Info'));
+echo Wrap(
+        sprintf(T('Are you sure you want to delete this %s?'), $ActionName . ' ' . T('Yaga.Action')) .
+        Wrap(
+                $this->Form->Button('OK', array('class' => 'Button Primary')) .
+                $this->Form->Button('Cancel', array('type' => 'button', 'class' => 'Button Close')), 'div', array('class' => 'Buttons Buttons-Confirm')
+        ), 'div', array('class' => 'Info'));
 
-echo '<div class="Buttons Buttons-Confirm">';
-echo $this->Form->Button('OK', array('class' => 'Button Primary'));
-echo $this->Form->Button('Cancel', array('type' => 'button', 'class' => 'Button Close'));
-echo '<div>';
 echo $this->Form->Close();

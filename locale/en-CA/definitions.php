@@ -16,6 +16,8 @@ $Definition['Yaga.Transport.Return'] = 'Return to main Yaga settings page.';
 // Actions
 $Definition['Yaga.Reactions'] = 'Reactions';
 $Definition['Yaga.Action'] = 'Action';
+$Definition['Yaga.Action.Delete'] = 'Delete Action';
+$Definition['Yaga.Action.Move'] = 'Move the %s reactions?';
 $Definition['Yaga.Actions.Current'] = 'Current Reactions';
 $Definition['Yaga.ManageReactions'] = 'Manage Reactions';
 $Definition['Yaga.AddAction'] = 'Add Action';

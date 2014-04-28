@@ -97,7 +97,8 @@ class ActionModel extends Gdn_Model {
       if($ReplacementID && $this->Exists($ReplacementID)) {
         $this->SQL->Update('Reaction')
                 ->Set('ActionID', $ReplacementID)
-                ->Where('ActionID', $ActionID);
+                ->Where('ActionID', $ActionID)
+                ->Put();
       }
       else {
         $this->SQL->Delete('Reaction', array('ActionID' => $ActionID));

@@ -134,8 +134,25 @@ class ActionController extends DashboardController {
 
     $this->Permission('Yaga.Reactions.Manage');
 
+    $Actions = $this->ActionModel->Get();
+    // Cast to array of arrays until vanillaforums/Garden issue #1879 is fixed
+    foreach($Actions as $Index => $ActionObject) {
+      $Actions[$Index] = (array)$ActionObject;
+    }
+    
+    $Actions = ConsolidateArrayValuesByKey($Actions, 'ActionID', 'Name');
+    unset($Actions[$ActionID]);
+    //decho($Actions);
+    
+    $this->SetData('OtherActions', $Actions);
+    $this->SetData('ActionName', $Action->Name);
+    
     if($this->Form->IsPostBack()) {
-      if(!$this->ActionModel->Delete($ActionID)) {
+      $FormValues = $this->Form->FormValues();
+      $ReplacementID = $FormValues['Move'] ? $FormValues['ReplacementID'] : NULL;
+
+      //$Replacement
+      if(!$this->ActionModel->Delete($ActionID, $ReplacementID)) {
         $this->Form->AddError(sprintf(T('Yaga.Error.DeleteFailed'), T('Yaga.Action')));
       }
 
@@ -148,8 +165,8 @@ class ActionController extends DashboardController {
       }
     }
 
-    $this->AddSideMenu('badge/settings');
-    $this->SetData('Title', T('Delete Reaction'));
+    $this->AddSideMenu('action/settings');
+    $this->SetData('Title', T('Yaga.Action.Delete'));
     $this->Render();
   }
 

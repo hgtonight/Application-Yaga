@@ -51,6 +51,20 @@ jQuery(document).ready(function($) {
       $('#ActionIcons img.Selected').removeClass('Selected');
       $(this).addClass('Selected');
     });
+    
+    var DeleteForm = $("form[action*='action/delete']");
+    var OtherAction = DeleteForm.find('select');
+    OtherAction.hide();
+    
+    // Toggle the display of the dropdown with the checkbox
+    DeleteForm.find('input[type=checkbox]').click(function() {
+      if($(this).is(':checked')) {
+        OtherAction.slideDown(500);
+      }
+      else {
+        OtherAction.slideUp(300);
+      }
+    });
   });
 
   // If the form is already existing, trigger the event manually
