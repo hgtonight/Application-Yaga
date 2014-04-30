@@ -13,7 +13,7 @@ $ApplicationInfo['Yaga'] = array(
 	  'SettingsPermission' => 'Garden.Settings.Manage',
 
     // Application requirements
-    'RequiredApplications' => array('Vanilla' => '2.1b2'),
+    'RequiredApplications' => array('Vanilla' => '2.1'),
 
     // Application-specific permissions
     'RegisterPermissions'  => array(
