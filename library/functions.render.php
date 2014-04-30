@@ -6,7 +6,7 @@
  */
 /**
  * Renders a list of available actions that also contains the current count of
- * reactions an item has received
+ * reactions an item has received if allowed
  *
  * @param int $ID
  * @param string $Type 'discussion', 'activity', or 'comment'
@@ -17,10 +17,11 @@ if(!function_exists('RenderReactions')) {
 
   function RenderReactionList($ID, $Type, $Echo = TRUE) {
     $Reactions = Yaga::ReactionModel()->GetList($ID, $Type);
+    $ShowCount = Gdn::Session()->CheckPermission('Yaga.Reactions.View');
     $ActionsString = '';
     foreach($Reactions as $Action) {
       if(CheckPermission($Action->Permission)) {
-        $CountString = ($Action->Count) ? $Action->Count : '';
+        $CountString = ($ShowCount && $Action->Count) ? $Action->Count : '';
         $ActionsString .= Anchor(
                 Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID . ' ' . $Action->CssClass)) .
                 WrapIf($CountString, 'span', array('class' => 'Count')) .

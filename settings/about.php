@@ -19,7 +19,7 @@ $ApplicationInfo['Yaga'] = array(
     'RegisterPermissions'  => array(
         'Yaga.Reactions.Add',    // Can a user click on reactions?
         'Yaga.Reactions.Manage', // Can a user add/edit/delete actions?
-        'Yaga.Reactions.View',   // Can a user see reactions?
+        'Yaga.Reactions.View',   // Can a user see the reaction record?
         'Yaga.Reactions.Edit',   // Can a user remove other's reactions?
         'Yaga.Badges.Add',       // Can a user give out badges?
         'Yaga.Badges.Manage',    // Can a user adit/edit/delete badges from the system?
