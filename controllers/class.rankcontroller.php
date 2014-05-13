@@ -214,7 +214,7 @@ class RankController extends DashboardController {
       $RedirectUrl = 'rank/settings';
 
       if (Gdn::Session()->ValidateTransientKey($TransientKey)) {
-         SaveToConfig('Yaga.Ranks.Photo', NULL);
+         SaveToConfig('Yaga.Ranks.Photo', NULL, array('RemoveEmpty' => TRUE));
          $this->InformMessage(T('Yaga.RankPhotoDeleted'));
       }
 
