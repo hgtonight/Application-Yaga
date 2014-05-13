@@ -15,3 +15,4 @@ $Configuration['Modules']['Yaga']['Panel'] = array('MeModule', 'UserBoxModule', 
 $Configuration['Modules']['Yaga']['Content'] = array('MessageModule', 'MeModule', 'UserBoxModule', 'ProfileOptionsModule', 'Notices', 'ActivityFilterModule', 'ProfileFilterModule', 'BestFilterModule', 'Content', 'Ads');
 
 $Configuration['Yaga']['BestContent']['PerPage'] = 10;
+$Configuration['Yaga']['Ranks']['Photo'] = 'applications/yaga/design/images/default_promotion.png';

@@ -125,7 +125,7 @@ class RankModel extends Gdn_Model {
           'ActivityType' => 'RankPromotion',
           'ActivityUserID' => $UserID,
           'RegardingUserID' => $UserID,
-          'Photo' => 'uploads' . DS . C('Yaga.Ranks.Photo'),
+          'Photo' => C('Yaga.Ranks.Photo'),
           'RecordType' => 'Rank',
           'RecordID' => $Rank->RankID,
           'HeadlineFormat' => T('Yaga.HeadlineFormat.Promoted'),

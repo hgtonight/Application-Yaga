@@ -5,7 +5,7 @@ $PhotoString = '';
 $DelButton = '';
 $Photo = C('Yaga.Ranks.Photo', FALSE);
 if($Photo) {
-  $PhotoString = Img(Gdn_Upload::Url($Photo));
+  $PhotoString = Img($Photo);
   $DelButton = Anchor(T('Delete Photo'), CombinePaths(array('rank/deletephoto', Gdn::Session()->TransientKey())), 'SmallButton Danger PopConfirm');
 }
 
