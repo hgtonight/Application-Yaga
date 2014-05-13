@@ -94,6 +94,22 @@ class ReactionModel extends Gdn_Model {
             ->Where('ParentAuthorID', $UserID)
             ->GetCount();
   }
+  
+  /**
+   * Return the count of actions taken by a user
+   *
+   * @param int $UserID
+   * @param int $ActionID
+   * @return DataSet
+   */
+  public function GetUserTakenCount($UserID, $ActionID) {
+    return $this->SQL
+            ->Select()
+            ->From('Reaction')
+            ->Where('ActionID', $ActionID)
+            ->Where('InsertUserID', $UserID)
+            ->GetCount();
+  }
 
   /**
    * Sets a users reaction against another user's content. A user can only react

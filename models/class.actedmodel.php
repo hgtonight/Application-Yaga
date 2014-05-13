@@ -90,13 +90,59 @@ class ActedModel extends Gdn_Model {
 
     return $Content;
   }
+  
+  /**
+   * Returns a list of all posts of which a specific user has taken the
+   * specified action.
+   */
+  public function GetTaken($UserID, $ActionID, $Limit = NULL, $Offset = 0) {
+    $CacheKey = "yaga.profile.actions.{$UserID}.{$ActionID}";
+    $Content = Gdn::Cache()->Get($CacheKey);
+
+    if($Content == Gdn_Cache::CACHEOP_FAILURE) {
+
+      // Get matching Discussions
+      $Discussions = $this->_BaseSQL('Discussion')
+                      ->Join('Reaction r', 'd.DiscussionID = r.ParentID')
+                      ->Where('r.InsertUserID', $UserID)
+                      ->Where('r.ActionID', $ActionID)
+                      ->Where('r.ParentType', 'discussion')
+                      ->OrderBy('r.DateInserted', 'DESC')
+                      ->Get()->Result(DATASET_TYPE_ARRAY);
+
+      // Get matching Comments
+      $Comments = $this->_BaseSQL('Comment')
+                      ->Join('Reaction r', 'c.CommentID = r.ParentID')
+                      ->Where('r.InsertUserID', $UserID)
+                      ->Where('r.ActionID', $ActionID)
+                      ->Where('r.ParentType', 'comment')
+                      ->OrderBy('r.DateInserted', 'DESC')
+                      ->Get()->Result(DATASET_TYPE_ARRAY);
+
+      $this->JoinCategory($Comments);
+
+      // Interleave
+      $Content = $this->Union('DateInserted', array(
+          'Discussion' => $Discussions,
+          'Comment' => $Comments
+      ));
+      $this->Prepare($Content);
+
+      // Add result to cache
+      Gdn::Cache()->Store($CacheKey, $Content, array(
+          Gdn_Cache::FEATURE_EXPIRY => $this->_Expiry
+      ));
+    }
+
+    $this->Security($Content);
+    $this->Condense($Content, $Limit, $Offset);
+
+    return $Content;
+  }
 
   /**
-   *
-   * @param type $ActionID
-   * @param type $Limit
-   * @param type $Offset
-   * @return type
+   * Returns a list of all posts that has received at least one of the
+   * specified actions.
    */
   public function GetAction($ActionID, $Limit = NULL, $Offset = 0) {
     $CacheKey = "yaga.best.actions.{$ActionID}";
