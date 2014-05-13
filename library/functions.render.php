@@ -25,7 +25,10 @@ if(!function_exists('RenderReactions')) {
         $ActionsString .= Anchor(
                 Wrap('&nbsp;', 'span', array('class' => 'ReactSprite React-' . $Action->ActionID . ' ' . $Action->CssClass)) .
                 WrapIf($CountString, 'span', array('class' => 'Count')) .
-                Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'react/' . $Type . '/' . $ID . '/' . $Action->ActionID, 'Hijack ReactButton'
+                Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'react/' . $Type . '/' . $ID . '/' . $Action->ActionID,
+                array(
+                  'class' => 'Hijack ReactButton',
+                  'title' => $Action->Tooltip)
         );
       }
     }
