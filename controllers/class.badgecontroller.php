@@ -100,12 +100,17 @@ class BadgeController extends DashboardController {
 
         // Save the uploaded image
         $Parts = $Upload->SaveAs($TmpImage, 'yaga' . DS . $ImageBaseName);
+        $RelativeUrl = StringBeginsWith($Parts['Url'], Gdn_Url::WebRoot(TRUE), TRUE, TRUE);
 
-        $this->Form->SetFormValue('Photo', $Parts['SaveName']);
+        $this->Form->SetFormValue('Photo', $RelativeUrl);
+      }
+      else if(!$Edit) {
+        // Use default photo from config if this is a new badge
+        $this->Form->SetFormValue('Photo', C('Yaga.Badges.DefaultPhoto'));
       }
 
       // Find the rule criteria
-      $FormValues = $this->Form->FormValues();
+      $FormValues = $this->Form->FormValues();     
       $Criteria = array();
       foreach($FormValues as $Key => $Value) {
         if(substr($Key, 0, 7) == '_Rules/') {

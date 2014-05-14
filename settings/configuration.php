@@ -16,3 +16,4 @@ $Configuration['Modules']['Yaga']['Content'] = array('MessageModule', 'MeModule'
 
 $Configuration['Yaga']['BestContent']['PerPage'] = 10;
 $Configuration['Yaga']['Ranks']['Photo'] = 'applications/yaga/design/images/default_promotion.png';
+$Configuration['Yaga']['Badges']['DefaultPhoto'] = 'applications/yaga/design/images/default_badge.png';

@@ -27,12 +27,7 @@ echo Wrap(Anchor(T('Yaga.AddBadge'), 'badge/add', array('class' => 'SmallButton'
       $Alt = $Alt ? '' : 'Alt';
       $Row = '';
 
-      if($Badge->Photo) {
-        $BadgePhoto = Img(Gdn_Upload::Url($Badge->Photo), array('class' => 'BadgePhoto'));
-      }
-      else {
-        $BadgePhoto = Img('applications/yaga/design/images/default_badge.png', array('class' => 'BadgePhoto'));
-      }
+      $BadgePhoto = Img($Badge->Photo, array('class' => 'BadgePhoto'));
 
       $Row .= Wrap(Anchor($BadgePhoto, '/badges/detail/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name), array('title' => T('Yaga.Badge.DetailLink'))), 'td');
       $Row .= Wrap($Badge->Name, 'td');

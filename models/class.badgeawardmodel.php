@@ -80,7 +80,7 @@ class BadgeAwardModel extends Gdn_Model {
             'ActivityType' => 'BadgeAward',
             'ActivityUserID' => $UserID,
             'RegardingUserID' => $InsertUserID,
-            'Photo' => '/uploads/' . $Badge->Photo,
+            'Photo' => $Badge->Photo,
             'RecordType' => 'Badge',
             'RecordID' => $BadgeID,
             'Route' => '/badges/detail/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name),

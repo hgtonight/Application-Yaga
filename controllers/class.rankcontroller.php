@@ -58,7 +58,8 @@ class RankController extends DashboardController {
 
         // Save the uploaded image
         $Parts = $Upload->SaveAs($TmpImage, 'yaga' . DS . $ImageBaseName);
-        SaveToConfig('Yaga.Ranks.Photo', Gdn_Upload::Url($Parts['SaveName']));
+        $RelativeUrl = StringBeginsWith($Parts['Url'], Gdn_Url::WebRoot(TRUE), TRUE, TRUE);
+        SaveToConfig('Yaga.Ranks.Photo', $RelativeUrl);
 
         if(C('Yaga.Ranks.Photo') == $Parts['SaveName']) {
           $this->InformMessage(T('Yaga.Rank.PhotoUploaded'));
