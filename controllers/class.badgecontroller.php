@@ -226,7 +226,7 @@ class BadgeController extends DashboardController {
       $RedirectUrl = 'badge/edit/'.$BadgeID;
 
       if (Gdn::Session()->ValidateTransientKey($TransientKey)) {
-         $this->BadgeModel->SetField($BadgeID, 'Photo', NULL);
+         $this->BadgeModel->SetField($BadgeID, 'Photo', C('Yaga.Badges.DefaultPhoto'));
          $this->InformMessage(T('Yaga.BadgePhotoDeleted'));
       }
 
