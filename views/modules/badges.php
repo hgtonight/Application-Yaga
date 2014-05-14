@@ -7,7 +7,7 @@ echo '<div class="PhotoGrid">';
 foreach($this->Data as $Badge) {
   echo Anchor(
           Img(
-                  Gdn_Upload::Url($Badge['Photo']),
+                  $Badge['Photo'],
                   array('class' => 'ProfilePhoto ProfilePhotoSmall')
              ),
           'badges/detail/' . $Badge['BadgeID'] . '/' . Gdn_Format::Url($Badge['Name']),

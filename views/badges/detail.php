@@ -7,7 +7,7 @@ $RecentAwards = $this->Data('RecentAwards', FALSE);
 $AwardCount = $this->Data('AwardCount', 0);
 
 echo Wrap(
-        Img(Gdn_Upload::Url($Badge->Photo), array('class' => 'BadgePhotoDisplay')) .
+        Img($Badge->Photo, array('class' => 'BadgePhotoDisplay')) .
         Wrap($Badge->Name, 'h1') .
         Wrap($Badge->Description, 'p'),
         'div',
