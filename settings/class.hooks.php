@@ -598,19 +598,19 @@ class YagaHooks implements Gdn_IPlugin {
       // Remove neutral/negative reactions
       $Actions = Yaga::ActionModel()->GetWhere(array('AwardValue <' => 1))->Result();
       foreach($Actions as $Negative) {
-        Gdn::UserModel()->GetDelete('Reactions', array('InsertUserID' => $UserID, 'ActionID' => $Negative->ActionID), $Data); 
+        Gdn::UserModel()->GetDelete('Reaction', array('InsertUserID' => $UserID, 'ActionID' => $Negative->ActionID), $Data); 
       }
     }
     else if($DeleteMethod == 'wipe') {
       // Completely remove reactions
-      Gdn::UserModel()->GetDelete('Reactions', array('InsertUserID' => $UserID), $Data);
+      Gdn::UserModel()->GetDelete('Reaction', array('InsertUserID' => $UserID), $Data);
     }
     else {
       // Leave reactions
     }
     
     // Remove the reactions they have received
-    Gdn::UserModel()->GetDelete('BadgeAward', array('ParentAuthorID' => $UserID), $Data);
+    Gdn::UserModel()->GetDelete('Reaction', array('ParentAuthorID' => $UserID), $Data);
 
     // Remove their badges
     Gdn::UserModel()->GetDelete('BadgeAward', array('UserID' => $UserID), $Data);
