@@ -110,8 +110,8 @@ class ActionModel extends Gdn_Model {
 
   public function SaveSort($SortArray) {
     foreach($SortArray as $Index => $Action) {
-      // remove the 'Action_' prefix
-      $ActionID = substr($Action, 7);
+      // remove the 'ActionID_' prefix
+      $ActionID = substr($Action, 9);
       $this->SetField($ActionID, 'Sort', $Index);
     }
     return TRUE;
