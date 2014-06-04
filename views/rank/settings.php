@@ -31,7 +31,7 @@ echo Wrap(
         'div',
         array('class' => 'Wrap'));
 ?>
-<table id="Actions" class="AltRows">
+<table id="Ranks" class="Sortable AltRows">
   <thead>
     <tr>
       <th><?php echo T('Name'); ?></th>

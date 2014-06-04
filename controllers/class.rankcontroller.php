@@ -28,8 +28,8 @@ class RankController extends DashboardController {
     if($this->Menu) {
       $this->Menu->HighlightRoute('/rank');
     }
+    $this->AddJsFile('jquery-ui-1.10.0.custom.min.js');
     $this->AddJsFile('admin.ranks.js');
-    $this->AddCssFile('ranks.css');
   }
 
   /**
@@ -288,4 +288,21 @@ class RankController extends DashboardController {
     $this->Render();
   }
 
+  public function Sort() {
+      // Check permission
+      $this->Permission('Yaga.Ranks.Manage');
+
+      $Request = Gdn::Request();
+      if($Request->IsPostBack()) {
+         $SortArray = $Request->GetValue('SortArray', NULL);
+         $Saves = $this->RankModel->SaveSort($SortArray);
+         $this->SetData('Result', TRUE);
+         $this->SetData('Saves', $Saves);
+      }
+      else {
+        $this->SetData('Result', FALSE);
+      }
+
+      $this->RenderData();
+   }
 }

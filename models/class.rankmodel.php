@@ -35,7 +35,7 @@ class RankModel extends Gdn_Model {
       self::$_Ranks = $this->SQL
               ->Select()
               ->From('Rank')
-              ->OrderBy('Level')
+              ->OrderBy('Sort')
               ->Get()
               ->Result();
     }
@@ -166,5 +166,19 @@ class RankModel extends Gdn_Model {
     $this->EventArguments['Rank'] = $Rank;
     $this->EventArguments['UserID'] = $UserID;
     $this->FireEvent('AfterRankChange');
+  }
+  
+  public function SaveSort($SortArray) {
+    foreach($SortArray as $Index => $Rank) {
+      // skip the header row
+      if($Index == 0) {
+        continue;
+      }
+      
+      // remove the 'RankID_' prefix
+      $RankID = substr($Rank, 7);
+      $this->SetField($RankID, 'Sort', $Index);
+    }
+    return TRUE;
   }
 }
