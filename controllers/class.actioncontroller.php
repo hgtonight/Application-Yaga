@@ -174,16 +174,17 @@ class ActionController extends DashboardController {
       // Check permission
       $this->Permission('Yaga.Reactions.Manage');
 
-      // Set delivery type to true/false
-      $TransientKey = GetIncomingValue('TransientKey');
-      if (Gdn::Request()->IsPostBack()) {
-         $SortArray = GetValue('SortArray', $_POST);
+      $Request = Gdn::Request();
+      if($Request->IsPostBack()) {
+         $SortArray = $Request->GetValue('SortArray', NULL);
          $Saves = $this->ActionModel->SaveSort($SortArray);
          $this->SetData('Result', TRUE);
          $this->SetData('Saves', $Saves);
       }
+      else {
+        $this->SetData('Result', FALSE);
+      }
 
-      // Renders true/false rather than template
-      $this->Render();
+      $this->RenderData();
    }
 }
