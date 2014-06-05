@@ -37,5 +37,28 @@ jQuery(document).ready(function($) {
       return ui;
     }
   });
-
+  
+  $('.TickDown input').each(function() {
+    var DefaultVal = $(this).val();
+    if(DefaultVal == -1 || DefaultVal == '') {
+      
+    }
+  });
+  
+  // Toggle requirements input
+  $('.ReqTick').on('change', function() {
+    var Item = $(this).parents('li').next('.TickDown');
+    if($(this).is(':checked')) {
+      if(Item.children('input').val() == -1) {
+          Item.children('input').val('');
+        }
+      Item.slideDown();
+    }
+    else {
+      Item.slideUp(function(){
+        Item.children('input').val('-1');
+      });
+    }
+  });
+  
 });

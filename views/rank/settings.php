@@ -37,6 +37,8 @@ echo Wrap(
       <th><?php echo T('Name'); ?></th>
       <th><?php echo T('Description'); ?></th>
       <th><?php echo T('Points Required'); ?></th>
+      <th><?php echo T('Posts Required'); ?></th>
+      <th><?php echo T('Age Required'); ?></th>
       <th><?php echo T('Role Award'); ?></th>
       <th><?php echo T('Auto Award'); ?></th>
       <th><?php echo T('Options'); ?></th>
@@ -50,7 +52,9 @@ echo Wrap(
       $Row = '';
       $Row .= Wrap($Rank->Name, 'td');
       $Row .= Wrap($Rank->Description, 'td');
-      $Row .= Wrap($Rank->Level, 'td');
+      $Row .= Wrap(($Rank->RequiredPoints == -1) ? 'None' : $Rank->RequiredPoints, 'td');
+      $Row .= Wrap(($Rank->RequiredPosts == -1) ? 'None' : $Rank->RequiredPosts, 'td');
+      $Row .= Wrap(($Rank->RequiredLengthOfService == -1) ? 'None' : $Rank->RequiredLengthOfService, 'td');
       $Row .= Wrap($Rank->Role, 'td');
       $ToggleText = ($Rank->Enabled) ? T('Enabled') : T('Disabled');
       $ActiveClass = ($Rank->Enabled) ? 'Active' : 'InActive';

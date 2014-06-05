@@ -27,8 +27,35 @@ echo $this->Form->Errors();
   </li>
   <li>
     <?php
-    echo $this->Form->Label('Points Required', 'Level');
-    echo $this->Form->TextBox('Level');
+    echo $this->Form->CheckBox('Tick_RequiredPoints', 'Use account age threshold?', array('class' => 'ReqTick'));
+    ?>
+  </li>
+  <li class="TickDown">
+    <?php
+    echo $this->Form->Label('Points Required', 'RequiredPoints');
+    echo $this->Form->TextBox('RequiredPoints');
+    ?>
+  </li>
+  <li>
+    <?php
+    echo $this->Form->CheckBox('Tick_RequiredPosts', 'Use account age threshold?', array('class' => 'ReqTick'));
+    ?>
+  </li>
+  <li class="TickDown">
+    <?php
+    echo $this->Form->Label('Posts Required', 'RequiredPosts');
+    echo $this->Form->TextBox('RequiredPosts');
+    ?>
+  </li>
+  <li>
+    <?php
+    echo $this->Form->CheckBox('Tick_RequiredLengthOfService', 'Use account age threshold?', array('class' => 'ReqTick'));
+    ?>
+  </li>
+  <li class="TickDown">
+    <?php
+    echo $this->Form->Label('Age Required', 'RequiredLengthOfService');
+    echo $this->Form->TextBox('RequiredLengthOfService');
     ?>
   </li>
   <li>
