@@ -517,13 +517,6 @@ class YagaHooks implements Gdn_IPlugin {
     // Let's us use __FUNCTION__ in the original hook
     $Hook = str_ireplace('_Handler', '', $Handler);
 
-    if(Debug()) {
-      $Controller = Gdn::Controller();
-      if($Controller) {
-        $Controller->InformMessage("Checking for awards on $Hook");
-      }
-    }
-
     $UserID = $Session->UserID;
     $User = $Session->User;
 
