@@ -37,7 +37,7 @@ class RankController extends DashboardController {
    *
    * @param int $Page
    */
-  public function Settings($Page = '') {
+  public function Settings() {
     $this->Permission('Yaga.Ranks.Manage');
     $this->AddSideMenu('rank/settings');
 
@@ -90,26 +90,24 @@ class RankController extends DashboardController {
       $this->Title(T('Yaga.EditRank'));
     }
 
-     // Load up all roles
+    // Load up all roles
     $RoleModel = new RoleModel();
     $Roles = $RoleModel->GetArray();
     $this->SetData('Roles', $Roles);
 
-    if($this->Form->IsPostBack() == FALSE) {
+    if($this->Form->IsPostBack() != TRUE) {
       if(property_exists($this, 'Rank')) {
         $this->Form->SetData($this->Rank);
       }
     }
-    else {
-      if($this->Form->Save()) {
-        if($Edit) {
-          $this->InformMessage(T('Yaga.RankUpdated'));
-        }
-        else {
-          $this->InformMessage(T('Yaga.RankAdded'));
-        }
-        Redirect('/rank/settings');
+    else if($this->Form->Save()) {
+      if($Edit) {
+        $this->InformMessage(T('Yaga.RankUpdated'));
       }
+      else {
+        $this->InformMessage(T('Yaga.RankAdded'));
+      }
+      Redirect('/rank/settings');
     }
 
     $this->Render('edit');
