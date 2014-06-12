@@ -101,21 +101,6 @@ class RankController extends DashboardController {
       }
     }
     else {
-      // Handle the photo upload
-      $Upload = new Gdn_Upload();
-      $TmpImage = $Upload->ValidateUpload('PhotoUpload', FALSE);
-
-      if($TmpImage) {
-        // Generate the target image name
-        $TargetImage = $Upload->GenerateTargetName(PATH_UPLOADS);
-        $ImageBaseName = pathinfo($TargetImage, PATHINFO_BASENAME);
-
-        // Save the uploaded image
-        $Parts = $Upload->SaveAs($TmpImage, 'ranks/' . $ImageBaseName);
-
-        $this->Form->SetFormValue('Photo', $Parts['SaveName']);
-      }
-
       if($this->Form->Save()) {
         if($Edit) {
           $this->InformMessage(T('Yaga.RankUpdated'));
