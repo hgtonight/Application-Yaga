@@ -72,9 +72,9 @@ class RankModel extends Gdn_Model {
     $Rank = $this->SQL
                     ->Select()
                     ->From('Rank')
-                    ->Where('Level <=', $Points)
+                    ->Where('RequiredPoints <=', $Points)
                     ->Where('Enabled', '1')
-                    ->OrderBy('Level', 'Desc')
+                    ->OrderBy('Sort')
                     ->Get()
                     ->FirstRow();
     return $Rank;
