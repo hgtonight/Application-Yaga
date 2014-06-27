@@ -67,7 +67,7 @@ $Construct->Table('Rank')
         ->Column('RequiredPoints', 'int', -1)
         ->Column('RequiredPosts', 'int', -1)
         ->Column('RequiredLengthOfService', 'int', -1)
-        ->Column('Role', 'text', NULL)
+        ->Column('Perks', 'text', TRUE)
         ->Column('Enabled', 'tinyint(1)', '1')
         ->Set($Explicit, $Drop);
 
