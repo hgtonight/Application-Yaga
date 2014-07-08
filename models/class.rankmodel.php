@@ -106,14 +106,14 @@ class RankModel extends Gdn_Model {
   
   public function GetPerkRoleIDs($RankID) {
     $Perks = $this->GetPerks($RankID);
-    
+      
     $RoleIDs = array();
-    foreach($Perks as $Perk) {
-      if($Perk['Type'] == 'Role') {
-        $RoleIDs[] = $Perk['RoleID'];
+    foreach($Perks as $Perk => $Value) {
+      if(substr($Perk, 0, 4) === 'Role') {
+        $RoleIDs[] = $Value;
       }
     }
-    
+
     return $RoleIDs;
   }
 
