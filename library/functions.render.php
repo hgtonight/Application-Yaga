@@ -102,7 +102,15 @@ if(!function_exists('PerkPermissionForm')) {
 }
 
 if(!function_exists('PerkConfigurationForm')) {
-  function PerkConfigurationForm($Config, $Label, $Options) {
+  function PerkConfigurationForm($Config, $Label, $Options = NULL) {
+    if(is_null($Options)) {
+      // Default to a true/false/default array
+      $Options = array(
+          '' => T('Default'),
+          1 => T('Enabled'),
+          0 => T('Disabled')
+      );
+    }
     // Add a default option
     $Options = $Options + array('' => T('Default'));
     $Form = Gdn::Controller()->Form;
