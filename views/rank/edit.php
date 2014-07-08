@@ -77,6 +77,16 @@ echo $this->Form->Errors();
     PerkPermissionForm('Plugins.Tagging.Add', 'Add Tags');
     ?>
   </li>
+  <li>
+    <?php
+    PerkConfigurationForm('Plugins.Emotify.FormatEmoticons', 'Format Emoticons');
+    ?>
+  </li>
+  <li>
+    <?php
+    PerkConfigurationForm('Garden.Format.MeActions', 'Format /me Actions');
+    ?>
+  </li>
   <?php
     $this->FireEvent('PerkOptions');
     
