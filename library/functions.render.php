@@ -87,3 +87,28 @@ if(!function_exists('ActionRow')) {
                             Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'div', array('class' => 'Preview Reactions')), 'div', array('class' => 'Action')), 'li', array('id' => 'ActionID_' . $Action->ActionID));
   }
 }
+
+if(!function_exists('PerkPermissionForm')) {
+  function PerkPermissionForm($Perm, $Label) {
+    $Form = Gdn::Controller()->Form;
+    $Fieldname = 'Perm' . $Perm;
+    echo $Form->Label($Label, $Fieldname);
+    echo $Form->Dropdown($Fieldname, array(
+        '' => T('Default'),
+        'grant' => T('Grant'),
+        'revoke' => T('Revoke')
+    ));
+  }
+}
+
+if(!function_exists('PerkConfigurationForm')) {
+  function PerkConfigurationForm($Config, $Label, $Options) {
+    // Add a default option
+    $Options = $Options + array('' => T('Default'));
+    $Form = Gdn::Controller()->Form;
+    $Fieldname = 'Conf' . $Config;
+    echo $Form->Label($Label, $Fieldname);
+    echo $Form->Dropdown($Fieldname, $Options);
+  }
+}
+    

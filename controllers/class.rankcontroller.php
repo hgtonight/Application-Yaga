@@ -81,13 +81,15 @@ class RankController extends DashboardController {
     $this->AddSideMenu('rank/settings');
     $this->Form->SetModel($this->RankModel);
 
-    $this->Title(T('Yaga.AddRank'));
     $Edit = FALSE;
     if($RankID) {
+      $this->Title(T('Yaga.EditRank'));
       $this->Rank = $this->RankModel->GetByID($RankID);
       $this->Form->AddHidden('RankID', $RankID);
       $Edit = TRUE;
-      $this->Title(T('Yaga.EditRank'));
+    }
+    else {
+      $this->Title(T('Yaga.AddRank'));
     }
 
     // Load up all roles
@@ -97,17 +99,46 @@ class RankController extends DashboardController {
 
     if($this->Form->IsPostBack() != TRUE) {
       if(property_exists($this, 'Rank')) {
-        $this->Form->SetData($this->Rank);
+        $PerkOptions = (array) unserialize($this->Rank->Perks);
+        $RankArray = (array) $this->Rank;
+
+        $Data = array_merge($RankArray, $PerkOptions);
+        $this->Form->SetData($Data);
       }
     }
-    else if($this->Form->Save()) {
-      if($Edit) {
-        $this->InformMessage(T('Yaga.RankUpdated'));
+    else {
+      // Find the perk options
+      $FormValues = $this->Form->FormValues();     
+      $PerkOptions = array();
+      foreach($FormValues as $Key => $Value) {
+        // Don't save default settings
+        if($Value === '') {
+          continue;
+        }
+        
+        if(substr($Key, 0, 7) == '_Perks/') {
+          $RealKey = substr($Key, 7);
+          $PerkOptions[$RealKey] = $Value;
+          var_dump($RealKey);
+          var_dump($Value);
+        }
       }
-      else {
-        $this->InformMessage(T('Yaga.RankAdded'));
+
+      // Fire event for validating perk options
+      $this->EventArguments['PerkOptions'] =& $PerkOptions;
+      $this->FireEvent('BeforeValidation');
+      
+      $this->Form->SetFormValue('Perks', serialize($PerkOptions));
+
+      if($this->Form->Save()) {
+        if($Edit) {
+          $this->InformMessage(T('Yaga.RankUpdated'));
+        }
+        else {
+          $this->InformMessage(T('Yaga.RankAdded'));
+        }
+        Redirect('/rank/settings');
       }
-      Redirect('/rank/settings');
     }
 
     $this->Render('edit');
@@ -288,4 +319,5 @@ class RankController extends DashboardController {
 
       $this->RenderData();
    }
+  
 }

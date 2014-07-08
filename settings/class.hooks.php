@@ -435,24 +435,24 @@ class YagaHooks implements Gdn_IPlugin {
 
     $RankModel = Yaga::RankModel();
     $Perks = $RankModel->GetPerks($RankID);
-
+    
     // Apply all the perks
-    foreach($Perks as $Perk) {
-      switch($Perk['Type']) {
-        case 'GrantPermission':
-          $this->_GrantPermission($User, $Perk['Name']);
-          break;
-        case 'RevokePermission':
-          $this->_RevokePermission($User, $Perk['Name']);
-          break;
-        case 'CustomConfig':
-          $this->_ApplyCustomConfigs($Perk['Name'], $Perk['Value']);
-          break;
-        case 'Role':
-          // Roles are applied when the rank changes
-          break;
-        default:
-          break;
+    foreach($Perks as $Perk => $PerkValue) {
+      $PerkType = substr($Perk, 0, 4);
+      $PerkKey = substr($Perk, 4);
+      
+      if($PerkType === 'Conf') {
+        $this->_ApplyCustomConfigs($PerkKey, $PerkValue);
+      }
+      else if($PerkType === 'Perm' && $PerkValue === 'grant') {
+        $this->_GrantPermission($User, $PerkKey);
+      }
+      else if($PerkType === 'Perm' && $PerkValue === 'revoke') {
+        $this->_RevokePermission($User, $PerkKey);
+      }
+      else {
+        // Do nothing
+        // TODO: look into firing a custom event
       }
     }
   }
