@@ -119,8 +119,6 @@ class RankController extends DashboardController {
         if(substr($Key, 0, 7) == '_Perks/') {
           $RealKey = substr($Key, 7);
           $PerkOptions[$RealKey] = $Value;
-          var_dump($RealKey);
-          var_dump($Value);
         }
       }
 
