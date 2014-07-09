@@ -8,6 +8,7 @@ if($Photo) {
   $PhotoString = Img($Photo);
   $DelButton = Anchor(T('Delete Photo'), CombinePaths(array('rank/deletephoto', Gdn::Session()->TransientKey())), 'SmallButton Danger PopConfirm');
 }
+$AgeArray = $this->_AgeArray();
 
 echo Wrap($this->Title(), 'h1');
 
@@ -51,9 +52,9 @@ echo Wrap(
       $Row = '';
       $Row .= Wrap($Rank->Name, 'td');
       $Row .= Wrap($Rank->Description, 'td');
-      $Row .= Wrap(($Rank->RequiredPoints == -1) ? 'None' : $Rank->RequiredPoints, 'td');
-      $Row .= Wrap(($Rank->RequiredPosts == -1) ? 'None' : $Rank->RequiredPosts, 'td');
-      $Row .= Wrap(($Rank->RequiredLengthOfService == -1) ? 'None' : $Rank->RequiredLengthOfService, 'td');
+      $Row .= Wrap($Rank->PointReq, 'td');
+      $Row .= Wrap($Rank->PostReq, 'td');
+      $Row .= Wrap($AgeArray[$Rank->AgeReq], 'td');
       $ToggleText = ($Rank->Enabled) ? T('Enabled') : T('Disabled');
       $ActiveClass = ($Rank->Enabled) ? 'Active' : 'InActive';
       $Row .= Wrap(Wrap(Anchor($ToggleText, 'rank/toggle/' . $Rank->RankID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');

@@ -46,14 +46,14 @@ $SQL->Insert('Badge', array(
 $SQL->Insert('Rank', array(
     'Name' => 'Entry Level',
     'Description' => 'You are in the minor leagues. I suggest you work on your content to progress.',
-    'RequiredPoints' => 1,
+    'PointReq' => 1,
     'Sort' => 1,
     'Enabled' => 0
 ));
 $SQL->Insert('Rank', array(
     'Name' => 'Big Time',
     'Description' => 'You have hit the big time! Keep up the good work.',
-    'RequiredPoints' => 100,
+    'PointReq' => 100,
     'Sort' => 2,
     'Role' => 4,
     'Enabled' => 0

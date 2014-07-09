@@ -21,20 +21,20 @@ echo $this->Form->Errors();
   </li>
   <li>
     <?php
-    echo $this->Form->Label('Points Required', 'RequiredPoints');
-    echo $this->Form->TextBox('RequiredPoints');
+    echo $this->Form->Label('Points Required', 'PointReq');
+    echo $this->Form->TextBox('PointReq');
     ?>
   </li>
   <li>
     <?php
-    echo $this->Form->Label('Posts Required', 'RequiredPosts');
-    echo $this->Form->TextBox('RequiredPosts');
+    echo $this->Form->Label('Posts Required', 'PostReq');
+    echo $this->Form->TextBox('PostReq');
     ?>
   </li>
   <li>
     <?php
-    echo $this->Form->Label('Age Required', 'RequiredLengthOfService');
-    echo $this->Form->TextBox('RequiredLengthOfService');
+    echo $this->Form->Label('Age Required', 'AgeReq');
+    echo $this->Form->Dropdown('AgeReq', $this->_AgeArray());
     ?>
   </li>
   <li>
