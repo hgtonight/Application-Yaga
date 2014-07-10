@@ -8,7 +8,7 @@ if($Photo) {
   $PhotoString = Img($Photo);
   $DelButton = Anchor(T('Delete Photo'), CombinePaths(array('rank/deletephoto', Gdn::Session()->TransientKey())), 'SmallButton Danger PopConfirm');
 }
-$AgeArray = $this->_AgeArray();
+$AgeArray = AgeArray();
 
 echo Wrap($this->Title(), 'h1');
 

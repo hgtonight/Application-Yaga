@@ -34,7 +34,7 @@ echo $this->Form->Errors();
   <li>
     <?php
     echo $this->Form->Label('Age Required', 'AgeReq');
-    echo $this->Form->Dropdown('AgeReq', $this->_AgeArray());
+    echo $this->Form->Dropdown('AgeReq', AgeArray());
     ?>
   </li>
   <li>
@@ -59,39 +59,27 @@ echo $this->Form->Errors();
     echo $this->Form->Dropdown('Role', $this->Data('Roles'), array('IncludeNULL' => TRUE));
     ?>
   </li>
-  <li>
-    <?php
-    PerkConfigurationForm('Garden.EditContentTimeout', 'Edit Timeout', array('0' => T('Authors may never edit'),
-                        '350' => sprintf(T('Authors may edit for %s'), T('5 minutes')), 
-                        '900' => sprintf(T('Authors may edit for %s'), T('15 minutes')), 
-                       '3600' => sprintf(T('Authors may edit for %s'), T('1 hour')),
-                      '14400' => sprintf(T('Authors may edit for %s'), T('4 hours')),
-                      '86400' => sprintf(T('Authors may edit for %s'), T('1 day')),
-                     '604800' => sprintf(T('Authors may edit for %s'), T('1 week')),
-                    '2592000' => sprintf(T('Authors may edit for %s'), T('1 month')),
-                         '-1' => T('Authors may always edit')));
-    ?>
-  </li>
-  <li>
-    <?php    
-    PerkPermissionForm('Plugins.Tagging.Add', 'Add Tags');
-    ?>
-  </li>
-  <li>
-    <?php
-    PerkConfigurationForm('Plugins.Emotify.FormatEmoticons', 'Format Emoticons');
-    ?>
-  </li>
-  <li>
-    <?php
-    PerkConfigurationForm('Garden.Format.MeActions', 'Format /me Actions');
-    ?>
-  </li>
   <?php
-    $this->FireEvent('PerkOptions');
-    
-    // Restore the prefix
-    $this->Form->InputPrefix = $Prefix;
+  RenderPerkConfigurationForm('Garden.EditContentTimeout', 'Edit Timeout', array('0' => T('Authors may never edit'),
+                      '350' => sprintf(T('Authors may edit for %s'), T('5 minutes')), 
+                      '900' => sprintf(T('Authors may edit for %s'), T('15 minutes')), 
+                     '3600' => sprintf(T('Authors may edit for %s'), T('1 hour')),
+                    '14400' => sprintf(T('Authors may edit for %s'), T('4 hours')),
+                    '86400' => sprintf(T('Authors may edit for %s'), T('1 day')),
+                   '604800' => sprintf(T('Authors may edit for %s'), T('1 week')),
+                  '2592000' => sprintf(T('Authors may edit for %s'), T('1 month')),
+                       '-1' => T('Authors may always edit')));
+
+  RenderPerkPermissionForm('Plugins.Tagging.Add', 'Add Tags');
+
+  RenderPerkConfigurationForm('Plugins.Emotify.FormatEmoticons', 'Format Emoticons');
+
+  RenderPerkConfigurationForm('Garden.Format.MeActions', 'Format /me Actions');
+
+  $this->FireEvent('PerkOptions');
+
+  // Restore the prefix
+  $this->Form->InputPrefix = $Prefix;
   ?>
 </ul>
 <?php
