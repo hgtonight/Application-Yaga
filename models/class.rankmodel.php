@@ -17,6 +17,12 @@ class RankModel extends Gdn_Model {
    * @var DataSet
    */
   private static $_Ranks = NULL;
+  
+  /**
+   * Used as a cache
+   * @var DataSet
+   */
+  private static $_Perks = array();
 
   /**
    * Defines the related database table name.
@@ -35,7 +41,7 @@ class RankModel extends Gdn_Model {
       self::$_Ranks = $this->SQL
               ->Select()
               ->From('Rank')
-              ->OrderBy('Level')
+              ->OrderBy('Sort')
               ->Get()
               ->Result();
     }
@@ -53,31 +59,72 @@ class RankModel extends Gdn_Model {
    * @return DataSet
    */
   public function GetByID($RankID) {
-    $Rank = $this->SQL
-                    ->Select()
-                    ->From('Rank')
-                    ->Where('RankID', $RankID)
-                    ->Get()
-                    ->FirstRow();
-    return $Rank;
+    $Ranks = $this->Get();
+    
+    foreach($Ranks as $Rank) {
+      if($Rank->RankID == $RankID) {
+        return $Rank;
+      }
+    }
+    
+    return NULL;
   }
 
   /**
-   * Returns the nearest rank below the value passed
+   * Returns the highest rank a user can currently achieve
    *
-   * @param int $Points
-   * @return DataSet
+   * @param object $User
+   * @return mixed NULL if no qualifying ranks are found, Rank object otherwise
    */
-  public function GetByPoints($Points) {
-    $Rank = $this->SQL
-                    ->Select()
-                    ->From('Rank')
-                    ->Where('Level <=', $Points)
-                    ->Where('Enabled', '1')
-                    ->OrderBy('Level', 'Desc')
-                    ->Get()
-                    ->FirstRow();
-    return $Rank;
+  public function GetHighestQualifyingRank($User) {
+    $Points = $User->Points;
+    $Posts = $User->CountDiscussions + $User->CountComments;
+    $StartDate = strtotime($User->DateInserted);
+    
+    $Ranks = $this->Get();
+    
+    $HighestRank = NULL;
+    foreach($Ranks as $Rank) {
+      $TargetDate = time() - $Rank->AgeReq;
+      if($Points >= $Rank->PointReq && $Posts >= $Rank->PostReq && $StartDate <= $TargetDate) {
+        $HighestRank = $Rank;
+      }
+      else {
+        // Don't continue if we do not qualify
+        break;
+      }
+    }
+
+    return $HighestRank;
+  }
+  
+  public function GetPerks($RankID) {
+    if(!array_key_exists($RankID, self::$_Perks)) {
+      $Ranks = $this->Get();
+      foreach($Ranks as $Rank) {
+        self::$_Perks[$Rank->RankID] = unserialize($Rank->Perks);
+        
+        // TODO: Remove once interface is done
+        if(self::$_Perks[$Rank->RankID] === FALSE) {
+          self::$_Perks[$Rank->RankID] = array();
+        }
+      }
+    }
+    
+    return self::$_Perks[$RankID];
+  }
+  
+  public function GetPerkRoleIDs($RankID) {
+    $Perks = $this->GetPerks($RankID);
+      
+    $RoleIDs = array();
+    foreach($Perks as $Perk => $Value) {
+      if(substr($Perk, 0, 4) === 'Role') {
+        $RoleIDs[] = $Value;
+      }
+    }
+
+    return $RoleIDs;
   }
 
   /**
@@ -144,27 +191,56 @@ class RankModel extends Gdn_Model {
 
       $ActivityModel->SaveQueue();
     }
+    
     // Update the rank id
     $UserModel = Gdn::UserModel();
+    $OldRankID = $UserModel->GetID($UserID)->RankID;
+    
     $UserModel->SetField($UserID, 'RankID', $Rank->RankID);
 
-    // Get the user's roles
-    $CurrentRoleData = $UserModel->GetRoles($UserID);
-    $CurrentRoleIDs = ConsolidateArrayValuesByKey($CurrentRoleData->Result(), 'RoleID');
-
-    // Remove the old roles
-    $TempRoleIDs = array_diff($CurrentRoleIDs, array($OldRank->Role));
-
-    // Add our selected roles
-    $NewRoleIDs = array_unique(array_merge($TempRoleIDs, array($Rank->Role)));
-
-    // Set the combined roles
-    if($NewRoleIDs != $CurrentRoleIDs) {
-      $UserModel->SaveRoles($UserID, $NewRoleIDs);
-    }
-
+    // Update the roles if necessary
+    $this->_UpdateUserRoles($UserID, $OldRankID, $Rank->RankID);
+    
     $this->EventArguments['Rank'] = $Rank;
     $this->EventArguments['UserID'] = $UserID;
     $this->FireEvent('AfterRankChange');
+  }
+  
+  public function SaveSort($SortArray) {
+    foreach($SortArray as $Index => $Rank) {
+      // skip the header row
+      if($Index == 0) {
+        continue;
+      }
+      
+      // remove the 'RankID_' prefix
+      $RankID = substr($Rank, 7);
+      $this->SetField($RankID, 'Sort', $Index);
+    }
+    return TRUE;
+  }
+  
+  private function _UpdateUserRoles($UserID, $OldRankID, $NewRankID) {
+    $UserModel = Gdn::UserModel();
+    
+    // Get the user's current roles
+    $CurrentRoleData = $UserModel->GetRoles($UserID);
+    $CurrentRoleIDs = ConsolidateArrayValuesByKey($CurrentRoleData->Result(), 'RoleID');
+
+    // Get the associated role perks
+    $OldPerkRoles = $this->GetPerkRoleIDs($OldRankID);
+    $NewPerkRoles = $this->GetPerkRoleIDs($NewRankID);
+
+    // Remove any role perks the old rank had
+    $TempRoleIDs = array_diff($CurrentRoleIDs, $OldPerkRoles);
+
+    // Add our selected roles
+    $NewRoleIDs = array_unique(array_merge($TempRoleIDs, $NewPerkRoles));
+
+    // Set the combined roles
+    if($NewRoleIDs != $CurrentRoleIDs) {
+      $UserModel->SaveRoles($UserID, $NewRoleIDs, FALSE);
+    }
+
   }
 }

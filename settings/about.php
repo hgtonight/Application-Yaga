@@ -17,14 +17,14 @@ $ApplicationInfo['Yaga'] = array(
 
     // Application-specific permissions
     'RegisterPermissions'  => array(
-        'Yaga.Reactions.Add',    // Can a user click on reactions?
-        'Yaga.Reactions.Manage', // Can a user add/edit/delete actions?
-        'Yaga.Reactions.View',   // Can a user see the reaction record?
-        'Yaga.Reactions.Edit',   // Can a user remove other's reactions?
-        'Yaga.Badges.Add',       // Can a user give out badges?
-        'Yaga.Badges.Manage',    // Can a user adit/edit/delete badges from the system?
-        'Yaga.Badges.View',      // Can a user view badges?
-        'Yaga.Ranks.Add',        // Can a user assign ranks manually?
-        'Yaga.Ranks.Manage',     // Can a user adit/edit/delete ranks from the system?
+        'Yaga.Reactions.Add' => 1,    // Can a user click on reactions?
+        'Yaga.Reactions.Manage' => 0, // Can a user add/edit/delete actions?
+        'Yaga.Reactions.View' => 1,   // Can a user see the reaction record?
+        'Yaga.Reactions.Edit' => 0,   // Can a user remove other's reactions?
+        'Yaga.Badges.Add' => 0,       // Can a user give out badges?
+        'Yaga.Badges.Manage' => 0,    // Can a user adit/edit/delete badges from the system?
+        'Yaga.Badges.View' => 1,      // Can a user view badges?
+        'Yaga.Ranks.Add' => 0,        // Can a user assign ranks manually?
+        'Yaga.Ranks.Manage' => 0,     // Can a user adit/edit/delete ranks from the system?
     )
 );

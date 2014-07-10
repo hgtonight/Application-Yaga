@@ -87,3 +87,40 @@ if(!function_exists('ActionRow')) {
                             Wrap($Action->Name, 'span', array('class' => 'ReactLabel')), 'div', array('class' => 'Preview Reactions')), 'div', array('class' => 'Action')), 'li', array('id' => 'ActionID_' . $Action->ActionID));
   }
 }
+
+if(!function_exists('RenderPerkPermissionForm')) {
+  function RenderPerkPermissionForm($Perm, $Label) {
+    $Form = Gdn::Controller()->Form;
+    $Fieldname = 'Perm' . $Perm;
+    echo '<li>';
+    echo $Form->Label($Label, $Fieldname);
+    echo $Form->Dropdown($Fieldname, array(
+        '' => T('Default'),
+        'grant' => T('Grant'),
+        'revoke' => T('Revoke')
+    ));
+    echo '</li>';
+  }
+}
+
+if(!function_exists('RenderPerkConfigurationForm')) {
+  function RenderPerkConfigurationForm($Config, $Label, $Options = NULL) {
+    if(is_null($Options)) {
+      // Default to a true/false/default array
+      $Options = array(
+          '' => T('Default'),
+          1 => T('Enabled'),
+          0 => T('Disabled')
+      );
+    }
+    // Add a default option
+    $Options = $Options + array('' => T('Default'));
+    $Form = Gdn::Controller()->Form;
+    $Fieldname = 'Conf' . $Config;
+    echo '<li>';
+    echo $Form->Label($Label, $Fieldname);
+    echo $Form->Dropdown($Fieldname, $Options);
+    echo '</li>';
+  }
+}
+    

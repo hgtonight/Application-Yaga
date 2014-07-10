@@ -28,8 +28,8 @@ class RankController extends DashboardController {
     if($this->Menu) {
       $this->Menu->HighlightRoute('/rank');
     }
+    $this->AddJsFile('jquery-ui-1.10.0.custom.min.js');
     $this->AddJsFile('admin.ranks.js');
-    $this->AddCssFile('ranks.css');
   }
 
   /**
@@ -37,7 +37,7 @@ class RankController extends DashboardController {
    *
    * @param int $Page
    */
-  public function Settings($Page = '') {
+  public function Settings() {
     $this->Permission('Yaga.Ranks.Manage');
     $this->AddSideMenu('rank/settings');
 
@@ -67,6 +67,7 @@ class RankController extends DashboardController {
       }
     }
 
+    include_once $this->FetchViewLocation('helper_functions', 'rank');
     $this->Render();
   }
 
@@ -81,41 +82,53 @@ class RankController extends DashboardController {
     $this->AddSideMenu('rank/settings');
     $this->Form->SetModel($this->RankModel);
 
-    $this->Title(T('Yaga.AddRank'));
     $Edit = FALSE;
     if($RankID) {
+      $this->Title(T('Yaga.EditRank'));
       $this->Rank = $this->RankModel->GetByID($RankID);
       $this->Form->AddHidden('RankID', $RankID);
       $Edit = TRUE;
-      $this->Title(T('Yaga.EditRank'));
+    }
+    else {
+      $this->Title(T('Yaga.AddRank'));
     }
 
-     // Load up all roles
+    // Load up all roles
     $RoleModel = new RoleModel();
     $Roles = $RoleModel->GetArray();
     $this->SetData('Roles', $Roles);
 
-    if($this->Form->IsPostBack() == FALSE) {
+    if($this->Form->IsPostBack() != TRUE) {
       if(property_exists($this, 'Rank')) {
-        $this->Form->SetData($this->Rank);
+        $PerkOptions = (array) unserialize($this->Rank->Perks);
+        $RankArray = (array) $this->Rank;
+
+        $Data = array_merge($RankArray, $PerkOptions);
+        $this->Form->SetData($Data);
       }
     }
     else {
-      // Handle the photo upload
-      $Upload = new Gdn_Upload();
-      $TmpImage = $Upload->ValidateUpload('PhotoUpload', FALSE);
-
-      if($TmpImage) {
-        // Generate the target image name
-        $TargetImage = $Upload->GenerateTargetName(PATH_UPLOADS);
-        $ImageBaseName = pathinfo($TargetImage, PATHINFO_BASENAME);
-
-        // Save the uploaded image
-        $Parts = $Upload->SaveAs($TmpImage, 'ranks/' . $ImageBaseName);
-
-        $this->Form->SetFormValue('Photo', $Parts['SaveName']);
+      // Find the perk options
+      $FormValues = $this->Form->FormValues();     
+      $PerkOptions = array();
+      foreach($FormValues as $Key => $Value) {
+        // Don't save default settings
+        if($Value === '') {
+          continue;
+        }
+        
+        if(substr($Key, 0, 7) == '_Perks/') {
+          $RealKey = substr($Key, 7);
+          $PerkOptions[$RealKey] = $Value;
+        }
       }
 
+      // Fire event for validating perk options
+      $this->EventArguments['PerkOptions'] =& $PerkOptions;
+      $this->FireEvent('BeforeValidation');
+      
+      $this->Form->SetFormValue('Perks', serialize($PerkOptions));
+      
       if($this->Form->Save()) {
         if($Edit) {
           $this->InformMessage(T('Yaga.RankUpdated'));
@@ -127,6 +140,7 @@ class RankController extends DashboardController {
       }
     }
 
+    include_once $this->FetchViewLocation('helper_functions', 'rank');
     $this->Render('edit');
   }
 
@@ -288,4 +302,21 @@ class RankController extends DashboardController {
     $this->Render();
   }
 
+  public function Sort() {
+      // Check permission
+      $this->Permission('Yaga.Ranks.Manage');
+
+      $Request = Gdn::Request();
+      if($Request->IsPostBack()) {
+         $SortArray = $Request->GetValue('SortArray', NULL);
+         $Saves = $this->RankModel->SaveSort($SortArray);
+         $this->SetData('Result', TRUE);
+         $this->SetData('Saves', $Saves);
+      }
+      else {
+        $this->SetData('Result', FALSE);
+      }
+
+      $this->RenderData();
+   }
 }

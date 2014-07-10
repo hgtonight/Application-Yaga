@@ -63,8 +63,11 @@ $Construct->Table('Rank')
         ->PrimaryKey('RankID')
         ->Column('Name', 'varchar(140)')
         ->Column('Description', 'varchar(255)', NULL)
-        ->Column('Level', 'int', 0)
-        ->Column('Role', 'text', NULL)
+        ->Column('Sort', 'int', TRUE)
+        ->Column('PointReq', 'int', 0)
+        ->Column('PostReq', 'int', 0)
+        ->Column('AgeReq', 'int', 0)
+        ->Column('Perks', 'text', TRUE)
         ->Column('Enabled', 'tinyint(1)', '1')
         ->Set($Explicit, $Drop);
 

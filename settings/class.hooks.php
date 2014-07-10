@@ -249,16 +249,34 @@ class YagaHooks implements Gdn_IPlugin {
   }
 
   /**
-   * Check for promotions on received points.
+   * Check for rank progress when the user model gets updated
    *
    * @param UserModel $Sender
    */
-  public function UserModel_GivePoints_Handler($Sender) {
+  public function UserModel_AfterSetField_Handler($Sender) {
     // Don't check for promotions if we aren't using ranks
     if(!C('Yaga.Ranks.Enabled')) {
       return;
     }
-    $UserID = $Sender->EventArguments['UserID'];
+    
+    $Fields = $Sender->EventArguments['Fields'];
+    $FieldHooks = array('Points', 'CountDiscussions', 'CountComments');
+    
+    foreach($FieldHooks as $FieldHook) {
+      if(array_key_exists($FieldHook, $Fields)) {
+        $UserID = $Sender->EventArguments['UserID'];
+        $this->_RankProgression($UserID);
+        break; // Only need to fire once per event
+      }
+    }
+  }
+  
+  /**
+   * Update a user's rank id if they qualify
+   * 
+   * @param int $UserID
+   */
+  protected function _RankProgression($UserID) {
     $UserModel = Gdn::UserModel();
     $User = $UserModel->GetID($UserID);
 
@@ -267,14 +285,13 @@ class YagaHooks implements Gdn_IPlugin {
       return;
     }
 
-    $Points = $Sender->EventArguments['Points'];
     $RankModel = Yaga::RankModel();
-    $Rank = $RankModel->GetByPoints($Points);
+    $Rank = $RankModel->GetHighestQualifyingRank($User);
 
     if($Rank && $Rank->RankID != $User->RankID) {
       // Only promote automatically
       $OldRank = $RankModel->GetByID($User->RankID);
-      if($OldRank->Level <= $Rank->Level) {
+      if($OldRank->Sort <= $Rank->Sort) {
         $RankModel->Set($Rank->RankID, $UserID, TRUE);
       }
     }
@@ -416,6 +433,92 @@ class YagaHooks implements Gdn_IPlugin {
     else {
       echo Wrap(RenderReactionList($ID, $Type, FALSE), 'div', array('class' => 'Reactions'));
     }
+  }
+
+  /**
+   * Apply any applicable rank perks when the session first starts.
+   * @param UserModel $Sender
+   */
+  public function UserModel_AfterGetSession_Handler($Sender) {
+    if(!C('Yaga.Ranks.Enabled')) {
+      return;
+    }
+
+    $User = &$Sender->EventArguments['User'];
+    $RankID = $User->RankID;
+    if(is_null($RankID)) {
+      return;
+    }
+
+    $RankModel = Yaga::RankModel();
+    $Perks = $RankModel->GetPerks($RankID);
+    
+    // Apply all the perks
+    foreach($Perks as $Perk => $PerkValue) {
+      $PerkType = substr($Perk, 0, 4);
+      $PerkKey = substr($Perk, 4);
+      
+      if($PerkType === 'Conf') {
+        $this->_ApplyCustomConfigs($PerkKey, $PerkValue);
+      }
+      else if($PerkType === 'Perm' && $PerkValue === 'grant') {
+        $this->_GrantPermission($User, $PerkKey);
+      }
+      else if($PerkType === 'Perm' && $PerkValue === 'revoke') {
+        $this->_RevokePermission($User, $PerkKey);
+      }
+      else {
+        // Do nothing
+        // TODO: look into firing a custom event
+      }
+    }
+  }
+
+  /**
+   * Gives the specified permission to a user, regardless of current role.
+   * @param type $User
+   * @param string $Permission
+   */
+  private function _GrantPermission($User, $Permission = '') {
+    if($Permission === '') {
+      return;
+    }
+
+    $TempPerms = unserialize($User->Permissions);
+    if(!in_array($Permission, $TempPerms)) {
+      $TempPerms[] = $Permission;
+      $User->Permissions = serialize($TempPerms);
+    }
+  }
+
+  /**
+   * Removes the specified permission from a user, regardless of current role.
+   *
+   * Cannot be used to override $User->Admin = 1 permissions
+   *
+   * @param type $User
+   * @param string $Permission
+   */
+  private function _RevokePermission($User, $Permission = '') {
+    if($Permission === '') {
+      return;
+    }
+
+    $TempPerms = unserialize($User->Permissions);
+    $Key = array_search($Permission, $TempPerms);
+    if($Key) {
+      unset($TempPerms[$Key]);
+      $User->Permissions = serialize($TempPerms);
+    }
+  }
+
+  /**
+   * Apply custom configuration from rank perks in memory only.
+   * @param string $Name
+   * @param mixed $Value
+   */
+  private function _ApplyCustomConfigs($Name = NULL, $Value = NULL) {
+    SaveToConfig($Name, $Value, array('Save' => FALSE));
   }
 
   /**
@@ -591,7 +694,7 @@ class YagaHooks implements Gdn_IPlugin {
       // Remove neutral/negative reactions
       $Actions = Yaga::ActionModel()->GetWhere(array('AwardValue <' => 1))->Result();
       foreach($Actions as $Negative) {
-        Gdn::UserModel()->GetDelete('Reaction', array('InsertUserID' => $UserID, 'ActionID' => $Negative->ActionID), $Data); 
+        Gdn::UserModel()->GetDelete('Reaction', array('InsertUserID' => $UserID, 'ActionID' => $Negative->ActionID), $Data);
       }
     }
     else if($DeleteMethod == 'wipe') {
@@ -601,13 +704,13 @@ class YagaHooks implements Gdn_IPlugin {
     else {
       // Leave reactions
     }
-    
+
     // Remove the reactions they have received
     Gdn::UserModel()->GetDelete('Reaction', array('ParentAuthorID' => $UserID), $Data);
 
     // Remove their badges
     Gdn::UserModel()->GetDelete('BadgeAward', array('UserID' => $UserID), $Data);
-    
+
     // Blank the user's yaga information
     $SQL->Update('User')
             ->Set(array(
@@ -617,7 +720,7 @@ class YagaHooks implements Gdn_IPlugin {
             ))
             ->Where('UserID', $UserID)
             ->Put();
-    
+
     // Trigger a system wide point recount
     // TODO: Look into point re-calculation
   }

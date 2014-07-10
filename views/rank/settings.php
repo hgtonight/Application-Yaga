@@ -8,6 +8,7 @@ if($Photo) {
   $PhotoString = Img($Photo);
   $DelButton = Anchor(T('Delete Photo'), CombinePaths(array('rank/deletephoto', Gdn::Session()->TransientKey())), 'SmallButton Danger PopConfirm');
 }
+$AgeArray = AgeArray();
 
 echo Wrap($this->Title(), 'h1');
 
@@ -31,13 +32,14 @@ echo Wrap(
         'div',
         array('class' => 'Wrap'));
 ?>
-<table id="Actions" class="AltRows">
+<table id="Ranks" class="Sortable AltRows">
   <thead>
     <tr>
       <th><?php echo T('Name'); ?></th>
       <th><?php echo T('Description'); ?></th>
       <th><?php echo T('Points Required'); ?></th>
-      <th><?php echo T('Role Award'); ?></th>
+      <th><?php echo T('Posts Required'); ?></th>
+      <th><?php echo T('Age Required'); ?></th>
       <th><?php echo T('Auto Award'); ?></th>
       <th><?php echo T('Options'); ?></th>
     </tr>
@@ -50,8 +52,9 @@ echo Wrap(
       $Row = '';
       $Row .= Wrap($Rank->Name, 'td');
       $Row .= Wrap($Rank->Description, 'td');
-      $Row .= Wrap($Rank->Level, 'td');
-      $Row .= Wrap($Rank->Role, 'td');
+      $Row .= Wrap($Rank->PointReq, 'td');
+      $Row .= Wrap($Rank->PostReq, 'td');
+      $Row .= Wrap($AgeArray[$Rank->AgeReq], 'td');
       $ToggleText = ($Rank->Enabled) ? T('Enabled') : T('Disabled');
       $ActiveClass = ($Rank->Enabled) ? 'Active' : 'InActive';
       $Row .= Wrap(Wrap(Anchor($ToggleText, 'rank/toggle/' . $Rank->RankID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
