@@ -19,8 +19,6 @@ class CakeDayPost implements YagaRule {
     $TodaysMonth = date('n');
     $TodaysDay = date('j');
 
-    decho('CakeDayPost');
-    die();
     if($CakeMonth == $TodaysMonth
             && $CakeDay == $TodaysDay) {
       return TRUE;

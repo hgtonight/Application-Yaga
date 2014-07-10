@@ -142,7 +142,6 @@ class ActionController extends DashboardController {
     
     $Actions = ConsolidateArrayValuesByKey($Actions, 'ActionID', 'Name');
     unset($Actions[$ActionID]);
-    //decho($Actions);
     
     $this->SetData('OtherActions', $Actions);
     $this->SetData('ActionName', $Action->Name);
