@@ -10,7 +10,11 @@ It is released under the GPLv3 and may be released under a different license _**
 To get up and running with Yaga, either:
 
 * [Download the latest stable release](http://vanillaforums.org/get/yaga-application)
-* Clone the repository into the `applications` directory:
+* Extract into the `/applications` directory
+
+-- OR --
+
+* Clone the repository into the `/applications` directory:
 
 ```sh
 $ cd path-to-applications
