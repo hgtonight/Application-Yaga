@@ -71,21 +71,31 @@ class RankModel extends Gdn_Model {
   }
 
   /**
-   * Returns the nearest rank below the value passed
+   * Returns the highest rank a user can currently achieve
    *
-   * @param int $Points
-   * @return DataSet
+   * @param object $User
+   * @return mixed NULL if no qualifying ranks are found, Rank object otherwise
    */
-  public function GetByPoints($Points) {
-    $Rank = $this->SQL
-                    ->Select()
-                    ->From('Rank')
-                    ->Where('RequiredPoints <=', $Points)
-                    ->Where('Enabled', '1')
-                    ->OrderBy('Sort')
-                    ->Get()
-                    ->FirstRow();
-    return $Rank;
+  public function GetHighestQualifyingRank($User) {
+    $Points = $User->Points;
+    $Posts = $User->CountDiscussions + $User->CountComments;
+    $StartDate = strtotime($User->DateInserted);
+    
+    $Ranks = $this->Get();
+    
+    $HighestRank = NULL;
+    foreach($Ranks as $Rank) {
+      $TargetDate = time() - $Rank->AgeReq;
+      if($Points >= $Rank->PointReq && $Posts >= $Rank->PostReq && $StartDate <= $TargetDate) {
+        $HighestRank = $Rank;
+      }
+      else {
+        // Don't continue if we do not qualify
+        break;
+      }
+    }
+
+    return $HighestRank;
   }
   
   public function GetPerks($RankID) {

@@ -249,16 +249,34 @@ class YagaHooks implements Gdn_IPlugin {
   }
 
   /**
-   * Check for promotions on received points.
+   * Check for rank progress when the user model gets updated
    *
    * @param UserModel $Sender
    */
-  public function UserModel_GivePoints_Handler($Sender) {
+  public function UserModel_AfterSetField_Handler($Sender) {
     // Don't check for promotions if we aren't using ranks
     if(!C('Yaga.Ranks.Enabled')) {
       return;
     }
-    $UserID = $Sender->EventArguments['UserID'];
+    
+    $Fields = $Sender->EventArguments['Fields'];
+    $FieldHooks = array('Points', 'CountDiscussions', 'CountComments');
+    
+    foreach($FieldHooks as $FieldHook) {
+      if(array_key_exists($FieldHook, $Fields)) {
+        $UserID = $Sender->EventArguments['UserID'];
+        $this->_RankProgression($UserID);
+        break; // Only need to fire once per event
+      }
+    }
+  }
+  
+  /**
+   * Update a user's rank id if they qualify
+   * 
+   * @param int $UserID
+   */
+  protected function _RankProgression($UserID) {
     $UserModel = Gdn::UserModel();
     $User = $UserModel->GetID($UserID);
 
@@ -267,14 +285,13 @@ class YagaHooks implements Gdn_IPlugin {
       return;
     }
 
-    $Points = $Sender->EventArguments['Points'];
     $RankModel = Yaga::RankModel();
-    $Rank = $RankModel->GetByPoints($Points);
+    $Rank = $RankModel->GetHighestQualifyingRank($User);
 
     if($Rank && $Rank->RankID != $User->RankID) {
       // Only promote automatically
       $OldRank = $RankModel->GetByID($User->RankID);
-      if($OldRank->Level <= $Rank->Level) {
+      if($OldRank->Sort <= $Rank->Sort) {
         $RankModel->Set($Rank->RankID, $UserID, TRUE);
       }
     }
