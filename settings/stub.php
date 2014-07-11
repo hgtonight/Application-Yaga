@@ -55,6 +55,5 @@ $SQL->Insert('Rank', array(
     'Description' => 'You have hit the big time! Keep up the good work.',
     'PointReq' => 100,
     'Sort' => 2,
-    'Role' => 4,
     'Enabled' => 0
 ));
