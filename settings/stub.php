@@ -35,7 +35,7 @@ $SQL->Insert('Action', array(
 $SQL->Insert('Badge', array(
     'Name' => 'What did I just do?',
     'Description' => 'You installed Yaga! Feel free to edit or delete this badge by clicking the buttons on the right.',
-    'Photo' => '../applications/yaga/design/images/default_badge.png',
+    'Photo' => 'applications/yaga/design/images/default_badge.png',
     'RuleClass' => 'ManualAward',
     'RuleCriteria' => 'a:0:{}',
     'AwardValue' => 1,
