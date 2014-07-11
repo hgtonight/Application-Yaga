@@ -85,6 +85,11 @@ class RankModel extends Gdn_Model {
     
     $HighestRank = NULL;
     foreach($Ranks as $Rank) {
+      // skip disabled ranks
+      if(!$Rank->Enabled) {
+        continue;
+      }
+      
       $TargetDate = time() - $Rank->AgeReq;
       if($Points >= $Rank->PointReq && $Posts >= $Rank->PostReq && $StartDate <= $TargetDate) {
         $HighestRank = $Rank;
