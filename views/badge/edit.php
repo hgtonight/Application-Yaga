@@ -72,7 +72,7 @@ echo $this->Form->Errors();
   </li>
   <li>
     <?php
-    echo $this->Form->Label('Active', 'Enabled');
+    echo $this->Form->Label('Automatically Award', 'Enabled');
     echo $this->Form->CheckBox('Enabled');
     ?>
   </li>

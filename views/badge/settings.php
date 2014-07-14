@@ -16,7 +16,7 @@ echo Wrap(Anchor(T('Yaga.AddBadge'), 'badge/add', array('class' => 'SmallButton'
       <th><?php echo T('Description'); ?></th>
       <th><?php echo T('Rule'); ?></th>
       <th><?php echo T('Award Value'); ?></th>
-      <th><?php echo T('Active'); ?></th>
+      <th><?php echo T('Auto Award'); ?></th>
       <th><?php echo T('Options'); ?></th>
     </tr>
   </thead>

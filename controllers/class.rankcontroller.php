@@ -180,7 +180,7 @@ class RankController extends DashboardController {
     }
 
     $this->AddSideMenu('rank/settings');
-    $this->SetData('Title', T('Delete Rank'));
+    $this->SetData('Title', T('Yaga.Rank.Delete'));
     $this->Render();
   }
 

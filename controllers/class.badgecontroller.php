@@ -177,7 +177,7 @@ class BadgeController extends DashboardController {
     }
 
     $this->AddSideMenu('badge/settings');
-    $this->SetData('Title', T('Delete Badge'));
+    $this->SetData('Title', T('Yaga.Badge.Delete'));
     $this->Render();
   }
 

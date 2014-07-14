@@ -55,12 +55,12 @@ echo $this->Form->Errors();
     ?>
   <li>
     <?php    
-    echo $this->Form->Label('Role Award', 'Role');
+    echo $this->Form->Label('Role', 'Role');
     echo $this->Form->Dropdown('Role', $this->Data('Roles'), array('IncludeNULL' => TRUE));
     ?>
   </li>
   <?php
-  RenderPerkConfigurationForm('Garden.EditContentTimeout', 'Edit Timeout', array('0' => T('Authors may never edit'),
+  RenderPerkConfigurationForm('Garden.EditContentTimeout', 'Yaga.Perks.EditTimeout', array('0' => T('Authors may never edit'),
                       '350' => sprintf(T('Authors may edit for %s'), T('5 minutes')), 
                       '900' => sprintf(T('Authors may edit for %s'), T('15 minutes')), 
                      '3600' => sprintf(T('Authors may edit for %s'), T('1 hour')),
@@ -70,11 +70,11 @@ echo $this->Form->Errors();
                   '2592000' => sprintf(T('Authors may edit for %s'), T('1 month')),
                        '-1' => T('Authors may always edit')));
 
-  RenderPerkPermissionForm('Plugins.Tagging.Add', 'Add Tags');
+  RenderPerkPermissionForm('Plugins.Tagging.Add', 'Yaga.Perks.Tags');
 
-  RenderPerkConfigurationForm('Plugins.Emotify.FormatEmoticons', 'Format Emoticons');
+  RenderPerkConfigurationForm('Plugins.Emotify.FormatEmoticons', 'Yaga.Perks.Emoticons');
 
-  RenderPerkConfigurationForm('Garden.Format.MeActions', 'Format /me Actions');
+  RenderPerkConfigurationForm('Garden.Format.MeActions', 'Yaga.Perks.MeActions');
 
   $this->FireEvent('PerkOptions');
 

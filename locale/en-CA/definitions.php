@@ -32,6 +32,7 @@ $Definition['Yaga.Actions.Settings.Desc'] = 'Add or edit the available actions t
 // Badges
 $Definition['Yaga.Badges'] = 'Badges';
 $Definition['Yaga.Badge'] = 'Badge';
+$Definition['Yaga.Badge.Delete'] = 'Delete Badge';
 $Definition['Yaga.ManageBadges'] = 'Manage Badges';
 $Definition['Yaga.AddBadge'] = 'Add Badge';
 $Definition['Yaga.EditBadge'] = 'Edit Badge';
@@ -56,6 +57,7 @@ $Definition['Yaga.Badge.DetailLink'] = 'View statistics about this badge';
 // Ranks
 $Definition['Yaga.Ranks'] = 'Ranks';
 $Definition['Yaga.Rank'] = 'Rank';
+$Definition['Yaga.Rank.Delete'] = 'Delete Rank';
 $Definition['Yaga.ManageRanks'] = 'Manage Ranks';
 $Definition['Yaga.AddRank'] = 'Add Rank';
 $Definition['Yaga.EditRank'] = 'Edit Rank';
@@ -70,6 +72,15 @@ $Definition['Yaga.Ranks.Settings.Desc'] = 'Add or edit the available ranks that 
 $Definition['Yaga.Rank.Progression'] = 'Rank Progression';
 $Definition['Yaga.Rank.Progression.Desc'] = 'Allow user to automatically progress past this rank.';
 $Definition['Yaga.Rank.Photo.Desc'] = 'This photo will be shown on activity posts and in notifications concerning rank progression.';
+
+// Perks
+$Definition['Yaga.Perks'] = 'Perks';
+$Definition['Yaga.Perks.AgeFormat'] = 'Account must be at least %s old.';
+$Definition['Yaga.Perks.AgeDNC'] = 'Account can be any age';
+$Definition['Yaga.Perks.Emoticons'] = 'Format Emoticons';
+$Definition['Yaga.Perks.MeActions'] = 'Format /me Actions';
+$Definition['Yaga.Perks.Tags'] = 'Add Tags';
+$Definition['Yaga.Perks.EditTimeout'] = 'Edit Timeout';
 
 // Best Content
 $Definition['Yaga.BestContent'] = 'Best Of...';
@@ -112,34 +123,41 @@ $Definition['Yaga.Notifications.Badges'] = 'Notify me when I earn a badge.';
 $Definition['Yaga.Notifications.Ranks'] = 'Notify me when I am promoted in rank.';
 
 // Misc
-$Definition['Edit'] = 'Edit';
-$Definition['Delete'] = 'Delete';
-$Definition['Image'] = 'Image';
-$Definition['Rule'] = 'Rule';
-$Definition['Active'] = 'Active';
-$Definition['Options'] = 'Options';
-$Definition['Name'] = 'Name';
-$Definition['Description'] = 'Description';
-$Definition['None'] = 'None';
-$Definition['Icon'] = 'Icon';
-$Definition['Tooltip'] = 'Tooltip';
-$Definition['Award Value'] = 'Award Value';
-$Definition['Elevated Permission'] = 'Elevated Permission';
-$Definition['Points Required'] = 'Points Required';
-$Definition['Role Award'] = 'Role Award';
+$Definition['1 year'] = '1 year';
+$Definition['3 months'] = '3 months';
+$Definition['5 years'] = '5 years';
+$Definition['6 months'] = '6 months';
+$Definition['Age Required'] = 'Age Required';
 $Definition['Auto Award'] = 'Auto Award';
-$Definition['Enabled'] = 'Enabled';
-$Definition['Disabled'] = 'Disabled';
-
-// Rules
+$Definition['Automatically Award'] = 'Automatically Award';
+$Definition['Award Value'] = 'Award Value';
 $Definition['Days'] = 'Days';
-$Definition['Weeks'] = 'Weeks';
-$Definition['Years'] = 'Years';
-$Definition['More than:'] = 'More than:';
+$Definition['Default'] = 'Default';
+$Definition['Delete'] = 'Delete';
+$Definition['Description'] = 'Description';
+$Definition['Disabled'] = 'Disabled';
+$Definition['Edit'] = 'Edit';
+$Definition['Elevated Permission'] = 'Elevated Permission';
+$Definition['Enabled'] = 'Enabled';
+$Definition['Export'] = 'Export';
+$Definition['Icon'] = 'Icon';
+$Definition['Image'] = 'Image';
 $Definition['Less than:'] = 'Less than:';
 $Definition['More than or:'] = 'More than or:';
+$Definition['More than:'] = 'More than:';
+$Definition['Name'] = 'Name';
+$Definition['None'] = 'None';
+$Definition['Options'] = 'Options';
+$Definition['Points Required'] = 'Points Required';
+$Definition['Posts Required'] = 'Posts Required';
+$Definition['Role Award'] = 'Role Award';
+$Definition['Rule'] = 'Rule';
 $Definition['Time Frame'] = 'Time Frame';
+$Definition['Tooltip'] = 'Tooltip';
+$Definition['Weeks'] = 'Weeks';
+$Definition['Years'] = 'Years';
 
+// Rule Info
 $Definition['Yaga.Rules.AwardCombo'] = 'Award Combo';
 $Definition['Yaga.Rules.AwardCombo.Desc'] = 'Award this badge if the count of unique badge awards (based on rule) a user received within the past time frame meets or exceeds the target criteria.';
 $Definition['Yaga.Rules.AwardCombo.Criteria.Head'] = 'Number of Badge Types';
