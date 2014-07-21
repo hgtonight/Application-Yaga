@@ -12,6 +12,12 @@ class NewbieComment implements YagaRule{
   public function Award($Sender, $User, $Criteria) {
     $Discussion = $Sender->EventArguments['Discussion'];
     $NewbUserID = $Discussion->InsertUserID;
+    
+    // Don't award to the newb on his own discussion
+    if($NewbUserID == $User->UserID) {
+      return FALSE;
+    }
+    
     $CurrentDiscussionID = $Discussion->DiscussionID;
     $TargetDate = strtotime($Criteria->Duration . ' ' . $Criteria->Period . ' ago');
 
