@@ -29,6 +29,8 @@ $Definition['Yaga.InvalidReactType'] = 'Invalid React Target';
 $Definition['Yaga.ManageReactions'] = 'Manage Reactions';
 $Definition['Yaga.Reactions'] = 'Reactions';
 $Definition['Yaga.Reactions.RecordFormat'] = '%s - %s on %s.';
+$Definition['Yaga.Reactions.RecordLimit.Single'] = 'and %s other.';
+$Definition['Yaga.Reactions.RecordLimit.Plural'] = 'and %s others.';
 
 // Badges
 $Definition['Yaga.AddBadge'] = 'Add Badge';
