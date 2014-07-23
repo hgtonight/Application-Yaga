@@ -58,26 +58,27 @@ if(!function_exists('RenderReactionRecord')) {
     $i = 0;
     $result = count($Reactions);
     foreach($Reactions as $Reaction) {
-    	if($i > 4) {
-    		$i++;
-    		if ($i == $result) {
-    			$actionName = $Reaction->Name;
-    			$counted = $result-5;
-    			echo ' and '.$counted.' other'.($counted>1?'s':'').' '.strtolower($actionName).' this.';
-    		}
-    	} else {
-      $User = Gdn::UserModel()->GetID($Reaction->UserID);
-	  $DateTitle = $User->Name . ' - ' . $Reaction->Name . ' on ' . Gdn_Format::Date($Reaction->DateInserted, '%B %e, %Y');
-      $String = UserPhoto($User, array('Size' => 'Small', 'title' => $DateTitle));
-      $String .= '<span class="ReactSprite Reaction-' . $Reaction->ActionID . ' ' . $Reaction->CssClass . '"></span>';
-      $Wrapttributes = array(
-          'class' => 'UserReactionWrap',
-          'data-userid' => $User->UserID,
-          'title' => $DateTitle
-      );
-      echo Wrap($String, 'span', $Wrapttributes);
-      $i++;
-    	}
+      if($i > 4) {
+        $i++;
+        if($i == $result) {
+          $actionName = $Reaction->Name;
+          $counted = $result - 5;
+          echo ' and ' . $counted . ' other' . ($counted > 1 ? 's' : '') . ' ' . strtolower($actionName) . ' this.';
+        }
+      }
+      else {
+        $User = Gdn::UserModel()->GetID($Reaction->UserID);
+        $DateTitle = sprintf(T('Yaga.Reactions.RecordFormat'), $User->Name, $Reaction->Name, Gdn_Format::Date($Reaction->DateInserted, '%B %e, %Y'));
+        $String = UserPhoto($User, array('Size' => 'Small', 'title' => $DateTitle));
+        $String .= '<span class="ReactSprite Reaction-' . $Reaction->ActionID . ' ' . $Reaction->CssClass . '"></span>';
+        $Wrapttributes = array(
+            'class' => 'UserReactionWrap',
+            'data-userid' => $User->UserID,
+            'title' => $DateTitle
+        );
+        echo Wrap($String, 'span', $Wrapttributes);
+        $i++;
+      }
     }
   }
 
@@ -135,4 +136,4 @@ if(!function_exists('RenderPerkConfigurationForm')) {
     echo '</li>';
   }
 }
-    
+
