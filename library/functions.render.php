@@ -55,16 +55,21 @@ if(!function_exists('RenderReactionRecord')) {
 
   function RenderReactionRecord($ID, $Type) {
     $Reactions = Yaga::ReactionModel()->GetRecord($ID, $Type);
-    $i = 0;
     $Limit = C('Yaga.Reactions.RecordLimit');
     $ReactionCount = count($Reactions);
+    $i = 0;
     foreach($Reactions as $Reaction) {
       $i++;
       
       // Limit the record if there are a lot of reactions
       if($i <= $Limit || $Limit <= 0) {
         $User = Gdn::UserModel()->GetID($Reaction->UserID);
-        $DateTitle = sprintf(T('Yaga.Reactions.RecordFormat'), $User->Name, $Reaction->Name, Gdn_Format::Date($Reaction->DateInserted, '%B %e, %Y'));
+        $DateTitle = sprintf(
+                T('Yaga.Reactions.RecordFormat'),
+                $User->Name,
+                $Reaction->Name,
+                Gdn_Format::Date($Reaction->DateInserted, '%B %e, %Y')
+              );
         $String = UserPhoto($User, array('Size' => 'Small', 'title' => $DateTitle));
         $String .= '<span class="ReactSprite Reaction-' . $Reaction->ActionID . ' ' . $Reaction->CssClass . '"></span>';
         $Wrapttributes = array(
