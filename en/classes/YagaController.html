@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>    Yaga Technical Documentation &raquo; \YagaController
+</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+            <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+            <!--[if lt IE 9]>
+        <script src="https://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+        <![endif]-->
+        <script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script>
+        <script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script>
+        <script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script>
+        <script src="../js/bootstrap.js" type="text/javascript"></script>
+        <script src="../js/template.js" type="text/javascript"></script>
+        <script src="../js/prettify/prettify.min.js" type="text/javascript"></script>
+    
+            <link rel="shortcut icon" href="../img/favicon.ico"/>
+        <link rel="apple-touch-icon" href="../img/apple-touch-icon.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png"/>
+    </head>
+<body>
+
+        <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    <span class="icon-bar"></span> </a>
+                <a class="brand" href="../index.html">Yaga Technical Documentation</a>
+
+                <div class="nav-collapse">
+                    <ul class="nav">
+                        <li class="dropdown">
+                            <a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                API Documentation <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                                                                            </ul>
+                        </li>
+                        <li class="dropdown" id="charts-menu">
+                            <a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                Charts <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="../graph_class.html">
+                                        <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown" id="reports-menu">
+                            <a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                Reports <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="../errors.html">
+                                        <i class="icon-list-alt"></i>&#160;Errors
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../markers.html">
+                                        <i class="icon-list-alt"></i>&#160;Markers
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../deprecated.html">
+                                        <i class="icon-list-alt"></i>&#160;Deprecated
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="go_to_top">
+            <a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>
+        </div>
+    </div>
+    
+    <div id="___" class="container">
+        <noscript>
+            <div class="alert alert-warning">
+                Javascript is disabled; several features are only available if Javascript is enabled.
+            </div>
+        </noscript>
+
+        
+            <style>
+        .deprecated h2 {
+            text-decoration: line-through;
+        }
+    </style>
+    <div class="row">
+        <div class="span4">
+                    <div class="btn-group view pull-right" data-toggle="buttons-radio">
+        <button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button>
+        <button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+    </div>
+    <div class="btn-group visibility" data-toggle="buttons-checkbox">
+        <button class="btn public active" title="Show public elements">Public</button>
+        <button class="btn protected" title="Show protected elements">Protected</button>
+        <button class="btn private" title="Show private elements">Private</button>
+        <button class="btn inherited active" title="Show inherited elements">Inherited</button>
+    </div>
+
+        <ul class="side-nav nav nav-list">
+        <li class="nav-header">
+            <i class="icon-custom icon-method"></i> Methods
+            <ul>
+                                                                                                    <li class="method public">
+        <a href="#method_Initialize" title="Initialize :: Make this look like a dashboard page and add the resources">
+            <span class="description">Make this look like a dashboard page and add the resources</span><pre>Initialize</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_Index" title="Index :: Redirect to settings by default">
+            <span class="description">Redirect to settings by default</span><pre>Index</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_Settings" title="Settings :: This handles all the core settings for the gamification application.">
+            <span class="description">This handles all the core settings for the gamification application.</span><pre>Settings</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_Import" title="Import :: Import a Yaga transport file">
+            <span class="description">Import a Yaga transport file</span><pre>Import</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_Export" title="Export :: Create a Yaga transport file">
+            <span class="description">Create a Yaga transport file</span><pre>Export</pre>
+        </a>
+    </li>
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        </ul>
+        </li>
+        <li class="nav-header protected">» Protected
+            <ul>
+                                                                                                                                                                                                                                                                <li class="method protected">
+                            <a href="#method__FindIncludes" title="_FindIncludes :: ">
+                                <span class="description"></span><pre>_FindIncludes</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method protected">
+                            <a href="#method__ExportData" title="_ExportData :: Creates a transport file for easily transferring Yaga configurations across
+installs">
+                                <span class="description">Creates a transport file for easily transferring Yaga configurations across
+installs</span><pre>_ExportData</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method protected">
+                            <a href="#method__ExtractZip" title="_ExtractZip :: Extract the transport file and validate">
+                                <span class="description">Extract the transport file and validate</span><pre>_ExtractZip</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method protected">
+                            <a href="#method__ImportData" title="_ImportData :: Overwrites Yaga configurations, dumps Yaga db tables, inserts data via the
+model, and copies uploaded files to the server">
+                                <span class="description">Overwrites Yaga configurations, dumps Yaga db tables, inserts data via the
+model, and copies uploaded files to the server</span><pre>_ImportData</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method protected">
+                            <a href="#method__NestedToDotNotation" title="_NestedToDotNotation :: Converted a nest config array into an array where indexes are the configuration
+strings and the value is the value">
+                                <span class="description">Converted a nest config array into an array where indexes are the configuration
+strings and the value is the value</span><pre>_NestedToDotNotation</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method protected">
+                            <a href="#method__ValidateChecksum" title="_ValidateChecksum :: Inspects the Yaga transport files and calculates a checksum">
+                                <span class="description">Inspects the Yaga transport files and calculates a checksum</span><pre>_ValidateChecksum</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method protected">
+                            <a href="#method__GetFiles" title="_GetFiles :: Returns a list of all files in a directory, recursively (Thanks @businessdad)">
+                                <span class="description">Returns a list of all files in a directory, recursively (Thanks @businessdad)</span><pre>_GetFiles</pre>
+                            </a>
+                        </li>
+                                                </ul>
+        </li>
+        <li class="nav-header private">» Private
+            <ul>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            </ul>
+        </li>
+        <li class="nav-header">
+            <i class="icon-custom icon-constant"></i> Constants
+            <ul>
+                            </ul>
+        </li>
+    </ul>
+
+
+        </div>
+
+        <div class="span8">
+            <div class="element class">
+                <h1>YagaController</h1>
+                <small style="display: block; text-align: right">
+                                            Extends \DashboardController
+                                                        </small>
+                <p class="short_description">Manage the yaga application including configuration and import/export</p>
+                <div class="details">
+                    <div class="long_description">
+                        
+                    </div>
+                    <table class="table table-bordered">
+                                                                                    <tr>
+                                    <th>
+                                        since
+                                                                            </th>
+                                    <td>
+                                                                                    1.0
+                                                                                
+                                    </td>
+                                </tr>
+                                                                                                                <tr>
+                                    <th>
+                                        package
+                                                                            </th>
+                                    <td>
+                                                                                    
+                                                                                <p>Yaga</p>
+                                    </td>
+                                </tr>
+                                                                                                                                                                                </table>
+
+                    <h3><i class="icon-custom icon-method"></i> Methods</h3>
+                                                                <a id="method_Initialize"></a>
+                        <div class="element clickable method public  method_Initialize" data-toggle="collapse" data-target=".method_Initialize .collapse">
+                            <h2>Make this look like a dashboard page and add the resources</h2>
+                            <pre>Initialize() </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    since
+                                                </th>
+                                                <td>
+                                                                                                                                                                        1.0
+                                                                                                                                                                        
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    access
+                                                </th>
+                                                <td>
+                                                                                                                                                                        
+                                                                                                                                                                        <p>public</p>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_Index"></a>
+                        <div class="element clickable method public  method_Index" data-toggle="collapse" data-target=".method_Index .collapse">
+                            <h2>Redirect to settings by default</h2>
+                            <pre>Index() </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_Settings"></a>
+                        <div class="element clickable method public  method_Settings" data-toggle="collapse" data-target=".method_Settings .collapse">
+                            <h2>This handles all the core settings for the gamification application.</h2>
+                            <pre>Settings() </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_Import"></a>
+                        <div class="element clickable method public  method_Import" data-toggle="collapse" data-target=".method_Import .collapse">
+                            <h2>Import a Yaga transport file</h2>
+                            <pre>Import() </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_Export"></a>
+                        <div class="element clickable method public  method_Export" data-toggle="collapse" data-target=".method_Export .collapse">
+                            <h2>Create a Yaga transport file</h2>
+                            <pre>Export() </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method__FindIncludes"></a>
+                        <div class="element clickable method protected  method__FindIncludes" data-toggle="collapse" data-target=".method__FindIncludes .collapse">
+                            <h2>_FindIncludes</h2>
+                            <pre>_FindIncludes() </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method__ExportData"></a>
+                        <div class="element clickable method protected  method__ExportData" data-toggle="collapse" data-target=".method__ExportData .collapse">
+                            <h2>Creates a transport file for easily transferring Yaga configurations across
+installs</h2>
+                            <pre>_ExportData( $Include = array(),  $Path = NULL) : mixed</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Include</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Path</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>mixed</code><p><p>False on failure, the path to the transport file on success</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method__ExtractZip"></a>
+                        <div class="element clickable method protected  method__ExtractZip" data-toggle="collapse" data-target=".method__ExtractZip .collapse">
+                            <h2>Extract the transport file and validate</h2>
+                            <pre>_ExtractZip( $Filename) : boolean</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Filename</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>boolean</code><p><p>Whether or not the transport file was extracted successfully</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method__ImportData"></a>
+                        <div class="element clickable method protected  method__ImportData" data-toggle="collapse" data-target=".method__ImportData .collapse">
+                            <h2>Overwrites Yaga configurations, dumps Yaga db tables, inserts data via the
+model, and copies uploaded files to the server</h2>
+                            <pre>_ImportData( $Info,  $Include) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Info</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Include</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method__NestedToDotNotation"></a>
+                        <div class="element clickable method protected  method__NestedToDotNotation" data-toggle="collapse" data-target=".method__NestedToDotNotation .collapse">
+                            <h2>Converted a nest config array into an array where indexes are the configuration
+strings and the value is the value</h2>
+                            <pre>_NestedToDotNotation( $Configs,  $Prefix = &#039;&#039;) : array</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Configs</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Prefix</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>array</code><p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method__ValidateChecksum"></a>
+                        <div class="element clickable method protected  method__ValidateChecksum" data-toggle="collapse" data-target=".method__ValidateChecksum .collapse">
+                            <h2>Inspects the Yaga transport files and calculates a checksum</h2>
+                            <pre>_ValidateChecksum( $MetaData) : boolean</pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$MetaData</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                            <h3>Response</h3>
+                                        <code>boolean</code><p><p>Whether or not the checksum is valid</p></p>
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method__GetFiles"></a>
+                        <div class="element clickable method protected  method__GetFiles" data-toggle="collapse" data-target=".method__GetFiles .collapse">
+                            <h2>Returns a list of all files in a directory, recursively (Thanks @businessdad)</h2>
+                            <pre>_GetFiles( $Directory) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    result
+                                                </th>
+                                                <td>
+                                                                                                                                                                        
+                                                                                                                                                                        <p>array A list of Files and, optionally, Directories.</p>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Directory</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                    
+                    
+                                                                <h3><i class="icon-custom icon-property"></i> Properties</h3>
+                                                    <a id="property_Uses"> </a>
+                            <div class="element clickable property  public property_Uses" data-toggle="collapse" data-target=".property_Uses .collapse">
+                                <h2>These objects will be created on instantiation and available via
+$this-&gt;ObjectName</h2>
+                                <pre>Uses : array</pre>
+                                <div class="labels">
+                                                                                                        </div>
+                                <div class="row collapse">
+                                    <div class="detail-description">
+                                        <div class="long_description"></div>
+
+                                        <table class="table">
+                                                                                            <tr>
+                                                    <th>
+                                                        var
+                                                    </th>
+                                                    <td>
+                                                                                                                    <p>These objects will be created on instantiation and available via
+$this->ObjectName</p>
+                                                                                                            </td>
+                                                </tr>
+                                                                                    </table>
+
+                                                                                    <h3>Type(s)</h3>
+                                            <code>array</code>
+                                                                            </div>
+                                </div>
+                            </div>
+                                                            </div>
+            </div>
+            <a id="\YagaController"></a>
+            <ul class="breadcrumb">
+                <li><a href="../index.html"><i class="icon-custom icon-class"></i></a></li>
+                    
+    
+    <li><span class="divider">\</span><a href="../namespaces/default.html">\</a></li>
+
+                <li class="active"><span class="divider">\</span><a href="../classes/YagaController.html">YagaController</a></li>
+            </ul>
+        </div>
+    </div>
+
+    </div>
+
+        <footer class="span12">
+            Documentation generated on Wed, 06 Aug 2014 19:17:34 +0200.<br/>
+    </footer>
+    </body>
+</html>

@@ -1,0 +1,1929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta charset="utf-8"/>
+    <title>    Yaga Technical Documentation &raquo; \YagaHooks
+</title>
+    <meta name="author" content=""/>
+    <meta name="description" content=""/>
+
+            <link href="../css/template.css" rel="stylesheet" media="all"/>
+    
+            <!--[if lt IE 9]>
+        <script src="https://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+        <![endif]-->
+        <script src="../js/jquery-1.7.1.min.js" type="text/javascript"></script>
+        <script src="../js/jquery-ui-1.8.2.custom.min.js" type="text/javascript"></script>
+        <script src="../js/jquery.mousewheel.min.js" type="text/javascript"></script>
+        <script src="../js/bootstrap.js" type="text/javascript"></script>
+        <script src="../js/template.js" type="text/javascript"></script>
+        <script src="../js/prettify/prettify.min.js" type="text/javascript"></script>
+    
+            <link rel="shortcut icon" href="../img/favicon.ico"/>
+        <link rel="apple-touch-icon" href="../img/apple-touch-icon.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72x72.png"/>
+        <link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114x114.png"/>
+    </head>
+<body>
+
+        <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span> <span class="icon-bar"></span>
+                    <span class="icon-bar"></span> </a>
+                <a class="brand" href="../index.html">Yaga Technical Documentation</a>
+
+                <div class="nav-collapse">
+                    <ul class="nav">
+                        <li class="dropdown">
+                            <a href="#api" class="dropdown-toggle" data-toggle="dropdown">
+                                API Documentation <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                                                                            </ul>
+                        </li>
+                        <li class="dropdown" id="charts-menu">
+                            <a href="#charts" class="dropdown-toggle" data-toggle="dropdown">
+                                Charts <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="../graph_class.html">
+                                        <i class="icon-list-alt"></i>&#160;Class hierarchy diagram
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown" id="reports-menu">
+                            <a href="#reports" class="dropdown-toggle" data-toggle="dropdown">
+                                Reports <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a href="../errors.html">
+                                        <i class="icon-list-alt"></i>&#160;Errors
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../markers.html">
+                                        <i class="icon-list-alt"></i>&#160;Markers
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="../deprecated.html">
+                                        <i class="icon-list-alt"></i>&#160;Deprecated
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="go_to_top">
+            <a href="#___" style="color: inherit">Back to top&#160;&#160;<i class="icon-upload icon-white"></i></a>
+        </div>
+    </div>
+    
+    <div id="___" class="container">
+        <noscript>
+            <div class="alert alert-warning">
+                Javascript is disabled; several features are only available if Javascript is enabled.
+            </div>
+        </noscript>
+
+        
+            <style>
+        .deprecated h2 {
+            text-decoration: line-through;
+        }
+    </style>
+    <div class="row">
+        <div class="span4">
+                    <div class="btn-group view pull-right" data-toggle="buttons-radio">
+        <button class="btn details" title="Show descriptions and method names"><i class="icon-list"></i></button>
+        <button class="btn simple" title="Show only method names"><i class="icon-align-justify"></i></button>
+    </div>
+    <div class="btn-group visibility" data-toggle="buttons-checkbox">
+        <button class="btn public active" title="Show public elements">Public</button>
+        <button class="btn protected" title="Show protected elements">Protected</button>
+        <button class="btn private" title="Show private elements">Private</button>
+        <button class="btn inherited active" title="Show inherited elements">Inherited</button>
+    </div>
+
+        <ul class="side-nav nav nav-list">
+        <li class="nav-header">
+            <i class="icon-custom icon-method"></i> Methods
+            <ul>
+                                                                                                    <li class="method public">
+        <a href="#method_SettingsController_Yaga_Create" title="SettingsController_Yaga_Create :: Redirect any old links to proper settings page permanently">
+            <span class="description">Redirect any old links to proper settings page permanently</span><pre>SettingsController_Yaga_Create</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_SettingsController_AfterRenderAsset_Handler" title="SettingsController_AfterRenderAsset_Handler :: Add Simple stats page to dashboard index">
+            <span class="description">Add Simple stats page to dashboard index</span><pre>SettingsController_AfterRenderAsset_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_Base_GetAppSettingsMenuItems_Handler" title="Base_GetAppSettingsMenuItems_Handler :: Add the settings page links">
+            <span class="description">Add the settings page links</span><pre>Base_GetAppSettingsMenuItems_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_Base_AfterDiscussionFilters_Handler" title="Base_AfterDiscussionFilters_Handler :: ">
+            <span class="description"></span><pre>Base_AfterDiscussionFilters_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_ProfileController_AfterUserInfo_Handler" title="ProfileController_AfterUserInfo_Handler :: Display the reaction counts on the profile page">
+            <span class="description">Display the reaction counts on the profile page</span><pre>ProfileController_AfterUserInfo_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_UserInfoModule_OnBasicInfo_Handler" title="UserInfoModule_OnBasicInfo_Handler :: Add the badge count into the user info module">
+            <span class="description">Add the badge count into the user info module</span><pre>UserInfoModule_OnBasicInfo_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_ProfileController_Reactions_Create" title="ProfileController_Reactions_Create :: This method shows the latest discussions/comments a user has posted that
+received the specified action">
+            <span class="description">This method shows the latest discussions/comments a user has posted that
+received the specified action</span><pre>ProfileController_Reactions_Create</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_ProfileController_Best_Create" title="ProfileController_Best_Create :: This method shows the highest scoring discussions/comments a user has ever posted">
+            <span class="description">This method shows the highest scoring discussions/comments a user has ever posted</span><pre>ProfileController_Best_Create</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_ProfileController_AddProfileTabs_Handler" title="ProfileController_AddProfileTabs_Handler :: Add a best content tab on a user&#039;s profile">
+            <span class="description">Add a best content tab on a user&#039;s profile</span><pre>ProfileController_AddProfileTabs_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_UserModel_AfterSetField_Handler" title="UserModel_AfterSetField_Handler :: Check for rank progress when the user model gets updated">
+            <span class="description">Check for rank progress when the user model gets updated</span><pre>UserModel_AfterSetField_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                                                                                <li class="method public">
+        <a href="#method_ProfileController_AfterPreferencesDefined_Handler" title="ProfileController_AfterPreferencesDefined_Handler :: Add the badge and rank notification options">
+            <span class="description">Add the badge and rank notification options</span><pre>ProfileController_AfterPreferencesDefined_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_ProfileController_BeforeProfileOptions_Handler" title="ProfileController_BeforeProfileOptions_Handler :: Add the Award Badge and Promote options to the profile controller">
+            <span class="description">Add the Award Badge and Promote options to the profile controller</span><pre>ProfileController_BeforeProfileOptions_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_DiscussionController_AfterDiscussionBody_Handler" title="DiscussionController_AfterDiscussionBody_Handler :: Display a record of reactions after the first post">
+            <span class="description">Display a record of reactions after the first post</span><pre>DiscussionController_AfterDiscussionBody_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_DiscussionController_AfterCommentBody_Handler" title="DiscussionController_AfterCommentBody_Handler :: Display a record of reactions after comments">
+            <span class="description">Display a record of reactions after comments</span><pre>DiscussionController_AfterCommentBody_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_DiscussionController_AfterReactions_Handler" title="DiscussionController_AfterReactions_Handler :: Add action list to discussion items">
+            <span class="description">Add action list to discussion items</span><pre>DiscussionController_AfterReactions_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_ActivityController_AfterActivityBody_Handler" title="ActivityController_AfterActivityBody_Handler :: Add the action list to any activity items that can be commented on">
+            <span class="description">Add the action list to any activity items that can be commented on</span><pre>ActivityController_AfterActivityBody_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_UserModel_AfterGetSession_Handler" title="UserModel_AfterGetSession_Handler :: Apply any applicable rank perks when the session first starts.">
+            <span class="description">Apply any applicable rank perks when the session first starts.</span><pre>UserModel_AfterGetSession_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                                                                                                                                                                                                <li class="method public">
+        <a href="#method_ProfileController_Render_Before" title="ProfileController_Render_Before :: Insert JS and CSS files into the appropiate controllers">
+            <span class="description">Insert JS and CSS files into the appropiate controllers</span><pre>ProfileController_Render_Before</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_DiscussionController_Render_Before" title="DiscussionController_Render_Before :: ">
+            <span class="description"></span><pre>DiscussionController_Render_Before</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_CommentController_Render_Before" title="CommentController_Render_Before :: ">
+            <span class="description"></span><pre>CommentController_Render_Before</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_ActivityController_Render_Before" title="ActivityController_Render_Before :: ">
+            <span class="description"></span><pre>ActivityController_Render_Before</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_Gdn_Dispatcher_AppStartup_Handler" title="Gdn_Dispatcher_AppStartup_Handler :: Check for Badge Awards where appropriate">
+            <span class="description">Check for Badge Awards where appropriate</span><pre>Gdn_Dispatcher_AppStartup_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_Base_AfterGetSession_Handler" title="Base_AfterGetSession_Handler :: ">
+            <span class="description"></span><pre>Base_AfterGetSession_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_CommentModel_AfterSaveComment_Handler" title="CommentModel_AfterSaveComment_Handler :: ">
+            <span class="description"></span><pre>CommentModel_AfterSaveComment_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_DiscussionModel_AfterSaveDiscussion_Handler" title="DiscussionModel_AfterSaveDiscussion_Handler :: ">
+            <span class="description"></span><pre>DiscussionModel_AfterSaveDiscussion_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_ActivityModel_BeforeSaveComment_Handler" title="ActivityModel_BeforeSaveComment_Handler :: ">
+            <span class="description"></span><pre>ActivityModel_BeforeSaveComment_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_CommentModel_BeforeNotification_Handler" title="CommentModel_BeforeNotification_Handler :: ">
+            <span class="description"></span><pre>CommentModel_BeforeNotification_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_DiscussionModel_BeforeNotification_Handler" title="DiscussionModel_BeforeNotification_Handler :: ">
+            <span class="description"></span><pre>DiscussionModel_BeforeNotification_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_Base_AfterSignIn_Handler" title="Base_AfterSignIn_Handler :: ">
+            <span class="description"></span><pre>Base_AfterSignIn_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_UserModel_AfterSave_Handler" title="UserModel_AfterSave_Handler :: ">
+            <span class="description"></span><pre>UserModel_AfterSave_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_ReactionModel_AfterReactionSave_Handler" title="ReactionModel_AfterReactionSave_Handler :: ">
+            <span class="description"></span><pre>ReactionModel_AfterReactionSave_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_BadgeAwardModel_AfterBadgeAward_Handler" title="BadgeAwardModel_AfterBadgeAward_Handler :: ">
+            <span class="description"></span><pre>BadgeAwardModel_AfterBadgeAward_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_Base_AfterConnection_Handler" title="Base_AfterConnection_Handler :: ">
+            <span class="description"></span><pre>Base_AfterConnection_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                                                                                                                                        <li class="method public">
+        <a href="#method_Base_Render_Before" title="Base_Render_Before :: Add global Yaga resources to all dashboard pages">
+            <span class="description">Add global Yaga resources to all dashboard pages</span><pre>Base_Render_Before</pre>
+        </a>
+    </li>
+
+                                                                                                                                                                <li class="method public">
+        <a href="#method_UserModel_BeforeDeleteUser_Handler" title="UserModel_BeforeDeleteUser_Handler :: Remove Yaga data when deleting a user.">
+            <span class="description">Remove Yaga data when deleting a user.</span><pre>UserModel_BeforeDeleteUser_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_DbaController_CountJobs_Handler" title="DbaController_CountJobs_Handler :: Add update routines to the DBA controller">
+            <span class="description">Add update routines to the DBA controller</span><pre>DbaController_CountJobs_Handler</pre>
+        </a>
+    </li>
+
+                                                                                                        <li class="method public">
+        <a href="#method_Setup" title="Setup :: Run the structure and stub scripts if necessary when the application is
+enabled.">
+            <span class="description">Run the structure and stub scripts if necessary when the application is
+enabled.</span><pre>Setup</pre>
+        </a>
+    </li>
+
+                                                </ul>
+        </li>
+        <li class="nav-header protected">» Protected
+            <ul>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    <li class="method protected">
+                            <a href="#method__RankProgression" title="_RankProgression :: Update a user&#039;s rank id if they qualify">
+                                <span class="description">Update a user&#039;s rank id if they qualify</span><pre>_RankProgression</pre>
+                            </a>
+                        </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <li class="method protected">
+                            <a href="#method_DeleteUserData" title="DeleteUserData :: Delete all of the Yaga related information for a specific user.">
+                                <span class="description">Delete all of the Yaga related information for a specific user.</span><pre>DeleteUserData</pre>
+                            </a>
+                        </li>
+                                                                                                                                                            </ul>
+        </li>
+        <li class="nav-header private">» Private
+            <ul>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <li class="method private">
+                            <a href="#method__GrantPermission" title="_GrantPermission :: Gives the specified permission to a user, regardless of current role.">
+                                <span class="description">Gives the specified permission to a user, regardless of current role.</span><pre>_GrantPermission</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method private">
+                            <a href="#method__RevokePermission" title="_RevokePermission :: Removes the specified permission from a user, regardless of current role.">
+                                <span class="description">Removes the specified permission from a user, regardless of current role.</span><pre>_RevokePermission</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method private">
+                            <a href="#method__ApplyCustomConfigs" title="_ApplyCustomConfigs :: Apply custom configuration from rank perks in memory only.">
+                                <span class="description">Apply custom configuration from rank perks in memory only.</span><pre>_ApplyCustomConfigs</pre>
+                            </a>
+                        </li>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <li class="method private">
+                            <a href="#method__AwardBadges" title="_AwardBadges :: This is the dispatcher to check badge awards">
+                                <span class="description">This is the dispatcher to check badge awards</span><pre>_AwardBadges</pre>
+                            </a>
+                        </li>
+                                                                                <li class="method private">
+                            <a href="#method__AddResources" title="_AddResources :: Add the appropriate resources for each controller">
+                                <span class="description">Add the appropriate resources for each controller</span><pre>_AddResources</pre>
+                            </a>
+                        </li>
+                                                                                                                                                                                                                                    </ul>
+        </li>
+        <li class="nav-header">
+            <i class="icon-custom icon-constant"></i> Constants
+            <ul>
+                            </ul>
+        </li>
+    </ul>
+
+
+        </div>
+
+        <div class="span8">
+            <div class="element class">
+                <h1>YagaHooks</h1>
+                <small style="display: block; text-align: right">
+                                                                Implements \Gdn_IPlugin
+                                    </small>
+                <p class="short_description">A collection of hooks that are enabled when Yaga is.</p>
+                <div class="details">
+                    <div class="long_description">
+                        
+                    </div>
+                    <table class="table table-bordered">
+                                                                                    <tr>
+                                    <th>
+                                        package
+                                                                            </th>
+                                    <td>
+                                                                                    
+                                                                                <p>Default</p>
+                                    </td>
+                                </tr>
+                                                                                                                                                                                </table>
+
+                    <h3><i class="icon-custom icon-method"></i> Methods</h3>
+                                                                <a id="method_SettingsController_Yaga_Create"></a>
+                        <div class="element clickable method public  method_SettingsController_Yaga_Create" data-toggle="collapse" data-target=".method_SettingsController_Yaga_Create .collapse">
+                            <h2>Redirect any old links to proper settings page permanently</h2>
+                            <pre>SettingsController_Yaga_Create(\SettingsController $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\SettingsController</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_SettingsController_AfterRenderAsset_Handler"></a>
+                        <div class="element clickable method public  method_SettingsController_AfterRenderAsset_Handler" data-toggle="collapse" data-target=".method_SettingsController_AfterRenderAsset_Handler .collapse">
+                            <h2>Add Simple stats page to dashboard index</h2>
+                            <pre>SettingsController_AfterRenderAsset_Handler(\SettingsController $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\SettingsController</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_Base_GetAppSettingsMenuItems_Handler"></a>
+                        <div class="element clickable method public  method_Base_GetAppSettingsMenuItems_Handler" data-toggle="collapse" data-target=".method_Base_GetAppSettingsMenuItems_Handler .collapse">
+                            <h2>Add the settings page links</h2>
+                            <pre>Base_GetAppSettingsMenuItems_Handler(Object $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>Object</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_Base_AfterDiscussionFilters_Handler"></a>
+                        <div class="element clickable method public  method_Base_AfterDiscussionFilters_Handler" data-toggle="collapse" data-target=".method_Base_AfterDiscussionFilters_Handler .collapse">
+                            <h2>Base_AfterDiscussionFilters_Handler</h2>
+                            <pre>Base_AfterDiscussionFilters_Handler( $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_ProfileController_AfterUserInfo_Handler"></a>
+                        <div class="element clickable method public  method_ProfileController_AfterUserInfo_Handler" data-toggle="collapse" data-target=".method_ProfileController_AfterUserInfo_Handler .collapse">
+                            <h2>Display the reaction counts on the profile page</h2>
+                            <pre>ProfileController_AfterUserInfo_Handler(\ProfileController $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\ProfileController</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_UserInfoModule_OnBasicInfo_Handler"></a>
+                        <div class="element clickable method public  method_UserInfoModule_OnBasicInfo_Handler" data-toggle="collapse" data-target=".method_UserInfoModule_OnBasicInfo_Handler .collapse">
+                            <h2>Add the badge count into the user info module</h2>
+                            <pre>UserInfoModule_OnBasicInfo_Handler(\UserInfoModule $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\UserInfoModule</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_ProfileController_Reactions_Create"></a>
+                        <div class="element clickable method public  method_ProfileController_Reactions_Create" data-toggle="collapse" data-target=".method_ProfileController_Reactions_Create .collapse">
+                            <h2>This method shows the latest discussions/comments a user has posted that
+received the specified action</h2>
+                            <pre>ProfileController_Reactions_Create(\ProfileController $Sender, integer $UserReference = &#039;&#039;, string $Username = &#039;&#039;, integer $ActionID = &#039;&#039;, integer $Page) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\ProfileController</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$UserReference</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Username</h4>
+                                                <code>string</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$ActionID</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Page</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_ProfileController_Best_Create"></a>
+                        <div class="element clickable method public  method_ProfileController_Best_Create" data-toggle="collapse" data-target=".method_ProfileController_Best_Create .collapse">
+                            <h2>This method shows the highest scoring discussions/comments a user has ever posted</h2>
+                            <pre>ProfileController_Best_Create(\ProfileController $Sender, integer $UserReference = &#039;&#039;, string $Username = &#039;&#039;, integer $Page) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\ProfileController</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$UserReference</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Username</h4>
+                                                <code>string</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Page</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_ProfileController_AddProfileTabs_Handler"></a>
+                        <div class="element clickable method public  method_ProfileController_AddProfileTabs_Handler" data-toggle="collapse" data-target=".method_ProfileController_AddProfileTabs_Handler .collapse">
+                            <h2>Add a best content tab on a user&#039;s profile</h2>
+                            <pre>ProfileController_AddProfileTabs_Handler(\ProfileController $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\ProfileController</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_UserModel_AfterSetField_Handler"></a>
+                        <div class="element clickable method public  method_UserModel_AfterSetField_Handler" data-toggle="collapse" data-target=".method_UserModel_AfterSetField_Handler .collapse">
+                            <h2>Check for rank progress when the user model gets updated</h2>
+                            <pre>UserModel_AfterSetField_Handler(\UserModel $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\UserModel</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method__RankProgression"></a>
+                        <div class="element clickable method protected  method__RankProgression" data-toggle="collapse" data-target=".method__RankProgression .collapse">
+                            <h2>Update a user&#039;s rank id if they qualify</h2>
+                            <pre>_RankProgression(integer $UserID) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$UserID</h4>
+                                                <code>integer</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_ProfileController_AfterPreferencesDefined_Handler"></a>
+                        <div class="element clickable method public  method_ProfileController_AfterPreferencesDefined_Handler" data-toggle="collapse" data-target=".method_ProfileController_AfterPreferencesDefined_Handler .collapse">
+                            <h2>Add the badge and rank notification options</h2>
+                            <pre>ProfileController_AfterPreferencesDefined_Handler(\ProfileController $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\ProfileController</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_ProfileController_BeforeProfileOptions_Handler"></a>
+                        <div class="element clickable method public  method_ProfileController_BeforeProfileOptions_Handler" data-toggle="collapse" data-target=".method_ProfileController_BeforeProfileOptions_Handler .collapse">
+                            <h2>Add the Award Badge and Promote options to the profile controller</h2>
+                            <pre>ProfileController_BeforeProfileOptions_Handler(\ProfileController $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\ProfileController</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_DiscussionController_AfterDiscussionBody_Handler"></a>
+                        <div class="element clickable method public  method_DiscussionController_AfterDiscussionBody_Handler" data-toggle="collapse" data-target=".method_DiscussionController_AfterDiscussionBody_Handler .collapse">
+                            <h2>Display a record of reactions after the first post</h2>
+                            <pre>DiscussionController_AfterDiscussionBody_Handler(\DiscussionController $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\DiscussionController</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_DiscussionController_AfterCommentBody_Handler"></a>
+                        <div class="element clickable method public  method_DiscussionController_AfterCommentBody_Handler" data-toggle="collapse" data-target=".method_DiscussionController_AfterCommentBody_Handler .collapse">
+                            <h2>Display a record of reactions after comments</h2>
+                            <pre>DiscussionController_AfterCommentBody_Handler(\DiscussionController $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\DiscussionController</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_DiscussionController_AfterReactions_Handler"></a>
+                        <div class="element clickable method public  method_DiscussionController_AfterReactions_Handler" data-toggle="collapse" data-target=".method_DiscussionController_AfterReactions_Handler .collapse">
+                            <h2>Add action list to discussion items</h2>
+                            <pre>DiscussionController_AfterReactions_Handler(\DiscussionController $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\DiscussionController</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_ActivityController_AfterActivityBody_Handler"></a>
+                        <div class="element clickable method public  method_ActivityController_AfterActivityBody_Handler" data-toggle="collapse" data-target=".method_ActivityController_AfterActivityBody_Handler .collapse">
+                            <h2>Add the action list to any activity items that can be commented on</h2>
+                            <pre>ActivityController_AfterActivityBody_Handler(\ActivityController $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\ActivityController</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_UserModel_AfterGetSession_Handler"></a>
+                        <div class="element clickable method public  method_UserModel_AfterGetSession_Handler" data-toggle="collapse" data-target=".method_UserModel_AfterGetSession_Handler .collapse">
+                            <h2>Apply any applicable rank perks when the session first starts.</h2>
+                            <pre>UserModel_AfterGetSession_Handler(\UserModel $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\UserModel</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method__GrantPermission"></a>
+                        <div class="element clickable method private  method__GrantPermission" data-toggle="collapse" data-target=".method__GrantPermission .collapse">
+                            <h2>Gives the specified permission to a user, regardless of current role.</h2>
+                            <pre>_GrantPermission(\type $User, string $Permission = &#039;&#039;) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$User</h4>
+                                                <code>\type</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Permission</h4>
+                                                <code>string</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method__RevokePermission"></a>
+                        <div class="element clickable method private  method__RevokePermission" data-toggle="collapse" data-target=".method__RevokePermission .collapse">
+                            <h2>Removes the specified permission from a user, regardless of current role.</h2>
+                            <pre>_RevokePermission(\type $User, string $Permission = &#039;&#039;) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"><p>Cannot be used to override $User->Admin = 1 permissions</p></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$User</h4>
+                                                <code>\type</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Permission</h4>
+                                                <code>string</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method__ApplyCustomConfigs"></a>
+                        <div class="element clickable method private  method__ApplyCustomConfigs" data-toggle="collapse" data-target=".method__ApplyCustomConfigs .collapse">
+                            <h2>Apply custom configuration from rank perks in memory only.</h2>
+                            <pre>_ApplyCustomConfigs(string $Name = NULL, mixed $Value = NULL) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Name</h4>
+                                                <code>string</code><p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Value</h4>
+                                                <code>mixed</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_ProfileController_Render_Before"></a>
+                        <div class="element clickable method public  method_ProfileController_Render_Before" data-toggle="collapse" data-target=".method_ProfileController_Render_Before .collapse">
+                            <h2>Insert JS and CSS files into the appropiate controllers</h2>
+                            <pre>ProfileController_Render_Before( $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_DiscussionController_Render_Before"></a>
+                        <div class="element clickable method public  method_DiscussionController_Render_Before" data-toggle="collapse" data-target=".method_DiscussionController_Render_Before .collapse">
+                            <h2>DiscussionController_Render_Before</h2>
+                            <pre>DiscussionController_Render_Before( $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_CommentController_Render_Before"></a>
+                        <div class="element clickable method public  method_CommentController_Render_Before" data-toggle="collapse" data-target=".method_CommentController_Render_Before .collapse">
+                            <h2>CommentController_Render_Before</h2>
+                            <pre>CommentController_Render_Before( $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_ActivityController_Render_Before"></a>
+                        <div class="element clickable method public  method_ActivityController_Render_Before" data-toggle="collapse" data-target=".method_ActivityController_Render_Before .collapse">
+                            <h2>ActivityController_Render_Before</h2>
+                            <pre>ActivityController_Render_Before( $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_Gdn_Dispatcher_AppStartup_Handler"></a>
+                        <div class="element clickable method public  method_Gdn_Dispatcher_AppStartup_Handler" data-toggle="collapse" data-target=".method_Gdn_Dispatcher_AppStartup_Handler .collapse">
+                            <h2>Check for Badge Awards where appropriate</h2>
+                            <pre>Gdn_Dispatcher_AppStartup_Handler( $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_Base_AfterGetSession_Handler"></a>
+                        <div class="element clickable method public  method_Base_AfterGetSession_Handler" data-toggle="collapse" data-target=".method_Base_AfterGetSession_Handler .collapse">
+                            <h2>Base_AfterGetSession_Handler</h2>
+                            <pre>Base_AfterGetSession_Handler( $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_CommentModel_AfterSaveComment_Handler"></a>
+                        <div class="element clickable method public  method_CommentModel_AfterSaveComment_Handler" data-toggle="collapse" data-target=".method_CommentModel_AfterSaveComment_Handler .collapse">
+                            <h2>CommentModel_AfterSaveComment_Handler</h2>
+                            <pre>CommentModel_AfterSaveComment_Handler( $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_DiscussionModel_AfterSaveDiscussion_Handler"></a>
+                        <div class="element clickable method public  method_DiscussionModel_AfterSaveDiscussion_Handler" data-toggle="collapse" data-target=".method_DiscussionModel_AfterSaveDiscussion_Handler .collapse">
+                            <h2>DiscussionModel_AfterSaveDiscussion_Handler</h2>
+                            <pre>DiscussionModel_AfterSaveDiscussion_Handler( $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_ActivityModel_BeforeSaveComment_Handler"></a>
+                        <div class="element clickable method public  method_ActivityModel_BeforeSaveComment_Handler" data-toggle="collapse" data-target=".method_ActivityModel_BeforeSaveComment_Handler .collapse">
+                            <h2>ActivityModel_BeforeSaveComment_Handler</h2>
+                            <pre>ActivityModel_BeforeSaveComment_Handler( $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_CommentModel_BeforeNotification_Handler"></a>
+                        <div class="element clickable method public  method_CommentModel_BeforeNotification_Handler" data-toggle="collapse" data-target=".method_CommentModel_BeforeNotification_Handler .collapse">
+                            <h2>CommentModel_BeforeNotification_Handler</h2>
+                            <pre>CommentModel_BeforeNotification_Handler( $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_DiscussionModel_BeforeNotification_Handler"></a>
+                        <div class="element clickable method public  method_DiscussionModel_BeforeNotification_Handler" data-toggle="collapse" data-target=".method_DiscussionModel_BeforeNotification_Handler .collapse">
+                            <h2>DiscussionModel_BeforeNotification_Handler</h2>
+                            <pre>DiscussionModel_BeforeNotification_Handler( $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_Base_AfterSignIn_Handler"></a>
+                        <div class="element clickable method public  method_Base_AfterSignIn_Handler" data-toggle="collapse" data-target=".method_Base_AfterSignIn_Handler .collapse">
+                            <h2>Base_AfterSignIn_Handler</h2>
+                            <pre>Base_AfterSignIn_Handler( $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_UserModel_AfterSave_Handler"></a>
+                        <div class="element clickable method public  method_UserModel_AfterSave_Handler" data-toggle="collapse" data-target=".method_UserModel_AfterSave_Handler .collapse">
+                            <h2>UserModel_AfterSave_Handler</h2>
+                            <pre>UserModel_AfterSave_Handler( $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_ReactionModel_AfterReactionSave_Handler"></a>
+                        <div class="element clickable method public  method_ReactionModel_AfterReactionSave_Handler" data-toggle="collapse" data-target=".method_ReactionModel_AfterReactionSave_Handler .collapse">
+                            <h2>ReactionModel_AfterReactionSave_Handler</h2>
+                            <pre>ReactionModel_AfterReactionSave_Handler( $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_BadgeAwardModel_AfterBadgeAward_Handler"></a>
+                        <div class="element clickable method public  method_BadgeAwardModel_AfterBadgeAward_Handler" data-toggle="collapse" data-target=".method_BadgeAwardModel_AfterBadgeAward_Handler .collapse">
+                            <h2>BadgeAwardModel_AfterBadgeAward_Handler</h2>
+                            <pre>BadgeAwardModel_AfterBadgeAward_Handler( $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_Base_AfterConnection_Handler"></a>
+                        <div class="element clickable method public  method_Base_AfterConnection_Handler" data-toggle="collapse" data-target=".method_Base_AfterConnection_Handler .collapse">
+                            <h2>Base_AfterConnection_Handler</h2>
+                            <pre>Base_AfterConnection_Handler( $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method__AwardBadges"></a>
+                        <div class="element clickable method private  method__AwardBadges" data-toggle="collapse" data-target=".method__AwardBadges .collapse">
+                            <h2>This is the dispatcher to check badge awards</h2>
+                            <pre>_AwardBadges(mixed $Sender, string $Handler) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>mixed</code><p><p>The sending object</p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Handler</h4>
+                                                <code>string</code><p><p>The event handler to check associated rules for awards
+(e.g. BadgeAwardModel_AfterBadgeAward_Handler or Base_AfterConnection)</p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method__AddResources"></a>
+                        <div class="element clickable method private  method__AddResources" data-toggle="collapse" data-target=".method__AddResources .collapse">
+                            <h2>Add the appropriate resources for each controller</h2>
+                            <pre>_AddResources(\Gdn_Controller $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\Gdn_Controller</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_Base_Render_Before"></a>
+                        <div class="element clickable method public  method_Base_Render_Before" data-toggle="collapse" data-target=".method_Base_Render_Before .collapse">
+                            <h2>Add global Yaga resources to all dashboard pages</h2>
+                            <pre>Base_Render_Before(\Gdn_Controller $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\Gdn_Controller</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_DeleteUserData"></a>
+                        <div class="element clickable method protected  method_DeleteUserData" data-toggle="collapse" data-target=".method_DeleteUserData .collapse">
+                            <h2>Delete all of the Yaga related information for a specific user.</h2>
+                            <pre>DeleteUserData(integer $UserID, array $Options = array(),  &$Data = NULL) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    since
+                                                </th>
+                                                <td>
+                                                                                                                                                                        1.0
+                                                                                                                                                                        
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$UserID</h4>
+                                                <code>integer</code><p><p>The ID of the user to delete.</p></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Options</h4>
+                                                <code>array</code><p><p>An array of options:</p>
+<ul>
+<li>DeleteMethod: One of delete, wipe, or NULL</li>
+</ul></p>
+                                            </div>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Data</h4>
+                                                <code></code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_UserModel_BeforeDeleteUser_Handler"></a>
+                        <div class="element clickable method public  method_UserModel_BeforeDeleteUser_Handler" data-toggle="collapse" data-target=".method_UserModel_BeforeDeleteUser_Handler .collapse">
+                            <h2>Remove Yaga data when deleting a user.</h2>
+                            <pre>UserModel_BeforeDeleteUser_Handler(\UserModel $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    since
+                                                </th>
+                                                <td>
+                                                                                                                                                                        1.0
+                                                                                                                                                                        
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    package
+                                                </th>
+                                                <td>
+                                                                                                                                                                        
+                                                                                                                                                                        <p>Yaga</p>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\UserModel</code><p><p>UserModel.</p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_DbaController_CountJobs_Handler"></a>
+                        <div class="element clickable method public  method_DbaController_CountJobs_Handler" data-toggle="collapse" data-target=".method_DbaController_CountJobs_Handler .collapse">
+                            <h2>Add update routines to the DBA controller</h2>
+                            <pre>DbaController_CountJobs_Handler(\DbaController $Sender) </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                                                            <h3>Arguments</h3>
+                                                                                    <div class="subelement argument">
+                                                <h4>$Sender</h4>
+                                                <code>\DbaController</code><p></p>
+                                            </div>
+                                                                            
+                                                                    </div>
+                            </div>
+                        </div>
+                                            <a id="method_Setup"></a>
+                        <div class="element clickable method public  method_Setup" data-toggle="collapse" data-target=".method_Setup .collapse">
+                            <h2>Run the structure and stub scripts if necessary when the application is
+enabled.</h2>
+                            <pre>Setup() </pre>
+                            <div class="labels">
+                                                                                                                                                                                            </div>
+                            <div class="row collapse">
+                                <div class="detail-description">
+                                    <div class="long_description"></div>
+
+                                    <table class="table">
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                                    <tr>
+                                                <th>
+                                                    
+                                                </th>
+                                                <td>
+                                                                                                    </td>
+                                            </tr>
+                                                                            </table>
+
+                                    
+                                                                    </div>
+                            </div>
+                        </div>
+                    
+                    
+                                                        </div>
+            </div>
+            <a id="\YagaHooks"></a>
+            <ul class="breadcrumb">
+                <li><a href="../index.html"><i class="icon-custom icon-class"></i></a></li>
+                    
+    
+    <li><span class="divider">\</span><a href="../namespaces/default.html">\</a></li>
+
+                <li class="active"><span class="divider">\</span><a href="../classes/YagaHooks.html">YagaHooks</a></li>
+            </ul>
+        </div>
+    </div>
+
+    </div>
+
+        <footer class="span12">
+            Documentation generated on Wed, 06 Aug 2014 19:17:35 +0200.<br/>
+    </footer>
+    </body>
+</html>
