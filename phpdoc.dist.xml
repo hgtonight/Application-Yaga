@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdoc>
+  <title>Yaga Technical Documentation</title>
+  <parser>
+    <target>doc/stage/</target>
+    <markers>
+      <item>TODO</item>
+    </markers>
+  </parser>
+  <transformer>
+    <target>doc/en/</target>
+  </transformer>
+  <transformations>
+    <template name="responsive-yaga" />
+  </transformations>
+  <files>
+    <directory>.</directory>
+    <ignore>doc/*</ignore>
+  </files>
+</phpdoc>
