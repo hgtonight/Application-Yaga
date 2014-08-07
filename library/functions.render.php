@@ -80,7 +80,7 @@ if(!function_exists('RenderReactionRecord')) {
         echo Wrap($String, 'span', $Wrapttributes);
       }
       
-      if($Limit > 0 && $i >= $ReactionCount) {
+      if($Limit > 0 && $i >= $ReactionCount && $ReactionCount > $Limit) {
         echo Plural($ReactionCount - $Limit, 'Yaga.Reactions.RecordLimit.Single', 'Yaga.Reactions.RecordLimit.Plural');
       }
     }
