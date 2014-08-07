@@ -18,67 +18,85 @@
 
   </head>
   <body>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/hgtonight/Application-Yaga">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/hgtonight/Application-Yaga/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/hgtonight/Application-Yaga/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
+    <div id="header">
+      <nav>
+        <li class="fork"><a href="https://github.com/hgtonight/Application-Yaga">View On GitHub</a></li>
+        <li class="downloads"><a href="https://github.com/hgtonight/Application-Yaga/zipball/master">ZIP</a></li>
+        <li class="downloads"><a href="https://github.com/hgtonight/Application-Yaga/tarball/master">TAR</a></li>
+        <li class="title">DOWNLOADS</li>
+      </nav>
+    </div><!-- end header -->
 
     <div class="wrapper">
 
       <section>
         <div id="title">
           <h1>Yaga</h1>
-          <p>Yet Another Gamification Application is a Garden application that provides a gamification platform for Vanilla Forums and other Garden applications.</p>
+          <p><strong>Y</strong>et <strong>A</strong>nother <strong>G</strong>amification <strong>A</strong>pplication is a Garden application that provides a gamification platform for Vanilla Forums and other Garden applications. It integrates by default with Vanilla Forums. Out of the box, it provides Reactions, Badges, and Ranks.</p>
           <hr>
-          <span class="credits left">Project maintained by <a href="https://github.com/hgtonight">hgtonight</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
         </div>
 
-        <h1>
-<a name="yaga" class="anchor" href="#yaga"><span class="octicon octicon-link"></span></a>Yaga</h1>
+        <h2>
+          <a name="yaga" class="anchor" href="#yaga"><span class="octicon octicon-link"></span></a>
+          License
+        </h2>
 
-<p><strong>Y</strong>​et <strong>A</strong>​nother <strong>G</strong>​amification <strong>A</strong>​pplication is a Garden application that provides a gamification platform for Vanilla Forums and other Garden applications. It integrates by default with Vanilla Forums. Out of the box, it provides Reactions, Badges, and Ranks.</p>
+        <p>All source code is released under the GPLv3 and may be released under a different license <em><strong>with permission</strong></em>.</p>
+        
+        <p>All artwork and artwork assets are released under the CC-0 license.</p>
 
-<p>It is released under the GPLv3 and may be released under a different license <em><strong>with permission</strong></em>.</p>
+        <h2>
+          <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
 
-<h2>
-<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+        <ol>
+          <li>
+            <p>To get up and running with Yaga, either:</p>
 
-<ol>
-<li>
-<p>To get up and running with Yaga, either:</p>
+            <ul>
+              <li><a href="http://vanillaforums.org/get/yaga-application">Download the latest stable release</a></li>
+              <li>Extract into the <code>/applications</code> directory</li>
+            </ul>
+            <p>-- OR --</p>
 
-<ul>
-<li><a href="http://vanillaforums.org/get/yaga-application">Download the latest stable release</a></li>
-<li>Extract into the <code>/applications</code> directory</li>
-</ul>
-<p>-- OR --</p>
-
-<ul>
-<li>Clone the repository into the <code>/applications</code> directory:</li>
-</ul>
-<div class="highlight highlight-sh"><pre><span class="nv">$ </span><span class="nb">cd </span>path-to-applications
+            <ul>
+              <li>Clone the repository into the <code>/applications</code> directory:</li>
+            </ul>
+            <div class="highlight highlight-sh"><pre><span class="nv">$ </span><span class="nb">cd </span>path-to-applications
 <span class="nv">$ </span>git clone git://github.com/hgtonight/Application-Yaga.git yaga
-</pre></div>
+              </pre></div>
 
-<blockquote>
-<p>Make sure to double check that the installed folder is named <code>yaga</code>!</p>
-</blockquote>
+            <blockquote>
+              <p>Make sure to double check that the installed folder is named <code>yaga</code>!</p>
+            </blockquote>
 
-<p>The latter option is only recommend if you're familiar with git.</p>
-</li>
-</ol><ol>
-<li><p>Once you've added the application to your Vanilla installation, you need to activate it in the dashboard. Once activated, you will see a new "Gamification" menu in the dashboard sidebar where you can configure each individual part of the Yaga application.</p></li>
-<li><p>Finally, you need to delete the <code>/cache/locale_map.ini</code> file to force refresh the locale definitions.</p></li>
-</ol><hr><p>Copyright 2013 - 2014 <g-emoji alias="copyright" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/00a9.png">©</g-emoji> Zachary Doll</p>
+            <p>The latter option is only recommend if you're familiar with git.</p>
+          </li>
+        </ol><ol>
+          <li><p>Once you've added the application to your Vanilla installation, you need to activate it in the dashboard. Once activated, you will see a new "Gamification" menu in the dashboard sidebar where you can configure each individual part of the Yaga application.</p></li>
+          <li><p>Finally, you need to delete the <code>/cache/locale_map.ini</code> file to force refresh the locale definitions.</p></li>
+        </ol>
+        
+        <h2>
+          Getting Started
+        </h2>
+        
+        <p>A fresh install of Yaga will have some stub content intended to familiarize yourself with the configuration process.</p>
+        <p>If you want a more fully featured baseline experience, please import the default transport file that is included in the design folder. It contains one example of a gamification set of badges, ranks, perks, and reactions.</p>
+        
+        <h2>
+          Technical Documentation
+        </h2>
+        
+        <p>While I firmly believe the source code is the best documentation, you can find the <a href="http://hgtonight.github.io/Application-Yaga/en/">technical documentation here</a>.</p>
+        
+        <hr>
+        <p>Copyright 2013 - 2014 <g-emoji alias="copyright" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/00a9.png">©</g-emoji> Zachary Doll</p>
+        <span class="credits left">Project maintained by <a href="https://github.com/hgtonight">hgtonight</a></span>
+        <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
       </section>
 
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
+
   </body>
 </html>
