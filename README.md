@@ -28,5 +28,9 @@ It is released under the GPLv3 and may be released under a different license _**
 
 3. Finally, you need to delete the `/cache/locale_map.ini` file to force refresh the locale definitions.
 
+## Documentation
+
+Yaga documentation can be found at http://hgtonight.github.io/Application-Yaga/
+
 ---
 Copyright 2013 - 2014 © Zachary Doll
