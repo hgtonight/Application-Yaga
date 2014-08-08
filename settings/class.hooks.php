@@ -105,6 +105,7 @@ class YagaHooks implements Gdn_IPlugin {
     }
 
     echo Wrap($String, 'div', array('class' => 'DataCounts'));
+    echo '</div>';
   }
 
   /**
