@@ -3,6 +3,9 @@
 
 /**
  * A collection of hooks that are enabled when Yaga is.
+ * 
+ * @package Yaga
+ * @since 1.0
  */
 class YagaHooks implements Gdn_IPlugin {
 
@@ -64,9 +67,15 @@ class YagaHooks implements Gdn_IPlugin {
     }
   }
 
+  /**
+   * Add a Best Content item to the discussion filters module
+   * 
+   * @param mixed $Sender
+   * @return boolean
+   */
   public function Base_AfterDiscussionFilters_Handler($Sender) {
     if(!C('Yaga.Reactions.Enabled')) {
-      return;
+      return FALSE;
     }
 
     echo Wrap(Anchor(Sprite('SpBestOf') . ' ' . T('Yaga.BestContent'), '/best'), 'li', array('class' => $Sender->ControllerName == 'bestcontroller' ? 'Best Active' : 'Best'));
@@ -524,6 +533,8 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Insert JS and CSS files into the appropiate controllers
+   * 
+   * @param ProfileController $Sender
    */
   public function ProfileController_Render_Before($Sender) {
     $this->_AddResources($Sender);
@@ -533,14 +544,29 @@ class YagaHooks implements Gdn_IPlugin {
     }
   }
 
+  /**
+   * Insert JS and CSS files into the appropiate controllers
+   * 
+   * @param DiscussionController $Sender
+   */
   public function DiscussionController_Render_Before($Sender) {
     $this->_AddResources($Sender);
   }
 
+  /**
+   * Insert JS and CSS files into the appropiate controllers
+   * 
+   * @param CommentController $Sender
+   */
   public function CommentController_Render_Before($Sender) {
     $this->_AddResources($Sender);
   }
 
+  /**
+   * Insert JS and CSS files into the appropiate controllers
+   * 
+   * @param ActivityController $Sender
+   */
   public function ActivityController_Render_Before($Sender) {
     $this->_AddResources($Sender);
 
@@ -555,52 +581,109 @@ class YagaHooks implements Gdn_IPlugin {
   }
 
   /**
-   * Check for Badge Awards where appropriate
+   * Check for Badge Awards
+   * 
+   * @param Gdn_Dispatcher $Sender
    */
   public function Gdn_Dispatcher_AppStartup_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
+  /**
+   * Check for Badge Awards
+   * 
+   * @param mixed $Sender
+   */
   public function Base_AfterGetSession_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
+  /**
+   * Check for Badge Awards
+   * 
+   * @param CommentModel $Sender
+   */
   public function CommentModel_AfterSaveComment_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
+  /**
+   * Check for Badge Awards
+   * 
+   * @param DiscussionModel $Sender
+   */
   public function DiscussionModel_AfterSaveDiscussion_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
+  /**
+   * Check for Badge Awards
+   * 
+   * @param ActivityModel $Sender
+   */
   public function ActivityModel_BeforeSaveComment_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
+  /**
+   * Check for Badge Awards
+   * 
+   * @param CommentModel $Sender
+   */
   public function CommentModel_BeforeNotification_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
+  /**
+   * Check for Badge Awards
+   * 
+   * @param DiscussionModel $Sender
+   */
   public function DiscussionModel_BeforeNotification_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
+  /**
+   * Check for Badge Awards
+   * 
+   * @param mixed $Sender
+   */
   public function Base_AfterSignIn_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
+  /**
+   * Check for Badge Awards
+   * 
+   * @param UserModel $Sender
+   */
   public function UserModel_AfterSave_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
+  /**
+   * Check for Badge Awards
+   * 
+   * @param ReactionModel $Sender
+   */
   public function ReactionModel_AfterReactionSave_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
+  /**
+   * Check for Badge Awards
+   * 
+   * @param BadgeAwardModel $Sender
+   */
   public function BadgeAwardModel_AfterBadgeAward_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
   }
 
+  /**
+   * Check for Badge Awards
+   * 
+   * @param mixed $Sender
+   */
   public function Base_AfterConnection_Handler($Sender) {
     $this->_AwardBadges($Sender, __FUNCTION__);
   }
@@ -681,12 +764,15 @@ class YagaHooks implements Gdn_IPlugin {
   }
 
   /**
-    * Delete all of the Yaga related information for a specific user.
-    * @param int $UserID The ID of the user to delete.
-    * @param array $Options An array of options:
-    *  - DeleteMethod: One of delete, wipe, or NULL
-    * @since 1.0
-    */
+   * Delete all of the Yaga related information for a specific user.
+   * 
+   * @param int $UserID The ID of the user to delete.
+   * @param array $Options An array of options:
+   *  - DeleteMethod: One of delete, wipe, or NULL
+   * @param array $Data
+   * 
+   * @since 1.0
+   */
    protected function DeleteUserData($UserID, $Options = array(), &$Data = NULL) {
     $SQL = Gdn::SQL();
 
