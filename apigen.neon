@@ -1,0 +1,40 @@
+# Source file or directory to parse
+source: ./
+# Directory where to save the generated documentation
+destination: ./doc/en
+# List of allowed file extensions
+extensions: [php]
+# Mask to exclude file or directory from processing
+exclude:
+# Don't generate documentation for classes from file or directory with this mask
+skipDocPath: doc
+# Title of generated documentation
+title: Yaga
+# Documentation base URL
+baseUrl: http://hgtonight.github.io/Application-Yaga/en/
+# Generate documentation for PHP internal classes
+php: No
+# Generate tree view of classes, interfaces and exceptions
+tree: Yes
+# Generate documentation for deprecated classes, methods, properties and constants
+deprecated: No
+# Generate documentation of tasks
+todo: Yes
+# Generate highlighted source code files
+sourceCode: Yes
+# Add a link to download documentation as a ZIP archive
+download: Yes
+# Save a checkstyle report of poorly documented elements into a file
+report: ./doc/report.xml
+# Wipe out the destination directory first
+wipeout: Yes
+# Don't display scanning and generating messages
+quiet: No
+# Display progressbars
+progressbar: Yes
+# Use colors
+colors: Yes
+# Check for update
+updateCheck: Yes
+# Display additional information in case of an error
+debug: No
