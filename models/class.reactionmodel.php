@@ -25,6 +25,14 @@ class ReactionModel extends Gdn_Model {
     parent::__construct('Reaction');
   }
 
+  /**
+   * Returns all available actions along with the current count specified by
+   * the $ID and $Type of content.
+   * 
+   * @param int $ID
+   * @param string $Type
+   * @return DataSet
+   */
   public function GetList($ID, $Type) {
     $Px = $this->Database->DatabasePrefix;
     $Sql = "select a.*, "
@@ -42,6 +50,7 @@ class ReactionModel extends Gdn_Model {
    *
    * @param int $ID
    * @param string $Type is the kind of ID. Valid: comment, discussion, activity
+   * @return mixed DataSet if it exists, NULL otherwise
    */
   public function GetRecord($ID, $Type) {
     if(in_array($Type, array('discussion', 'comment', 'activity')) && $ID > 0) {

@@ -42,7 +42,14 @@ class BadgeModel extends Gdn_Model {
     return self::$_Badges;
   }
 
-   public function GetLimit($Limit = FALSE, $Offset = FALSE) {
+  /**
+   * Gets the badge list with an optional limit and offset
+   * 
+   * @param int $Limit
+   * @param int $Offset
+   * @return DataSet
+   */
+  public function GetLimit($Limit = FALSE, $Offset = FALSE) {
       return $this->SQL
               ->Select()
               ->From('Badge')
@@ -95,6 +102,8 @@ class BadgeModel extends Gdn_Model {
    * Remove a badge and associated awards
    *
    * @param int $BadgeID
+   * @throws Exception
+   * @return boolean
    */
   public function Delete($BadgeID) {
     $Badge = $this->GetByID($BadgeID);
@@ -141,6 +150,7 @@ class BadgeModel extends Gdn_Model {
    * This shouldn't really be here, but I can't think of a good place to put it
    *
    * @param int $UserID
+   * @return DataSet
    */
   public function GetWithEarned($UserID) {
     $Px = $this->Database->DatabasePrefix;

@@ -48,6 +48,11 @@ class RankModel extends Gdn_Model {
     return self::$_Ranks;
   }
 
+  /**
+   * Gets the number of ranks currently specified in the database.
+   * 
+   * @return int
+   */
   public function GetCount() {
     return count($this->Get());
   }
@@ -103,6 +108,12 @@ class RankModel extends Gdn_Model {
     return $HighestRank;
   }
   
+  /**
+   * Get a list of perks associated with the specified Rank ID
+   * 
+   * @param int $RankID
+   * @return array
+   */
   public function GetPerks($RankID) {
     if(!array_key_exists($RankID, self::$_Perks)) {
       $Ranks = $this->Get();
@@ -118,6 +129,12 @@ class RankModel extends Gdn_Model {
     return self::$_Perks[$RankID];
   }
   
+  /**
+   * Returns all role IDs the specified rank confers as a perk
+   * 
+   * @param int $RankID
+   * @return array
+   */
   public function GetPerkRoleIDs($RankID) {
     $Perks = $this->GetPerks($RankID);
       
@@ -150,6 +167,7 @@ class RankModel extends Gdn_Model {
    * Remove a rank and associated awards
    *
    * @param int $RankID
+   * @return boolean
    */
   public function Delete($RankID) {
     $Rank = $this->GetByID($RankID);
@@ -165,6 +183,7 @@ class RankModel extends Gdn_Model {
    *
    * @param int $RankID
    * @param int $UserID This is the user that should get the award
+   * @param bool $Activity Whether or not to insert an activity record.
    */
   public function Set($RankID, $UserID, $Activity = FALSE) {
     $Rank = $this->GetByID($RankID);
@@ -210,6 +229,12 @@ class RankModel extends Gdn_Model {
     $this->FireEvent('AfterRankChange');
   }
   
+  /**
+   * Updates the sort field for each rank in the sort array
+   * 
+   * @param array $SortArray
+   * @return boolean
+   */
   public function SaveSort($SortArray) {
     foreach($SortArray as $Index => $Rank) {
       // skip the header row
@@ -224,6 +249,13 @@ class RankModel extends Gdn_Model {
     return TRUE;
   }
   
+  /**
+   * Updates a user roles by removing role perks from the old rank and adding the
+   * roles from the new rank
+   * @param int $UserID
+   * @param int $OldRankID
+   * @param int $NewRankID
+   */
   private function _UpdateUserRoles($UserID, $OldRankID, $NewRankID) {
     $UserModel = Gdn::UserModel();
     

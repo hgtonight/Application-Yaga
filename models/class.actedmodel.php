@@ -45,6 +45,12 @@ class ActedModel extends Gdn_Model {
   /**
    * Returns a list of all posts by a specific user that has received at least
    * one of the specified actions.
+   * 
+   * @param int $UserID
+   * @param int $ActionID
+   * @param int $Limit
+   * @param int $Offset
+   * @return array
    */
   public function Get($UserID, $ActionID, $Limit = NULL, $Offset = 0) {
     $CacheKey = "yaga.profile.reactions.{$UserID}.{$ActionID}";
@@ -94,6 +100,12 @@ class ActedModel extends Gdn_Model {
   /**
    * Returns a list of all posts of which a specific user has taken the
    * specified action.
+   *
+   * @param int $UserID
+   * @param int $ActionID
+   * @param int $Limit
+   * @param int $Offset
+   * @return array
    */
   public function GetTaken($UserID, $ActionID, $Limit = NULL, $Offset = 0) {
     $CacheKey = "yaga.profile.actions.{$UserID}.{$ActionID}";
@@ -143,6 +155,11 @@ class ActedModel extends Gdn_Model {
   /**
    * Returns a list of all posts that has received at least one of the
    * specified actions.
+   * 
+   * @param int $ActionID
+   * @param int $Limit
+   * @param int $Offset
+   * @return array
    */
   public function GetAction($ActionID, $Limit = NULL, $Offset = 0) {
     $CacheKey = "yaga.best.actions.{$ActionID}";
@@ -189,6 +206,11 @@ class ActedModel extends Gdn_Model {
 
   /**
    * Returns a list of all posts by a specific user ordered by highest score
+   * 
+   * @param int $UserID
+   * @param int $Limit
+   * @param int $Offset
+   * @return array
    */
   public function GetBest($UserID = NULL, $Limit = NULL, $Offset = 0) {
     $CacheKey = "yaga.profile.best.{$UserID}";
@@ -229,6 +251,11 @@ class ActedModel extends Gdn_Model {
 
   /**
    * Returns a list of all recent scored posts ordered by highest score
+   * 
+   * @param string $Timespan strtotime compatible time
+   * @param int $Limit
+   * @param int $Offset
+   * @return array
    */
   public function GetRecent($Timespan = 'week', $Limit = NULL, $Offset = 0) {
     $CacheKey = "yaga.best.last.{$Timespan}";
@@ -370,15 +397,23 @@ class ActedModel extends Gdn_Model {
     $Content = array_filter($Content, array($this, 'SecurityFilter'));
   }
 
+  /**
+   * Checks the view permission on an item
+   * 
+   * @param array $ContentItem
+   * @return boolean Whether or not the user can see the content item
+   */
   protected function SecurityFilter($ContentItem) {
     $CategoryID = GetValue('CategoryID', $ContentItem, NULL);
-    if(is_null($CategoryID) || $CategoryID === FALSE)
+    if(is_null($CategoryID) || $CategoryID === FALSE) {
       return FALSE;
+    }
 
     $Category = CategoryModel::Categories($CategoryID);
     $CanView = GetValue('PermsDiscussionsView', $Category);
-    if(!$CanView)
+    if(!$CanView) {
       return FALSE;
+    }
 
     return TRUE;
   }
@@ -387,7 +422,8 @@ class ActedModel extends Gdn_Model {
    * Condense an interleaved content list down to the required size
    *
    * @param array $Content
-   * @param array $Limit
+   * @param int $Limit
+   * @param int $Offset
    */
   protected function Condense(&$Content, $Limit, $Offset) {
     $Content = array_slice($Content, $Offset, $Limit);

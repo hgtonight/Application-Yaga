@@ -27,6 +27,8 @@ class ActionModel extends Gdn_Model {
 
   /**
    * Returns a list of all available actions
+   * 
+   * @return dataset
    */
   public function Get() {
     if(empty(self::$_Actions)) {
@@ -88,6 +90,7 @@ class ActionModel extends Gdn_Model {
    * @param int $ActionID
    * @param int $ReplacementID what action ID existing reactions should report
    * to. Null will delete the associated reactions.
+   * @return boolean Whether or not the deletion was successful
    */
   public function Delete($ActionID, $ReplacementID = NULL) {
     if($this->Exists($ActionID)) {
@@ -108,6 +111,12 @@ class ActionModel extends Gdn_Model {
     return FALSE;
   }
 
+  /**
+   * Updates the sort field for each action in the sort array
+   * 
+   * @param array $SortArray
+   * @return boolean
+   */
   public function SaveSort($SortArray) {
     foreach($SortArray as $Index => $Action) {
       // remove the 'ActionID_' prefix

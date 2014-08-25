@@ -18,6 +18,12 @@ class BadgeAwardModel extends Gdn_Model {
     parent::__construct('BadgeAward');
   }
 
+  /**
+   * Gets the number of badges that have been awarded with a specific ID
+   * 
+   * @param int $BadgeID
+   * @return int
+   */
   public function GetCount($BadgeID = FALSE) {
     if($BadgeID) {
       $Wheres = array('BadgeID' => $BadgeID);
@@ -28,6 +34,13 @@ class BadgeAwardModel extends Gdn_Model {
     return $this->SQL->GetCount('BadgeAward', $Wheres);
   }
 
+  /**
+   * Gets recently awarded badges with a specific ID
+   * 
+   * @param int $BadgeID
+   * @param int $Limit
+   * @return dataset
+   */
   public function GetRecent($BadgeID, $Limit = 15) {
     return $this->SQL
                     ->Select('ba.UserID, ba.DateInserted, u.Name, u.Photo, u.Gender, u.Email')
@@ -125,10 +138,11 @@ class BadgeAwardModel extends Gdn_Model {
   }
 
   /**
-   * Returns the badges a user already has
+   * Returns the badges a user has already received
    *
    * @param int $UserID
-   * @return array
+   * @param string $DataType
+   * @return mixed
    */
   public function GetByUser($UserID, $DataType = DATASET_TYPE_ARRAY) {
     return $this->SQL
@@ -144,7 +158,6 @@ class BadgeAwardModel extends Gdn_Model {
    * Returns the list of unobtained but enabled badges for a specific user
    *
    * @param int $UserID
-   * @param bool $Enabled Description
    * @return DataSet
    */
   public function GetUnobtained($UserID) {
