@@ -207,9 +207,7 @@ input + .ReactSprite {
 .ReactCheckmark { background-position: -340px -100px; }
 .ReactClose { background-position: -364px -100px; }
 
-/* Share icons need to be specified here to undo the override
-TODO: Bundle the big social network icons
-*/
+/* Share icons need to be specified here to undo the override */
 .ReactFacebook { background-position: -29px -124px; }
 .ReactTwitter { background-position: -53px -124px; }
 .ReactGooglePlus { background-position: -77px -124px; }

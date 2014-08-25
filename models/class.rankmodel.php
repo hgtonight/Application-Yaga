@@ -109,7 +109,6 @@ class RankModel extends Gdn_Model {
       foreach($Ranks as $Rank) {
         self::$_Perks[$Rank->RankID] = unserialize($Rank->Perks);
         
-        // TODO: Remove once interface is done
         if(self::$_Perks[$Rank->RankID] === FALSE) {
           self::$_Perks[$Rank->RankID] = array();
         }
