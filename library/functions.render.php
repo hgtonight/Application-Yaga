@@ -4,17 +4,17 @@
 /**
  * Contains render functions that can be used cross controller
  */
-/**
- * Renders a list of available actions that also contains the current count of
- * reactions an item has received if allowed
- *
- * @param int $ID
- * @param string $Type 'discussion', 'activity', or 'comment'
- * @param bool $Echo Should it be echoed?
- * @return mixed String if $Echo is false, TRUE otherwise
- */
 if(!function_exists('RenderReactions')) {
 
+  /**
+   * Renders a list of available actions that also contains the current count of
+   * reactions an item has received if allowed
+   *
+   * @param int $ID
+   * @param string $Type 'discussion', 'activity', or 'comment'
+   * @param bool $Echo Should it be echoed?
+   * @return mixed String if $Echo is false, TRUE otherwise
+   */
   function RenderReactionList($ID, $Type, $Echo = TRUE) {
     $Reactions = Yaga::ReactionModel()->GetList($ID, $Type);
     $ShowCount = Gdn::Session()->CheckPermission('Yaga.Reactions.View');
@@ -46,13 +46,14 @@ if(!function_exists('RenderReactions')) {
 
 }
 
-/**
- * Renders the reaction record for a specific item
- * @param int $ID
- * @param string $Type 'discussion', 'activity', or 'comment'
- */
 if(!function_exists('RenderReactionRecord')) {
 
+  /**
+   * Renders the reaction record for a specific item
+   * 
+   * @param int $ID
+   * @param string $Type 'discussion', 'activity', or 'comment'
+   */
   function RenderReactionRecord($ID, $Type) {
     $Reactions = Yaga::ReactionModel()->GetRecord($ID, $Type);
     $Limit = C('Yaga.Reactions.RecordLimit');
@@ -89,6 +90,13 @@ if(!function_exists('RenderReactionRecord')) {
 }
 
 if(!function_exists('ActionRow')) {
+  
+  /**
+   * Renders an action row used to construct the action admin screen
+   * 
+   * @param stdClass $Action
+   * @return string
+   */
   function ActionRow($Action) {
     return Wrap(
             Wrap(
@@ -106,6 +114,13 @@ if(!function_exists('ActionRow')) {
 }
 
 if(!function_exists('RenderPerkPermissionForm')) {
+  
+  /**
+   * Render a simple permission perk form
+   * 
+   * @param string $Perm The permission you want to grant/revoke
+   * @param string $Label Translation code used on the form
+   */
   function RenderPerkPermissionForm($Perm, $Label) {
     $Form = Gdn::Controller()->Form;
     $Fieldname = 'Perm' . $Perm;
@@ -121,6 +136,14 @@ if(!function_exists('RenderPerkPermissionForm')) {
 }
 
 if(!function_exists('RenderPerkConfigurationForm')) {
+  
+  /**
+   * Render a perk form for the specified configuration
+   * 
+   * @param string $Config The configuration you want to override (i.e. 'Vanilla.EditTimeout')
+   * @param string $Label Translation code used on the form
+   * @param array $Options The options you want shown instead of default/enable/disable.
+   */
   function RenderPerkConfigurationForm($Config, $Label, $Options = NULL) {
     if(is_null($Options)) {
       // Default to a true/false/default array

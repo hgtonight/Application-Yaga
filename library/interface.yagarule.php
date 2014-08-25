@@ -12,6 +12,7 @@ interface YagaRule {
    * This performs the grunt work of an award rule. Given an expected criteria,
    * it determines if a specific user meets muster.
    *
+   * @param mixed $Sender The object calling the award method.
    * @param UserObject $User the user object of the calling user
    * @param stdClass $Criteria This is a standard object with properties that
    * match the criteria that were previously rendered

@@ -6,10 +6,39 @@
  */
 class Yaga {
 
+  /**
+   * A single copy of ActionModel available to plugins and hooks files.
+   * 
+   * @var ActionModel
+   */
   protected static $_ActionModel = NULL;
+  
+  /**
+   * A single copy of ReactionModel available to plugins and hooks files.
+   * 
+   * @var ReactionModel
+   */
   protected static $_ReactionModel = NULL;
+  
+  /**
+   * A single copy of BadgeModel available to plugins and hooks files.
+   * 
+   * @var BadgeModel
+   */
   protected static $_BadgeModel = NULL;
+  
+  /**
+   * A single copy of RankModel available to plugins and hooks files.
+   * 
+   * @var RankModel
+   */
   protected static $_RankModel = NULL;
+  
+  /**
+   * A single copy of BadgeAwardModel available to plugins and hooks files.
+   * 
+   * @var BadgeAwardModel
+   */
   protected static $_BadgeAwardModel = NULL;
 
   /**
