@@ -3,18 +3,44 @@
 
 /**
  * Renders a leaderboard in the panel detailing points earned of all time
+ * 
+ * @package Yaga
+ * @since 1.0
  */
 class LeaderBoardModule extends Gdn_Module {
+  
+  /**
+   * Holds the title of the module.
+   * 
+   * @var string
+   */
   protected $Title = FALSE;
 
+  
+  /**
+   * Don't do anything special on construct.
+   * 
+   * @param string $Sender
+   */
   public function __construct($Sender = '') {
     parent::__construct($Sender);
   }
 
+  /**
+   * Specifies the asset this module should be rendered to.
+   * 
+   * @return string
+   */
   public function AssetTarget() {
     return 'Panel';
   }
 
+  /**
+   * Load up the leaderboard module data based on a specific time slot
+   * 
+   * @param string $SlotType Valid options are 'a': All Time, 'w': Weekly, 'm':
+   * Monthly, 'y': Yearly
+   */
   public function GetData($SlotType = 'a') {
     // Get the leaderboard data
     $Leaders = Gdn::SQL()
@@ -47,6 +73,11 @@ class LeaderBoardModule extends Gdn_Module {
 
   }
 
+  /**
+   * Renders the leaderboard.
+   * 
+   * @return string
+   */
   public function ToString() {
     if(!$this->Data && !$this->Title) {
       $this->GetData();

@@ -4,21 +4,37 @@
 /**
  * This shows the different filters you can apply to the entire forums scored content
  *
- * @since 1.0
  * @package Yaga
+ * @since 1.0
  */
 class BestFilterModule extends Gdn_Module {
   
+  /**
+   * Load up the action list.
+   * 
+   * @param string $Sender
+   */
   public function __construct($Sender = '') {
     parent::__construct($Sender);
     
     $ActionModel = Yaga::ActionModel();
     $this->Data = $ActionModel->Get();
   }
+  
+  /**
+   * Specifies the asset this module should be rendered to.
+   * 
+   * @return string
+   */
   public function AssetTarget() {
     return 'Content';
   }
 
+  /**
+   * Renders an action list.
+   * 
+   * @return string
+   */
   public function ToString() {
     return parent::ToString();
   }

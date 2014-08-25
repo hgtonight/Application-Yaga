@@ -2,10 +2,18 @@
 /* Copyright 2013 Zachary Doll */
 
 /**
- * Renders a users badges in a nice grid in the panel
+ * Renders a user's badges in a nice grid in the panel
+ * 
+ * @package Yaga
+ * @since 1.0
  */
 class BadgesModule extends Gdn_Module {
 
+  /**
+   * Retrieves the user's badgelist upon construction of the module object.
+   * 
+   * @param string $Sender
+   */
   public function __construct($Sender = '') {
     parent::__construct($Sender);
 
@@ -29,10 +37,20 @@ class BadgesModule extends Gdn_Module {
     $this->Data = $BadgeAwardModel->GetByUser($UserID);
   }
 
+  /**
+   * Specifies the asset this module should be rendered to.
+   * 
+   * @return string
+   */
   public function AssetTarget() {
     return 'Panel';
   }
 
+  /**
+   * Renders a badge list in a nice little box.
+   * 
+   * @return string
+   */
   public function ToString() {
     if($this->Data) {
       if($this->Visible) {
