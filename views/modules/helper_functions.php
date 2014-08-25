@@ -1,5 +1,19 @@
 <?php if (!defined('APPLICATION')) exit();
+/* Copyright 2013-2014 Zachary Doll */
 
+/**
+ * A collection of hooks that are enabled when Yaga is.
+ * 
+ * @package Yaga
+ * @since 1.0
+ */
+
+/**
+ * Writes a discussion out for use in a module
+ * 
+ * @param stdClass $Discussion
+ * @param string $Px
+ */
 function WriteModuleDiscussion($Discussion, $Px = 'Bookmark') {
 ?>
 <li id="<?php echo "{$Px}_{$Discussion->DiscussionID}"; ?>" class="<?php echo CssClass($Discussion); ?>">
@@ -27,10 +41,18 @@ function WriteModuleDiscussion($Discussion, $Px = 'Bookmark') {
 <?php
 }
 
+/**
+ * Writes a discussion or comment out for use in a module
+ * 
+ * @staticvar boolean $UserPhotoFirst
+ * @param array $Content
+ * @param mixed $Sender calling object.
+ */
 function WritePromotedContent($Content, $Sender) {
    static $UserPhotoFirst = NULL;
-   if ($UserPhotoFirst === NULL)
+   if ($UserPhotoFirst === NULL) {
       $UserPhotoFirst = C('Vanilla.Comment.UserPhotoFirst', TRUE);
+   }
 
    $ContentType = GetValue('ItemType', $Content);
    $ContentID = GetValue("{$ContentType}ID", $Content);
@@ -75,8 +97,9 @@ function WritePromotedContent($Content, $Sender) {
          </span>
          <?php
          // Include source if one was set
-         if ($Source = GetValue('Source', $Content))
+         if ($Source = GetValue('Source', $Content)) {
             echo Wrap(sprintf(T('via %s'), T($Source.' Source', $Source)), 'span', array('class' => 'MItem Source'));
+         }
 
          $Sender->FireEvent('ContentInfo');
          ?>

@@ -1,6 +1,19 @@
 <?php if (!defined('APPLICATION')) exit();
+/* Copyright 2014 Zachary Doll */
+
+/**
+ * A collection of hooks that are enabled when Yaga is.
+ * 
+ * @package Yaga
+ * @since 1.0
+ */
 
 if(!function_exists('AgeArray')) {
+  /**
+   * Defines the age options array for use in perks
+   * 
+   * @return array
+   */
   function AgeArray() {
     return array(
         strtotime('0 seconds', 0) => T('Yaga.Perks.AgeDNC'),
