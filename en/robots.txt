@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: http://hgtonight.github.io/Application-Yaga/en/sitemap.xml

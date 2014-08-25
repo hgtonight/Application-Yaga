@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/index.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/package-None.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/package-Yaga.html</loc>
+</url>
+
+
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-ActedModel.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-ActionController.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-ActionModel.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-AwardCombo.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-BadgeAwardModel.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-BadgeController.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-BadgeModel.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-BadgesController.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-BadgesModule.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-BestController.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-BestFilterModule.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-CakeDayPost.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-CommentCount.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-CommentMarathon.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-DiscussionBodyLength.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-DiscussionCategory.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-DiscussionCount.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-DiscussionPageCount.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-HasMentioned.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-HolidayVisit.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-LeaderBoardModule.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-LengthOfService.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-ManualAward.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-NecroPost.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-NewbieComment.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-PhotoExists.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-PostCount.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-PostReactions.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-QnAAnserCount.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-RankController.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-RankModel.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-ReactController.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-ReactionCount.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-ReactionModel.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-ReflexComment.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-RulesController.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-SocialConnection.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-Yaga.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-YagaController.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-YagaHooks.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/class-YagaRule.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/function-ActionRow.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/function-AgeArray.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/function-RenderPerkConfigurationForm.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/function-RenderPerkPermissionForm.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/function-RenderReactionList.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/function-RenderReactionRecord.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/function-WriteModuleDiscussion.html</loc>
+</url>
+<url>
+	<loc>http://hgtonight.github.io/Application-Yaga/en/function-WritePromotedContent.html</loc>
+</url>
+</urlset>
