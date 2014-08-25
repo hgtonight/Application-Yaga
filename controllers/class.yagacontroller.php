@@ -158,6 +158,12 @@ class YagaController extends DashboardController {
     }
   }
 
+  /**
+   * This searches through the submitted checkboxes and constructs an array of
+   * Yaga sections to be included in the transport file.
+   * 
+   * @return array
+   */
   protected function _FindIncludes() {
     $FormValues = $this->Form->FormValues();
     $Sections = $FormValues['Checkboxes'];
@@ -323,6 +329,8 @@ class YagaController extends DashboardController {
    * 
    * @param stdClass The info object read in from the archive
    * @param array Which tables should be overwritten
+   * @return bool Pass/Fail on the import being executed. Errors can exist on the
+   * form with a passing return value.
    */
   protected function _ImportData($Info, $Include) {
     if(!$Info) {
@@ -354,6 +362,8 @@ class YagaController extends DashboardController {
     if(Gdn_FileSystem::Copy(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . 'images' . DS, PATH_UPLOADS . DS) === FALSE) {
       $this->Form->AddError(T('Yaga.Error.TransportCopy'));
     }
+    
+    return TRUE;
   }
   
   /**
@@ -426,7 +436,7 @@ class YagaController extends DashboardController {
 	 * Returns a list of all files in a directory, recursively (Thanks @businessdad)
 	 *
 	 * @param string Directory The directory to scan for files
-	 * @result array A list of Files and, optionally, Directories.
+	 * @return array A list of Files and, optionally, Directories.
 	 */
 	protected function _GetFiles($Directory) {
     $Files = array_diff(scandir($Directory), array('.', '..'));

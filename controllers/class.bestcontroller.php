@@ -21,6 +21,10 @@ class BestController extends Gdn_Controller {
    */
   public $Uses = array('ActedModel');
 
+  /**
+   * Initializes a frontend controller with the Best Filter, New Discussion, and
+   * Discussion Filter modules.
+   */
   public function Initialize() {
     parent::Initialize();
     $this->Application = 'Yaga';
@@ -39,6 +43,8 @@ class BestController extends Gdn_Controller {
 
   /**
    * Default to showing the best of all time
+   * 
+   * @param int $Page What page of content should be shown
    */
   public function Index($Page = 0) {
     list($Offset, $Limit) = $this->_TranslatePage($Page);    
@@ -51,6 +57,8 @@ class BestController extends Gdn_Controller {
   
   /**
    * Get the highest scoring content from all time
+   *
+   * @param int $Page What page of content should be shown
    */
   public function AllTime($Page = 0) {
     list($Offset, $Limit) = $this->_TranslatePage($Page); 
@@ -63,6 +71,9 @@ class BestController extends Gdn_Controller {
   
   /**
    * Get the latest promoted content
+   * 
+   * @param int $ID Filter on a specific action ID
+   * @param int $Page What page of content should be shown
    */
   public function Action($ID = NULL, $Page = 0) {
     if(is_null($ID) || !is_numeric($ID)) {
@@ -84,6 +95,12 @@ class BestController extends Gdn_Controller {
     $this->Render('index');
   }
   
+  /**
+   * Converts a page number to an offset and limit useful for model queries.
+   * 
+   * @param int $Page What page of content should be shown
+   * @return array An array containing the offset and limit
+   */
   protected function _TranslatePage($Page) {
     list($Offset, $Limit) = OffsetLimit($Page, C('Yaga.BestContent.PerPage'));
     if(!is_numeric($Offset) || $Offset < 0) {
@@ -92,6 +109,13 @@ class BestController extends Gdn_Controller {
     return array($Offset, $Limit);
   }
   
+  /**
+   * Builds a simple more/less pager to be rendered on the page
+   * 
+   * @param int $Offset
+   * @param int $Limit
+   * @param string $Link
+   */
   protected function _BuildPager($Offset, $Limit, $Link) {
     $PagerFactory = new Gdn_PagerFactory();
     $this->Pager = $PagerFactory->GetPager('MorePager', $this);
@@ -102,7 +126,7 @@ class BestController extends Gdn_Controller {
        $Offset,
        $Limit,
        FALSE,
-       'profile/notifications/%1$s/'
+       $Link
     );
   }
 }

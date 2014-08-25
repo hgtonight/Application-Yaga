@@ -1,11 +1,11 @@
 <?php if(!defined('APPLICATION')) exit();
-/* Copyright 2013 Zachary Doll */
 
 /**
  * Manage actions that are available for reactions
  *
  * @since 1.0
  * @package Yaga
+ * @copyright (c) 2013-2014, Zachary Doll
  */
 class ActionController extends DashboardController {
 
@@ -124,6 +124,7 @@ class ActionController extends DashboardController {
    * Remove the action via model.
    *
    * @param int $ActionID
+   * @throws NotFoundException
    */
   public function Delete($ActionID) {
     $Action = $this->ActionModel->GetID($ActionID);
@@ -169,6 +170,11 @@ class ActionController extends DashboardController {
     $this->Render();
   }
 
+  /**
+   * This takes in a sort array and updates the action sort order.
+   * 
+   * Renders the Save tree and/or the Result of the sort update.
+   */
   public function Sort() {
       // Check permission
       $this->Permission('Yaga.Reactions.Manage');

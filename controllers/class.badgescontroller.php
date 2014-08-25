@@ -15,6 +15,10 @@ class BadgesController extends Gdn_Controller {
    */
   public $Uses = array('BadgeModel', 'BadgeAwardModel');
 
+  /**
+   * This sets the badges controller up to look like a front end page. It also
+   * adds some leader board modules.
+   */
   public function Initialize() {
     parent::Initialize();
     $this->Application = 'Yaga';
@@ -64,6 +68,7 @@ class BadgesController extends Gdn_Controller {
    *
    * @param int $BadgeID
    * @param string $Slug
+   * @throws NotFoundException
    */
   public function Detail($BadgeID, $Slug = NULL) {
     $UserID = Gdn::Session()->UserID;

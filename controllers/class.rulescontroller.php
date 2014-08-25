@@ -55,6 +55,13 @@ class RulesController extends Gdn_Controller {
     return unserialize($Rules);
   }
   
+  /**
+   * This checks the cache for current rule set that can be triggered for a user
+   * by another user. It loads all rules and selects only those that return true
+   * on its `Interacts()` method.
+   *
+   * @return array Rules that are currently available to use that are interactive.
+   */
   public static function GetInteractionRules() {
     $Rules = Gdn::Cache()->Get('Yaga.Badges.InteractionRules');
     if($Rules === Gdn_Cache::CACHEOP_FAILURE) {

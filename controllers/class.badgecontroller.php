@@ -152,6 +152,7 @@ class BadgeController extends DashboardController {
    * Remove the badge via model.
    *
    * @param int $BadgeID
+   * @throws NotFoundException
    */
   public function Delete($BadgeID) {
     $Badge = $this->BadgeModel->GetByID($BadgeID);
@@ -244,6 +245,7 @@ class BadgeController extends DashboardController {
     * You can manually award badges to users for special cases
     *
     * @param int $UserID
+    * @throws Gdn_UserException
     */
    public function Award($UserID) {
     // Check permission

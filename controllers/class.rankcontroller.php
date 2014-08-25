@@ -34,8 +34,6 @@ class RankController extends DashboardController {
 
   /**
    * Manage the current ranks and add new ones
-   *
-   * @param int $Page
    */
   public function Settings() {
     $this->Permission('Yaga.Ranks.Manage');
@@ -155,6 +153,7 @@ class RankController extends DashboardController {
    * Remove the rank via model.
    *
    * @param int $RankID
+   * @throws NotFoundException
    */
   public function Delete($RankID) {
     $Rank = $this->RankModel->GetByID($RankID);
@@ -217,9 +216,9 @@ class RankController extends DashboardController {
   }
 
   /**
-   * Remove the photo association of a rank. This does not remove the actual file
+   * Remove the photo association of rank promotions. This does not remove the
+   * actual file.
    *
-   * @param int $RankID
    * @param string $TransientKey
    */
   public function DeletePhoto($TransientKey = '') {
@@ -247,6 +246,7 @@ class RankController extends DashboardController {
     * You can manually award ranks to users for special cases
     *
     * @param int $UserID
+    * @throws Gdn_UserException
     */
    public function Promote($UserID) {
     // Check permission
@@ -302,6 +302,11 @@ class RankController extends DashboardController {
     $this->Render();
   }
 
+  /**
+   * This takes in a sort array and updates the rank sort order.
+   * 
+   * Renders the Save tree and/or the Result of the sort update.
+   */
   public function Sort() {
       // Check permission
       $this->Permission('Yaga.Ranks.Manage');
