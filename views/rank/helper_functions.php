@@ -1,11 +1,10 @@
 <?php if (!defined('APPLICATION')) exit();
-/* Copyright 2014 Zachary Doll */
-
 /**
  * A collection of hooks that are enabled when Yaga is.
  * 
  * @package Yaga
  * @since 1.0
+ * @copyright (c) 2014, Zachary Doll
  */
 
 if(!function_exists('AgeArray')) {

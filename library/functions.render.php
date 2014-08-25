@@ -1,8 +1,10 @@
 <?php if(!defined('APPLICATION')) exit();
-/* Copyright 2013 Zachary Doll */
-
 /**
  * Contains render functions that can be used cross controller
+ * 
+ * @package Yaga
+ * @since 1.0
+ * @copyright (c) 2013-2014, Zachary Doll
  */
 if(!function_exists('RenderReactions')) {
 

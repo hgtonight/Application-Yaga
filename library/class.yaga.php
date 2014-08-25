@@ -3,6 +3,9 @@
 
 /**
  * This contains static functions to get models and objects related to Yaga
+ * 
+ * @package Yaga
+ * @since 1.0
  */
 class Yaga {
 
