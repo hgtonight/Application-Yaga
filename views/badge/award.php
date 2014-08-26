@@ -16,7 +16,7 @@ echo Wrap(
         'li') .
 
       Wrap(
-        $this->Form->Label('Yaga.Reason', 'Reason') .
+        $this->Form->Label('Yaga.Badge.Reason', 'Reason') .
         $this->Form->TextBox('Reason', array('Multiline' => TRUE)),
         'li') .
       Wrap(

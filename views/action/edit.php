@@ -1,10 +1,10 @@
 <?php if(!defined('APPLICATION')) exit();
 /* Copyright 2013 Zachary Doll */
 if(property_exists($this, 'Action')) {
-  echo Wrap(T('Yaga.EditAction'), 'h1');
+  echo Wrap(T('Yaga.Action.Edit'), 'h1');
 }
 else {
-  echo Wrap(T('Yaga.AddAction'), 'h1');
+  echo Wrap(T('Yaga.Action.Add'), 'h1');
 }
 
 $OriginalCssClass = $this->Form->GetValue('CssClass');

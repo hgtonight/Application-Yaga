@@ -21,19 +21,19 @@ echo $this->Form->Errors();
   </li>
   <li>
     <?php
-    echo $this->Form->Label('Points Required', 'PointReq');
+    echo $this->Form->Label('Yaga.Ranks.PointsReq', 'PointReq');
     echo $this->Form->TextBox('PointReq');
     ?>
   </li>
   <li>
     <?php
-    echo $this->Form->Label('Posts Required', 'PostReq');
+    echo $this->Form->Label('Yaga.Ranks.PostsReq', 'PostReq');
     echo $this->Form->TextBox('PostReq');
     ?>
   </li>
   <li>
     <?php
-    echo $this->Form->Label('Age Required', 'AgeReq');
+    echo $this->Form->Label('Yaga.Ranks.AgeReq', 'AgeReq');
     echo $this->Form->Dropdown('AgeReq', AgeArray());
     ?>
   </li>

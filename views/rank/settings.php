@@ -29,7 +29,7 @@ echo Wrap($PhotoString .
 echo Wrap(
         Wrap(T('Yaga.Ranks.Desc'), 'p') . 
         Wrap(T('Yaga.Ranks.Settings.Desc'), 'p') .
-        Wrap(Anchor(T('Yaga.AddRank'), 'rank/add', array('class' => 'SmallButton')), 'p'),
+        Wrap(Anchor(T('Yaga.Rank.Add'), 'rank/add', array('class' => 'SmallButton')), 'p'),
         'div',
         array('class' => 'Wrap'));
 ?>
@@ -38,9 +38,9 @@ echo Wrap(
     <tr>
       <th><?php echo T('Name'); ?></th>
       <th><?php echo T('Description'); ?></th>
-      <th><?php echo T('Points Required'); ?></th>
-      <th><?php echo T('Posts Required'); ?></th>
-      <th><?php echo T('Age Required'); ?></th>
+      <th><?php echo T('Yaga.Ranks.PointsReq'); ?></th>
+      <th><?php echo T('Yaga.Ranks.PostsReq'); ?></th>
+      <th><?php echo T('Yaga.Ranks.AgeReq'); ?></th>
       <th><?php echo T('Auto Award'); ?></th>
       <th><?php echo T('Options'); ?></th>
     </tr>

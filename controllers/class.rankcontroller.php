@@ -39,7 +39,7 @@ class RankController extends DashboardController {
     $this->Permission('Yaga.Ranks.Manage');
     $this->AddSideMenu('rank/settings');
 
-    $this->Title(T('Yaga.ManageRanks'));
+    $this->Title(T('Yaga.Ranks.Manage'));
 
     // Get list of ranks from the model and pass to the view
     $this->SetData('Ranks', $this->RankModel->Get());
@@ -82,13 +82,13 @@ class RankController extends DashboardController {
 
     $Edit = FALSE;
     if($RankID) {
-      $this->Title(T('Yaga.EditRank'));
+      $this->Title(T('Yaga.Rank.Edit'));
       $this->Rank = $this->RankModel->GetByID($RankID);
       $this->Form->AddHidden('RankID', $RankID);
       $Edit = TRUE;
     }
     else {
-      $this->Title(T('Yaga.AddRank'));
+      $this->Title(T('Yaga.Rank.Add'));
     }
 
     // Load up all roles
@@ -129,10 +129,10 @@ class RankController extends DashboardController {
       
       if($this->Form->Save()) {
         if($Edit) {
-          $this->InformMessage(T('Yaga.RankUpdated'));
+          $this->InformMessage(T('Yaga.Rank.Updated'));
         }
         else {
-          $this->InformMessage(T('Yaga.RankAdded'));
+          $this->InformMessage(T('Yaga.Rank.Added'));
         }
         Redirect('/rank/settings');
       }
@@ -229,7 +229,7 @@ class RankController extends DashboardController {
 
       if (Gdn::Session()->ValidateTransientKey($TransientKey)) {
          SaveToConfig('Yaga.Ranks.Photo', NULL, array('RemoveEmpty' => TRUE));
-         $this->InformMessage(T('Yaga.RankPhotoDeleted'));
+         $this->InformMessage(T('Yaga.Rank.PhotoDeleted'));
       }
 
       if ($this->_DeliveryType == DELIVERY_TYPE_ALL) {

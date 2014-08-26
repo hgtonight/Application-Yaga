@@ -203,7 +203,7 @@ class RankModel extends Gdn_Model {
           'Photo' => C('Yaga.Ranks.Photo'),
           'RecordType' => 'Rank',
           'RecordID' => $Rank->RankID,
-          'HeadlineFormat' => T('Yaga.HeadlineFormat.Promoted'),
+          'HeadlineFormat' => T('Yaga.Rank.PromotedHeadlineFormat'),
           'Data' => array(
               'Name' => $Rank->Name
           ),

@@ -50,7 +50,7 @@ class BadgesController extends Gdn_Controller {
    * This renders out the full list of badges
    */
   public function All() {
-    $this->Title(T('Yaga.AllBadges'));
+    $this->Title(T('Yaga.Badges.All'));
 
     $UserID = Gdn::Session()->UserID;
 
@@ -86,7 +86,7 @@ class BadgesController extends Gdn_Controller {
     $this->SetData('UserBadgeAward', $UserBadgeAward);
     $this->SetData('Badge', $Badge);
 
-    $this->Title(T('Yaga.ViewBadge') . $Badge->Name);
+    $this->Title(T('Yaga.Badge.View') . $Badge->Name);
 
     $this->Render();
   }

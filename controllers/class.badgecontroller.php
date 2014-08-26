@@ -41,7 +41,7 @@ class BadgeController extends DashboardController {
     $this->Permission('Yaga.Badges.Manage');
     $this->AddSideMenu('badge/settings');
 
-    $this->Title(T('Yaga.ManageBadges'));
+    $this->Title(T('Yaga.Badges.Manage'));
 
     // Get list of badges from the model and pass to the view
     list($Offset, $Limit) = OffsetLimit($Page, PagerModule::$DefaultPageSize);
@@ -69,13 +69,13 @@ class BadgeController extends DashboardController {
 
     $Edit = FALSE;
     if($BadgeID) {
-      $this->Title(T('Yaga.EditBadge'));
+      $this->Title(T('Yaga.Badge.Edit'));
       $this->Badge = $this->BadgeModel->GetByID($BadgeID);
       $this->Form->AddHidden('BadgeID', $BadgeID);
       $Edit = TRUE;
     }
     else {
-      $this->Title(T('Yaga.AddBadge'));
+      $this->Title(T('Yaga.Badge.Add'));
     }
 
     if($this->Form->IsPostBack() == FALSE) {
@@ -129,10 +129,10 @@ class BadgeController extends DashboardController {
       $this->Form->SetFormValue('RuleCriteria', $SerializedCriteria);
       if($this->Form->Save()) {
         if($Edit) {
-          $this->InformMessage(T('Yaga.BadgeUpdated'));
+          $this->InformMessage(T('Yaga.Badge.Updated'));
         }
         else {
-          $this->InformMessage(T('Yaga.BadgeAdded'));
+          $this->InformMessage(T('Yaga.Badge.Added'));
         }
         Redirect('/badge/settings');
       }
@@ -228,7 +228,7 @@ class BadgeController extends DashboardController {
 
       if (Gdn::Session()->ValidateTransientKey($TransientKey)) {
          $this->BadgeModel->SetField($BadgeID, 'Photo', C('Yaga.Badges.DefaultPhoto'));
-         $this->InformMessage(T('Yaga.BadgePhotoDeleted'));
+         $this->InformMessage(T('Yaga.Badge.PhotoDeleted'));
       }
 
       if ($this->_DeliveryType == DELIVERY_TYPE_ALL) {
@@ -280,7 +280,7 @@ class BadgeController extends DashboardController {
       if($Validation->Validate($this->Request->Post())) {
         $FormValues = $this->Form->FormValues();
         if($this->BadgeAwardModel->Exists($FormValues['UserID'], $FormValues['BadgeID'])) {
-          $this->Form->AddError(sprintf(T('Yaga.BadgeAlreadyAwarded'), $User->Name), 'BadgeID');
+          $this->Form->AddError(sprintf(T('Yaga.Badge.AlreadyAwarded'), $User->Name), 'BadgeID');
           // Need to respecify the user id
           $this->Form->AddHidden('UserID', $User->UserID);
         }

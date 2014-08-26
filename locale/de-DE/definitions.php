@@ -1,6 +1,6 @@
 ﻿<?php if (!defined('APPLICATION')) exit();
 $Definition['Yaga.Settings'] = 'Yaga Einstellungen';
-$Definition['Yaga.Reason'] = 'Grund (optional)';
+$Definition['Yaga.Badge.Reason'] = 'Grund (optional)';
 
 // Transport
 $Definition['Yaga.Transport'] = 'Konfigurationsdatei importieren / exportieren';
@@ -19,29 +19,29 @@ $Definition['Yaga.Action'] = 'Aktion';
 $Definition['Yaga.Action.Delete'] = 'Lösche Aktion';
 $Definition['Yaga.Action.Move'] = 'Die %s Aktionen verschieben?';
 $Definition['Yaga.Actions.Current'] = 'Aktivierte Reaktionen';
-$Definition['Yaga.ManageReactions'] = 'Reaktionen bearbeiten';
-$Definition['Yaga.AddAction'] = 'Aktion hinzufügen';
-$Definition['Yaga.EditAction'] = 'Aktion bearbeiten';
+$Definition['Yaga.Actions.Manage'] = 'Reaktionen bearbeiten';
+$Definition['Yaga.Action.Add'] = 'Aktion hinzufügen';
+$Definition['Yaga.Action.Edit'] = 'Aktion bearbeiten';
 $Definition['Yaga.ActionUpdated'] = 'Die Aktion wurde erfolgreich geändert!';
-$Definition['Yaga.ActionAdded'] = 'Die Aktion wurde erfolgreich hinzugefügt!';
-$Definition['Yaga.InvalidAction'] = 'Ungültige Aktion';
-$Definition['Yaga.InvalidReactType'] = 'Ungültiges Reaktions-Ziel';
-$Definition['Yaga.InvalidID'] = 'Ungültige ID';
+$Definition['Yaga.Action.Added'] = 'Die Aktion wurde erfolgreich hinzugefügt!';
+$Definition['Yaga.Action.Invalid'] = 'Ungültige Aktion';
+$Definition['Yaga.Action.InvalidTargetType'] = 'Ungültiges Reaktions-Ziel';
+$Definition['Yaga.Action.InvalidTargetID'] = 'Ungültige ID';
 $Definition['Yaga.Actions.Settings.Desc'] = 'Aktionen, welche als Reaktionen verwendet werden können, hinzufügen oder entfernen';
 
 // Badges
 $Definition['Yaga.Badges'] = 'Auszeichnungen';
 $Definition['Yaga.Badge'] = 'Auszeichnung';
-$Definition['Yaga.ManageBadges'] = 'Auszeichnungen hinzufügen / bearbeiten';
-$Definition['Yaga.AddBadge'] = 'Auszeichnung hinzufügen';
-$Definition['Yaga.EditBadge'] = 'Auszeichnung bearbeiten';
-$Definition['Yaga.BadgeUpdated'] = 'Auszeichnung erfolgreich geändert!';
-$Definition['Yaga.BadgeAdded'] = 'Auszeichnung erfolgreich hinzugefügt!';
-$Definition['Yaga.BadgePhotoDeleted'] = 'Auszeichnungs-Foto entfernt';
-$Definition['Yaga.BadgeAlreadyAwarded'] = '%s hat diese Auszeichnung bereits!';
-$Definition['Yaga.AllBadges'] = 'Alle Auszeichnungen';
-$Definition['Yaga.ViewBadge'] = 'Auszeichnungen ansehen: ';
-$Definition['Yaga.MyBadges'] = 'Meine Auszeichnungen';
+$Definition['Yaga.Badges.Manage'] = 'Auszeichnungen hinzufügen / bearbeiten';
+$Definition['Yaga.Badge.Add'] = 'Auszeichnung hinzufügen';
+$Definition['Yaga.Badge.Edit'] = 'Auszeichnung bearbeiten';
+$Definition['Yaga.Badge.Updated'] = 'Auszeichnung erfolgreich geändert!';
+$Definition['Yaga.Badge.Added'] = 'Auszeichnung erfolgreich hinzugefügt!';
+$Definition['Yaga.Badge.PhotoDeleted'] = 'Auszeichnungs-Foto entfernt';
+$Definition['Yaga.Badge.AlreadyAwarded'] = '%s hat diese Auszeichnung bereits!';
+$Definition['Yaga.Badges.All'] = 'Alle Auszeichnungen';
+$Definition['Yaga.Badge.View'] = 'Auszeichnungen ansehen: ';
+$Definition['Yaga.Badges.Mine'] = 'Meine Auszeichnungen';
 $Definition['Yaga.Badge.Award'] = 'Auszeichnung verleihen';
 $Definition['Yaga.Badge.GiveTo'] = 'Verleihe eine Auszeichnung an %s';
 $Definition['Yaga.Badges.Settings.Desc'] = 'Bearbeite die Auszeichnungen, die Benutzer erhalten können, oder füge weitere hinzu.';
@@ -56,12 +56,12 @@ $Definition['Yaga.Badge.DetailLink'] = 'Statistik zu dieser Auszeichnung';
 // Ranks
 $Definition['Yaga.Ranks'] = 'Ränge';
 $Definition['Yaga.Rank'] = 'Rang';
-$Definition['Yaga.ManageRanks'] = 'Ränge hinzufügen / bearbeiten';
-$Definition['Yaga.AddRank'] = 'Rang hinzufügen';
-$Definition['Yaga.EditRank'] = 'Rang bearbeiten';
-$Definition['Yaga.RankUpdated'] = 'Rang erfolgreich geändert!';
-$Definition['Yaga.RankAdded'] = 'Rang erfolgreich hinzugefügt!';
-$Definition['Yaga.RankPhotoDeleted'] = 'Rang-Foto entfernt';
+$Definition['Yaga.Ranks.Manage'] = 'Ränge hinzufügen / bearbeiten';
+$Definition['Yaga.Rank.Add'] = 'Rang hinzufügen';
+$Definition['Yaga.Rank.Edit'] = 'Rang bearbeiten';
+$Definition['Yaga.Rank.Updated'] = 'Rang erfolgreich geändert!';
+$Definition['Yaga.Rank.Added'] = 'Rang erfolgreich hinzugefügt!';
+$Definition['Yaga.Rank.PhotoDeleted'] = 'Rang-Foto entfernt';
 $Definition['Yaga.RankAlreadyAttained'] = '%s hat bereits diesen Rang!';
 $Definition['Yaga.Rank.Promote'] = 'Rang verleihen';
 $Definition['Yaga.Rank.Promote.Format'] = "%s einen Rang verleihen";
@@ -98,8 +98,8 @@ $Definition['Yaga.Error.ArchiveChecksum'] = 'Archivdatei ist beschädigt: Ungül
 $Definition['Yaga.Error.TransportCopy'] = 'Bilddateien konnten nicht übertragen werden.';
 
 // Activities
-$Definition['Yaga.HeadlineFormat.BadgeEarned'] = '{ActivityUserID,You} hast die <a href="{Url,html}">{Data.Name,text}</a> Auszeichnung erhalten.';
-$Definition['Yaga.HeadlineFormat.Promoted'] = '{ActivityUserID,You} wurdest zum {Data.Name,text} befördert.';
+$Definition['Yaga.Badge.EarnedHeadlineFormat'] = '{ActivityUserID,You} hast die <a href="{Url,html}">{Data.Name,text}</a> Auszeichnung erhalten.';
+$Definition['Yaga.Rank.PromotedHeadlineFormat'] = '{ActivityUserID,You} wurdest zum {Data.Name,text} befördert.';
 
 // Leaderboard Module
 $Definition['Yaga.LeaderBoard.AllTime'] = 'Rangliste (Gesamt)';
@@ -108,8 +108,8 @@ $Definition['Yaga.LeaderBoard.Month'] = "Rangliste (Diesen Monat)";
 $Definition['Yaga.LeaderBoard.Year'] = "Rangliste (Dieses Jahr)";
 
 // Notifications
-$Definition['Yaga.Notifications.Badges'] = 'Benachrichtige mich, wenn ich eine Auszeichnung erhalte.';
-$Definition['Yaga.Notifications.Ranks'] = 'Benachrichtige mich, wenn ich auf einen neuen Rang befördert werde';
+$Definition['Yaga.Badges.Notify'] = 'Benachrichtige mich, wenn ich eine Auszeichnung erhalte.';
+$Definition['Yaga.Ranks.Notify'] = 'Benachrichtige mich, wenn ich auf einen neuen Rang befördert werde';
 
 // Misc
 $Definition['Edit'] = 'Bearbeiten';
@@ -125,7 +125,7 @@ $Definition['Icon'] = 'Icon';
 $Definition['Tooltip'] = 'Tooltip';
 $Definition['Award Value'] = 'Auszeichnungswert';
 $Definition['Elevated Permission'] = 'Erhöhte Berechtigung';
-$Definition['Points Required'] = 'Benötigte Punkte';
+$Definition['Yaga.Ranks.PointsReq'] = 'Benötigte Punkte';
 $Definition['Role Award'] = 'Rollen-Auszeichnung';
 $Definition['Auto Award'] = 'Automatische Auszeichnung';
 $Definition['Enabled'] = 'Aktiviert';

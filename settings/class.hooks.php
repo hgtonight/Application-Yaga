@@ -314,13 +314,13 @@ class YagaHooks implements Gdn_IPlugin {
    */
   public function ProfileController_AfterPreferencesDefined_Handler($Sender) {
     if(C('Yaga.Badges.Enabled')) {
-      $Sender->Preferences['Notifications']['Email.BadgeAward'] = T('Yaga.Notifications.Badges');
-      $Sender->Preferences['Notifications']['Popup.BadgeAward'] = T('Yaga.Notifications.Badges');
+      $Sender->Preferences['Notifications']['Email.BadgeAward'] = T('Yaga.Badges.Notify');
+      $Sender->Preferences['Notifications']['Popup.BadgeAward'] = T('Yaga.Badges.Notify');
     }
 
     if(C('Yaga.Ranks.Enabled')) {
-      $Sender->Preferences['Notifications']['Email.RankPromotion'] = T('Yaga.Notifications.Ranks');
-      $Sender->Preferences['Notifications']['Popup.RankPromotion'] = T('Yaga.Notifications.Ranks');
+      $Sender->Preferences['Notifications']['Email.RankPromotion'] = T('Yaga.Ranks.Notify');
+      $Sender->Preferences['Notifications']['Popup.RankPromotion'] = T('Yaga.Ranks.Notify');
     }
   }
 

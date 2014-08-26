@@ -42,7 +42,7 @@ class ReactController extends Gdn_Controller {
 
     // Make sure the action exists and the user is allowed to react
     if(!$Action) {
-      throw new Gdn_UserException(T('Yaga.InvalidAction'));
+      throw new Gdn_UserException(T('Yaga.Action.Invalid'));
     }
 
     if(!Gdn::Session()->CheckPermission($Action->Permission)) {
@@ -66,7 +66,7 @@ class ReactController extends Gdn_Controller {
         $Key = 'ActivityUserID';
         break;
       default:
-        throw new Gdn_UserException(T('Yaga.InvalidReactType'));
+        throw new Gdn_UserException(T('Yaga.Action.InvalidTargetType'));
         break;
     }
 
@@ -76,7 +76,7 @@ class ReactController extends Gdn_Controller {
       $Anchor = $AnchorID . $ID . ' .ReactMenu';
     }
     else {
-      throw new Gdn_UserException(T('Yaga.InvalidID'));
+      throw new Gdn_UserException(T('Yaga.Action.InvalidTargetID'));
     }
 
     $UserID = Gdn::Session()->UserID;
@@ -90,7 +90,7 @@ class ReactController extends Gdn_Controller {
         $ItemOwnerID = $Item['ActivityUserID'];
         break;
       default:
-        throw new Gdn_UserException(T('Yaga.InvalidReactType'));
+        throw new Gdn_UserException(T('Yaga.Action.InvalidTargetType'));
         break;
     }
 
