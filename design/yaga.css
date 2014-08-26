@@ -1,4 +1,10 @@
-/* Copyright 2013 Zachary Doll */
+/* Copyright 2013-2014 Zachary Doll */
+
+/* Donation Aside */
+.Footer .Aside.Box form {
+  text-align: center;
+  padding: 20px;
+}
 
 /* Panel Icon */
 #Panel div.Gamification h4 {
