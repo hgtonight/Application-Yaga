@@ -60,7 +60,8 @@ echo $this->Form->Errors();
       </div>
       <div>
         <?php
-        echo $this->Form->Label('Elevated Permission', 'Permission');
+        echo $this->Form->Label('Permission', 'Permission');
+        echo Wrap(T('Yaga.Action.PermDesc'), 'p');
         echo $this->Form->Dropdown('Permission', $this->Data('Permissions'));
         ?>
       </div>
