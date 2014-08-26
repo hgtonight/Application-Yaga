@@ -27,6 +27,7 @@ echo Wrap($PhotoString .
  $this->Form->Close('', ' '), 'div', array('class' => 'Aside'));
 
 echo Wrap(
+        Wrap(T('Yaga.Ranks.Desc'), 'p') . 
         Wrap(T('Yaga.Ranks.Settings.Desc'), 'p') .
         Wrap(Anchor(T('Yaga.AddRank'), 'rank/add', array('class' => 'SmallButton')), 'p'),
         'div',

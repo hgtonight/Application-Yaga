@@ -77,7 +77,8 @@ $Definition['Yaga.RankAlreadyAttained'] = '%s already has this rank!';
 $Definition['Yaga.RankPhotoDeleted'] = 'Rank photo has been deleted.';
 $Definition['Yaga.RankUpdated'] = 'Rank updated successfully!';
 $Definition['Yaga.Ranks'] = 'Ranks';
-$Definition['Yaga.Ranks.Settings.Desc'] = 'Add or edit the available ranks that can be earned.';
+$Definition['Yaga.Ranks.Desc'] = "Ranks are awarded to users based on their account age, accumulated points, and total posts. Ranks have associated perks that can be used to alter the user's experience.";
+$Definition['Yaga.Ranks.Settings.Desc'] = 'You can manage the available ranks here. Disabled ranks will not be awarded automatically. Drag items to sort the promotion order.';
 
 // Perks
 $Definition['Yaga.Perks'] = 'Perks';
