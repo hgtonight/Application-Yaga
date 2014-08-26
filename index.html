@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Yaga by hgtonight</title>
+    <title>Application-yaga by hgtonight</title>
     <link rel="stylesheet" href="stylesheets/styles.css">
     <link rel="stylesheet" href="stylesheets/pygment_trac.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -18,85 +18,157 @@
 
   </head>
   <body>
-    <div id="header">
-      <nav>
-        <li class="fork"><a href="https://github.com/hgtonight/Application-Yaga">View On GitHub</a></li>
-        <li class="downloads"><a href="https://github.com/hgtonight/Application-Yaga/zipball/master">ZIP</a></li>
-        <li class="downloads"><a href="https://github.com/hgtonight/Application-Yaga/tarball/master">TAR</a></li>
-        <li class="title">DOWNLOADS</li>
-      </nav>
-    </div><!-- end header -->
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/hgtonight/Application-Yaga">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/hgtonight/Application-Yaga/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/hgtonight/Application-Yaga/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
     <div class="wrapper">
 
       <section>
         <div id="title">
-          <h1>Yaga</h1>
-          <p><strong>Y</strong>et <strong>A</strong>nother <strong>G</strong>amification <strong>A</strong>pplication is a Garden application that provides a gamification platform for Vanilla Forums and other Garden applications. It integrates by default with Vanilla Forums. Out of the box, it provides Reactions, Badges, and Ranks.</p>
+          <h1>Application-yaga</h1>
+          <p>Yet Another Gamification Application is a Garden application that provides a gamification platform for Vanilla Forums and other Garden applications.</p>
           <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/hgtonight">hgtonight</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
         </div>
 
-        <h2>
-          <a name="yaga" class="anchor" href="#yaga"><span class="octicon octicon-link"></span></a>
-          License
-        </h2>
+        <h1>
+<a name="yaga" class="anchor" href="#yaga"><span class="octicon octicon-link"></span></a>Yaga</h1>
 
-        <p>All source code is released under the GPLv3 and may be released under a different license <em><strong>with permission</strong></em>.</p>
-        
-        <p>All artwork and artwork assets are released under the CC-0 license.</p>
+<p><strong>Y</strong>​et <strong>A</strong>​nother <strong>G</strong>​amification <strong>A</strong>​pplication is a
+Garden application that provides a gamification platform for Vanilla Forums and other
+Garden applications. It integrates by default with Vanilla Forums. Out of the box, it
+provides Reactions, Badges, and Ranks.</p>
 
-        <h2>
-          <a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+<h2>
+<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
 
-        <ol>
-          <li>
-            <p>To get up and running with Yaga, either:</p>
+<p>All source code is released under the GPLv3 and may be released under a different license
+<em><strong>with permission</strong></em>.</p>
 
-            <ul>
-              <li><a href="http://vanillaforums.org/get/yaga-application">Download the latest stable release</a></li>
-              <li>Extract into the <code>/applications</code> directory</li>
-            </ul>
-            <p>-- OR --</p>
+<p>All artwork and artwork assets are released under the CC-0 license.</p>
 
-            <ul>
-              <li>Clone the repository into the <code>/applications</code> directory:</li>
-            </ul>
-            <div class="highlight highlight-sh"><pre><span class="nv">$ </span><span class="nb">cd </span>path-to-applications
+<h2>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<ol>
+<li>
+<p>To get up and running with Yaga, either:</p>
+
+<ul>
+<li><a href="http://vanillaforums.org/get/yaga-application">Download the latest stable release</a></li>
+<li>Extract into the <code>/applications</code> directory</li>
+</ul>
+<p>-- OR --</p>
+
+<ul>
+<li>Clone the repository into the <code>/applications</code> directory:</li>
+</ul>
+<div class="highlight highlight-sh"><pre><span class="nv">$ </span><span class="nb">cd </span>path-to-applications
 <span class="nv">$ </span>git clone git://github.com/hgtonight/Application-Yaga.git yaga
-              </pre></div>
+</pre></div>
 
-            <blockquote>
-              <p>Make sure to double check that the installed folder is named <code>yaga</code>!</p>
-            </blockquote>
+<blockquote>
+<p>Make sure to double check that the installed folder is named <code>yaga</code>!</p>
+</blockquote>
 
-            <p>The latter option is only recommend if you're familiar with git.</p>
-          </li>
-        </ol><ol>
-          <li><p>Once you've added the application to your Vanilla installation, you need to activate it in the dashboard. Once activated, you will see a new "Gamification" menu in the dashboard sidebar where you can configure each individual part of the Yaga application.</p></li>
-          <li><p>Finally, you need to delete the <code>/cache/locale_map.ini</code> file to force refresh the locale definitions.</p></li>
-        </ol>
-        
-        <h2>
-          Getting Started
-        </h2>
-        
-        <p>A fresh install of Yaga will have some stub content intended to familiarize yourself with the configuration process.</p>
-        <p>If you want a more fully featured baseline experience, please import the default transport file that is included in the design folder. It contains one example of a gamification set of badges, ranks, perks, and reactions.</p>
-        
-        <h2>
-          Technical Documentation
-        </h2>
-        
-        <p>While I firmly believe the source code is the best documentation, you can find the <a href="http://hgtonight.github.io/Application-Yaga/en/">technical documentation here</a>.</p>
-        
-        <hr>
-        <p>Copyright 2013 - 2014 <g-emoji alias="copyright" fallback-src="https://assets-cdn.github.com/images/icons/emoji/unicode/00a9.png">©</g-emoji> Zachary Doll</p>
-        <span class="credits left">Project maintained by <a href="https://github.com/hgtonight">hgtonight</a></span>
-        <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+<p>The latter option is only recommend if you're familiar with git.</p>
+</li>
+</ol><ol>
+<li><p>Once you've added the application to your Vanilla installation, you need to activate it
+in the dashboard. Once activated, you will see a new "Gamification" menu in the dashboard
+sidebar where you can configure each individual part of the Yaga application.</p></li>
+<li><p>Finally, you need to delete the <code>/cache/locale_map.ini</code> file to force refresh the locale
+definitions.</p></li>
+</ol><h2>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
+
+<p>A fresh install of Yaga will have some stub content intended to familiarize yourself with
+the configuration process.</p>
+
+<p>If you want a more fully featured baseline experience, please import the default transport
+file that is included in the design folder. It contains one example of a gamification set
+of badges, ranks, perks, and reactions.</p>
+
+<h2>
+<a name="extending" class="anchor" href="#extending"><span class="octicon octicon-link"></span></a>Extending</h2>
+
+<h3>
+<a name="perks" class="anchor" href="#perks"><span class="octicon octicon-link"></span></a>Perks</h3>
+
+<p>Yaga provides an easy way to integrate third party plugins into the perks system. Sample
+code for your plugin is below:</p>
+
+<pre><code>public function RankController_PerkOptions_Handler($Sender) {
+  /**
+   * Create a permission perk.
+   * This will show a dropdown labeled 'My Plugin Permission' with options
+   * 'Default', 'Grant', and 'Revoke'.
+   * Default leaves the permission as is.
+   * Grant gives the 'Plugins.MyPlugin.Add' permission if they don't already have it.
+   * Revoke removes the 'Plugins.MyPlugin.Add' permission if they have.
+   */
+  RenderPerkPermissionForm('Plugins.MyPlugin.Add', 'My Plugin Permission');
+
+  /**
+   * Create a configuration perk
+   * This will show a dropdown labeled 'My Plugin Configuration' with options
+   * 'Default', 'Enabled', 'Disabled'.
+   * Default leaves the configuration set to the global configuration.
+   * Enabled will set the 'Plugins.MyPlugin.AdvancedMode' to true.
+   * Disabled will set the 'Plugins.MyPlugin.AdvancedMode' to false.
+   */
+  RenderPerkConfigurationForm('Plugins.MyPlugin.AdvancedMode', 'My Plugin Configuration');
+
+  /**
+   * Create a configuration perk with custom options
+   * This will show a dropdown labeled 'My Plugin Advanced Config Perk' with options
+   * 'List Mode', 'Legacy Mode', and 'Modern Mode'. The configuration will be set to
+   * the key of the item selected.
+   */
+  RenderPerkConfigurationForm('Plugins.MyPlugin.DisplayMode', 'My Plugin Advanced Config Perk', array(
+                     'list' =&gt; T('List Mode'),
+                    'table' =&gt; T('Legacy Mode'), 
+                  'deflist' =&gt; T('Modern Mode')));
+}
+</code></pre>
+
+<h3>
+<a name="rules" class="anchor" href="#rules"><span class="octicon octicon-link"></span></a>Rules</h3>
+
+<p>Rules determine when a badge should be awarded to a user. You can create your own custom rules
+quite easily. Just create a class that implements <code>YagaRule</code> and place it in the
+<code>/yaga/library/rules</code> folder.</p>
+
+<p>Check out the technical documentation for more information on specific <code>YagaRule</code> methods.</p>
+
+<h2>
+<a name="technical-documentation" class="anchor" href="#technical-documentation"><span class="octicon octicon-link"></span></a>Technical Documentation</h2>
+
+<p>Technical documentation generated from the Yaga sourc can be found at
+<a href="http://hgtonight.github.io/Application-Yaga/">http://hgtonight.github.io/Application-Yaga/</a></p>
+
+<hr><p>Copyright 2013 - 2014 � Zachary Doll</p>
       </section>
 
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-54177624-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
 
   </body>
 </html>
