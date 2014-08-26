@@ -1,40 +1,58 @@
 <?php if (!defined('APPLICATION')) exit();
-$Definition['Yaga.Reason'] = 'Reason (optional)';
-$Definition['Yaga.Settings'] = 'Yaga Settings';
 
-// Transport
-$Definition['Yaga.Transport'] = 'Import / Export Configuration';
-$Definition['Yaga.Transport.Desc'] = 'You can use these tools to facilitate transport of your Yaga configuration across sites with a convenient single file transfer.';
-$Definition['Yaga.Transport.Return'] = 'Return to main Yaga settings page.';
-$Definition['Yaga.Export'] = 'Export Yaga Configuration';
-$Definition['Yaga.Export.Desc'] = 'You can export your existing Yaga configuration for backup or transport purposes. Select which sections of your Yaga configuration should be exported.';
-$Definition['Yaga.Export.Success'] = 'Your Yaga configuration was successfully exported to: <strong>%s</strong>';
-$Definition['Yaga.Import'] = 'Import Yaga Configuration';
-$Definition['Yaga.Import.Desc'] = 'You can import a Yaga configuration to <strong>replace</strong> your current configuration. Select which sections of your Yaga configuration should be <strong>overwritten</strong>.';
-$Definition['Yaga.Import.Success'] = 'You successfully overwrote your Yaga configuration with the contents of: <strong>%s</strong>';
+// Misc
+$Definition['1 year'] = '1 year';
+$Definition['3 months'] = '3 months';
+$Definition['5 years'] = '5 years';
+$Definition['6 months'] = '6 months';
+$Definition['Age Required'] = 'Age Required';
+$Definition['Auto Award'] = 'Auto Award';
+$Definition['Automatically Award'] = 'Automatically Award';
+$Definition['Award Value'] = 'Award Value';
+$Definition['Css Class'] = 'Css Class';
+$Definition['Days'] = 'Days';
+$Definition['Description'] = 'Description';
+$Definition['Export'] = 'Export';
+$Definition['Grant'] = 'Grant';
+$Definition['Icon'] = 'Icon';
+$Definition['Image Files'] = 'Image Files';
+$Definition['Image'] = 'Image';
+$Definition['Less than:'] = 'Less than:';
+$Definition['More than or:'] = 'More than or:';
+$Definition['More than:'] = 'More than:';
+$Definition['Photo'] = 'Photo';
+$Definition['Points Required'] = 'Points Required';
+$Definition['Posts Required'] = 'Posts Required';
+$Definition['Rule'] = 'Rule';
+$Definition['Time Frame'] = 'Time Frame';
+$Definition['Tooltip'] = 'Tooltip';
+$Definition['Weeks'] = 'Weeks';
+$Definition['Yaga.Reason'] = 'Reason (optional)';
+$Definition['Years'] = 'Years';
 
 // Actions
 $Definition['Yaga.Action'] = 'Action';
 $Definition['Yaga.Action.Delete'] = 'Delete Action';
 $Definition['Yaga.Action.Move'] = 'Move the %s reactions?';
+$Definition['Yaga.Action.PermDesc'] = "A user will need the following permission to use this action. The default is 'Yaga.Reactions.Add'.";
 $Definition['Yaga.ActionAdded'] = 'Action added successfully!';
-$Definition['Yaga.ActionUpdated'] = 'Action updated successfully!';
 $Definition['Yaga.Actions.Current'] = 'Current Reactions';
 $Definition['Yaga.Actions.Desc'] = "Actions are shown underneath user generated content such as discussions, comments, and activity items. Other users can select one as a 'reaction'. The owner of the original item will receive points based on the reactions of others. This forms a positive feedback loop for both positive <em>and</em> negative actions.";
 $Definition['Yaga.Actions.Settings.Desc'] = 'You can manage the available actions that can be used as reactions here. Drag items to sort their display order.';
+$Definition['Yaga.ActionUpdated'] = 'Action updated successfully!';
 $Definition['Yaga.AddAction'] = 'Add Action';
 $Definition['Yaga.EditAction'] = 'Edit Action';
-$Definition['Yaga.Action.PermDesc'] = "A user will need the following permission to use this action. The default is 'Yaga.Reactions.Add'.";
+$Definition['Yaga.Reactions'] = 'Reactions';
+$Definition['Yaga.Reactions.RecordFormat'] = '%s - %s on %s.';
+$Definition['Yaga.Reactions.RecordLimit.Plural'] = 'and %s others.';
+$Definition['Yaga.Reactions.RecordLimit.Single'] = 'and %s other.';
 $Definition['Yaga.InvalidAction'] = 'Invalid Action';
 $Definition['Yaga.InvalidID'] = 'Invalid ID';
 $Definition['Yaga.InvalidReactType'] = 'Invalid React Target';
 $Definition['Yaga.ManageReactions'] = 'Manage Reactions';
-$Definition['Yaga.Reactions'] = 'Reactions';
-$Definition['Yaga.Reactions.RecordFormat'] = '%s - %s on %s.';
-$Definition['Yaga.Reactions.RecordLimit.Single'] = 'and %s other.';
-$Definition['Yaga.Reactions.RecordLimit.Plural'] = 'and %s others.';
 
 // Badges
+$Definition['Yaga.ManageBadges'] = 'Manage Badges';
 $Definition['Yaga.AddBadge'] = 'Add Badge';
 $Definition['Yaga.AllBadges'] = 'All Badges';
 $Definition['Yaga.Badge'] = 'Badge';
@@ -51,43 +69,15 @@ $Definition['Yaga.Badge.RecentRecipients'] = 'Most recent recipients';
 $Definition['Yaga.BadgeAdded'] = 'Badge added successfully!';
 $Definition['Yaga.BadgeAlreadyAwarded'] = '%s already has this badge!';
 $Definition['Yaga.BadgePhotoDeleted'] = 'Badge photo has been deleted.';
-$Definition['Yaga.BadgeUpdated'] = 'Badge updated successfully!';
 $Definition['Yaga.Badges'] = 'Badges';
 $Definition['Yaga.Badges.Desc'] = 'Badges are awarded to users that meet the criteria defined by the associated rules. They are recorded to their user profile and also award points. They can be used to create an achievement system that re-enforces good user behavior.';
 $Definition['Yaga.Badges.Settings.Desc'] = 'You can manage the available badges here. Disabled badges will not be awarded automatically.';
+$Definition['Yaga.BadgeUpdated'] = 'Badge updated successfully!';
 $Definition['Yaga.EditBadge'] = 'Edit Badge';
-$Definition['Yaga.ManageBadges'] = 'Manage Badges';
-$Definition['Yaga.MyBadges'] = 'My Badges';
 $Definition['Yaga.ViewBadge'] = 'View Badge: ';
-
-// Ranks
-$Definition['Yaga.AddRank'] = 'Add Rank';
-$Definition['Yaga.EditRank'] = 'Edit Rank';
-$Definition['Yaga.ManageRanks'] = 'Manage Ranks';
-$Definition['Yaga.Rank'] = 'Rank';
-$Definition['Yaga.Rank.Delete'] = 'Delete Rank';
-$Definition['Yaga.Rank.Photo.Desc'] = 'This photo will be shown on activity posts and in notifications concerning rank progression.';
-$Definition['Yaga.Rank.Progression'] = 'Rank Progression';
-$Definition['Yaga.Rank.Progression.Desc'] = 'Allow user to automatically progress past this rank.';
-$Definition['Yaga.Rank.Promote'] = 'Edit Rank';
-$Definition['Yaga.Rank.Promote.Format'] = "Edit %s's Rank";
-$Definition['Yaga.Rank.RecordActivity'] = 'Record this rank edit to the public activity log.';
-$Definition['Yaga.RankAdded'] = 'Rank added successfully!';
-$Definition['Yaga.RankAlreadyAttained'] = '%s already has this rank!';
-$Definition['Yaga.RankPhotoDeleted'] = 'Rank photo has been deleted.';
-$Definition['Yaga.RankUpdated'] = 'Rank updated successfully!';
-$Definition['Yaga.Ranks'] = 'Ranks';
-$Definition['Yaga.Ranks.Desc'] = "Ranks are awarded to users based on their account age, accumulated points, and total posts. Ranks have associated perks that can be used to alter the user's experience.";
-$Definition['Yaga.Ranks.Settings.Desc'] = 'You can manage the available ranks here. Disabled ranks will not be awarded automatically. Drag items to sort the promotion order.';
-
-// Perks
-$Definition['Yaga.Perks'] = 'Perks';
-$Definition['Yaga.Perks.AgeDNC'] = 'Account can be any age';
-$Definition['Yaga.Perks.AgeFormat'] = 'Account must be at least %s old.';
-$Definition['Yaga.Perks.EditTimeout'] = 'Edit Timeout';
-$Definition['Yaga.Perks.Emoticons'] = 'Format Emoticons';
-$Definition['Yaga.Perks.MeActions'] = 'Format /me Actions';
-$Definition['Yaga.Perks.Tags'] = 'Add Tags';
+$Definition['Yaga.HeadlineFormat.BadgeEarned'] = '{ActivityUserID,You} earned the <a href="{Url,html}">{Data.Name,text}</a> badge.';
+$Definition['Yaga.MyBadges'] = 'My Badges';
+$Definition['Yaga.Notifications.Badges'] = 'Notify me when I earn a badge.';
 
 // Best Content
 $Definition['Yaga.BestContent'] = 'Best Of...';
@@ -95,7 +85,7 @@ $Definition['Yaga.BestContent.Action'] = 'Best %s Content';
 $Definition['Yaga.BestContent.AllTime'] = 'Best Content of All Time';
 $Definition['Yaga.BestContent.Recent'] = 'Best Recent Content';
 
-// Error Strings
+// Errors
 $Definition['Yaga.Error.AddFile'] ='Unable to add file: %s';
 $Definition['Yaga.Error.ArchiveChecksum'] = 'Archive appears to be corrupt: Checksum is invalid.';
 $Definition['Yaga.Error.ArchiveCreate'] = 'Unable to create archive: %s';
@@ -115,56 +105,44 @@ $Definition['Yaga.Error.TransportCopy'] = 'Unable to copy image files.';
 $Definition['Yaga.Error.TransportRequirements'] = 'You do not seem to have the minimum requirements to transport a Yaga configuration automatically. Please reference manual_transport.md for more information.';
 $Defitition['Yaga.Error.FileDNE'] = 'File does not exist.';
 
-// Activities
-$Definition['Yaga.HeadlineFormat.BadgeEarned'] = '{ActivityUserID,You} earned the <a href="{Url,html}">{Data.Name,text}</a> badge.';
-$Definition['Yaga.HeadlineFormat.Promoted'] = '{ActivityUserID,You} earned a promotion to {Data.Name,text}.';
-
-// Leaderboard Module
+// Leader Board
 $Definition['Yaga.LeaderBoard.AllTime'] = 'All Time Leaders';
 $Definition['Yaga.LeaderBoard.Month'] = "This Month's Leaders";
 $Definition['Yaga.LeaderBoard.Week'] = "This Week's Leaders";
 $Definition['Yaga.LeaderBoard.Year'] = "This Years's Leaders";
 
-// Notifications
-$Definition['Yaga.Notifications.Badges'] = 'Notify me when I earn a badge.';
+// Perks
+$Definition['Yaga.Perks'] = 'Perks';
+$Definition['Yaga.Perks.AgeDNC'] = 'Account can be any age';
+$Definition['Yaga.Perks.EditTimeout'] = 'Edit Timeout';
+$Definition['Yaga.Perks.Emoticons'] = 'Format Emoticons';
+$Definition['Yaga.Perks.MeActions'] = 'Format /me Actions';
+$Definition['Yaga.Perks.Tags'] = 'Add Tags';
+
+// Ranks
+$Definition['Yaga.ManageRanks'] = 'Manage Ranks';
+$Definition['Yaga.AddRank'] = 'Add Rank';
+$Definition['Yaga.AgeFormat'] = 'Account must be at least %s old.';
+$Definition['Yaga.Rank'] = 'Rank';
+$Definition['Yaga.Rank.Delete'] = 'Delete Rank';
+$Definition['Yaga.Rank.Photo.Desc'] = 'This photo will be shown on activity posts and in notifications concerning rank progression.';
+$Definition['Yaga.Rank.PhotoUploaded'] = 'Rank photo has been uploaded successfully!';
+$Definition['Yaga.Rank.Progression'] = 'Rank Progression';
+$Definition['Yaga.Rank.Progression.Desc'] = 'Allow user to automatically progress past this rank.';
+$Definition['Yaga.Rank.Promote'] = 'Edit Rank';
+$Definition['Yaga.Rank.Promote.Format'] = "Edit %s's Rank";
+$Definition['Yaga.Rank.RecordActivity'] = 'Record this rank edit to the public activity log.';
+$Definition['Yaga.RankAdded'] = 'Rank added successfully!';
+$Definition['Yaga.RankPhotoDeleted'] = 'Rank photo has been deleted.';
+$Definition['Yaga.Ranks'] = 'Ranks';
+$Definition['Yaga.Ranks.Desc'] = "Ranks are awarded to users based on their account age, accumulated points, and total posts. Ranks have associated perks that can be used to alter the user's experience.";
+$Definition['Yaga.Ranks.Settings.Desc'] = 'You can manage the available ranks here. Disabled ranks will not be awarded automatically. Drag items to sort the promotion order.';
+$Definition['Yaga.RankUpdated'] = 'Rank updated successfully!';
+$Definition['Yaga.EditRank'] = 'Edit Rank';
+$Definition['Yaga.HeadlineFormat.Promoted'] = '{ActivityUserID,You} earned a promotion to {Data.Name,text}.';
 $Definition['Yaga.Notifications.Ranks'] = 'Notify me when I am promoted in rank.';
 
-// Misc
-$Definition['1 year'] = '1 year';
-$Definition['3 months'] = '3 months';
-$Definition['5 years'] = '5 years';
-$Definition['6 months'] = '6 months';
-$Definition['Age Required'] = 'Age Required';
-$Definition['Auto Award'] = 'Auto Award';
-$Definition['Automatically Award'] = 'Automatically Award';
-$Definition['Award Value'] = 'Award Value';
-$Definition['Days'] = 'Days';
-$Definition['Default'] = 'Default';
-$Definition['Delete'] = 'Delete';
-$Definition['Description'] = 'Description';
-$Definition['Disabled'] = 'Disabled';
-$Definition['Edit'] = 'Edit';
-$Definition['Elevated Permission'] = 'Elevated Permission';
-$Definition['Enabled'] = 'Enabled';
-$Definition['Export'] = 'Export';
-$Definition['Icon'] = 'Icon';
-$Definition['Image'] = 'Image';
-$Definition['Less than:'] = 'Less than:';
-$Definition['More than or:'] = 'More than or:';
-$Definition['More than:'] = 'More than:';
-$Definition['Name'] = 'Name';
-$Definition['None'] = 'None';
-$Definition['Options'] = 'Options';
-$Definition['Points Required'] = 'Points Required';
-$Definition['Posts Required'] = 'Posts Required';
-$Definition['Role Award'] = 'Role Award';
-$Definition['Rule'] = 'Rule';
-$Definition['Time Frame'] = 'Time Frame';
-$Definition['Tooltip'] = 'Tooltip';
-$Definition['Weeks'] = 'Weeks';
-$Definition['Years'] = 'Years';
-
-// Rule Info
+// Rules
 $Definition['Yaga.Rules.AwardCombo'] = 'Award Combo';
 $Definition['Yaga.Rules.AwardCombo.Criteria.Head'] = 'Number of Badge Types';
 $Definition['Yaga.Rules.AwardCombo.Desc'] = 'Award this badge if the count of unique badge awards (based on rule) a user received within the past time frame meets or exceeds the target criteria.';
@@ -225,3 +203,16 @@ $Definition['Yaga.Rules.ReflexComment.Desc'] = "Award this badge if a comment is
 $Definition['Yaga.Rules.SocialConnection'] = 'Social Connections';
 $Definition['Yaga.Rules.SocialConnection.Criteria.Head'] = 'Which Social Network?';
 $Definition['Yaga.Rules.SocialConnection.Desc'] = 'Award this badge if the user has connected to the target social network.';
+$Definition['Yaga.Settings'] = 'Yaga Settings';
+
+// Transport
+$Definition['Yaga.Transport'] = 'Import / Export Configuration';
+$Definition['Yaga.Export'] = 'Export Yaga Configuration';
+$Definition['Yaga.Export.Desc'] = 'You can export your existing Yaga configuration for backup or transport purposes. Select which sections of your Yaga configuration should be exported.';
+$Definition['Yaga.Export.Success'] = 'Your Yaga configuration was successfully exported to: <strong>%s</strong>';
+$Definition['Yaga.Transport.File'] = 'Yaga Transport File';
+$Definition['Yaga.Transport.Desc'] = 'You can use these tools to facilitate transport of your Yaga configuration across sites with a convenient single file transfer.';
+$Definition['Yaga.Transport.Return'] = 'Return to main Yaga settings page.';
+$Definition['Yaga.Import'] = 'Import Yaga Configuration';
+$Definition['Yaga.Import.Desc'] = 'You can import a Yaga configuration to <strong>replace</strong> your current configuration. Select which sections of your Yaga configuration should be <strong>overwritten</strong>.';
+$Definition['Yaga.Import.Success'] = 'You successfully overwrote your Yaga configuration with the contents of: <strong>%s</strong>';
