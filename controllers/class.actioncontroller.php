@@ -100,7 +100,7 @@ class ActionController extends DashboardController {
         $NewActionRow = ActionRow($Action);
 
         if($Edit) {
-          $this->JsonTarget('#Action_' . $this->Action->ActionID, $NewActionRow, 'ReplaceWith');
+          $this->JsonTarget('#ActionID_' . $this->Action->ActionID, $NewActionRow, 'ReplaceWith');
           $this->InformMessage(T('Yaga.ActionUpdated'));
         }
         else {
