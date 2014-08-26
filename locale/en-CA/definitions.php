@@ -47,6 +47,7 @@ $Definition['Yaga.Reactions'] = 'Reactions';
 $Definition['Yaga.Reactions.RecordFormat'] = '%s - %s on %s.';
 $Definition['Yaga.Reactions.RecordLimit.Plural'] = 'and %s others.';
 $Definition['Yaga.Reactions.RecordLimit.Single'] = 'and %s other.';
+$Definition['Yaga.Reactions.Use'] = 'Use Reactions';
 
 // Badges
 $Definition['Yaga.Badge'] = 'Badge';
@@ -76,6 +77,7 @@ $Definition['Yaga.Badges.Manage'] = 'Manage Badges';
 $Definition['Yaga.Badges.Mine'] = 'My Badges';
 $Definition['Yaga.Badges.Notify'] = 'Notify me when I earn a badge.';
 $Definition['Yaga.Badges.Settings.Desc'] = 'You can manage the available badges here. Disabled badges will not be awarded automatically.';
+$Definition['Yaga.Badges.Use'] = 'Use Badges';
 
 // Best Content
 $Definition['Yaga.BestContent'] = 'Best Of...';
@@ -105,7 +107,9 @@ $Definition['Yaga.Error.TransportRequirements'] = 'You do not seem to have the m
 
 // Leader Board
 $Definition['Yaga.LeaderBoard.AllTime'] = 'All Time Leaders';
+$Definition['Yaga.LeaderBoard.Max'] = 'Maximum number of leaders to show';
 $Definition['Yaga.LeaderBoard.Month'] = "This Month's Leaders";
+$Definition['Yaga.LeaderBoard.Use'] = 'Show leaderboard on activity page';
 $Definition['Yaga.LeaderBoard.Week'] = "This Week's Leaders";
 $Definition['Yaga.LeaderBoard.Year'] = "This Years's Leaders";
 
@@ -142,6 +146,7 @@ $Definition['Yaga.Ranks.PostsReq'] = 'Posts Required';
 $Definition['Yaga.Ranks.RequiredAgeDNC'] = 'Account can be any age';
 $Definition['Yaga.Ranks.RequiredAgeFormat'] = 'Account must be at least %s old.';
 $Definition['Yaga.Ranks.Settings.Desc'] = 'You can manage the available ranks here. Disabled ranks will not be awarded automatically. Drag items to sort the promotion order.';
+$Definition['Yaga.Ranks.Use'] = 'Use Ranks';
 
 // Rules
 $Definition['Yaga.Rules.AwardCombo'] = 'Award Combo';

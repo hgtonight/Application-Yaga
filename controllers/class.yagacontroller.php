@@ -52,23 +52,23 @@ class YagaController extends DashboardController {
 
     $ConfigModule->Initialize(array(
         'Yaga.Reactions.Enabled' => array(
-            'LabelCode' => 'Use Reactions',
+            'LabelCode' => 'Yage.Reactions.Use',
             'Control' => 'Checkbox'
         ),
         'Yaga.Badges.Enabled' => array(
-            'LabelCode' => 'Use Badges',
+            'LabelCode' => 'Yaga.Badges.Use',
             'Control' => 'Checkbox'
         ),
         'Yaga.Ranks.Enabled' => array(
-            'LabelCode' => 'Use Ranks',
+            'LabelCode' => 'Yaga.Ranks.Use',
             'Control' => 'Checkbox'
         ),
         'Yaga.LeaderBoard.Enabled' => array(
-            'LabelCode' => 'Show leaderboard on activity page',
+            'LabelCode' => 'Yaga.LeaderBoard.Use',
             'Control' => 'Checkbox'
         ),
         'Yaga.LeaderBoard.Limit' => array(
-            'LabelCode' => 'Maximum number of leaders to show',
+            'LabelCode' => 'Yaga.LeaderBoard.Max',
             'Control' => 'Textbox',
             'Options' => array(
                 'Size' => 45,
