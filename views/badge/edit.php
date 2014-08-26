@@ -40,7 +40,7 @@ echo $this->Form->Errors();
   <li>
     <?php
     echo $this->Form->Label('Description', 'Description');
-    echo $this->Form->TextBox('Description');
+    echo $this->Form->TextBox('Description', array('multiline' => TRUE));
     ?>
   </li>
   <li>

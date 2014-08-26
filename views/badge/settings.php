@@ -4,6 +4,7 @@
 $Rules = $this->Data('Rules');
 
 echo Wrap($this->Title(), 'h1');
+echo Wrap(Wrap(T('Yaga.Badges.Desc'), 'div'), 'div', array('class' => 'Wrap'));
 echo Wrap(Wrap(T('Yaga.Badges.Settings.Desc'), 'div'), 'div', array('class' => 'Wrap'));
 echo Wrap(Anchor(T('Yaga.AddBadge'), 'badge/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
 
