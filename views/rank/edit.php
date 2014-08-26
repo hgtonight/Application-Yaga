@@ -69,6 +69,8 @@ echo $this->Form->Errors();
                    '604800' => sprintf(T('Authors may edit for %s'), T('1 week')),
                   '2592000' => sprintf(T('Authors may edit for %s'), T('1 month')),
                        '-1' => T('Authors may always edit')));
+  
+  RenderPerkPermissionForm('Plugins.Signatures.Edit', 'Yaga.Perks.Signatures');
 
   RenderPerkPermissionForm('Plugins.Tagging.Add', 'Yaga.Perks.Tags');
 
