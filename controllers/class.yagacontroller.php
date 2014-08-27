@@ -253,11 +253,11 @@ class YagaController extends DashboardController {
     }
 
     foreach($FilteredImages as $Image) {
-      if($FH->addFile(PATH_UPLOADS . DS . $Image, 'images' . DS . $Image) !== TRUE) {
+      if($FH->addFile('.' . $Image, 'images/' . $Image) === FALSE) {
         $this->Form->AddError(sprintf(T('Yaga.Error.AddFile'), $FH->getStatusString()));
-        return FALSE;
+        //return FALSE;
       }
-      $Hashes[] = md5_file(PATH_UPLOADS . DS . $Image);
+      $Hashes[] = md5_file('.' . $Image);
     }
 
     // Save all the hashes
@@ -359,7 +359,7 @@ class YagaController extends DashboardController {
     }
     
     // Import uploaded files
-    if(Gdn_FileSystem::Copy(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . 'images' . DS, PATH_UPLOADS . DS) === FALSE) {
+    if(Gdn_FileSystem::Copy(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . 'images' . DS . 'uploads' . DS, PATH_UPLOADS . DS) === FALSE) {
       $this->Form->AddError(T('Yaga.Error.TransportCopy'));
     }
     
