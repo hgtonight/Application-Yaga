@@ -115,9 +115,11 @@ $Definition['Yaga.LeaderBoard.Year'] = "This Years's Leaders";
 
 // Perks
 $Definition['Yaga.Perks'] = 'Perks';
+$Definition['Yaga.Perks.Curation'] = 'Content Curation';
 $Definition['Yaga.Perks.EditTimeout'] = 'Edit Timeout';
 $Definition['Yaga.Perks.Emoticons'] = 'Format Emoticons';
 $Definition['Yaga.Perks.MeActions'] = 'Format /me Actions';
+$Definition['Yaga.Perks.Signatures'] = 'Edit Signature';
 $Definition['Yaga.Perks.Tags'] = 'Add Tags';
 
 // Ranks
