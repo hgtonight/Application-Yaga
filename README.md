@@ -97,8 +97,8 @@ Check out the technical documentation for more information on specific `YagaRule
 
 ## Technical Documentation
 
-Technical documentation generated from the Yaga sourc can be found at
-http://hgtonight.github.io/Application-Yaga/
+Technical documentation generated from the Yaga source can be found at
+http://hgtonight.github.io/Application-Yaga/en/
 
 ---
 Copyright 2013 - 2014 © Zachary Doll
