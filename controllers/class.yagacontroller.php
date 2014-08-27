@@ -52,7 +52,7 @@ class YagaController extends DashboardController {
 
     $ConfigModule->Initialize(array(
         'Yaga.Reactions.Enabled' => array(
-            'LabelCode' => 'Yage.Reactions.Use',
+            'LabelCode' => 'Yaga.Reactions.Use',
             'Control' => 'Checkbox'
         ),
         'Yaga.Badges.Enabled' => array(
