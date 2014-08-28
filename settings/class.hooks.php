@@ -424,7 +424,7 @@ class YagaHooks implements Gdn_IPlugin {
     $ID = $Activity->ActivityID;
 
     // Only allow reactions on activities that allow comments
-    if($Activity->AllowComments == 0) {
+    if(!property_exists($Activity, 'AllowComments') || $Activity->AllowComments == 0) {
       return;
     }
 
