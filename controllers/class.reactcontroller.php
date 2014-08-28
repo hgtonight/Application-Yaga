@@ -53,17 +53,14 @@ class ReactController extends Gdn_Controller {
       case 'discussion':
         $Model = new DiscussionModel();
         $AnchorID = '#Discussion_';
-        $Key = 'InsertUserID';
         break;
       case 'comment':
         $Model = new CommentModel();
         $AnchorID = '#Comment_';
-        $Key = 'InsertUserID';
         break;
       case 'activity':
         $Model = new ActivityModel();
         $AnchorID = '#Activity_';
-        $Key = 'ActivityUserID';
         break;
       default:
         throw new Gdn_UserException(T('Yaga.Action.InvalidTargetType'));
@@ -87,7 +84,7 @@ class ReactController extends Gdn_Controller {
         $ItemOwnerID = $Item->InsertUserID;
         break;
       case 'activity':
-        $ItemOwnerID = $Item['ActivityUserID'];
+        $ItemOwnerID = $Item['RegardingUserID'];
         break;
       default:
         throw new Gdn_UserException(T('Yaga.Action.InvalidTargetType'));
