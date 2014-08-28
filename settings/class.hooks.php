@@ -432,13 +432,9 @@ class YagaHooks implements Gdn_IPlugin {
     if(!Gdn::Session()->CheckPermission('Yaga.Reactions.Add')) {
       return;
     }
-
-    // Activities can be by multiple users
-    if(is_array($Activity->ActivityUserID) && in_array($CurrentUserID, $Activity->ActivityUserID)) {
-      // User is part of a multiple user activity
-    }
-    else if($CurrentUserID == $Activity->ActivityUserID) {
-      // User is the author of this activity
+    
+    if($CurrentUserID == $Activity->RegardingUserID) {
+      // The current user made this activity item happen
     }
     else {
       echo Wrap(RenderReactionList($ID, $Type, FALSE), 'div', array('class' => 'Reactions'));
