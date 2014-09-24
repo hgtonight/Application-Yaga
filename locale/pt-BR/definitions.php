@@ -138,16 +138,16 @@ $Definition['Yaga.Rank.Promote.Format'] = "Editar Posição do %s";
 $Definition['Yaga.Rank.PromotedHeadlineFormat'] = '{ActivityUserID,You} ganhou uma promoção para {Data.Name,text}.';
 $Definition['Yaga.Rank.RecordActivity'] = 'Gravar esta atualização de posição no log de atividade.';
 $Definition['Yaga.Rank.Updated'] = 'Posição atualizada com sucesso!';
-$Definition['Yaga.Ranks'] = 'Posisões';
+$Definition['Yaga.Ranks'] = 'Posições';
 $Definition['Yaga.Ranks.AgeReq'] = 'Tempo Requirido';
-$Definition['Yaga.Ranks.Desc'] = "Posisões são concedidos aos usuários com base na idade de sua conta, os pontos acumulados, e total. Posições têm vantagens associados que podem ser utilizados para alterar a experiência do usuário.";
-$Definition['Yaga.Ranks.Manage'] = 'Gerenciar Posisões';
+$Definition['Yaga.Ranks.Desc'] = "Posições são concedidos aos usuários com base na idade de sua conta, os pontos acumulados, e total. Posições têm vantagens associados que podem ser utilizados para alterar a experiência do usuário.";
+$Definition['Yaga.Ranks.Manage'] = 'Gerenciar Posições';
 $Definition['Yaga.Ranks.Notify'] = 'Me notificar quando for promovido.';
 $Definition['Yaga.Ranks.PointsReq'] = 'Pontos Requiridos';
 $Definition['Yaga.Ranks.PostsReq'] = 'Postagens Requiridas';
 $Definition['Yaga.Ranks.RequiredAgeDNC'] = 'A Conta pode ter qualquer idade';
 $Definition['Yaga.Ranks.RequiredAgeFormat'] = 'A conta tem que ter %s de atividade.';
-$Definition['Yaga.Ranks.Settings.Desc'] = 'Aqui você pode gerenciar as posisões disponíveis. Posisões desativadas não serão concedidas automaticamente. Arraste os itens para classificar a ordem de promoção.';
+$Definition['Yaga.Ranks.Settings.Desc'] = 'Aqui você pode gerenciar as posições disponíveis. Posições desativadas não serão concedidas automaticamente. Arraste os itens para classificar a ordem de promoção.';
 $Definition['Yaga.Ranks.Use'] = 'Usar Posições';
 
 // Rules
