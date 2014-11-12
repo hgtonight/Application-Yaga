@@ -1,4 +1,4 @@
-﻿<?php if (!defined('APPLICATION')) exit();
+<?php if (!defined('APPLICATION')) exit();
 $Definition['Yaga.Settings'] = 'Yaga Einstellungen';
 $Definition['Yaga.Badge.Reason'] = 'Grund (optional)';
 
