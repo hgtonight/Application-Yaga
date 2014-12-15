@@ -726,13 +726,20 @@ class YagaHooks implements Gdn_IPlugin {
           $Criteria = (object) unserialize($Badge->RuleCriteria);
           $Result = $Rule->Award($Sender, $User, $Criteria);
           if($Result) {
-            if(is_numeric($Result)) {
-              $AwardedUserID = $Result;
+            $AwardedUserIDs = array();
+            if(is_array($Result)) {
+              $AwardedUserIDs = $Result;
+            }
+            else if(is_numeric($Result)) {
+              $AwardedUserIDs[] = $Result;
             }
             else {
-              $AwardedUserID = $UserID;
+              $AwardedUserIDs[] = $UserID;
             }
-            $BadgeAwardModel->Award($Badge->BadgeID, $AwardedUserID, $UserID);
+            
+            foreach($AwardedUserIDs as $AwardedUserID) {
+              $BadgeAwardModel->Award($Badge->BadgeID, $AwardedUserID, $UserID);
+            }
           }
         }
       }
