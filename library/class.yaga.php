@@ -98,4 +98,18 @@ class Yaga {
       }
       return self::$_RankModel;
    }
+   
+   /**
+    * Alias for UserModel::GivePoints()
+    * 
+    * May be expanded in future versions.
+    * 
+    * @param int $UserID
+    * @param int $Value
+    * @param string $Source
+    * @param int $Timestamp
+    */
+   public static function GivePoints($UserID, $Value, $Source = 'Other', $Timestamp = FALSE) {
+     UserModel::GivePoints($UserID, $Value, $Source, $Timestamp);
+   }
 }
