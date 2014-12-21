@@ -187,6 +187,7 @@ class ReactionModel extends Gdn_Model {
     $this->SetUserScore($ID, $Type, $UserID, $Score);
     // Give the user points commesurate with reaction activity
     UserModel::GivePoints($AuthorID, $Points, 'Reaction');
+    $EventArgs['Points'] = $Points;
     $this->FireEvent('AfterReactionSave', $EventArgs);
     return $Reaction;
   }
