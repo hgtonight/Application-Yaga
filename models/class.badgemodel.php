@@ -130,7 +130,7 @@ class BadgeModel extends Gdn_Model {
 
         // Remove their points
         foreach($UserIDs as $UserID) {
-          UserModel::GivePoints($UserID, -1 * $Badge->AwardValue, 'Badge');
+          Yaga::GivePoints($UserID, -1 * $Badge->AwardValue, 'Badge');
         }
         // Remove the award rows
         $this->SQL->Delete('BadgeAward', array('BadgeID' => $BadgeID));
