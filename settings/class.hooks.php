@@ -715,8 +715,12 @@ class YagaHooks implements Gdn_IPlugin {
               || array_key_exists($Badge->RuleClass, $InteractionRules)) {
         // Create a rule object if needed
         $Class = $Badge->RuleClass;
-        if(!in_array($Class, $Rules)) {
+        if(!in_array($Class, $Rules) && class_exists($Class)) {
           $Rule = new $Class();
+          $Rules[$Class] = $Rule;
+        }
+        else {
+          $Rule = new ManualAward();
           $Rules[$Class] = $Rule;
         }
 
