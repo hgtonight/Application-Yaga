@@ -275,7 +275,7 @@ class YagaHooks implements Gdn_IPlugin {
     foreach($FieldHooks as $FieldHook) {
       if(array_key_exists($FieldHook, $Fields)) {
         $UserID = $Sender->EventArguments['UserID'];
-        $this->_RankProgression($UserID);
+        $this->RankProgression($UserID);
         break; // Only need to fire once per event
       }
     }
@@ -286,7 +286,7 @@ class YagaHooks implements Gdn_IPlugin {
    * 
    * @param int $UserID
    */
-  protected function _RankProgression($UserID) {
+  protected function RankProgression($UserID) {
     $UserModel = Gdn::UserModel();
     $User = $UserModel->GetID($UserID);
 
@@ -465,13 +465,13 @@ class YagaHooks implements Gdn_IPlugin {
       $PerkKey = substr($Perk, 4);
       
       if($PerkType === 'Conf') {
-        $this->_ApplyCustomConfigs($PerkKey, $PerkValue);
+        $this->ApplyCustomConfigs($PerkKey, $PerkValue);
       }
       else if($PerkType === 'Perm' && $PerkValue === 'grant') {
-        $this->_GrantPermission($User, $PerkKey);
+        $this->GrantPermission($User, $PerkKey);
       }
       else if($PerkType === 'Perm' && $PerkValue === 'revoke') {
-        $this->_RevokePermission($User, $PerkKey);
+        $this->RevokePermission($User, $PerkKey);
       }
       else {
         // Do nothing
@@ -485,7 +485,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param type $User
    * @param string $Permission
    */
-  private function _GrantPermission($User, $Permission = '') {
+  private function GrantPermission($User, $Permission = '') {
     if($Permission === '') {
       return;
     }
@@ -505,7 +505,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param type $User
    * @param string $Permission
    */
-  private function _RevokePermission($User, $Permission = '') {
+  private function RevokePermission($User, $Permission = '') {
     if($Permission === '') {
       return;
     }
@@ -523,7 +523,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param string $Name
    * @param mixed $Value
    */
-  private function _ApplyCustomConfigs($Name = NULL, $Value = NULL) {
+  private function ApplyCustomConfigs($Name = NULL, $Value = NULL) {
     SaveToConfig($Name, $Value, array('Save' => FALSE));
   }
 
@@ -533,7 +533,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param ProfileController $Sender
    */
   public function ProfileController_Render_Before($Sender) {
-    $this->_AddResources($Sender);
+    $this->AddResources($Sender);
 
     if(C('Yaga.Badges.Enabled')) {
       $Sender->AddModule('BadgesModule');
@@ -546,7 +546,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param DiscussionController $Sender
    */
   public function DiscussionController_Render_Before($Sender) {
-    $this->_AddResources($Sender);
+    $this->AddResources($Sender);
   }
 
   /**
@@ -555,7 +555,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param CommentController $Sender
    */
   public function CommentController_Render_Before($Sender) {
-    $this->_AddResources($Sender);
+    $this->AddResources($Sender);
   }
 
   /**
@@ -564,7 +564,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param ActivityController $Sender
    */
   public function ActivityController_Render_Before($Sender) {
-    $this->_AddResources($Sender);
+    $this->AddResources($Sender);
 
     if(C('Yaga.LeaderBoard.Enabled', FALSE)) {
       // add leaderboard modules to the activity page
@@ -689,7 +689,7 @@ class YagaHooks implements Gdn_IPlugin {
    *
    * @param Gdn_Controller $Sender
    */
-  private function _AddResources($Sender) {
+  private function AddResources($Sender) {
     $Sender->AddCssFile('reactions.css', 'yaga');
   }
 
