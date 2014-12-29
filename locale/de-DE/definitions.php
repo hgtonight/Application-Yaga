@@ -200,3 +200,5 @@ $Definition['Yaga.Rules.ReflexComment.Criteria.Head'] = 'Sekunden bis zum Kommen
 $Definition['Yaga.Rules.SocialConnection'] = 'Soziale Netzwerk Verknüpfungen';
 $Definition['Yaga.Rules.SocialConnection.Desc'] = 'Diese Auszeichnung verleihen, wenn der Benutzer seinen Account mit einem bestimmten sozialen Netzwerk verbunden hat.';
 $Definition['Yaga.Rules.SocialConnection.Criteria.Head'] = 'Welches Soziale Netzwerk?';
+$Definition['Yaga.Rules.UnknownRule'] = 'Unbekannte Regel';
+$Definition['Yaga.Rules.UnknownRule.Desc'] = 'Diese Auszeichnung wird <strong>nie</strong> <em>automatisch</em> verliehen. Diese Regel wird angewandt, wenn die in der Datenbank gespeicherte Regel nicht mehr verfügbar ist. Dies ist der Fall, wenn Regeln von einem deaktivierten Plugin stammen.';
