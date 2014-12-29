@@ -720,8 +720,10 @@ class YagaHooks implements Gdn_IPlugin {
           $Rules[$Class] = $Rule;
         }
         else {
-          $Rule = new ManualAward();
-          $Rules[$Class] = $Rule;
+          if(!array_key_exists('UnknownRule', $Rules)) {
+            $Rules['UnkownRule'] = new UnknownRule();
+          }
+          $Rules[$Class] = $Rules['UnkownRule'];
         }
 
         $Rule = $Rules[$Class];

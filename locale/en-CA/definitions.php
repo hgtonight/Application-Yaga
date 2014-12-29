@@ -211,6 +211,8 @@ $Definition['Yaga.Rules.ReflexComment.Desc'] = "Award this badge if a comment is
 $Definition['Yaga.Rules.SocialConnection'] = 'Social Connections';
 $Definition['Yaga.Rules.SocialConnection.Criteria.Head'] = 'Which Social Network?';
 $Definition['Yaga.Rules.SocialConnection.Desc'] = 'Award this badge if the user has connected to the target social network.';
+$Definition['Yaga.Rules.UnknownRule'] = 'Unknown Rule';
+$Definition['Yaga.Rules.UnknownRule.Desc'] = 'This badge will <strong>never</strong> be awarded <em>automatically</em>. This is selected if the rule class saved in the database is no longer available. This is most likely due to a plugin providing a rule and no longer being enabled.';
 
 // Transport
 $Definition['Yaga.Export'] = 'Export Yaga Configuration';
