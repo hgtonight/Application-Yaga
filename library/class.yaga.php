@@ -112,4 +112,72 @@ class Yaga {
    public static function GivePoints($UserID, $Value, $Source = 'Other', $Timestamp = FALSE) {
      UserModel::GivePoints($UserID, $Value, $Source, $Timestamp);
    }
+   
+   /**
+   * This is the dispatcher to check badge awards
+   *
+   * @param mixed $Sender The sending object
+   * @param string $Handler The event handler to check associated rules for awards
+   * (e.g. BadgeAwardModel_AfterBadgeAward_Handler or Base_AfterConnection)
+   */
+   public static function ExecuteBadgeHooks($Sender, $Handler) {
+    $Session = Gdn::Session();
+    if(!C('Yaga.Badges.Enabled') || !$Session->IsValid()) {
+      return;
+    }
+
+    // Let's us use __FUNCTION__ in the original hook
+    $Hook = str_ireplace('_Handler', '', $Handler);
+
+    $UserID = $Session->UserID;
+    $User = $Session->User;
+
+    $BadgeAwardModel = Yaga::BadgeAwardModel();
+    $Badges = $BadgeAwardModel->GetUnobtained($UserID);
+
+    $InteractionRules = RulesController::GetInteractionRules();
+
+    $Rules = array();
+    foreach($Badges as $Badge) {
+      // The badge award needs to be processed
+      if(($Badge->Enabled && $Badge->UserID != $UserID)
+         || array_key_exists($Badge->RuleClass, $InteractionRules)) {
+        // Create a rule object if needed
+        $Class = $Badge->RuleClass;
+        if(!in_array($Class, $Rules) && class_exists($Class)) {
+          $Rule = new $Class();
+          $Rules[$Class] = $Rule;
+        }
+        else {
+          if(!array_key_exists('UnknownRule', $Rules)) {
+            $Rules['UnkownRule'] = new UnknownRule();
+          }
+          $Rules[$Class] = $Rules['UnkownRule'];
+        }
+
+        $Rule = $Rules[$Class];
+        // Only check awards for rules that use this hook
+        if(in_array($Hook, $Rule->Hooks())) {
+          $Criteria = (object) unserialize($Badge->RuleCriteria);
+          $Result = $Rule->Award($Sender, $User, $Criteria);
+          if($Result) {
+            $AwardedUserIDs = array();
+            if(is_array($Result)) {
+              $AwardedUserIDs = $Result;
+            }
+            else if(is_numeric($Result)) {
+              $AwardedUserIDs[] = $Result;
+            }
+            else {
+              $AwardedUserIDs[] = $UserID;
+            }
+            
+            foreach($AwardedUserIDs as $AwardedUserID) {
+              $BadgeAwardModel->Award($Badge->BadgeID, $AwardedUserID, $UserID);
+            }
+          }
+        }
+      }
+    }
+  }
 }

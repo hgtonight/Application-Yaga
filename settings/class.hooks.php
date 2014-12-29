@@ -582,7 +582,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param Gdn_Dispatcher $Sender
    */
   public function Gdn_Dispatcher_AppStartup_Handler($Sender) {
-    $this->_AwardBadges($Sender, __FUNCTION__);
+    Yaga::ExecuteBadgeHooks($Sender, __FUNCTION__);
   }
 
   /**
@@ -591,7 +591,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param mixed $Sender
    */
   public function Base_AfterGetSession_Handler($Sender) {
-    $this->_AwardBadges($Sender, __FUNCTION__);
+    Yaga::ExecuteBadgeHooks($Sender, __FUNCTION__);
   }
 
   /**
@@ -600,7 +600,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param CommentModel $Sender
    */
   public function CommentModel_AfterSaveComment_Handler($Sender) {
-    $this->_AwardBadges($Sender, __FUNCTION__);
+    Yaga::ExecuteBadgeHooks($Sender, __FUNCTION__);
   }
 
   /**
@@ -609,7 +609,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param DiscussionModel $Sender
    */
   public function DiscussionModel_AfterSaveDiscussion_Handler($Sender) {
-    $this->_AwardBadges($Sender, __FUNCTION__);
+    Yaga::ExecuteBadgeHooks($Sender, __FUNCTION__);
   }
 
   /**
@@ -618,7 +618,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param ActivityModel $Sender
    */
   public function ActivityModel_BeforeSaveComment_Handler($Sender) {
-    $this->_AwardBadges($Sender, __FUNCTION__);
+    Yaga::ExecuteBadgeHooks($Sender, __FUNCTION__);
   }
 
   /**
@@ -627,7 +627,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param CommentModel $Sender
    */
   public function CommentModel_BeforeNotification_Handler($Sender) {
-    $this->_AwardBadges($Sender, __FUNCTION__);
+    Yaga::ExecuteBadgeHooks($Sender, __FUNCTION__);
   }
 
   /**
@@ -636,7 +636,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param DiscussionModel $Sender
    */
   public function DiscussionModel_BeforeNotification_Handler($Sender) {
-    $this->_AwardBadges($Sender, __FUNCTION__);
+    Yaga::ExecuteBadgeHooks($Sender, __FUNCTION__);
   }
 
   /**
@@ -645,7 +645,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param mixed $Sender
    */
   public function Base_AfterSignIn_Handler($Sender) {
-    $this->_AwardBadges($Sender, __FUNCTION__);
+    Yaga::ExecuteBadgeHooks($Sender, __FUNCTION__);
   }
 
   /**
@@ -654,7 +654,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param UserModel $Sender
    */
   public function UserModel_AfterSave_Handler($Sender) {
-    $this->_AwardBadges($Sender, __FUNCTION__);
+    Yaga::ExecuteBadgeHooks($Sender, __FUNCTION__);
   }
 
   /**
@@ -663,7 +663,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param ReactionModel $Sender
    */
   public function ReactionModel_AfterReactionSave_Handler($Sender) {
-    $this->_AwardBadges($Sender, __FUNCTION__);
+    Yaga::ExecuteBadgeHooks($Sender, __FUNCTION__);
   }
 
   /**
@@ -672,7 +672,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param BadgeAwardModel $Sender
    */
   public function BadgeAwardModel_AfterBadgeAward_Handler($Sender) {
-    $this->_AwardBadges($Sender, __FUNCTION__);
+    Yaga::ExecuteBadgeHooks($Sender, __FUNCTION__);
   }
 
   /**
@@ -681,75 +681,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param mixed $Sender
    */
   public function Base_AfterConnection_Handler($Sender) {
-    $this->_AwardBadges($Sender, __FUNCTION__);
-  }
-
-  /**
-   * This is the dispatcher to check badge awards
-   *
-   * @param mixed $Sender The sending object
-   * @param string $Handler The event handler to check associated rules for awards
-   * (e.g. BadgeAwardModel_AfterBadgeAward_Handler or Base_AfterConnection)
-   */
-  private function _AwardBadges($Sender, $Handler) {
-    $Session = Gdn::Session();
-    if(!C('Yaga.Badges.Enabled') || !$Session->IsValid()) {
-      return;
-    }
-
-    // Let's us use __FUNCTION__ in the original hook
-    $Hook = str_ireplace('_Handler', '', $Handler);
-
-    $UserID = $Session->UserID;
-    $User = $Session->User;
-
-    $BadgeAwardModel = Yaga::BadgeAwardModel();
-    $Badges = $BadgeAwardModel->GetUnobtained($UserID);
-
-    $InteractionRules = RulesController::GetInteractionRules();
-
-    $Rules = array();
-    foreach($Badges as $Badge) {
-      // The badge award needs to be processed
-      if(($Badge->Enabled && $Badge->UserID != $UserID)
-              || array_key_exists($Badge->RuleClass, $InteractionRules)) {
-        // Create a rule object if needed
-        $Class = $Badge->RuleClass;
-        if(!in_array($Class, $Rules) && class_exists($Class)) {
-          $Rule = new $Class();
-          $Rules[$Class] = $Rule;
-        }
-        else {
-          if(!array_key_exists('UnknownRule', $Rules)) {
-            $Rules['UnkownRule'] = new UnknownRule();
-          }
-          $Rules[$Class] = $Rules['UnkownRule'];
-        }
-
-        $Rule = $Rules[$Class];
-        // Only check awards for rules that use this hook
-        if(in_array($Hook, $Rule->Hooks())) {
-          $Criteria = (object) unserialize($Badge->RuleCriteria);
-          $Result = $Rule->Award($Sender, $User, $Criteria);
-          if($Result) {
-            $AwardedUserIDs = array();
-            if(is_array($Result)) {
-              $AwardedUserIDs = $Result;
-            }
-            else if(is_numeric($Result)) {
-              $AwardedUserIDs[] = $Result;
-            }
-            else {
-              $AwardedUserIDs[] = $UserID;
-            }
-            
-            foreach($AwardedUserIDs as $AwardedUserID) {
-              $BadgeAwardModel->Award($Badge->BadgeID, $AwardedUserID, $UserID);
-            }
-          }
-        }
-      }
-    }
+    Yaga::ExecuteBadgeHooks($Sender, __FUNCTION__);
   }
 
   /**
