@@ -55,12 +55,14 @@ if(!function_exists('RenderReactionRecord')) {
    * 
    * @param int $ID
    * @param string $Type 'discussion', 'activity', or 'comment'
+   * @param bool $Echo Should it be echoed?
+   * @return mixed String if $Echo is false, TRUE otherwise
    */
   function RenderReactionRecord($ID, $Type, $Echo = TRUE) {
     $Reactions = Yaga::ReactionModel()->GetRecord($ID, $Type);
     $Limit = C('Yaga.Reactions.RecordLimit');
     $ReactionCount = count($Reactions);
-	$RecordsString = '';
+    $RecordsString = '';
     $i = 0;
     foreach($Reactions as $Reaction) {
       $i++;
