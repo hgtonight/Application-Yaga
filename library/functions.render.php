@@ -56,10 +56,11 @@ if(!function_exists('RenderReactionRecord')) {
    * @param int $ID
    * @param string $Type 'discussion', 'activity', or 'comment'
    */
-  function RenderReactionRecord($ID, $Type) {
+  function RenderReactionRecord($ID, $Type, $Echo = TRUE) {
     $Reactions = Yaga::ReactionModel()->GetRecord($ID, $Type);
     $Limit = C('Yaga.Reactions.RecordLimit');
     $ReactionCount = count($Reactions);
+	$RecordsString = '';
     $i = 0;
     foreach($Reactions as $Reaction) {
       $i++;
@@ -80,12 +81,22 @@ if(!function_exists('RenderReactionRecord')) {
             'data-userid' => $User->UserID,
             'title' => $DateTitle
         );
-        echo Wrap($String, 'span', $Wrapttributes);
+        $RecordsString .= Wrap($String, 'span', $Wrapttributes);
       }
       
       if($Limit > 0 && $i >= $ReactionCount && $ReactionCount > $Limit) {
-        echo Plural($ReactionCount - $Limit, 'Yaga.Reactions.RecordLimit.Single', 'Yaga.Reactions.RecordLimit.Plural');
+        $RecordsString .= Plural($ReactionCount - $Limit, 'Yaga.Reactions.RecordLimit.Single', 'Yaga.Reactions.RecordLimit.Plural');
       }
+    }
+
+    $AllRecordsString = Wrap($RecordsString, 'div', array('class' => 'ReactionRecord'));
+
+    if($Echo) {
+      echo $AllRecordsString;
+      return true;
+    }
+    else {
+      return $AllRecordsString;
     }
   }
 
