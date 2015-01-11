@@ -6,7 +6,7 @@
  * @since 1.0
  * @copyright (c) 2013-2014, Zachary Doll
  */
-if(!function_exists('RenderReactions')) {
+if(!function_exists('RenderReactionList')) {
 
   /**
    * Renders a list of available actions that also contains the current count of
@@ -17,7 +17,7 @@ if(!function_exists('RenderReactions')) {
    * @param bool $Echo Should it be echoed?
    * @return mixed String if $Echo is false, TRUE otherwise
    */
-  function RenderReactions($ID, $Type, $Echo = TRUE) {
+  function RenderReactionList($ID, $Type, $Echo = TRUE) {
     $Reactions = Yaga::ReactionModel()->GetList($ID, $Type);
     $ShowCount = Gdn::Session()->CheckPermission('Yaga.Reactions.View');
     $ActionsString = '';
