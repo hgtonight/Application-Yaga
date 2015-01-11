@@ -17,7 +17,7 @@ if(!function_exists('RenderReactions')) {
    * @param bool $Echo Should it be echoed?
    * @return mixed String if $Echo is false, TRUE otherwise
    */
-  function RenderReactionList($ID, $Type, $Echo = TRUE) {
+  function RenderReactions($ID, $Type, $Echo = TRUE) {
     $Reactions = Yaga::ReactionModel()->GetList($ID, $Type);
     $ShowCount = Gdn::Session()->CheckPermission('Yaga.Reactions.View');
     $ActionsString = '';
