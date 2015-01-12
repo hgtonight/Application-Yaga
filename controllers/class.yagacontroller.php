@@ -100,6 +100,7 @@ class YagaController extends DashboardController {
   
   public function Badges($BadgeID = FALSE, $Slug = NULL) {
     $this->FrontendStyle();
+    $this->AddCssFile('badges.css');
     $this->AddModule('BadgesModule');
     
     if(is_numeric($BadgeID)) {
