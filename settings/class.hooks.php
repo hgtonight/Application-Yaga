@@ -405,7 +405,7 @@ class YagaHooks implements Gdn_IPlugin {
 
     // Users shouldn't be able to react to their own content
     if(Gdn::Session()->UserID != $AuthorID) {
-      RenderReactionList($ID, $Type);
+      echo RenderReactionList($ID, $Type);
     }
   }
 
@@ -437,7 +437,7 @@ class YagaHooks implements Gdn_IPlugin {
       // The current user made this activity item happen
     }
     else {
-      echo Wrap(RenderReactionList($ID, $Type, FALSE), 'div', array('class' => 'Reactions'));
+      echo Wrap(RenderReactionList($ID, $Type), 'div', array('class' => 'Reactions'));
     }
   }
 
