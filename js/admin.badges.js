@@ -19,6 +19,32 @@ var Cache = {
 };
 
 jQuery(document).ready(function($) {
+  
+  $('#Badges').sortable({
+    axis: 'y',
+    containment: 'parent',
+    cursor: 'move',
+    cursorAt: {left: '10px'},
+    forcePlaceholderSize: true,
+    items: 'tr',
+    placeholder: 'Placeholder',
+    opacity: .6,
+    tolerance: 'pointer',
+    update: function() {
+      $.post(
+        gdn.url('badge/sort.json'),
+        {
+          'SortArray': $('table.Sortable').sortable('toArray'),
+          'TransientKey': gdn.definition('TransientKey')
+        },
+        function(response) {
+          if (!response || !response.Result) {
+            alert("Oops - Didn't save order properly");
+          }
+        }
+      );
+    }
+  });
 
   // Store the current inputs in the form
   $(document).on('blur', '#Rule-Criteria input', function() {

@@ -9,7 +9,7 @@ echo Wrap(Wrap(T('Yaga.Badges.Settings.Desc'), 'div'), 'div', array('class' => '
 echo Wrap(Anchor(T('Yaga.Badge.Add'), 'badge/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
 
 ?>
-<table id="Badges" class="AltRows">
+<table id="Badges" class="AltRows Sortable">
   <thead>
     <tr>
       <th><?php echo T('Image'); ?></th>

@@ -28,6 +28,7 @@ class BadgeController extends DashboardController {
     if($this->Menu) {
       $this->Menu->HighlightRoute('/badge');
     }
+    $this->AddJsFile('jquery-ui-1.10.0.custom.min.js');
     $this->AddJsFile('admin.badges.js');
     $this->AddCssFile('badges.css');
   }
@@ -307,4 +308,26 @@ class BadgeController extends DashboardController {
     $this->Render();
   }
 
+  /**
+   * This takes in a sort array and updates the badge sort order.
+   * 
+   * Renders the Save tree and/or the Result of the sort update.
+   */
+  public function Sort() {
+      // Check permission
+      $this->Permission('Yaga.Badges.Manage');
+
+      $Request = Gdn::Request();
+      if($Request->IsPostBack()) {
+         $SortArray = $Request->GetValue('SortArray', NULL);
+         $Saves = $this->BadgeModel->SaveSort($SortArray);
+         $this->SetData('Result', TRUE);
+         $this->SetData('Saves', $Saves);
+      }
+      else {
+        $this->SetData('Result', FALSE);
+      }
+
+      $this->RenderData();
+   }
 }
