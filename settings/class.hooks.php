@@ -569,7 +569,7 @@ class YagaHooks implements Gdn_IPlugin {
     if(C('Yaga.LeaderBoard.Enabled', FALSE)) {
       // add leaderboard modules to the activity page
       $Module = new LeaderBoardModule();
-      $Module->GetData('w');
+      $Module->SlotType = 'w';
       $Sender->AddModule($Module);
       $Module = new LeaderBoardModule();
       $Sender->AddModule($Module);
