@@ -63,6 +63,10 @@ class YagaController extends DashboardController {
             'LabelCode' => 'Yaga.Ranks.Use',
             'Control' => 'Checkbox'
         ),
+        'Yaga.MenuLinks.Show' => array(
+            'LabelCode' => 'Yaga.MenuLinks.Show',
+            'Control' => 'Checkbox'
+        ),
         'Yaga.LeaderBoard.Enabled' => array(
             'LabelCode' => 'Yaga.LeaderBoard.Use',
             'Control' => 'Checkbox'

@@ -702,6 +702,20 @@ class YagaHooks implements Gdn_IPlugin {
     if($Sender->MasterView == 'admin') {
       $Sender->AddCssFile('yaga.css', 'yaga');
     }
+    else {
+      if(Gdn::Session()->IsValid() && is_object($Sender->Menu) && C('Yaga.MenuLinks.Show')) {
+        $this->AddMenuLinks($Sender->Menu);
+      }
+    }
+  }
+  
+  protected function AddMenuLinks($Menu) {
+    if(C('Yaga.Badges.Enabled')) {
+      $Menu->AddLink('Yaga', T('Badges'), 'yaga/badges');
+    }
+    if(C('Yaga.Ranks.Enabled')) {
+      $Menu->AddLink('Yaga', T('Ranks'), 'yaga/ranks');
+    }
   }
 
   /**
