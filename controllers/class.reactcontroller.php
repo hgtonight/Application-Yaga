@@ -70,7 +70,7 @@ class ReactController extends Gdn_Controller {
     $Item = $Model->GetID($ID);
 
     if($Item) {
-      $Anchor = $AnchorID . $ID . ' .ReactMenu';
+      $Anchor = $AnchorID . $ID;
     }
     else {
       throw new Gdn_UserException(T('Yaga.Action.InvalidTargetID'));
@@ -98,7 +98,8 @@ class ReactController extends Gdn_Controller {
     // It has passed through the gauntlet
     $this->ReactionModel->Set($ID, $Type, $ItemOwnerID, $UserID, $ActionID);
 
-    $this->JsonTarget($Anchor, RenderReactionList($ID, $Type), 'ReplaceWith');
+    $this->JsonTarget($Anchor . ' .ReactMenu', RenderReactionList($ID, $Type), 'ReplaceWith');
+    $this->JsonTarget($Anchor . ' .ReactionRecord', RenderReactionRecord($ID, $Type, FALSE), 'ReplaceWith');
 
     // Don't render anything
     $this->Render('Blank', 'Utility', 'Dashboard');
