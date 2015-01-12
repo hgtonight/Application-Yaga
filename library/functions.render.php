@@ -14,7 +14,7 @@ if(!function_exists('RenderReactionList')) {
    *
    * @param int $ID
    * @param string $Type 'discussion', 'activity', or 'comment'
-   * @return string Rendered list of reactions
+   * @return string Rendered list of actions available
    */
   function RenderReactionList($ID, $Type) {
     $Reactions = Yaga::ReactionModel()->GetList($ID, $Type);
@@ -46,51 +46,31 @@ if(!function_exists('RenderReactionRecord')) {
    * 
    * @param int $ID
    * @param string $Type 'discussion', 'activity', or 'comment'
-   * @param bool $Echo Should it be echoed?
-   * @return mixed String if $Echo is false, TRUE otherwise
+   * @return string Rendered list of existing reactions
    */
-  function RenderReactionRecord($ID, $Type, $Echo = TRUE) {
+  function RenderReactionRecord($ID, $Type) {
     $Reactions = Yaga::ReactionModel()->GetRecord($ID, $Type);
     $Limit = C('Yaga.Reactions.RecordLimit');
     $ReactionCount = count($Reactions);
     $RecordsString = '';
-    $i = 0;
-    foreach($Reactions as $Reaction) {
-      $i++;
-      
+    
+    foreach($Reactions as $i => $Reaction) {
       // Limit the record if there are a lot of reactions
       if($i <= $Limit || $Limit <= 0) {
         $User = Gdn::UserModel()->GetID($Reaction->UserID);
-        $DateTitle = sprintf(
-                T('Yaga.Reactions.RecordFormat'),
-                $User->Name,
-                $Reaction->Name,
-                Gdn_Format::Date($Reaction->DateInserted, '%B %e, %Y')
-              );
+        $DateTitle = sprintf(T('Yaga.Reactions.RecordFormat'), $User->Name, $Reaction->Name, Gdn_Format::Date($Reaction->DateInserted, '%B %e, %Y'));
         $String = UserPhoto($User, array('Size' => 'Small', 'title' => $DateTitle));
         $String .= '<span class="ReactSprite Reaction-' . $Reaction->ActionID . ' ' . $Reaction->CssClass . '"></span>';
-        $Wrapttributes = array(
-            'class' => 'UserReactionWrap',
-            'data-userid' => $User->UserID,
-            'title' => $DateTitle
-        );
+        $Wrapttributes = array('class' => 'UserReactionWrap', 'data-userid' => $User->UserID, 'title' => $DateTitle);
         $RecordsString .= Wrap($String, 'span', $Wrapttributes);
       }
-      
+      // Display the 'and x more' message if there is a limit
       if($Limit > 0 && $i >= $ReactionCount && $ReactionCount > $Limit) {
         $RecordsString .= Plural($ReactionCount - $Limit, 'Yaga.Reactions.RecordLimit.Single', 'Yaga.Reactions.RecordLimit.Plural');
       }
     }
 
-    $AllRecordsString = Wrap($RecordsString, 'div', array('class' => 'ReactionRecord'));
-
-    if($Echo) {
-      echo $AllRecordsString;
-      return true;
-    }
-    else {
-      return $AllRecordsString;
-    }
+    return Wrap($RecordsString, 'div', array('class' => 'ReactionRecord'));
   }
 
 }

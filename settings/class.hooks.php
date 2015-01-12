@@ -360,7 +360,7 @@ class YagaHooks implements Gdn_IPlugin {
     }
     $Type = 'discussion';
     $ID = $Sender->DiscussionID;
-    RenderReactionRecord($ID, $Type);
+    echo RenderReactionRecord($ID, $Type);
   }
 
   /**
@@ -373,7 +373,7 @@ class YagaHooks implements Gdn_IPlugin {
     }
     $Type = 'comment';
     $ID = $Sender->EventArguments['Comment']->CommentID;
-    RenderReactionRecord($ID, $Type);
+    echo RenderReactionRecord($ID, $Type);
   }
 
   /**

@@ -58,7 +58,7 @@ foreach ($Contents as $Content) {
          </div>
          <?php
          if(C('Yaga.Reactions.Enabled') && Gdn::Session()->CheckPermission('Yaga.Reactions.View')) {
-            RenderReactionRecord($ContentID, strtolower($ContentType));
+            echo RenderReactionRecord($ContentID, strtolower($ContentType));
          }
          ?>
        </div>
