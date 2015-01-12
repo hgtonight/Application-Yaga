@@ -31,6 +31,10 @@ jQuery(document).ready(function($) {
     opacity: .6,
     tolerance: 'pointer',
     update: function() {
+      // Update the alt classes
+      $('#Badges tbody tr:nth-child(odd)').removeClass('Alt');
+      $('#Badges tbody tr:nth-child(even)').addClass('Alt');
+      
       $.post(
         gdn.url('badge/sort.json'),
         {
@@ -43,6 +47,13 @@ jQuery(document).ready(function($) {
           }
         }
       );
+    },
+    helper: function(e, ui) {
+      // Preserve width of row
+      ui.children().each(function() {
+        $(this).width($(this).width());
+      });
+      return ui;
     }
   });
 
