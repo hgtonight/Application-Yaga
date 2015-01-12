@@ -82,7 +82,7 @@ class YagaController extends DashboardController {
     ));
     $this->ConfigurationModule = $ConfigModule;
 
-    $this->Render();
+    $this->Render('settings');
   }
 
   /**
