@@ -254,7 +254,7 @@ class YagaHooks implements Gdn_IPlugin {
    */
   public function ProfileController_AddProfileTabs_Handler($Sender) {
     if(is_object($Sender->User) && $Sender->User->UserID > 0) {
-      $Sender->AddProfileTab(Sprite('SpBestOf') . ' ' . T('Yaga.BestContent'), 'profile/best/' . $Sender->User->UserID . '/' . urlencode($Sender->User->Name));
+      $Sender->AddProfileTab(Sprite('SpBestOf') . ' ' . T('Yaga.BestContent'), 'profile/best/' . $Sender->User->UserID . '/' . urlencode($Sender->User->Name), 'Best');
     }
   }
 
