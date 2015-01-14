@@ -23,7 +23,7 @@ class ActedModel extends Gdn_Model {
    * @param string $Table Discussion or Comment
    * @return Gdn_SQLDriver
    */
-  private function _BaseSQL($Table = 'Discussion') {
+  private function BaseSQL($Table = 'Discussion') {
     switch($Table) {
       case 'Comment':
         $SQL = Gdn::SQL()->Select('c.*')
@@ -59,7 +59,7 @@ class ActedModel extends Gdn_Model {
     if($Content == Gdn_Cache::CACHEOP_FAILURE) {
 
       // Get matching Discussions
-      $Discussions = $this->_BaseSQL('Discussion')
+      $Discussions = $this->BaseSQL('Discussion')
                       ->Join('Reaction r', 'd.DiscussionID = r.ParentID')
                       ->Where('d.InsertUserID', $UserID)
                       ->Where('r.ActionID', $ActionID)
@@ -68,7 +68,7 @@ class ActedModel extends Gdn_Model {
                       ->Get()->Result(DATASET_TYPE_ARRAY);
 
       // Get matching Comments
-      $Comments = $this->_BaseSQL('Comment')
+      $Comments = $this->BaseSQL('Comment')
                       ->Join('Reaction r', 'c.CommentID = r.ParentID')
                       ->Where('c.InsertUserID', $UserID)
                       ->Where('r.ActionID', $ActionID)
@@ -114,7 +114,7 @@ class ActedModel extends Gdn_Model {
     if($Content == Gdn_Cache::CACHEOP_FAILURE) {
 
       // Get matching Discussions
-      $Discussions = $this->_BaseSQL('Discussion')
+      $Discussions = $this->BaseSQL('Discussion')
                       ->Join('Reaction r', 'd.DiscussionID = r.ParentID')
                       ->Where('r.InsertUserID', $UserID)
                       ->Where('r.ActionID', $ActionID)
@@ -123,7 +123,7 @@ class ActedModel extends Gdn_Model {
                       ->Get()->Result(DATASET_TYPE_ARRAY);
 
       // Get matching Comments
-      $Comments = $this->_BaseSQL('Comment')
+      $Comments = $this->BaseSQL('Comment')
                       ->Join('Reaction r', 'c.CommentID = r.ParentID')
                       ->Where('r.InsertUserID', $UserID)
                       ->Where('r.ActionID', $ActionID)
@@ -168,7 +168,7 @@ class ActedModel extends Gdn_Model {
     if($Content == Gdn_Cache::CACHEOP_FAILURE) {
 
       // Get matching Discussions
-      $Discussions = $this->_BaseSQL('Discussion')
+      $Discussions = $this->BaseSQL('Discussion')
                       ->Join('Reaction r', 'd.DiscussionID = r.ParentID')
                       ->Where('r.ActionID', $ActionID)
                       ->Where('r.ParentType', 'discussion')
@@ -176,7 +176,7 @@ class ActedModel extends Gdn_Model {
                       ->Get()->Result(DATASET_TYPE_ARRAY);
 
       // Get matching Comments
-      $Comments = $this->_BaseSQL('Comment')
+      $Comments = $this->BaseSQL('Comment')
                       ->Join('Reaction r', 'c.CommentID = r.ParentID')
                       ->Where('r.ActionID', $ActionID)
                       ->Where('r.ParentType', 'comment')
@@ -217,13 +217,13 @@ class ActedModel extends Gdn_Model {
     $Content = Gdn::Cache()->Get($CacheKey);
 
     if($Content == Gdn_Cache::CACHEOP_FAILURE) {
-      $SQL = $this->_BaseSQL('Discussion');
+      $SQL = $this->BaseSQL('Discussion');
       if(!is_null($UserID)) {
         $SQL = $SQL->Where('d.InsertUserID', $UserID);
       }
       $Discussions = $SQL->Get()->Result(DATASET_TYPE_ARRAY);
 
-      $SQL = $this->_BaseSQL('Comment');
+      $SQL = $this->BaseSQL('Comment');
       if(!is_null($UserID)) {
         $SQL = $SQL->Where('c.InsertUserID', $UserID);
       }
