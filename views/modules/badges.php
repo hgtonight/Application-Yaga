@@ -10,7 +10,7 @@ foreach($this->Data as $Badge) {
                   $Badge['Photo'],
                   array('class' => 'ProfilePhoto ProfilePhotoSmall')
              ),
-          'badges/detail/' . $Badge['BadgeID'] . '/' . Gdn_Format::Url($Badge['Name']),
+          'yaga/badges/' . $Badge['BadgeID'] . '/' . Gdn_Format::Url($Badge['Name']),
           array('title' => $Badge['Name'])
       );
 }
