@@ -49,7 +49,7 @@ class BestController extends Gdn_Controller {
   public function Index($Page = 0) {
     list($Offset, $Limit) = $this->_TranslatePage($Page);    
     $this->Title(T('Yaga.BestContent.Recent'));
-    $this->_Content = $this->ActedModel->GetRecent('week', $Limit, $Offset);
+    $this->_Content = $this->ActedModel->GetRecent($Limit, $Offset);
     $this->_BuildPager($Offset, $Limit, '/best/%1$s/');
     $this->SetData('ActiveFilter', 'Recent');
     $this->Render('index');

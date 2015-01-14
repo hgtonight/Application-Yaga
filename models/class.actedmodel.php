@@ -250,30 +250,38 @@ class ActedModel extends Gdn_Model {
   }
 
   /**
-   * Returns a list of all recent scored posts ordered by highest score
+   * Returns a list of all recent scored posts ordered by date reacted
    * 
-   * @param string $Timespan strtotime compatible time
    * @param int $Limit
    * @param int $Offset
    * @return array
    */
-  public function GetRecent($Timespan = 'week', $Limit = NULL, $Offset = 0) {
-    $CacheKey = "yaga.best.last.{$Timespan}";
+  public function GetRecent($Limit = NULL, $Offset = 0) {
+    $CacheKey = 'yaga.best.recent';
     $Content = Gdn::Cache()->Get($CacheKey);
 
     if($Content == Gdn_Cache::CACHEOP_FAILURE) {
-      $TargetDate = date('Y-m-d H:i:s', strtotime("1 {$Timespan} ago"));
 
-      $SQL = $this->_BaseSQL('Discussion');
-      $Discussions = $SQL->Where('d.DateUpdated >', $TargetDate)->Get()->Result(DATASET_TYPE_ARRAY);
+      $Discussions = Gdn::SQL()->Select('d.*, r.DateInserted as ReactionDate')
+                ->From('Reaction r')
+                ->Where('ParentType', 'discussion')
+                ->Join('Discussion d', 'r.ParentID = d.DiscussionID')
+                ->OrderBy('r.DateInserted', 'DESC')
+                ->Get()
+                ->Result(DATASET_TYPE_ARRAY);
 
-      $SQL = $this->_BaseSQL('Comment');
-      $Comments = $SQL->Where('c.DateUpdated >', $TargetDate)->Get()->Result(DATASET_TYPE_ARRAY);
+      $Comments = Gdn::SQL()->Select('c.*, r.DateInserted as ReactionDate')
+                ->From('Reaction r')
+                ->Where('ParentType', 'comment')
+                ->Join('Comment c', 'r.ParentID = c.CommentID')
+                ->OrderBy('r.DateInserted', 'DESC')
+                ->Get()
+                ->Result(DATASET_TYPE_ARRAY);
 
       $this->JoinCategory($Comments);
 
       // Interleave
-      $Content = $this->Union('Score', array(
+      $Content = $this->Union('ReactionDate', array(
           'Discussion' => $Discussions,
           'Comment' => $Comments
       ));
