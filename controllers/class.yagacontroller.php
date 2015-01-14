@@ -98,6 +98,17 @@ class YagaController extends DashboardController {
     $this->AddModule($Module);
   }
   
+  public function Ranks() {
+    $this->FrontendStyle();
+    $this->AddCssFile('ranks.css');
+    $this->Title(T('Yaga.Ranks.All'));
+
+    // Get list of ranks from the model and pass to the view
+    $this->SetData('Ranks', Yaga::RankModel()->Get());
+    
+    $this->Render('ranks');
+  }
+  
   public function Badges($BadgeID = FALSE, $Slug = NULL) {
     $this->FrontendStyle();
     $this->AddCssFile('badges.css');
