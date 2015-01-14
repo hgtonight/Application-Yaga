@@ -75,7 +75,7 @@ if(!function_exists('RenderReactionRecord')) {
 
 }
 
-if(!function_exists('ActionRow')) {
+if(!function_exists('RenderActionRow')) {
   
   /**
    * Renders an action row used to construct the action admin screen
@@ -83,7 +83,7 @@ if(!function_exists('ActionRow')) {
    * @param stdClass $Action
    * @return string
    */
-  function ActionRow($Action) {
+  function RenderActionRow($Action) {
     return Wrap(
             Wrap(
                     Anchor(T('Edit'), 'action/edit/' . $Action->ActionID, array('class' => 'Popup SmallButton')) . Anchor(T('Delete'), 'action/delete/' . $Action->ActionID, array('class' => 'Popup SmallButton')), 'div', array('class' => 'Tools')) .
@@ -110,14 +110,15 @@ if(!function_exists('RenderPerkPermissionForm')) {
   function RenderPerkPermissionForm($Perm, $Label) {
     $Form = Gdn::Controller()->Form;
     $Fieldname = 'Perm' . $Perm;
-    echo '<li>';
-    echo $Form->Label($Label, $Fieldname);
-    echo $Form->Dropdown($Fieldname, array(
+    
+    $String = $Form->Label($Label, $Fieldname);
+    $String .= $Form->Dropdown($Fieldname, array(
         '' => T('Default'),
         'grant' => T('Grant'),
         'revoke' => T('Revoke')
     ));
-    echo '</li>';
+    
+    return $String;
   }
 }
 
@@ -143,10 +144,11 @@ if(!function_exists('RenderPerkConfigurationForm')) {
     $Options = $Options + array('' => T('Default'));
     $Form = Gdn::Controller()->Form;
     $Fieldname = 'Conf' . $Config;
-    echo '<li>';
-    echo $Form->Label($Label, $Fieldname);
-    echo $Form->Dropdown($Fieldname, $Options);
-    echo '</li>';
+    
+    $String = $Form->Label($Label, $Fieldname);
+    $String .= $Form->Dropdown($Fieldname, $Options);
+    
+    return $String;
   }
 }
 

@@ -59,8 +59,9 @@ echo $this->Form->Errors();
     echo $this->Form->Dropdown('Role', $this->Data('Roles'), array('IncludeNULL' => TRUE));
     ?>
   </li>
+  <li>
   <?php
-  RenderPerkConfigurationForm('Garden.EditContentTimeout', 'Yaga.Perks.EditTimeout', array('0' => T('Authors may never edit'),
+  echo RenderPerkConfigurationForm('Garden.EditContentTimeout', 'Yaga.Perks.EditTimeout', array('0' => T('Authors may never edit'),
                       '350' => sprintf(T('Authors may edit for %s'), T('5 minutes')), 
                       '900' => sprintf(T('Authors may edit for %s'), T('15 minutes')), 
                      '3600' => sprintf(T('Authors may edit for %s'), T('1 hour')),
@@ -69,17 +70,34 @@ echo $this->Form->Errors();
                    '604800' => sprintf(T('Authors may edit for %s'), T('1 week')),
                   '2592000' => sprintf(T('Authors may edit for %s'), T('1 month')),
                        '-1' => T('Authors may always edit')));
-  
-  RenderPerkPermissionForm('Garden.Curation.Manage', 'Yaga.Perks.Curation');
-  
-  RenderPerkPermissionForm('Plugins.Signatures.Edit', 'Yaga.Perks.Signatures');
-
-  RenderPerkPermissionForm('Plugins.Tagging.Add', 'Yaga.Perks.Tags');
-
-  RenderPerkConfigurationForm('Plugins.Emotify.FormatEmoticons', 'Yaga.Perks.Emoticons');
-
-  RenderPerkConfigurationForm('Garden.Format.MeActions', 'Yaga.Perks.MeActions');
-
+  ?>
+  </li>
+  <li>
+  <?php  
+    echo RenderPerkPermissionForm('Garden.Curation.Manage', 'Yaga.Perks.Curation');
+  ?>
+  </li>
+  <li>
+    <?php
+    echo RenderPerkPermissionForm('Plugins.Signatures.Edit', 'Yaga.Perks.Signatures');
+    ?>
+  </li>
+  <li>
+    <?php
+    echo RenderPerkPermissionForm('Plugins.Tagging.Add', 'Yaga.Perks.Tags');
+    ?>
+  </li>
+  <li>
+    <?php
+    echo RenderPerkConfigurationForm('Plugins.Emotify.FormatEmoticons', 'Yaga.Perks.Emoticons');
+    ?>
+  </li>
+  <li>
+    <?php
+    echo RenderPerkConfigurationForm('Garden.Format.MeActions', 'Yaga.Perks.MeActions');
+    ?>
+  </li>
+  <?php
   $this->FireEvent('PerkOptions');
 
   // Restore the prefix

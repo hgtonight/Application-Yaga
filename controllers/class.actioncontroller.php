@@ -92,7 +92,7 @@ class ActionController extends DashboardController {
       $NewID = $this->Form->Save();
       if($NewID) {
         $Action = $this->ActionModel->GetByID($NewID);
-        $ActionRow = ActionRow($Action);
+        $ActionRow = RenderActionRow($Action);
 
         if($Edit) {
           $this->JsonTarget('#ActionID_' . $this->Action->ActionID, $ActionRow, 'ReplaceWith');
