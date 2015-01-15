@@ -30,7 +30,7 @@ echo Wrap(Anchor(T('Yaga.Badge.Add'), 'badge/add', array('class' => 'SmallButton
 
       $BadgePhoto = Img($Badge->Photo, array('class' => 'BadgePhoto'));
 
-      $Row .= Wrap(Anchor($BadgePhoto, '/badges/detail/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name), array('title' => T('Yaga.Badge.DetailLink'))), 'td');
+      $Row .= Wrap(Anchor($BadgePhoto, '/yaga/badges/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name), array('title' => T('Yaga.Badge.DetailLink'))), 'td');
       $Row .= Wrap($Badge->Name, 'td');
       $Row .= Wrap($Badge->Description, 'td');
       $RuleName = T('Yaga.Rules.UnknownRule');
