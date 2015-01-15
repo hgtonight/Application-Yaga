@@ -250,6 +250,25 @@ class ActedModel extends Gdn_Model {
   }
 
   /**
+   * Return the count of reactions received by a user for distinct ParentIDs
+   *
+   * @param int $UserID
+   * @param int $ActionID
+   * @return int
+   */
+  public function GetUserCount($UserID, $ActionID) {
+    $Result = $this->SQL
+            ->Select('COUNT(DISTINCT ParentID)', '', 'Count')
+            ->From('Reaction')
+            ->Where('ActionID', $ActionID)
+            ->Where('ParentAuthorID', $UserID)
+            ->Get()
+            ->FirstRow();
+
+    return $Result === FALSE ? 0 : $Result->Count;
+  }
+
+  /**
    * Returns a list of all recent scored posts ordered by date reacted
    * 
    * @param int $Limit
