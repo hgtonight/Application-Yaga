@@ -101,7 +101,7 @@ class BadgeController extends DashboardController {
 
         // Save the uploaded image
         $Parts = $Upload->SaveAs($TmpImage, 'yaga' . DS . $ImageBaseName);
-        $RelativeUrl = StringBeginsWith($Parts['Url'], Gdn_Url::WebRoot(TRUE), TRUE, TRUE);
+        $RelativeUrl = StringBeginsWith($Parts['Url'], Gdn::Request()->AssetRoot(), TRUE, TRUE);
 
         $this->Form->SetFormValue('Photo', $RelativeUrl);
       }
