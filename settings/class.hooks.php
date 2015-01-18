@@ -541,12 +541,18 @@ class YagaHooks implements Gdn_IPlugin {
   }
 
   /**
-   * Insert JS and CSS files into the appropiate controllers
+   * Insert JS and CSS files into the appropiate controllers and fill the reaction cache
    * 
    * @param DiscussionController $Sender
    */
   public function DiscussionController_Render_Before($Sender) {
     $this->AddResources($Sender);
+    if (C('Yaga.Reactions.Enabled')) {
+      $CommentIDs = ConsolidateArrayValuesByKey($Sender->Data['Comments']->ResultArray(), 'CommentID');
+	  // set the DataSet type back to "object"
+      $Sender->Data['Comments']->DataSetType(DATASET_TYPE_OBJECT);
+      Yaga::ReactionModel()->Prefetch('comment', $CommentIDs);
+    }
   }
 
   /**
