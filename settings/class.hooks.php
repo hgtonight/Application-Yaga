@@ -549,7 +549,7 @@ class YagaHooks implements Gdn_IPlugin {
     $this->AddResources($Sender);
     if (C('Yaga.Reactions.Enabled')) {
       $CommentIDs = ConsolidateArrayValuesByKey($Sender->Data['Comments']->ResultArray(), 'CommentID');
-	  // set the DataSet type back to "object"
+      // set the DataSet type back to "object"
       $Sender->Data['Comments']->DataSetType(DATASET_TYPE_OBJECT);
       Yaga::ReactionModel()->Prefetch('comment', $CommentIDs);
     }
