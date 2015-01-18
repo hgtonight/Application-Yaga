@@ -50,9 +50,10 @@ class ActedModel extends Gdn_Model {
    * @param int $ActionID
    * @param int $Limit
    * @param int $Offset
+   * @param int &$TotalRecords
    * @return array
    */
-  public function Get($UserID, $ActionID, $Limit = NULL, $Offset = 0) {
+  public function Get($UserID, $ActionID, $Limit = NULL, $Offset = 0, &$TotalRecords = 0) {
     $CacheKey = "yaga.profile.reactions.{$UserID}.{$ActionID}";
     $Content = Gdn::Cache()->Get($CacheKey);
 
@@ -92,6 +93,7 @@ class ActedModel extends Gdn_Model {
     }
 
     $this->Security($Content);
+    $TotalRecords = count($Content);
     $this->Condense($Content, $Limit, $Offset);
 
     return $Content;
@@ -105,9 +107,10 @@ class ActedModel extends Gdn_Model {
    * @param int $ActionID
    * @param int $Limit
    * @param int $Offset
+   * @param int &$TotalRecords
    * @return array
    */
-  public function GetTaken($UserID, $ActionID, $Limit = NULL, $Offset = 0) {
+  public function GetTaken($UserID, $ActionID, $Limit = NULL, $Offset = 0, &$TotalRecords = 0) {
     $CacheKey = "yaga.profile.actions.{$UserID}.{$ActionID}";
     $Content = Gdn::Cache()->Get($CacheKey);
 
@@ -147,6 +150,7 @@ class ActedModel extends Gdn_Model {
     }
 
     $this->Security($Content);
+    $TotalRecords = count($Content);
     $this->Condense($Content, $Limit, $Offset);
 
     return $Content;
@@ -159,9 +163,10 @@ class ActedModel extends Gdn_Model {
    * @param int $ActionID
    * @param int $Limit
    * @param int $Offset
+   * @param int &$TotalRecords
    * @return array
    */
-  public function GetAction($ActionID, $Limit = NULL, $Offset = 0) {
+  public function GetAction($ActionID, $Limit = NULL, $Offset = 0, &$TotalRecords = 0) {
     $CacheKey = "yaga.best.actions.{$ActionID}";
     $Content = Gdn::Cache()->Get($CacheKey);
 
@@ -199,6 +204,7 @@ class ActedModel extends Gdn_Model {
     }
 
     $this->Security($Content);
+    $TotalRecords = count($Content);
     $this->Condense($Content, $Limit, $Offset);
 
     return $Content;
@@ -210,9 +216,10 @@ class ActedModel extends Gdn_Model {
    * @param int $UserID
    * @param int $Limit
    * @param int $Offset
+   * @param int &$TotalRecords
    * @return array
    */
-  public function GetBest($UserID = NULL, $Limit = NULL, $Offset = 0) {
+  public function GetBest($UserID = NULL, $Limit = NULL, $Offset = 0, &$TotalRecords = 0) {
     $CacheKey = "yaga.profile.best.{$UserID}";
     $Content = Gdn::Cache()->Get($CacheKey);
 
@@ -244,6 +251,7 @@ class ActedModel extends Gdn_Model {
     }
 
     $this->Security($Content);
+    $TotalRecords = count($Content);
     $this->Condense($Content, $Limit, $Offset);
 
     return $Content;
@@ -254,9 +262,10 @@ class ActedModel extends Gdn_Model {
    * 
    * @param int $Limit
    * @param int $Offset
+   * @param int &$TotalRecords
    * @return array
    */
-  public function GetRecent($Limit = NULL, $Offset = 0) {
+  public function GetRecent($Limit = NULL, $Offset = 0, &$TotalRecords = 0) {
     $CacheKey = 'yaga.best.recent';
     $Content = Gdn::Cache()->Get($CacheKey);
 
@@ -293,6 +302,7 @@ class ActedModel extends Gdn_Model {
     }
 
     $this->Security($Content);
+    $TotalRecords = count($Content);
     $this->Condense($Content, $Limit, $Offset);
 
     return $Content;
