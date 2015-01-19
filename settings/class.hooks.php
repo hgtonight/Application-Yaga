@@ -78,7 +78,7 @@ class YagaHooks implements Gdn_IPlugin {
       return FALSE;
     }
 
-    echo Wrap(Anchor(Sprite('SpBestOf') . ' ' . T('Yaga.BestContent'), '/best'), 'li', array('class' => $Sender->ControllerName == 'bestcontroller' ? 'Best Active' : 'Best'));
+    echo Wrap(Anchor(Sprite('SpBestOf', 'SpMod Sprite') . ' ' . T('Yaga.BestContent'), '/best'), 'li', array('class' => $Sender->ControllerName == 'bestcontroller' ? 'Best Active' : 'Best'));
   }
 
   /**
@@ -254,7 +254,7 @@ class YagaHooks implements Gdn_IPlugin {
    */
   public function ProfileController_AddProfileTabs_Handler($Sender) {
     if(is_object($Sender->User) && $Sender->User->UserID > 0) {
-      $Sender->AddProfileTab(Sprite('SpBestOf') . ' ' . T('Yaga.BestContent'), 'profile/best/' . $Sender->User->UserID . '/' . urlencode($Sender->User->Name), 'Best');
+      $Sender->AddProfileTab(Sprite('SpBestOf', 'SpMod Sprite') . ' ' . T('Yaga.BestContent'), 'profile/best/' . $Sender->User->UserID . '/' . urlencode($Sender->User->Name), 'Best');
     }
   }
 
@@ -333,7 +333,7 @@ class YagaHooks implements Gdn_IPlugin {
     if(Gdn::Session()->IsValid()) {
       if(C('Yaga.Badges.Enabled') && CheckPermission('Yaga.Badges.Add')) {
         $Sender->EventArguments['ProfileOptions'][] = array(
-            'Text' => Sprite('SpRibbon') . ' ' . T('Yaga.Badge.Award'),
+            'Text' => Sprite('SpBadge', 'SpMod Sprite') . ' ' . T('Yaga.Badge.Award'),
             'Url' => '/badge/award/' . $Sender->User->UserID,
             'CssClass' => 'Popup'
         );
@@ -341,7 +341,7 @@ class YagaHooks implements Gdn_IPlugin {
 
       if(C('Yaga.Ranks.Enabled') && CheckPermission('Yaga.Ranks.Add')) {
         $Sender->EventArguments['ProfileOptions'][] = array(
-            'Text' => Sprite('SpModeratorActivities') . ' ' . T('Yaga.Rank.Promote'),
+            'Text' => Sprite('SpMod') . ' ' . T('Yaga.Rank.Promote'),
             'Url' => '/rank/promote/' . $Sender->User->UserID,
             'CssClass' => 'Popup'
         );
@@ -546,6 +546,15 @@ class YagaHooks implements Gdn_IPlugin {
    * @param DiscussionController $Sender
    */
   public function DiscussionController_Render_Before($Sender) {
+    $this->AddResources($Sender);
+  }
+  
+  /**
+   * Insert JS and CSS files into the appropiate controllers
+   * 
+   * @param DiscussionsController $Sender
+   */
+  public function DiscussionsController_Render_Before($Sender) {
     $this->AddResources($Sender);
   }
 
