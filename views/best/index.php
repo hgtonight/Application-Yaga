@@ -1,7 +1,7 @@
 <?php if(!defined('APPLICATION')) exit();
 /* Copyright 2014 Zachary Doll */
 
-$Contents = $this->_Content;
+$Contents = $this->_Content->Content;
 
 echo '<ul class="DataList Compact BlogList">';
 foreach ($Contents as $Content) {

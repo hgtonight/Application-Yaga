@@ -165,7 +165,7 @@ class YagaHooks implements Gdn_IPlugin {
     $Model = Yaga::ActedModel();
     $Data = $Model->Get($Sender->User->UserID, $ActionID, $Limit, $Offset);
 
-    $Sender->SetData('Content', $Data);
+    $Sender->SetData('Content', $Data->Content);
 
     // Set the HandlerType back to normal on the profilecontroller so that it fetches it's own views
     $Sender->HandlerType = HANDLER_TYPE_NORMAL;
@@ -184,7 +184,7 @@ class YagaHooks implements Gdn_IPlugin {
     $Sender->Pager = $PagerFactory->GetPager('Pager', $Sender);
     $Sender->Pager->ClientID = 'Pager';
     $Sender->Pager->Configure(
-            $Offset, $Limit, $ReactionModel->GetUserCount($Sender->User->UserID, $ActionID), 'profile/reactions/' . $Sender->User->UserID . '/' . Gdn_Format::Url($Sender->User->Name) . '/' . $ActionID . '/%1$s/'
+            $Offset, $Limit, $Data->TotalRecords, 'profile/reactions/' . $Sender->User->UserID . '/' . Gdn_Format::Url($Sender->User->Name) . '/' . $ActionID . '/%1$s/'
     );
 
     // Render the ProfileController
@@ -224,7 +224,7 @@ class YagaHooks implements Gdn_IPlugin {
     $Model = Yaga::ActedModel();
     $Data = $Model->GetBest($Sender->User->UserID, $Limit, $Offset);
 
-    $Sender->SetData('Content', $Data);
+    $Sender->SetData('Content', $Data->Content);
 
     // Set the HandlerType back to normal on the profilecontroller so that it fetches it's own views
     $Sender->HandlerType = HANDLER_TYPE_NORMAL;

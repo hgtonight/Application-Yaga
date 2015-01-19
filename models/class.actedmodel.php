@@ -92,7 +92,7 @@ class ActedModel extends Gdn_Model {
     }
 
     $this->Security($Content);
-    $this->Condense($Content, $Limit, $Offset);
+    $this->CondenseAndPrep($Content, $Limit, $Offset);
 
     return $Content;
   }
@@ -147,7 +147,7 @@ class ActedModel extends Gdn_Model {
     }
 
     $this->Security($Content);
-    $this->Condense($Content, $Limit, $Offset);
+    $this->CondenseAndPrep($Content, $Limit, $Offset);
 
     return $Content;
   }
@@ -199,7 +199,7 @@ class ActedModel extends Gdn_Model {
     }
 
     $this->Security($Content);
-    $this->Condense($Content, $Limit, $Offset);
+    $this->CondenseAndPrep($Content, $Limit, $Offset);
 
     return $Content;
   }
@@ -244,7 +244,7 @@ class ActedModel extends Gdn_Model {
     }
 
     $this->Security($Content);
-    $this->Condense($Content, $Limit, $Offset);
+    $this->CondenseAndPrep($Content, $Limit, $Offset);
 
     return $Content;
   }
@@ -293,7 +293,7 @@ class ActedModel extends Gdn_Model {
     }
 
     $this->Security($Content);
-    $this->Condense($Content, $Limit, $Offset);
+    $this->CondenseAndPrep($Content, $Limit, $Offset);
 
     return $Content;
   }
@@ -433,8 +433,8 @@ class ActedModel extends Gdn_Model {
    * @param int $Limit
    * @param int $Offset
    */
-  protected function Condense(&$Content, $Limit, $Offset) {
-    $Content = array_slice($Content, $Offset, $Limit);
+  protected function CondenseAndPrep(&$Content, $Limit, $Offset) {
+    $Content = (object) array('TotalRecords' => count($Content), 'Content' => array_slice($Content, $Offset, $Limit));
   }
 
 }
