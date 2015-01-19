@@ -162,7 +162,7 @@ class YagaHooks implements Gdn_IPlugin {
     $Sender->AddDefinition('ExpandText', T('(more)'));
     $Sender->AddDefinition('CollapseText', T('(less)'));
 
-    $Model = new ActedModel();
+    $Model = Yaga::ActedModel();
     $Data = $Model->Get($Sender->User->UserID, $ActionID, $Limit, $Offset);
 
     $Sender->SetData('Content', $Data);
@@ -221,7 +221,7 @@ class YagaHooks implements Gdn_IPlugin {
     $Sender->AddDefinition('ExpandText', T('(more)'));
     $Sender->AddDefinition('CollapseText', T('(less)'));
 
-    $Model = new ActedModel();
+    $Model = Yaga::ActedModel();
     $Data = $Model->GetBest($Sender->User->UserID, $Limit, $Offset);
 
     $Sender->SetData('Content', $Data);

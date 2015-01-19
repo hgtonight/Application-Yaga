@@ -10,6 +10,14 @@
 class Yaga {
 
   /**
+   * A single copy of ActedModel available to plugins and hooks files.
+   * 
+   * @since 1.1
+   * @var ActedModel
+   */
+  protected static $_ActedModel = NULL;
+  
+  /**
    * A single copy of ActionModel available to plugins and hooks files.
    * 
    * @var ActionModel
@@ -44,6 +52,18 @@ class Yaga {
    */
   protected static $_BadgeAwardModel = NULL;
 
+  /**
+   * Get a reference to the acted model
+   * @since 1.1
+   * @return ActedModel
+   */
+  public static function ActedModel() {
+      if (is_null(self::$_ActedModel)) {
+         self::$_ActedModel = new ActedModel();
+      }
+      return self::$_ActedModel;
+   }
+  
   /**
    * Get a reference to the action model
    * @return ActionModel
