@@ -91,16 +91,16 @@ class BadgeController extends DashboardController {
     }
     else {
       // Handle the photo upload
-      $Upload = new Gdn_Upload();
+      $Upload = new Gdn_UploadImage();
       $TmpImage = $Upload->ValidateUpload('PhotoUpload', FALSE);
 
       if($TmpImage) {
         // Generate the target image name
-        $TargetImage = $Upload->GenerateTargetName(PATH_UPLOADS);
+        $TargetImage = $Upload->GenerateTargetName(PATH_UPLOADS, FALSE);
         $ImageBaseName = pathinfo($TargetImage, PATHINFO_BASENAME);
 
         // Save the uploaded image
-        $Parts = $Upload->SaveAs($TmpImage, 'yaga' . DS . $ImageBaseName);
+        $Parts = $Upload->SaveImageAs($TmpImage, 'yaga' . DS . $ImageBaseName);
         $RelativeUrl = StringBeginsWith($Parts['Url'], Gdn_Url::WebRoot(TRUE), TRUE, TRUE);
 
         $this->Form->SetFormValue('Photo', $RelativeUrl);
