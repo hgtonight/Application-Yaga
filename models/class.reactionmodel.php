@@ -167,6 +167,9 @@ class ReactionModel extends Gdn_Model {
     $NewAction = $ActionModel->GetByID($ActionID);
     $Points = $Score = $NewAction->AwardValue;
     $CurrentReaction = $this->GetByUser($ID, $Type, $UserID);
+    $EventArgs['CurrentReaction'] = $CurrentReaction;
+    $this->FireEvent('BeforeReactionSave', $EventArgs);
+
     if($CurrentReaction) {
       $OldAction = $ActionModel->GetByID($CurrentReaction->ActionID);
 
