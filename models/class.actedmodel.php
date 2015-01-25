@@ -26,14 +26,14 @@ class ActedModel extends Gdn_Model {
   private function BaseSQL($Table = 'Discussion') {
     switch($Table) {
       case 'Comment':
-        $SQL = Gdn::SQL()->Select('c.*')
+        $SQL = Gdn::SQL()->Select('c.Score, c.CommentID, c.InsertUserID, c.DiscussionID, c.DateInserted')
                 ->From('Comment c')
                 ->Where('c.Score is not null')
                 ->OrderBy('c.Score', 'DESC');
         break;
       default:
       case 'Discussion':
-        $SQL = Gdn::SQL()->Select('d.*')
+        $SQL = Gdn::SQL()->Select('d.Score, d.DiscussionID, d.InsertUserID, d.CategoryID, d.DateInserted')
                 ->From('Discussion d')
                 ->Where('d.Score is not null')
                 ->OrderBy('d.Score', 'DESC');
@@ -83,7 +83,6 @@ class ActedModel extends Gdn_Model {
           'Discussion' => $Discussions,
           'Comment' => $Comments
       ));
-      $this->Prepare($Content);
 
       // Add result to cache
       Gdn::Cache()->Store($CacheKey, $Content, array(
@@ -93,6 +92,7 @@ class ActedModel extends Gdn_Model {
 
     $this->Security($Content);
     $this->CondenseAndPrep($Content, $Limit, $Offset);
+    $this->Prepare($Content->Content);
 
     return $Content;
   }
@@ -138,7 +138,6 @@ class ActedModel extends Gdn_Model {
           'Discussion' => $Discussions,
           'Comment' => $Comments
       ));
-      $this->Prepare($Content);
 
       // Add result to cache
       Gdn::Cache()->Store($CacheKey, $Content, array(
@@ -148,6 +147,7 @@ class ActedModel extends Gdn_Model {
 
     $this->Security($Content);
     $this->CondenseAndPrep($Content, $Limit, $Offset);
+    $this->Prepare($Content->Content);
 
     return $Content;
   }
@@ -190,7 +190,6 @@ class ActedModel extends Gdn_Model {
           'Discussion' => $Discussions,
           'Comment' => $Comments
       ));
-      $this->Prepare($Content);
 
       // Add result to cache
       Gdn::Cache()->Store($CacheKey, $Content, array(
@@ -200,6 +199,7 @@ class ActedModel extends Gdn_Model {
 
     $this->Security($Content);
     $this->CondenseAndPrep($Content, $Limit, $Offset);
+    $this->Prepare($Content->Content);
 
     return $Content;
   }
@@ -236,7 +236,6 @@ class ActedModel extends Gdn_Model {
           'Discussion' => $Discussions,
           'Comment' => $Comments
       ));
-      $this->Prepare($Content);
 
       Gdn::Cache()->Store($CacheKey, $Content, array(
           Gdn_Cache::FEATURE_EXPIRY => $this->_Expiry
@@ -245,6 +244,7 @@ class ActedModel extends Gdn_Model {
 
     $this->Security($Content);
     $this->CondenseAndPrep($Content, $Limit, $Offset);
+    $this->Prepare($Content->Content);
 
     return $Content;
   }
@@ -285,7 +285,6 @@ class ActedModel extends Gdn_Model {
           'Discussion' => $Discussions,
           'Comment' => $Comments
       ));
-      $this->Prepare($Content);
 
       Gdn::Cache()->Store($CacheKey, $Content, array(
           Gdn_Cache::FEATURE_EXPIRY => $this->_Expiry
@@ -294,6 +293,7 @@ class ActedModel extends Gdn_Model {
 
     $this->Security($Content);
     $this->CondenseAndPrep($Content, $Limit, $Offset);
+    $this->Prepare($Content->Content);
 
     return $Content;
   }
@@ -364,12 +364,13 @@ class ActedModel extends Gdn_Model {
   protected function Prepare(&$Content) {
 
     foreach($Content as &$ContentItem) {
-      $ContentType = GetValue('ItemType', $ContentItem);
+      $ContentType = strtolower(GetValue('ItemType', $ContentItem));
+      $ContentItem = array_merge($ContentItem, GetRecord($ContentType, $ContentItem[ucfirst($ContentType) . 'ID']));
 
       $Replacement = array();
       $Fields = array('DiscussionID', 'CategoryID', 'DateInserted', 'DateUpdated', 'InsertUserID', 'Body', 'Format', 'ItemType');
 
-      switch(strtolower($ContentType)) {
+      switch($ContentType) {
         case 'comment':
           $Fields = array_merge($Fields, array('CommentID'));
 
