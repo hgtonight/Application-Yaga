@@ -262,7 +262,7 @@ class ActedModel extends Gdn_Model {
 
     if($Content == Gdn_Cache::CACHEOP_FAILURE) {
 
-      $Discussions = Gdn::SQL()->Select('d.*, r.DateInserted as ReactionDate')
+      $Discussions = Gdn::SQL()->Select('d.DiscussionID, d.InsertUserID, d.CategoryID, r.DateInserted as ReactionDate')
                 ->From('Reaction r')
                 ->Where('ParentType', 'discussion')
                 ->Join('Discussion d', 'r.ParentID = d.DiscussionID')
@@ -270,7 +270,7 @@ class ActedModel extends Gdn_Model {
                 ->Get()
                 ->Result(DATASET_TYPE_ARRAY);
 
-      $Comments = Gdn::SQL()->Select('c.*, r.DateInserted as ReactionDate')
+      $Comments = Gdn::SQL()->Select('c.CommentID, c.InsertUserID, c.DiscussionID, r.DateInserted as ReactionDate')
                 ->From('Reaction r')
                 ->Where('ParentType', 'comment')
                 ->Join('Comment c', 'r.ParentID = c.CommentID')
@@ -365,7 +365,9 @@ class ActedModel extends Gdn_Model {
 
     foreach($Content as &$ContentItem) {
       $ContentType = strtolower(GetValue('ItemType', $ContentItem));
-      $ContentItem = array_merge($ContentItem, GetRecord($ContentType, $ContentItem[ucfirst($ContentType) . 'ID']));
+      $ItemID = $ContentItem[ucfirst($ContentType) . 'ID'];
+
+      $ContentItem = array_merge($ContentItem, $this->GetRecord($ContentType, $ItemID));
 
       $Replacement = array();
       $Fields = array('DiscussionID', 'CategoryID', 'DateInserted', 'DateUpdated', 'InsertUserID', 'Body', 'Format', 'ItemType');
@@ -436,6 +438,17 @@ class ActedModel extends Gdn_Model {
    */
   protected function CondenseAndPrep(&$Content, $Limit, $Offset) {
     $Content = (object) array('TotalRecords' => count($Content), 'Content' => array_slice($Content, $Offset, $Limit));
+  }
+
+  /**
+   * Wrapper for GetRecord()
+   *
+   * @param string $RecordType
+   * @param int $ID
+   * @return array
+   */
+  protected function GetRecord($RecordType, $ID) {
+    return GetRecord($RecordType, $ID);
   }
 
 }
