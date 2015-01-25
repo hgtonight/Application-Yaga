@@ -311,7 +311,7 @@ class ActedModel extends Gdn_Model {
     }
     $DiscussionIDs = array_keys($DiscussionIDs);
 
-    $Discussions = Gdn::SQL()->Select('d.*')
+    $Discussions = Gdn::SQL()->Select('d.DiscussionID, d.CategoryID, d.Name')
                     ->From('Discussion d')
                     ->WhereIn('DiscussionID', $DiscussionIDs)
                     ->Get()->Result(DATASET_TYPE_ARRAY);
