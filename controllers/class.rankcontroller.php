@@ -51,7 +51,7 @@ class RankController extends DashboardController {
 
       if($TmpImage) {
         // Generate the target image name
-        $TargetImage = $Upload->GenerateTargetName(PATH_UPLOADS);
+        $TargetImage = $Upload->GenerateTargetName(PATH_UPLOADS, FALSE);
         $ImageBaseName = pathinfo($TargetImage, PATHINFO_BASENAME);
 
         // Save the uploaded image
