@@ -96,6 +96,8 @@ class BadgeModel extends Gdn_Model {
             ->Set('Enabled', $Enable)
             ->Where('BadgeID', $BadgeID)
             ->Put();
+    $this->EventArguments['Enable'] = $Enable;
+    $this->FireEvent('BadgeEnable');
   }
 
   /**
