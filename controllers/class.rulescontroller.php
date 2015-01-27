@@ -50,6 +50,7 @@ class RulesController extends Gdn_Controller {
       $Model->FireAs = 'Yaga';
       $Model->FireEvent('AfterGetRules');
       
+      asort($TempRules);
       if(empty($TempRules)) {
         $Rules = serialize(FALSE);
       }
