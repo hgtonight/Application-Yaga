@@ -56,7 +56,7 @@ if(!function_exists('RenderReactionRecord')) {
     
     foreach($Reactions as $i => $Reaction) {
       // Limit the record if there are a lot of reactions
-      if($i <= $Limit || $Limit <= 0) {
+      if($i < $Limit || $Limit <= 0) {
         $User = Gdn::UserModel()->GetID($Reaction->UserID);
         $DateTitle = sprintf(T('Yaga.Reactions.RecordFormat'), $User->Name, $Reaction->Name, Gdn_Format::Date($Reaction->DateInserted, '%B %e, %Y'));
         $String = UserPhoto($User, array('Size' => 'Small', 'title' => $DateTitle));
@@ -65,7 +65,7 @@ if(!function_exists('RenderReactionRecord')) {
         $RecordsString .= Wrap($String, 'span', $Wrapttributes);
       }
       // Display the 'and x more' message if there is a limit
-      if($Limit > 0 && $i >= $ReactionCount && $ReactionCount > $Limit) {
+      if($Limit > 0 && $i == $Limit && $ReactionCount > $Limit) {
         $RecordsString .= Plural($ReactionCount - $Limit, 'Yaga.Reactions.RecordLimit.Single', 'Yaga.Reactions.RecordLimit.Plural');
       }
     }
