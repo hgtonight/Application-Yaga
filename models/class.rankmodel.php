@@ -176,7 +176,7 @@ class RankModel extends Gdn_Model {
    */
   public function Delete($RankID) {
     $Rank = $this->GetByID($RankID);
-    if(!$Rank) {
+    if($Rank) {
       $this->SQL->Delete('Rank', array('RankID' => $RankID));
       return TRUE;
     }
