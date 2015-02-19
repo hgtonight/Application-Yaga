@@ -126,7 +126,7 @@ class RankModel extends Gdn_Model {
       }
     }
     
-    return self::$_Perks[$RankID];
+    return (array_key_exists($RankID, self::$_Perks)) ? self::$_Perks[$RankID] : array();
   }
   
   /**
