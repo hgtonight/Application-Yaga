@@ -75,7 +75,7 @@ class ReactionModel extends Gdn_Model {
     if (array_key_exists($Type . $ID, self::$_Reactions)) {
       return self::$_Reactions[$Type . $ID];
     }
-    else if (in_array($Type, array('discussion', 'comment', 'activity')) && $ID > 0) {
+    else {
       $Result = $this->SQL
               ->Select('a.*, r.InsertUserID as UserID, r.DateInserted')
               ->From('Action a')
@@ -87,9 +87,6 @@ class ReactionModel extends Gdn_Model {
               ->Result();
       self::$_Reactions[$Type . $ID] = $Result;
       return $Result;
-    }
-    else {
-      return NULL;
     }
   }
 
