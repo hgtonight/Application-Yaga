@@ -15,10 +15,10 @@
   max-width: 300px;
 }
 
-.Yaga .InfoMessage,
-.Yaga .AlertMessage,
-.Yaga .CasualMessage,
-.Yaga .WarningMessage {
+.Yaga.Badge .InfoMessage,
+.Yaga.Badge .AlertMessage,
+.Yaga.Badge .CasualMessage,
+.Yaga.Badge .WarningMessage {
   width: 240px;
   padding: 10px;
 }
