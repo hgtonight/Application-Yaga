@@ -490,12 +490,15 @@ class YagaHooks implements Gdn_IPlugin {
       return;
     }
 
-    $TempPerms = unserialize($User->Permissions);
+    if(!is_array($TempPerms = $User->Permissions))
+        return;
+
     if(!in_array($Permission, $TempPerms)) {
       $TempPerms[] = $Permission;
-      $User->Permissions = serialize($TempPerms);
+      $User->Permissions = $TempPerms;
     }
   }
+
 
   /**
    * Removes the specified permission from a user, regardless of current role.
@@ -510,13 +513,16 @@ class YagaHooks implements Gdn_IPlugin {
       return;
     }
 
-    $TempPerms = unserialize($User->Permissions);
+    if(!is_array($TempPerms = $User->Permissions))
+        return;
+
     $Key = array_search($Permission, $TempPerms);
     if($Key) {
       unset($TempPerms[$Key]);
-      $User->Permissions = serialize($TempPerms);
+      $User->Permissions = $TempPerms;
     }
   }
+
 
   /**
    * Apply custom configuration from rank perks in memory only.
