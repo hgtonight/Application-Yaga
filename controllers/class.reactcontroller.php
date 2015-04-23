@@ -49,25 +49,23 @@ class ReactController extends Gdn_Controller {
       throw PermissionException();
     }
 
-    switch($Type) {
-      case 'discussion':
-        $Model = new DiscussionModel();
-        $AnchorID = '#Discussion_';
-        break;
-      case 'comment':
-        $Model = new CommentModel();
-        $AnchorID = '#Comment_';
-        break;
-      case 'activity':
-        $Model = new ActivityModel();
-        $AnchorID = '#Activity_';
-        break;
-      default:
-        throw new Gdn_UserException(T('Yaga.Action.InvalidTargetType'));
-        break;
-    }
+    $Item = null;
+    $AnchorID = '#' . ucfirst($Type) . '_';
+    $ItemOwnerID = 0;
 
-    $Item = $Model->GetID($ID);
+    if(in_array($Type, array('discussion', 'comment', 'activity'))) {
+      $Item = GetRecord($Type, $ID);
+    }
+    else {
+      $this->EventArguments = array(
+        'TargetType' => $Type,
+        'TargetID' => $ID,
+        'Item' => &$Item,
+        'AnchorID' => &$AnchorID,
+        'ItemOwnerID' => &$ItemOwnerID
+      );
+      $this->FireEvent('UnknownType');
+    }
 
     if($Item) {
       $Anchor = $AnchorID . $ID;
@@ -81,13 +79,12 @@ class ReactController extends Gdn_Controller {
     switch($Type) {
       case 'comment':
       case 'discussion':
-        $ItemOwnerID = $Item->InsertUserID;
+        $ItemOwnerID = $Item['InsertUserID'];
         break;
       case 'activity':
         $ItemOwnerID = $Item['RegardingUserID'];
         break;
       default:
-        throw new Gdn_UserException(T('Yaga.Action.InvalidTargetType'));
         break;
     }
 
