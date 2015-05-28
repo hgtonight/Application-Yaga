@@ -53,18 +53,27 @@ class ReactController extends Gdn_Controller {
     $AnchorID = '#' . ucfirst($Type) . '_';
     $ItemOwnerID = 0;
 
-    if(in_array($Type, array('discussion', 'comment', 'activity'))) {
+    if(in_array($Type, array('discussion', 'comment'))) {
       $Item = GetRecord($Type, $ID);
+    }
+    else if($Type == 'activity') {
+      $Model = new ActivityModel();
+      $Item = $Model->GetID($ID, DATASET_TYPE_ARRAY);
     }
     else {
       $this->EventArguments = array(
+        'TypeFound' => FALSE,
         'TargetType' => $Type,
         'TargetID' => $ID,
         'Item' => &$Item,
         'AnchorID' => &$AnchorID,
         'ItemOwnerID' => &$ItemOwnerID
       );
-      $this->FireEvent('UnknownType');
+      $this->FireEvent('CustomType');
+      
+      if(!$this->EventArguments['TypeFound']) {
+        throw new Gdn_UserException(T('Yaga.Action.InvalidTargetType'));
+      }
     }
 
     if($Item) {
