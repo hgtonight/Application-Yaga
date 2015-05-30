@@ -223,6 +223,10 @@ class ReactionModel extends Gdn_Model {
    * @param array $IDs
    */
   public function Prefetch($Type, $IDs) {
+    if (!is_array($IDs)) {
+        $IDs = (array)$IDs;
+    }
+    
     if (in_array($Type, array('discussion', 'comment', 'activity')) && !empty($IDs)) {
       $Result = $this->SQL
         ->Select('a.*, r.InsertUserID as UserID, r.DateInserted, r.ParentID')
@@ -237,10 +241,16 @@ class ReactionModel extends Gdn_Model {
       foreach ($IDs as $ID) {
         self::$_Reactions[$Type . $ID] = array();
       }
+      
+      $UserIDs = array();
       // fill the cache
       foreach ($Result as $Reaction) {
+        $UserIDs[] = $Reaction->UserID;
         self::$_Reactions[$Type . $Reaction->ParentID][] = $Reaction;
       }
+
+      // Prime the user cache
+      Gdn::UserModel()->GetIDs($UserIDs);
     }
   }
 
