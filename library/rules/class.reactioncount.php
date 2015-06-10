@@ -45,14 +45,8 @@ class ReactionCount implements YagaRule{
 
   public function Validate($Criteria, $Form) {
     $Validation = new Gdn_Validation();
-    $Validation->ApplyRules(array(
-        array(
-          'Name' => 'Target', 'Validation' => array('Required', 'Integer')
-        ),
-        array(
-          'Name' => 'ActionID', 'Validation' => array('Required', 'Integer')
-        )
-    ));
+    $Validation->ApplyRule('Target', array('Required', 'Integer'));
+    $Validation->ApplyRule('ActionID', array('Required', 'Integer'));
     $Validation->Validate($Criteria);
     $Form->SetValidationResults($Validation->Results());
   }

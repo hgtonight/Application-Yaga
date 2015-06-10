@@ -32,11 +32,7 @@ class DiscussionPageCount implements YagaRule{
 
   public function Validate($Criteria, $Form) {
     $Validation = new Gdn_Validation();
-    $Validation->ApplyRules(array(
-        array(
-          'Name' => 'Pages', 'Validation' => array('Required', 'Integer')
-        )
-    ));
+    $Validation->ApplyRule('Pages', array('Required', 'Integer'));
     $Validation->Validate($Criteria);
     $Form->SetValidationResults($Validation->Results());
   }

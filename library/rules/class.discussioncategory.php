@@ -27,11 +27,7 @@ class DiscussionCategory implements YagaRule {
 
   public function Validate($Criteria, $Form) {
     $Validation = new Gdn_Validation();
-    $Validation->ApplyRules(array(
-        array(
-            'Name' => 'CategoryID', 'Validation' => array('Required', 'Integer')
-        ),
-    ));
+    $Validation->ApplyRule('CategoryID', array('Required', 'Integer'));
     $Validation->Validate($Criteria);
     $Form->SetValidationResults($Validation->Results());
   }

@@ -29,11 +29,7 @@ class DiscussionBodyLength implements YagaRule{
 
   public function Validate($Criteria, $Form) {
     $Validation = new Gdn_Validation();
-    $Validation->ApplyRules(array(
-        array(
-          'Name' => 'Length', 'Validation' => array('Required', 'Integer')
-        )
-    ));
+    $Validation->ApplyRule('Length', array('Required', 'Integer'));
     $Validation->Validate($Criteria);
     $Form->SetValidationResults($Validation->Results());
   }
