@@ -47,17 +47,9 @@ class CommentMarathon implements YagaRule {
 
   public function Validate($Criteria, $Form) {
     $Validation = new Gdn_Validation();
-    $Validation->ApplyRules(array(
-        array(
-          'Name' => 'Target', 'Validation' => array('Required', 'Integer')
-        ),
-        array(
-          'Name' => 'Duration', 'Validation' => array('Required', 'Integer')
-        ),
-        array(
-          'Name' => 'Period', 'Validation' => 'Required'
-        )
-    ));
+    $Validation->ApplyRule('Target', array('Required', 'Integer'));
+    $Validation->ApplyRule('Duration', array('Required', 'Integer'));
+    $Validation->ApplyRule('Period', 'Required');
     $Validation->Validate($Criteria);
     $Form->SetValidationResults($Validation->Results());
   }

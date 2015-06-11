@@ -34,11 +34,7 @@ class SocialConnection implements YagaRule{
 
   public function Validate($Criteria, $Form) {
     $Validation = new Gdn_Validation();
-    $Validation->ApplyRules(array(
-        array(
-          'Name' => 'SocialNetwork', 'Validation' => array('Required')
-        )
-    ));
+    $Validation->ApplyRule('SocialNetwork', 'Required');
     $Validation->Validate($Criteria);
     $Form->SetValidationResults($Validation->Results());
   }
