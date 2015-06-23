@@ -78,11 +78,10 @@ class ActedModel extends Gdn_Model {
 
       $this->JoinCategory($Comments);
 
-      $this->EventArguments['Method'] = 'get';
       $this->EventArguments['UserID'] = $UserID;
       $this->EventArguments['ActionID'] = $ActionID;
       $this->EventArguments['CustomSections'] = array();
-      $this->FireEvent('Content');
+      $this->FireEvent('GetCustom');
 
       // Interleave
       $Content = $this->Union('DateInserted', array_merge(array(
@@ -139,11 +138,10 @@ class ActedModel extends Gdn_Model {
 
       $this->JoinCategory($Comments);
 
-      $this->EventArguments['Method'] = 'gettaken';
       $this->EventArguments['UserID'] = $UserID;
       $this->EventArguments['ActionID'] = $ActionID;
       $this->EventArguments['CustomSections'] = array();
-      $this->FireEvent('Content');
+      $this->FireEvent('GetCustomTaken');
 
       // Interleave
       $Content = $this->Union('DateInserted', array_merge(array(
@@ -197,10 +195,9 @@ class ActedModel extends Gdn_Model {
 
       $this->JoinCategory($Comments);
 
-      $this->EventArguments['Method'] = 'getaction';
       $this->EventArguments['ActionID'] = $ActionID;
       $this->EventArguments['CustomSections'] = array();
-      $this->FireEvent('Content');
+      $this->FireEvent('GetCustomAction');
 
       // Interleave
       $Content = $this->Union('DateInserted', array_merge(array(
@@ -248,10 +245,9 @@ class ActedModel extends Gdn_Model {
 
       $this->JoinCategory($Comments);
 
-      $this->EventArguments['Method'] = 'getbest';
       $this->EventArguments['UserID'] = $UserID;
       $this->EventArguments['CustomSections'] = array();
-      $this->FireEvent('Content');
+      $this->FireEvent('GetCustomBest');
 
       // Interleave
       $Content = $this->Union('Score', array_merge(array(
@@ -302,9 +298,8 @@ class ActedModel extends Gdn_Model {
 
       $this->JoinCategory($Comments);
 
-      $this->EventArguments['Method'] = 'getrecent';
       $this->EventArguments['CustomSections'] = array();
-      $this->FireEvent('Content');
+      $this->FireEvent('GetCustomRecent');
 
       // Interleave
       $Content = $this->Union('ReactionDate', array_merge(array(
@@ -484,7 +479,7 @@ class ActedModel extends Gdn_Model {
       $this->EventArguments['Type'] = $RecordType;
       $this->EventArguments['ID'] = $ID;
       $this->EventArguments['Record'] = false;
-      $this->FireEvent('UnknownRecordType');
+      $this->FireEvent('GetCustomRecord');
       return $this->EventArguments['Record'];
     }
   }
