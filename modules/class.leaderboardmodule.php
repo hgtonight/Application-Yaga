@@ -73,6 +73,7 @@ class LeaderBoardModule extends Gdn_Module {
             ->Select('up.Points as YagaPoints, u.*')
             ->From('User u')
             ->Join('UserPoints up', 'u.UserID = up.UserID')
+            ->Where('u.Banned', 0)
             ->Where('up.SlotType', $slot)
             ->Where('up.TimeSlot', gmdate('Y-m-d', Gdn_Statistics::TimeSlotStamp($slot)))
             ->Where('up.Source', 'Total')
