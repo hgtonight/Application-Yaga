@@ -40,7 +40,7 @@ class SocialConnection implements YagaRule{
   }
 
   public function Hooks() {
-    return array('Base_AfterConnection');
+    return array('base_afterConnection');
   }
 
   public function Description() {

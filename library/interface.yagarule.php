@@ -23,8 +23,8 @@ interface YagaRule {
   public function Award($Sender, $User, $Criteria);
 
   /**
-   * This determines what hook the rule should be checked on.
-   * @return string The hook name to fire our calculations on
+   * This determines what hook(s) the rule should be checked on.
+   * @return array The hook name(s) in lower case to fire our calculations on
    */
   public function Hooks();
 

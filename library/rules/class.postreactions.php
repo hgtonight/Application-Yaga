@@ -78,7 +78,7 @@ class PostReactions implements YagaRule {
   }
 
   public function Hooks() {
-    return array('ReactionModel_AfterReactionSave');
+    return array('reactionModel_afterReactionSave');
   }
 
   public function Description() {

@@ -38,7 +38,7 @@ class DiscussionPageCount implements YagaRule{
   }
 
   public function Hooks() {
-    return array('CommentModel_BeforeNotification');
+    return array('commentModel_beforeNotification');
   }
 
   public function Description() {

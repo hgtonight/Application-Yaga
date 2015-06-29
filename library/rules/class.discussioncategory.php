@@ -33,7 +33,7 @@ class DiscussionCategory implements YagaRule {
   }
 
   public function Hooks() {
-    return array('DiscussionModel_AfterSaveDiscussion');
+    return array('discussionModel_afterSaveDiscussion');
   }
 
   public function Description() {

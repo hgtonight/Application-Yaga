@@ -61,7 +61,7 @@ class AwardCombo implements YagaRule {
   }
 
   public function Hooks() {
-    return array('BadgeAwardModel_AfterBadgeAward');
+    return array('badgeAwardModel_afterBadgeAward');
   }
 
   public function Description() {

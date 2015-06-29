@@ -37,7 +37,7 @@ class CakeDayPost implements YagaRule {
   }
 
   public function Hooks() {
-    return array('DiscussionModel_AfterSaveDiscussion', 'CommentModel_AfterSaveComment', 'ActivityModel_BeforeSaveComment');
+    return array('discussionModel_afterSaveDiscussion', 'commentModel_afterSaveComment', 'activityModel_beforeSaveComment');
   }
 
   public function Description() {
