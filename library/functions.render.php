@@ -141,7 +141,7 @@ if(!function_exists('RenderPerkConfigurationForm')) {
       );
     }
     // Add a default option
-    $Options = $Options + array('' => T('Default'));
+    $Options = array('' => T('Default')) + $Options;
     $Form = Gdn::Controller()->Form;
     $Fieldname = 'Conf' . $Config;
     
