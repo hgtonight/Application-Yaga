@@ -45,7 +45,7 @@ class ActedModel extends Gdn_Model {
   /**
    * Returns a list of all posts by a specific user that has received at least
    * one of the specified actions.
-   * 
+   *
    * @param int $UserID
    * @param int $ActionID
    * @param int $Limit
@@ -78,11 +78,16 @@ class ActedModel extends Gdn_Model {
 
       $this->JoinCategory($Comments);
 
+      $this->EventArguments['UserID'] = $UserID;
+      $this->EventArguments['ActionID'] = $ActionID;
+      $this->EventArguments['CustomSections'] = array();
+      $this->FireEvent('GetCustom');
+
       // Interleave
-      $Content = $this->Union('DateInserted', array(
+      $Content = $this->Union('DateInserted', array_merge(array(
           'Discussion' => $Discussions,
           'Comment' => $Comments
-      ));
+      ), $this->EventArguments['CustomSections']));
 
       // Add result to cache
       Gdn::Cache()->Store($CacheKey, $Content, array(
@@ -96,7 +101,7 @@ class ActedModel extends Gdn_Model {
 
     return $Content;
   }
-  
+
   /**
    * Returns a list of all posts of which a specific user has taken the
    * specified action.
@@ -133,11 +138,16 @@ class ActedModel extends Gdn_Model {
 
       $this->JoinCategory($Comments);
 
+      $this->EventArguments['UserID'] = $UserID;
+      $this->EventArguments['ActionID'] = $ActionID;
+      $this->EventArguments['CustomSections'] = array();
+      $this->FireEvent('GetCustomTaken');
+
       // Interleave
-      $Content = $this->Union('DateInserted', array(
+      $Content = $this->Union('DateInserted', array_merge(array(
           'Discussion' => $Discussions,
           'Comment' => $Comments
-      ));
+      ), $this->EventArguments['CustomSections']));
 
       // Add result to cache
       Gdn::Cache()->Store($CacheKey, $Content, array(
@@ -155,7 +165,7 @@ class ActedModel extends Gdn_Model {
   /**
    * Returns a list of all posts that has received at least one of the
    * specified actions.
-   * 
+   *
    * @param int $ActionID
    * @param int $Limit
    * @param int $Offset
@@ -185,11 +195,15 @@ class ActedModel extends Gdn_Model {
 
       $this->JoinCategory($Comments);
 
+      $this->EventArguments['ActionID'] = $ActionID;
+      $this->EventArguments['CustomSections'] = array();
+      $this->FireEvent('GetCustomAction');
+
       // Interleave
-      $Content = $this->Union('DateInserted', array(
+      $Content = $this->Union('DateInserted', array_merge(array(
           'Discussion' => $Discussions,
           'Comment' => $Comments
-      ));
+      ), $this->EventArguments['CustomSections']));
 
       // Add result to cache
       Gdn::Cache()->Store($CacheKey, $Content, array(
@@ -206,7 +220,7 @@ class ActedModel extends Gdn_Model {
 
   /**
    * Returns a list of all posts by a specific user ordered by highest score
-   * 
+   *
    * @param int $UserID
    * @param int $Limit
    * @param int $Offset
@@ -231,11 +245,15 @@ class ActedModel extends Gdn_Model {
 
       $this->JoinCategory($Comments);
 
+      $this->EventArguments['UserID'] = $UserID;
+      $this->EventArguments['CustomSections'] = array();
+      $this->FireEvent('GetCustomBest');
+
       // Interleave
-      $Content = $this->Union('Score', array(
+      $Content = $this->Union('Score', array_merge(array(
           'Discussion' => $Discussions,
           'Comment' => $Comments
-      ));
+      ), $this->EventArguments['CustomSections']));
 
       Gdn::Cache()->Store($CacheKey, $Content, array(
           Gdn_Cache::FEATURE_EXPIRY => $this->_Expiry
@@ -251,7 +269,7 @@ class ActedModel extends Gdn_Model {
 
   /**
    * Returns a list of all recent scored posts ordered by date reacted
-   * 
+   *
    * @param int $Limit
    * @param int $Offset
    * @return array
@@ -280,11 +298,14 @@ class ActedModel extends Gdn_Model {
 
       $this->JoinCategory($Comments);
 
+      $this->EventArguments['CustomSections'] = array();
+      $this->FireEvent('GetCustomRecent');
+
       // Interleave
-      $Content = $this->Union('ReactionDate', array(
+      $Content = $this->Union('ReactionDate', array_merge(array(
           'Discussion' => $Discussions,
           'Comment' => $Comments
-      ));
+      ), $this->EventArguments['CustomSections']));
 
       Gdn::Cache()->Store($CacheKey, $Content, array(
           Gdn_Cache::FEATURE_EXPIRY => $this->_Expiry
@@ -370,25 +391,29 @@ class ActedModel extends Gdn_Model {
       $ContentItem = array_merge($ContentItem, $this->GetRecord($ContentType, $ItemID));
 
       $Replacement = array();
-      $Fields = array('DiscussionID', 'CategoryID', 'DateInserted', 'DateUpdated', 'InsertUserID', 'Body', 'Format', 'ItemType');
+      $Fields = array('DiscussionID', 'CategoryID', 'DateInserted', 'DateUpdated', 'InsertUserID', 'Body', 'Format', 'ItemType', 'ContentURL');
 
-      switch($ContentType) {
-        case 'comment':
-          $Fields = array_merge($Fields, array('CommentID'));
+      if ($ContentType == 'comment' || $ContentType == 'discussion') {
+        switch($ContentType) {
+          case 'comment':
+            $Fields = array_merge($Fields, array('CommentID'));
 
-          // Comment specific
-          $Replacement['Name'] = GetValueR('Discussion.Name', $ContentItem);
-          break;
+            // Comment specific
+            $Replacement['Name'] = GetValueR('Discussion.Name', $ContentItem);
+            $ContentItem['ContentURL'] = CommentUrl($ContentItem);
+            break;
 
-        case 'discussion':
-          $Fields = array_merge($Fields, array('Name', 'Type'));
-          break;
+          case 'discussion':
+            $Fields = array_merge($Fields, array('Name', 'Type'));
+            $ContentItem['ContentURL'] = DiscussionUrl($ContentItem);
+            break;
+        }
+
+        $Fields = array_fill_keys($Fields, TRUE);
+        $Common = array_intersect_key($ContentItem, $Fields);
+        $Replacement = array_merge($Replacement, $Common);
+        $ContentItem = $Replacement;
       }
-
-      $Fields = array_fill_keys($Fields, TRUE);
-      $Common = array_intersect_key($ContentItem, $Fields);
-      $Replacement = array_merge($Replacement, $Common);
-      $ContentItem = $Replacement;
 
       // Attach User
       $UserID = GetValue('InsertUserID', $ContentItem);
@@ -410,7 +435,7 @@ class ActedModel extends Gdn_Model {
 
   /**
    * Checks the view permission on an item
-   * 
+   *
    * @param array $ContentItem
    * @return boolean Whether or not the user can see the content item
    */
@@ -448,7 +473,15 @@ class ActedModel extends Gdn_Model {
    * @return array
    */
   protected function GetRecord($RecordType, $ID) {
-    return GetRecord($RecordType, $ID);
+    if(in_array($RecordType, array('discussion', 'comment', 'activity'))) {
+      return GetRecord($RecordType, $ID);
+    } else {
+      $this->EventArguments['Type'] = $RecordType;
+      $this->EventArguments['ID'] = $ID;
+      $this->EventArguments['Record'] = false;
+      $this->FireEvent('GetCustomRecord');
+      return $this->EventArguments['Record'];
+    }
   }
 
 }
