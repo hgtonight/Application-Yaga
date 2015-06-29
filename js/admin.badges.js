@@ -64,7 +64,9 @@ jQuery(document).ready(function($) {
   $(document).on('blur', '#Rule-Criteria select', function() {
     var currentValue = $(this).val();
     $(this).children('option').each(function() {$(this).removeAttr('selected'); });
-    $(this).find("option[value='" + currentValue + "']").attr('selected', 'selected');
+    $(this).find("option[value='" + currentValue + "']")
+      .attr('selected', 'selected')
+      .prop('selected', true);
   });
 
   // This handles retrieving and displaying the different rule criteria forms
