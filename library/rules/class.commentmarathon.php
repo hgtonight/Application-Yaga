@@ -55,7 +55,7 @@ class CommentMarathon implements YagaRule {
   }
 
   public function Hooks() {
-    return array('CommentModel_AfterSaveComment');
+    return array('commentModel_afterSaveComment');
   }
 
   public function Description() {

@@ -43,7 +43,7 @@ class LengthOfService implements YagaRule {
   }
 
   public function Hooks() {
-    return array('Gdn_Dispatcher_AppStartup');
+    return array('gdn_dispatcher_appStartup');
   }
 
   public function Description() {
