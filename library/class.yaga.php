@@ -176,8 +176,10 @@ class Yaga {
         }
 
         $Rule = $Rules[$Class];
+        
         // Only check awards for rules that use this hook
-        if(in_array($Hook, $Rule->Hooks())) {
+        $Hooks = array_map('strtolower',$Rule->Hooks());
+        if(in_array($Hook, $Hooks)) {
           $Criteria = (object) unserialize($Badge->RuleCriteria);
           $Result = $Rule->Award($Sender, $User, $Criteria);
           if($Result) {
