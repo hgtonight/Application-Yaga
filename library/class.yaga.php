@@ -147,7 +147,7 @@ class Yaga {
     }
 
     // Let's us use __FUNCTION__ in the original hook
-    $Hook = str_ireplace('_Handler', '', $Handler);
+    $Hook = strtolower(str_ireplace('_Handler', '', $Handler));
 
     $UserID = $Session->UserID;
     $User = $Session->User;
