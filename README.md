@@ -4,6 +4,9 @@
 
 It is released under the GPLv3 and may be released under a different license _**with permission**_.
 
+## Contributing
+
+Please contribute fixes against the `develop` branch.
 
 ## Documentation
 
