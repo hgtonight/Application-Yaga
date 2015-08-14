@@ -18,7 +18,7 @@ echo '<div class="Badge-Earned">';
 if($UserBadgeAward) {
   echo Wrap(
           UserPhoto(Gdn::Session()->User) .
-          T('Yaga.Badge.Earned') .
+          T('Yaga.Badge.Earned') . ' ' .
           Wrap(Gdn_Format::Date($UserBadgeAward->DateInserted, 'html'), 'span', array('class' => 'DateReceived')),
           'div',
           array('class' => 'EarnedThisBadge'));
