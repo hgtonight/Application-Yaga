@@ -19,7 +19,7 @@ class NecroPost implements YagaRule {
     $Discussion = $DiscussionModel->GetID($DiscussionID);
     $LastCommentDate = strtotime($Discussion->DateLastComment);
     
-    if($LastCommentDate < $NecroDate) {
+    if($Discussion->DateLastComment && $LastCommentDate < $NecroDate) {
       return TRUE;
     }
     else {
