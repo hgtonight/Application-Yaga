@@ -10,7 +10,7 @@ echo Wrap(Anchor(T('Yaga.Action.Add'), 'action/add', array('class' => 'Popup Sma
 <ol id="Actions" class="Sortable">
   <?php
   foreach($this->Data('Actions') as $Action) {
-    echo ActionRow($Action);
+    echo RenderActionRow($Action);
   }
   ?>
 </ol>

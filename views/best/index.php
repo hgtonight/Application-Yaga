@@ -1,7 +1,7 @@
 <?php if(!defined('APPLICATION')) exit();
 /* Copyright 2014 Zachary Doll */
 
-$Contents = $this->_Content;
+$Contents = $this->_Content->Content;
 
 echo '<ul class="DataList Compact BlogList">';
 foreach ($Contents as $Content) {
@@ -58,7 +58,7 @@ foreach ($Contents as $Content) {
          </div>
          <?php
          if(C('Yaga.Reactions.Enabled') && Gdn::Session()->CheckPermission('Yaga.Reactions.View')) {
-            RenderReactionRecord($ContentID, strtolower($ContentType));
+            echo RenderReactionRecord($ContentID, strtolower($ContentType));
          }
          ?>
        </div>

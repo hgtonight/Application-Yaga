@@ -6,7 +6,7 @@
  * @since 1.0
  * @copyright (c) 2013-2014, Zachary Doll
  */
-if(!function_exists('RenderReactions')) {
+if(!function_exists('RenderReactionList')) {
 
   /**
    * Renders a list of available actions that also contains the current count of
@@ -14,10 +14,9 @@ if(!function_exists('RenderReactions')) {
    *
    * @param int $ID
    * @param string $Type 'discussion', 'activity', or 'comment'
-   * @param bool $Echo Should it be echoed?
-   * @return mixed String if $Echo is false, TRUE otherwise
+   * @return string Rendered list of actions available
    */
-  function RenderReactionList($ID, $Type, $Echo = TRUE) {
+  function RenderReactionList($ID, $Type) {
     $Reactions = Yaga::ReactionModel()->GetList($ID, $Type);
     $ShowCount = Gdn::Session()->CheckPermission('Yaga.Reactions.View');
     $ActionsString = '';
@@ -35,15 +34,7 @@ if(!function_exists('RenderReactions')) {
       }
     }
 
-    $AllActionsString = Wrap($ActionsString, 'span', array('class' => 'ReactMenu'));
-
-    if($Echo) {
-      echo $AllActionsString;
-      return true;
-    }
-    else {
-      return $AllActionsString;
-    }
+    return Wrap($ActionsString, 'span', array('class' => 'ReactMenu'));
   }
 
 }
@@ -55,43 +46,36 @@ if(!function_exists('RenderReactionRecord')) {
    * 
    * @param int $ID
    * @param string $Type 'discussion', 'activity', or 'comment'
+   * @return string Rendered list of existing reactions
    */
   function RenderReactionRecord($ID, $Type) {
     $Reactions = Yaga::ReactionModel()->GetRecord($ID, $Type);
     $Limit = C('Yaga.Reactions.RecordLimit');
     $ReactionCount = count($Reactions);
-    $i = 0;
-    foreach($Reactions as $Reaction) {
-      $i++;
-      
+    $RecordsString = '';
+    
+    foreach($Reactions as $i => $Reaction) {
       // Limit the record if there are a lot of reactions
-      if($i <= $Limit || $Limit <= 0) {
+      if($i < $Limit || $Limit <= 0) {
         $User = Gdn::UserModel()->GetID($Reaction->UserID);
-        $DateTitle = sprintf(
-                T('Yaga.Reactions.RecordFormat'),
-                $User->Name,
-                $Reaction->Name,
-                Gdn_Format::Date($Reaction->DateInserted, '%B %e, %Y')
-              );
+        $DateTitle = sprintf(T('Yaga.Reactions.RecordFormat'), $User->Name, $Reaction->Name, Gdn_Format::Date($Reaction->DateInserted, '%B %e, %Y'));
         $String = UserPhoto($User, array('Size' => 'Small', 'title' => $DateTitle));
         $String .= '<span class="ReactSprite Reaction-' . $Reaction->ActionID . ' ' . $Reaction->CssClass . '"></span>';
-        $Wrapttributes = array(
-            'class' => 'UserReactionWrap',
-            'data-userid' => $User->UserID,
-            'title' => $DateTitle
-        );
-        echo Wrap($String, 'span', $Wrapttributes);
+        $Wrapttributes = array('class' => 'UserReactionWrap', 'data-userid' => $User->UserID, 'title' => $DateTitle);
+        $RecordsString .= Wrap($String, 'span', $Wrapttributes);
       }
-      
-      if($Limit > 0 && $i >= $ReactionCount && $ReactionCount > $Limit) {
-        echo Plural($ReactionCount - $Limit, 'Yaga.Reactions.RecordLimit.Single', 'Yaga.Reactions.RecordLimit.Plural');
+      // Display the 'and x more' message if there is a limit
+      if($Limit > 0 && $i == $Limit && $ReactionCount > $Limit) {
+        $RecordsString .= Plural($ReactionCount - $Limit, 'Yaga.Reactions.RecordLimit.Single', 'Yaga.Reactions.RecordLimit.Plural');
       }
     }
+
+    return Wrap($RecordsString, 'div', array('class' => 'ReactionRecord'));
   }
 
 }
 
-if(!function_exists('ActionRow')) {
+if(!function_exists('RenderActionRow')) {
   
   /**
    * Renders an action row used to construct the action admin screen
@@ -99,7 +83,7 @@ if(!function_exists('ActionRow')) {
    * @param stdClass $Action
    * @return string
    */
-  function ActionRow($Action) {
+  function RenderActionRow($Action) {
     return Wrap(
             Wrap(
                     Anchor(T('Edit'), 'action/edit/' . $Action->ActionID, array('class' => 'Popup SmallButton')) . Anchor(T('Delete'), 'action/delete/' . $Action->ActionID, array('class' => 'Popup SmallButton')), 'div', array('class' => 'Tools')) .
@@ -126,14 +110,15 @@ if(!function_exists('RenderPerkPermissionForm')) {
   function RenderPerkPermissionForm($Perm, $Label) {
     $Form = Gdn::Controller()->Form;
     $Fieldname = 'Perm' . $Perm;
-    echo '<li>';
-    echo $Form->Label($Label, $Fieldname);
-    echo $Form->Dropdown($Fieldname, array(
+    
+    $String = $Form->Label($Label, $Fieldname);
+    $String .= $Form->Dropdown($Fieldname, array(
         '' => T('Default'),
         'grant' => T('Grant'),
         'revoke' => T('Revoke')
     ));
-    echo '</li>';
+    
+    return $String;
   }
 }
 
@@ -159,10 +144,11 @@ if(!function_exists('RenderPerkConfigurationForm')) {
     $Options = $Options + array('' => T('Default'));
     $Form = Gdn::Controller()->Form;
     $Fieldname = 'Conf' . $Config;
-    echo '<li>';
-    echo $Form->Label($Label, $Fieldname);
-    echo $Form->Dropdown($Fieldname, $Options);
-    echo '</li>';
+    
+    $String = $Form->Label($Label, $Fieldname);
+    $String .= $Form->Dropdown($Fieldname, $Options);
+    
+    return $String;
   }
 }
 

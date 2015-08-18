@@ -46,6 +46,7 @@ $Construct->Table('Badge')
         ->Column('RuleCriteria', 'text', TRUE)
         ->Column('AwardValue', 'int', 0)
         ->Column('Enabled', 'tinyint(1)', '1')
+        ->Column('Sort', 'int', TRUE)
         ->Set($Explicit, $Drop);
 
 // Tracks the actual awarding of badges

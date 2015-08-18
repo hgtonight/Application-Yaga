@@ -35,7 +35,7 @@ class BadgeModel extends Gdn_Model {
       self::$_Badges = $this->SQL
               ->Select()
               ->From('Badge')
-              ->OrderBy('BadgeID')
+              ->OrderBy('Sort')
               ->Get()
               ->Result();
     }
@@ -53,7 +53,7 @@ class BadgeModel extends Gdn_Model {
       return $this->SQL
               ->Select()
               ->From('Badge')
-              ->OrderBy('BadgeID')
+              ->OrderBy('Sort')
               ->Limit($Limit, $Offset)
               ->Get()
               ->Result();
@@ -96,6 +96,9 @@ class BadgeModel extends Gdn_Model {
             ->Set('Enabled', $Enable)
             ->Where('BadgeID', $BadgeID)
             ->Put();
+    $this->EventArguments['BadgeID'] = $BadgeID;
+    $this->EventArguments['Enable'] = $Enable;
+    $this->FireEvent('BadgeEnable');
   }
 
   /**
@@ -130,7 +133,7 @@ class BadgeModel extends Gdn_Model {
 
         // Remove their points
         foreach($UserIDs as $UserID) {
-          UserModel::GivePoints($UserID, -1 * $Badge->AwardValue, 'Badge');
+          Yaga::GivePoints($UserID, -1 * $Badge->AwardValue, 'Badge');
         }
         // Remove the award rows
         $this->SQL->Delete('BadgeAward', array('BadgeID' => $BadgeID));
@@ -159,9 +162,25 @@ class BadgeModel extends Gdn_Model {
             . 'ui.Name AS InsertUserName '
             . "from {$Px}Badge as b "
             . "left join {$Px}BadgeAward as ba ON b.BadgeID = ba.BadgeID and ba.UserID = :UserID "
-            . "left join {$Px}User as ui on ba.InsertUserID = ui.UserID";
+            . "left join {$Px}User as ui on ba.InsertUserID = ui.UserID "
+            . 'order by b.Sort';
 
     return $this->Database->Query($Sql, array(':UserID' => $UserID))->Result();
+  }
+  
+  /**
+   * Updates the sort field for each badge in the sort array
+   * 
+   * @param array $SortArray
+   * @return boolean
+   */
+  public function SaveSort($SortArray) {
+    foreach($SortArray as $Index => $Badge) {
+      // remove the 'BadgeID_' prefix
+      $BadgeID = substr($Badge, 8);
+      $this->SetField($BadgeID, 'Sort', $Index);
+    }
+    return TRUE;
   }
 
 }

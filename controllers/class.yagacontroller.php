@@ -63,6 +63,10 @@ class YagaController extends DashboardController {
             'LabelCode' => 'Yaga.Ranks.Use',
             'Control' => 'Checkbox'
         ),
+        'Yaga.MenuLinks.Show' => array(
+            'LabelCode' => 'Yaga.MenuLinks.Show',
+            'Control' => 'Checkbox'
+        ),
         'Yaga.LeaderBoard.Enabled' => array(
             'LabelCode' => 'Yaga.LeaderBoard.Use',
             'Control' => 'Checkbox'
@@ -78,7 +82,74 @@ class YagaController extends DashboardController {
     ));
     $this->ConfigurationModule = $ConfigModule;
 
-    $this->Render();
+    $this->Render('settings');
+  }
+  
+  private function FrontendStyle() {
+    $this->RemoveCssFile('admin.css');
+    unset($this->Assets['Panel']['SideMenuModule']);
+    $this->AddCssFile('style.css');
+    $this->MasterView = 'default';
+    
+    $Module = new LeaderBoardModule();
+    $Module->SlotType = 'w';
+    $this->AddModule($Module);
+    $Module = new LeaderBoardModule();
+    $this->AddModule($Module);
+  }
+  
+  public function Ranks() {
+    $this->FrontendStyle();
+    $this->AddCssFile('ranks.css');
+    $this->Title(T('Yaga.Ranks.All'));
+
+    // Get list of ranks from the model and pass to the view
+    $this->SetData('Ranks', Yaga::RankModel()->Get());
+    
+    $this->Render('ranks');
+  }
+  
+  public function Badges($BadgeID = FALSE, $Slug = NULL) {
+    $this->FrontendStyle();
+    $this->AddCssFile('badges.css');
+    $this->AddModule('BadgesModule');
+    
+    if(is_numeric($BadgeID)) {
+      return $this->BadgeDetail($BadgeID, $Slug);
+    }
+    
+    $this->Title(T('Yaga.Badges.All'));
+
+    // Get list of badges from the model and pass to the view
+    $UserID = Gdn::Session()->UserID;
+    $AllBadges = Yaga::BadgeModel()->GetWithEarned($UserID);
+    $this->SetData('Badges', $AllBadges);
+
+    $this->Render('badges');
+  }
+  
+  public function BadgeDetail($BadgeID, $Slug = NULL) {
+    $Badge = Yaga::BadgeModel()->GetByID($BadgeID);
+    
+    if(!$Badge) {
+      throw NotFoundException('Badge');
+    }
+
+    $UserID = Gdn::Session()->UserID;
+    $BadgeAwardModel = Yaga::BadgeAwardModel();
+    $AwardCount = $BadgeAwardModel->GetCount($BadgeID);
+    $UserBadgeAward = $BadgeAwardModel->Exists($UserID, $BadgeID);
+    $RecentAwards = $BadgeAwardModel->GetRecent($BadgeID);
+
+    
+    $this->SetData('AwardCount', $AwardCount);
+    $this->SetData('RecentAwards', $RecentAwards);
+    $this->SetData('UserBadgeAward', $UserBadgeAward);
+    $this->SetData('Badge', $Badge);
+
+    $this->Title(T('Yaga.Badge.View') . $Badge->Name);
+
+    $this->Render('badgedetail');
   }
 
   /**

@@ -43,6 +43,14 @@ class RulesController extends Gdn_Controller {
           $TempRules[$className] = $Rule->Name();
         }
       }
+      
+      // TODO: Don't reuse badge model?
+      $Model = Yaga::BadgeModel();
+      $Model->EventArguments['Rules'] = &$TempRules;
+      $Model->FireAs = 'Yaga';
+      $Model->FireEvent('AfterGetRules');
+      
+      asort($TempRules);
       if(empty($TempRules)) {
         $Rules = serialize(FALSE);
       }

@@ -10,7 +10,12 @@ if(property_exists($this, 'Badge')) {
   $RuleClass = $this->Badge->RuleClass;
 }
 
-$Rule = new $RuleClass();
+if(class_exists($RuleClass)) {
+  $Rule = new $RuleClass();
+}
+else {
+  $Rule = new UnknownRule();
+}
 
 echo Wrap($this->Title(), 'h1');
 

@@ -9,7 +9,7 @@ echo Wrap(Wrap(T('Yaga.Badges.Settings.Desc'), 'div'), 'div', array('class' => '
 echo Wrap(Anchor(T('Yaga.Badge.Add'), 'badge/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
 
 ?>
-<table id="Badges" class="AltRows">
+<table id="Badges" class="AltRows Sortable">
   <thead>
     <tr>
       <th><?php echo T('Image'); ?></th>
@@ -30,10 +30,14 @@ echo Wrap(Anchor(T('Yaga.Badge.Add'), 'badge/add', array('class' => 'SmallButton
 
       $BadgePhoto = Img($Badge->Photo, array('class' => 'BadgePhoto'));
 
-      $Row .= Wrap(Anchor($BadgePhoto, '/badges/detail/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name), array('title' => T('Yaga.Badge.DetailLink'))), 'td');
+      $Row .= Wrap(Anchor($BadgePhoto, '/yaga/badges/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name), array('title' => T('Yaga.Badge.DetailLink'))), 'td');
       $Row .= Wrap($Badge->Name, 'td');
       $Row .= Wrap($Badge->Description, 'td');
-      $Row .= Wrap($Rules[$Badge->RuleClass], 'td');
+      $RuleName = T('Yaga.Rules.UnknownRule');
+      if(array_key_exists($Badge->RuleClass, $Rules)) {
+        $RuleName = $Rules[$Badge->RuleClass];
+      }
+      $Row .= Wrap($RuleName, 'td');
       $Row .= Wrap($Badge->AwardValue, 'td');
       $ToggleText = ($Badge->Enabled) ? T('Enabled') : T('Disabled');
       $ActiveClass = ($Badge->Enabled) ? 'Active' : 'InActive';

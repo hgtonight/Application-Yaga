@@ -126,7 +126,7 @@ class RankModel extends Gdn_Model {
       }
     }
     
-    return self::$_Perks[$RankID];
+    return (array_key_exists($RankID, self::$_Perks)) ? self::$_Perks[$RankID] : array();
   }
   
   /**
@@ -176,7 +176,7 @@ class RankModel extends Gdn_Model {
    */
   public function Delete($RankID) {
     $Rank = $this->GetByID($RankID);
-    if(!$Rank) {
+    if($Rank) {
       $this->SQL->Delete('Rank', array('RankID' => $RankID));
       return TRUE;
     }

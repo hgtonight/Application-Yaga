@@ -24,7 +24,8 @@
 }
 
 /* Badge detail page */
-.ProfilePhotoMedium {
+.Box .ProfilePhotoMedium,
+.ContentColumn .ProfilePhotoMedium {
   height: 24px;
   margin-bottom: 3px;
   margin-right: 3px;
