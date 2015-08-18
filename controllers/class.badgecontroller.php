@@ -28,6 +28,7 @@ class BadgeController extends DashboardController {
     if($this->Menu) {
       $this->Menu->HighlightRoute('/badge');
     }
+    $this->AddJsFile('jquery-ui-1.10.0.custom.min.js');
     $this->AddJsFile('admin.badges.js');
     $this->AddCssFile('badges.css');
   }
@@ -95,12 +96,13 @@ class BadgeController extends DashboardController {
 
       if($TmpImage) {
         // Generate the target image name
-        $TargetImage = $Upload->GenerateTargetName(PATH_UPLOADS);
+        $TargetImage = $Upload->GenerateTargetName(PATH_UPLOADS, FALSE);
         $ImageBaseName = pathinfo($TargetImage, PATHINFO_BASENAME);
 
         // Save the uploaded image
         $Parts = $Upload->SaveAs($TmpImage, 'yaga' . DS . $ImageBaseName);
-        $RelativeUrl = StringBeginsWith($Parts['Url'], Gdn_Url::WebRoot(TRUE), TRUE, TRUE);
+        $AssetRoot = Gdn::Request()->UrlDomain(TRUE).Gdn::Request()->AssetRoot();
+        $RelativeUrl = StringBeginsWith($Parts['Url'], $AssetRoot, TRUE, TRUE);
 
         $this->Form->SetFormValue('Photo', $RelativeUrl);
       }
@@ -307,4 +309,26 @@ class BadgeController extends DashboardController {
     $this->Render();
   }
 
+  /**
+   * This takes in a sort array and updates the badge sort order.
+   * 
+   * Renders the Save tree and/or the Result of the sort update.
+   */
+  public function Sort() {
+      // Check permission
+      $this->Permission('Yaga.Badges.Manage');
+
+      $Request = Gdn::Request();
+      if($Request->IsPostBack()) {
+         $SortArray = $Request->GetValue('SortArray', NULL);
+         $Saves = $this->BadgeModel->SaveSort($SortArray);
+         $this->SetData('Result', TRUE);
+         $this->SetData('Saves', $Saves);
+      }
+      else {
+        $this->SetData('Result', FALSE);
+      }
+
+      $this->RenderData();
+   }
 }

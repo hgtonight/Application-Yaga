@@ -19,7 +19,7 @@ $Construct->Table('Reaction')
         ->Column('InsertUserID', 'int', FALSE, 'index.1')
         ->Column('ActionID', 'int', FALSE, 'index')
         ->Column('ParentID', 'int', TRUE)
-        ->Column('ParentType', array('discussion', 'comment', 'activity'), TRUE)
+        ->Column('ParentType', 'varchar(100)')
         ->Column('ParentAuthorID', 'int', FALSE)
         ->Column('DateInserted', 'datetime')
         ->Set($Explicit, $Drop);
@@ -46,6 +46,7 @@ $Construct->Table('Badge')
         ->Column('RuleCriteria', 'text', TRUE)
         ->Column('AwardValue', 'int', 0)
         ->Column('Enabled', 'tinyint(1)', '1')
+        ->Column('Sort', 'int', TRUE)
         ->Set($Explicit, $Drop);
 
 // Tracks the actual awarding of badges

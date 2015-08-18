@@ -51,12 +51,13 @@ class RankController extends DashboardController {
 
       if($TmpImage) {
         // Generate the target image name
-        $TargetImage = $Upload->GenerateTargetName(PATH_UPLOADS);
+        $TargetImage = $Upload->GenerateTargetName(PATH_UPLOADS, FALSE);
         $ImageBaseName = pathinfo($TargetImage, PATHINFO_BASENAME);
 
         // Save the uploaded image
         $Parts = $Upload->SaveAs($TmpImage, 'yaga' . DS . $ImageBaseName);
-        $RelativeUrl = StringBeginsWith($Parts['Url'], Gdn_Url::WebRoot(TRUE), TRUE, TRUE);
+        $AssetRoot = Gdn::Request()->UrlDomain(TRUE).Gdn::Request()->AssetRoot();
+        $RelativeUrl = StringBeginsWith($Parts['Url'], $AssetRoot, TRUE, TRUE);
         SaveToConfig('Yaga.Ranks.Photo', $RelativeUrl);
 
         if(C('Yaga.Ranks.Photo') == $Parts['SaveName']) {

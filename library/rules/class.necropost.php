@@ -19,7 +19,7 @@ class NecroPost implements YagaRule {
     $Discussion = $DiscussionModel->GetID($DiscussionID);
     $LastCommentDate = strtotime($Discussion->DateLastComment);
     
-    if($LastCommentDate < $NecroDate) {
+    if($Discussion->DateLastComment && $LastCommentDate < $NecroDate) {
       return TRUE;
     }
     else {
@@ -43,20 +43,14 @@ class NecroPost implements YagaRule {
 
   public function Validate($Criteria, $Form) {
     $Validation = new Gdn_Validation();
-    $Validation->ApplyRules(array(
-        array(
-          'Name' => 'Duration', 'Validation' => array('Required', 'Integer')
-        ),
-        array(
-          'Name' => 'Period', 'Validation' => 'Required'
-        )
-    ));
+    $Validation->ApplyRule('Duration', array('Required', 'Integer'));
+    $Validation->ApplyRule('Period', 'Required');
     $Validation->Validate($Criteria);
     $Form->SetValidationResults($Validation->Results());
   }
 
   public function Hooks() {
-    return array('CommentModel_AfterSaveComment');
+    return array('commentModel_afterSaveComment');
   }
 
   public function Description() {
