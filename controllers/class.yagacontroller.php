@@ -110,6 +110,7 @@ class YagaController extends DashboardController {
   }
   
   public function Badges($BadgeID = FALSE, $Slug = NULL) {
+    $this->permission('Yaga.Badges.View');
     $this->FrontendStyle();
     $this->AddCssFile('badges.css');
     $this->AddModule('BadgesModule');
@@ -129,6 +130,7 @@ class YagaController extends DashboardController {
   }
   
   public function BadgeDetail($BadgeID, $Slug = NULL) {
+    $this->permission('Yaga.Badges.View');
     $Badge = Yaga::BadgeModel()->GetByID($BadgeID);
     
     if(!$Badge) {
