@@ -51,7 +51,7 @@ class Yaga {
    * @var BadgeAwardModel
    */
   protected static $_BadgeAwardModel = NULL;
-
+  
   /**
    * Get a reference to the acted model
    * @since 1.1
@@ -136,6 +136,9 @@ class Yaga {
     * @param int $Timestamp
     */
    public static function GivePoints($UserID, $Value, $Source = 'Other', $Timestamp = FALSE) {
+     if($UserID == Gdn::userModel()->getSystemUserID()) {
+         return;
+     }
      UserModel::GivePoints($UserID, $Value, $Source, $Timestamp);
    }
    
@@ -201,7 +204,11 @@ class Yaga {
               $AwardedUserIDs[] = $UserID;
             }
             
+            $systemUserID = Gdn::userModel()->getSystemUserID();
             foreach($AwardedUserIDs as $AwardedUserID) {
+              if($AwardedUserID == $systemUserID) {
+                  continue;
+              }
               $BadgeAwardModel->Award($Badge->BadgeID, $AwardedUserID, $UserID);
             }
           }
