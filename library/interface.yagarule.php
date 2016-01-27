@@ -12,6 +12,7 @@ interface YagaRule {
    * This performs the grunt work of an award rule. Given an expected criteria,
    * it determines if a specific user meets muster.
    *
+   * @since 1.0
    * @param mixed $Sender The object calling the award method.
    * @param UserObject $User the user object of the calling user
    * @param stdClass $Criteria This is a standard object with properties that
@@ -24,6 +25,8 @@ interface YagaRule {
 
   /**
    * This determines what hook(s) the rule should be checked on.
+   * 
+   * @since 1.0
    * @return array The hook name(s) in lower case to fire our calculations on
    */
   public function Hooks();
@@ -31,6 +34,7 @@ interface YagaRule {
   /**
    * Returns the needed criteria form for this rule's criteria.
    *
+   * @since 1.0
    * @param Gdn_Form $Form
    * @return string The fully rendered form.
    */
@@ -39,6 +43,7 @@ interface YagaRule {
   /**
    * This validates the submitted criteria and does what it wants with the form
    *
+   * @since 1.0
    * @param array $Criteria
    * @param Gdn_Form $Form
    */
@@ -47,6 +52,7 @@ interface YagaRule {
   /**
    * Returns a string representing a user friendly name of this rule.
    *
+   * @since 1.0
    * @return string Name shown on forms
    */
   public function Name();
@@ -54,6 +60,7 @@ interface YagaRule {
   /**
    * Returns a string representing the in depth description of how to use this rule.
    *
+   * @since 1.0
    * @return string The description
    */
   public function Description();
@@ -63,6 +70,7 @@ interface YagaRule {
    * other than the calling user. Rules that depend on interaction should return 
    * true.
    * 
+   * @since 1.0
    * @return bool Whether or not interactions need to be checked
    */
   public function Interacts();

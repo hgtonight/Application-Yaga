@@ -12,6 +12,7 @@ if(!function_exists('RenderReactionList')) {
    * Renders a list of available actions that also contains the current count of
    * reactions an item has received if allowed
    *
+   * @since 1.0
    * @param int $ID
    * @param string $Type 'discussion', 'activity', or 'comment'
    * @return string Rendered list of actions available
@@ -44,6 +45,7 @@ if(!function_exists('RenderReactionRecord')) {
   /**
    * Renders the reaction record for a specific item
    * 
+   * @since 1.0
    * @param int $ID
    * @param string $Type 'discussion', 'activity', or 'comment'
    * @return string Rendered list of existing reactions
@@ -80,6 +82,7 @@ if(!function_exists('RenderActionRow')) {
   /**
    * Renders an action row used to construct the action admin screen
    * 
+   * @since 1.0
    * @param stdClass $Action
    * @return string
    */
@@ -104,6 +107,7 @@ if(!function_exists('RenderPerkPermissionForm')) {
   /**
    * Render a simple permission perk form
    * 
+   * @since 1.0
    * @param string $Perm The permission you want to grant/revoke
    * @param string $Label Translation code used on the form
    */
@@ -127,6 +131,7 @@ if(!function_exists('RenderPerkConfigurationForm')) {
   /**
    * Render a perk form for the specified configuration
    * 
+   * @since 1.0
    * @param string $Config The configuration you want to override (i.e. 'Vanilla.EditTimeout')
    * @param string $Label Translation code used on the form
    * @param array $Options The options you want shown instead of default/enable/disable.

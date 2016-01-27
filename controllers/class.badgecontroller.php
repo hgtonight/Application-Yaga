@@ -313,6 +313,8 @@ class BadgeController extends DashboardController {
    * This takes in a sort array and updates the badge sort order.
    * 
    * Renders the Save tree and/or the Result of the sort update.
+   * 
+   * @since 1.1
    */
   public function Sort() {
       // Check permission

@@ -66,6 +66,7 @@ class Yaga {
   
   /**
    * Get a reference to the action model
+   * @since 1.0
    * @return ActionModel
    */
   public static function ActionModel() {
@@ -77,6 +78,7 @@ class Yaga {
 
   /**
    * Get a reference to the reaction model
+   * @since 1.0
    * @return ReactionModel
    */
   public static function ReactionModel() {
@@ -88,6 +90,7 @@ class Yaga {
 
   /**
    * Get a reference to the badge model
+   * @since 1.0
    * @return BadgeModel
    */
   public static function BadgeModel() {
@@ -99,6 +102,7 @@ class Yaga {
 
    /**
    * Get a reference to the badge award model
+   * @since 1.0
    * @return BadgeAwardModel
    */
   public static function BadgeAwardModel() {
@@ -110,6 +114,7 @@ class Yaga {
 
   /**
    * Get a reference to the rank model
+   * @since 1.0
    * @return RankModel
    */
   public static function RankModel() {
@@ -124,6 +129,7 @@ class Yaga {
     * 
     * May be expanded in future versions.
     * 
+    * @since 1.1
     * @param int $UserID
     * @param int $Value
     * @param string $Source
@@ -139,6 +145,7 @@ class Yaga {
    * @param mixed $Sender The sending object
    * @param string $Handler The event handler to check associated rules for awards
    * (e.g. BadgeAwardModel_AfterBadgeAward_Handler or Base_AfterConnection)
+   * @since 1.1
    */
    public static function ExecuteBadgeHooks($Sender, $Handler) {
     $Session = Gdn::Session();

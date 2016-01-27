@@ -468,6 +468,7 @@ class ActedModel extends Gdn_Model {
   /**
    * Wrapper for GetRecord()
    *
+   * @since 1.1
    * @param string $RecordType
    * @param int $ID
    * @return array
