@@ -142,7 +142,7 @@ class YagaHooks implements Gdn_IPlugin {
    */
   public function ProfileController_Reactions_Create($Sender, $UserReference = '', $Username = '', $ActionID = '', $Page = 0) {
     if(!C('Yaga.Reactions.Enabled')) {
-      return;
+      throw notFoundException();
     }
 
     list($Offset, $Limit) = OffsetLimit($Page, C('Yaga.ReactedContent.PerPage', 5));
