@@ -91,14 +91,15 @@ class YagaController extends DashboardController {
     $this->AddCssFile('style.css');
     $this->MasterView = 'default';
     
-    $Module = new LeaderBoardModule();
-    $Module->SlotType = 'w';
-    $this->AddModule($Module);
-    $Module = new LeaderBoardModule();
-    $this->AddModule($Module);
+    $WeeklyModule = new LeaderBoardModule();
+    $WeeklyModule->SlotType = 'w';
+    $this->AddModule($WeeklyModule);
+    $AllTimeModule = new LeaderBoardModule();
+    $this->AddModule($AllTimeModule);
   }
   
   public function Ranks() {
+    $this->permission('Yaga.Ranks.View');
     $this->FrontendStyle();
     $this->AddCssFile('ranks.css');
     $this->Title(T('Yaga.Ranks.All'));
