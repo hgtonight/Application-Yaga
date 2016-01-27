@@ -26,5 +26,6 @@ $ApplicationInfo['Yaga'] = array(
         'Yaga.Badges.View'      => 1, // Can a user view badges?
         'Yaga.Ranks.Add'        => 0, // Can a user assign ranks manually?
         'Yaga.Ranks.Manage'     => 0, // Can a user adit/edit/delete ranks from the system?
+        'Yaga.Ranks.View'       => 1, // Can a user view ranks?
     )
 );
