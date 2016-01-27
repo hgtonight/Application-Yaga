@@ -171,6 +171,7 @@ class BadgeModel extends Gdn_Model {
   /**
    * Updates the sort field for each badge in the sort array
    * 
+   * @since 1.1
    * @param array $SortArray
    * @return boolean
    */

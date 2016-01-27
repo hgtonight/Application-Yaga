@@ -219,6 +219,7 @@ class ReactionModel extends Gdn_Model {
   /**
    * Fills the memory cache with the specified reaction records
    *
+   * @since 1.1
    * @param string $Type
    * @param array $IDs
    */

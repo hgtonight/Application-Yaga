@@ -582,6 +582,7 @@ class YagaHooks implements Gdn_IPlugin {
   /**
    * Insert JS and CSS files into the appropiate controllers
    * 
+   * @since 1.1
    * @param DiscussionsController $Sender
    */
   public function DiscussionsController_Render_Before($Sender) {
@@ -748,6 +749,12 @@ class YagaHooks implements Gdn_IPlugin {
     }
   }
   
+  /**
+   * Adds links to the frontend
+   * 
+   * @since 1.1
+   * @param MenuModule $Menu
+   */
   protected function AddMenuLinks($Menu) {
     if(C('Yaga.Badges.Enabled')) {
       $Menu->AddLink('Yaga', T('Badges'), 'yaga/badges');
