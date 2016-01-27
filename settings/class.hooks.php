@@ -154,8 +154,6 @@ class YagaHooks implements Gdn_IPlugin {
 
     // Tell the ProfileController what tab to load
     $Sender->GetUserInfo($UserReference, $Username);
-    $Sender->_SetBreadcrumbs(T('Yaga.Reactions'), UserUrl($Sender->User, '', 'reactions'));
-    
     $Sender->SetTabView(T('Yaga.Reactions'), 'reactions', 'profile', 'Yaga');
 
     $Sender->AddJsFile('jquery.expander.js');
@@ -189,7 +187,10 @@ class YagaHooks implements Gdn_IPlugin {
 
     // Add the specific action to the breadcrumbs
     $action = Yaga::ActionModel()->GetID($ActionID);
-    $Sender->Data['Breadcrumbs'][] = array('Name' => $action->Name, 'Url' => $BaseUrl);
+    if($action) {
+      $Sender->_SetBreadcrumbs($action->Name, $BaseUrl);
+    }
+    
     // Render the ProfileController
     $Sender->Render();
   }
