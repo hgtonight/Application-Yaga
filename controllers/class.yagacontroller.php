@@ -31,6 +31,7 @@ class YagaController extends DashboardController {
     $this->AddSideMenu('yaga/settings');
 
     $this->AddCssFile('yaga.css');
+    $this->removeCssFile('magnific-popup.css');
   }
 
   /**

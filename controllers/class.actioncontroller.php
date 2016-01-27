@@ -31,6 +31,7 @@ class ActionController extends DashboardController {
     $this->AddJsFile('jquery-ui-1.10.0.custom.min.js');
     $this->AddJsFile('admin.actions.js');
     $this->AddCssFile('reactions.css');
+    $this->removeCssFile('magnific-popup.css');
   }
 
   /**

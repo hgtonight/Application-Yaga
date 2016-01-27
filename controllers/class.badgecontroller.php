@@ -31,6 +31,7 @@ class BadgeController extends DashboardController {
     $this->AddJsFile('jquery-ui-1.10.0.custom.min.js');
     $this->AddJsFile('admin.badges.js');
     $this->AddCssFile('badges.css');
+    $this->removeCssFile('magnific-popup.css');
   }
 
   /**
