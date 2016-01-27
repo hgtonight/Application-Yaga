@@ -513,10 +513,21 @@ class YagaHooks implements Gdn_IPlugin {
     if($Permission === '') {
       return;
     }
-    $TempPerms =& $User->Permissions;
-    $Key = array_search($Permission, $TempPerms);
-    if($Key) {
-      unset($TempPerms[$Key]);
+    
+    if(!is_array($User->Permissions)) {
+      $TempPerms = unserialize($User->Permissions);
+      $Key = array_search($Permission, $TempPerms);
+      if($Key) {
+        unset($TempPerms[$Key]);
+        $User->Permissions = serialize($TempPerms);
+      }
+    }
+    else {
+      $TempPerms =& $User->Permissions;
+      $Key = array_search($Permission, $TempPerms);
+      if($Key) {
+        unset($TempPerms[$Key]);
+      }
     }
   }
 
