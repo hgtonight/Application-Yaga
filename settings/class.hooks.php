@@ -142,7 +142,7 @@ class YagaHooks implements Gdn_IPlugin {
    */
   public function ProfileController_Reactions_Create($Sender, $UserReference = '', $Username = '', $ActionID = '', $Page = 0) {
     if(!C('Yaga.Reactions.Enabled')) {
-      return;
+      throw notFoundException();
     }
 
     list($Offset, $Limit) = OffsetLimit($Page, C('Yaga.ReactedContent.PerPage', 5));
@@ -154,7 +154,6 @@ class YagaHooks implements Gdn_IPlugin {
 
     // Tell the ProfileController what tab to load
     $Sender->GetUserInfo($UserReference, $Username);
-    $Sender->_SetBreadcrumbs(T('Yaga.Reactions'), UserUrl($Sender->User, '', 'reactions'));
     $Sender->SetTabView(T('Yaga.Reactions'), 'reactions', 'profile', 'Yaga');
 
     $Sender->AddJsFile('jquery.expander.js');
@@ -177,16 +176,21 @@ class YagaHooks implements Gdn_IPlugin {
       $Sender->Head->AddTag('meta', array('name' => 'robots', 'content' => 'noindex,noarchive'));
     }
 
-    $ReactionModel = Yaga::ReactionModel();
-
     // Build a pager
+    $BaseUrl = 'profile/reactions/' . $Sender->User->UserID . '/' . Gdn_Format::Url($Sender->User->Name) . '/' . $ActionID; 
     $PagerFactory = new Gdn_PagerFactory();
     $Sender->Pager = $PagerFactory->GetPager('Pager', $Sender);
     $Sender->Pager->ClientID = 'Pager';
     $Sender->Pager->Configure(
-            $Offset, $Limit, $Data->TotalRecords, 'profile/reactions/' . $Sender->User->UserID . '/' . Gdn_Format::Url($Sender->User->Name) . '/' . $ActionID . '/%1$s/'
+            $Offset, $Limit, $Data->TotalRecords, $BaseUrl . '/%1$s/'
     );
 
+    // Add the specific action to the breadcrumbs
+    $action = Yaga::ActionModel()->GetID($ActionID);
+    if($action) {
+      $Sender->_SetBreadcrumbs($action->Name, $BaseUrl);
+    }
+    
     // Render the ProfileController
     $Sender->Render();
   }
