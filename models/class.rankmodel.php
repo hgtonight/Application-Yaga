@@ -192,6 +192,14 @@ class RankModel extends Gdn_Model {
    */
   public function Set($RankID, $UserID, $Activity = FALSE) {
     $Rank = $this->GetByID($RankID);
+    $UserModel = Gdn::UserModel();
+    $OldRankID = $UserModel->GetID($UserID)->RankID;
+    
+    // Don't bother setting a rank that they already have
+    if($Rank->RankID == $OldRankID) {
+        return;
+    }
+    
     if($Activity) {
       // Throw up a promotion activity
       $ActivityModel = new ActivityModel();
@@ -219,10 +227,6 @@ class RankModel extends Gdn_Model {
 
       $ActivityModel->SaveQueue();
     }
-    
-    // Update the rank id
-    $UserModel = Gdn::UserModel();
-    $OldRankID = $UserModel->GetID($UserID)->RankID;
     
     $UserModel->SetField($UserID, 'RankID', $Rank->RankID);
 
