@@ -12,6 +12,7 @@ if(!isset($Explicit)) {
 $Database = Gdn::Database();
 $SQL = $Database->SQL(); // To run queries.
 $Construct = $Database->Structure(); // To modify and add database tables.
+$Px = $Database->DatabasePrefix;
 
 // Tracks the data associated with reacting to content
 $Construct->Table('Reaction')
@@ -23,6 +24,11 @@ $Construct->Table('Reaction')
         ->Column('ParentAuthorID', 'int', FALSE)
         ->Column('DateInserted', 'datetime')
         ->Set($Explicit, $Drop);
+
+$result = $SQL->query("SHOW INDEX FROM ${Px}Reaction WHERE Key_name = 'IX_ParentID_ParentType'")->result(); 
+if(!$result) {
+  $SQL->query("ALTER TABLE ${Px}Reaction ADD INDEX IX_ParentID_ParentType (ParentID, ParentType)");
+}
 
 // Describes actions that can be taken on a comment, discussion or activity
 $Construct->Table('Action')
