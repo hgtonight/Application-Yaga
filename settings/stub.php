@@ -3,77 +3,18 @@
 
 $SQL = Gdn::Database()->SQL();
 
-// Only insert stub content if nothing exists
+// Only insert default actions if none exist
 $Row = $SQL->get('Action', '', 'asc', 1)->firstRow(DATASET_TYPE_ARRAY);
 if (!$Row) {
-  $SQL->Insert('Action', array(
-      'ActionID' => 1,
-      'Name' => 'Promote',
-      'Description' => 'This post deserves to be featured on the best of page!',
-      'Tooltip' => 'Click me if this content should be featured.',
-      'CssClass' => 'ReactPointUp',
-      'AwardValue' => 5,
-      'Permission' => 'Garden.Curation.Manage',
-      'Sort' => 0
-  ));
-
-  $SQL->Insert('Action', array(
-      'ActionID' => 2,
-      'Name' => 'Insightful',
-      'Description' => 'This post brings new meaning to the discussion.',
-      'Tooltip' => 'Insightful',
-      'CssClass' => 'ReactEye2',
-      'AwardValue' => 1,
-      'Permission' => 'Yaga.Reactions.Add',
-      'Sort' => 1
-  ));
-
-  $SQL->Insert('Action', array(
-      'ActionID' => 3,
-      'Name' => 'Awesome',
-      'Description' => 'This post is made of pure win.',
-      'Tooltip' => 'Awesome',
-      'CssClass' => 'ReactHeart',
-      'AwardValue' => 1,
-      'Permission' => 'Yaga.Reactions.Add',
-      'Sort' => 2
-  ));
-
-  $SQL->Insert('Action', array(
-      'ActionID' => 4,
-      'Name' => 'LOL',
-      'Description' => 'This post is funny.',
-      'Tooltip' => 'LOL',
-      'CssClass' => 'ReactWink',
-      'AwardValue' => 1,
-      'Permission' => 'Yaga.Reactions.Add',
-      'Sort' => 3
-  ));
-
-  $SQL->Insert('Action', array(
-      'ActionID' => 5,
-      'Name' => 'WTF',
-      'Description' => 'This post is all sorts of shocking.',
-      'Tooltip' => 'WTF',
-      'CssClass' => 'ReactShocked',
-      'AwardValue' => 1,
-      'Permission' => 'Yaga.Reactions.Add',
-      'Sort' => 4
-  ));
-
-  $SQL->Insert('Action', array(
-      'ActionID' => 6,
-      'Name' => 'Spam',
-      'Description' => 'This post is spam.',
-      'Tooltip' => 'Spam',
-      'CssClass' => 'ReactWarning',
-      'AwardValue' => -5,
-      'Permission' => 'Garden.Curation.Manage',
-      'Sort' => 5
-  ));    
+  $SQL->Insert('Action', array('ActionID' => 1,'Name' => 'Promote','Description' => 'This post deserves to be featured on the best of page!','Tooltip' => 'Click me if this content should be featured.','CssClass' => 'ReactPointUp','AwardValue' => 5,'Permission' => 'Garden.Curation.Manage','Sort' => 0));
+  $SQL->Insert('Action', array('ActionID' => 2,'Name' => 'Insightful','Description' => 'This post brings new meaning to the discussion.','Tooltip' => 'Insightful','CssClass' => 'ReactEye2','AwardValue' => 1,'Permission' => 'Yaga.Reactions.Add','Sort' => 1));
+  $SQL->Insert('Action', array('ActionID' => 3,'Name' => 'Awesome','Description' => 'This post is made of pure win.','Tooltip' => 'Awesome','CssClass' => 'ReactHeart','AwardValue' => 1,'Permission' => 'Yaga.Reactions.Add','Sort' => 2));
+  $SQL->Insert('Action', array('ActionID' => 4,'Name' => 'LOL','Description' => 'This post is funny.','Tooltip' => 'LOL','CssClass' => 'ReactWink','AwardValue' => 1,'Permission' => 'Yaga.Reactions.Add','Sort' => 3));
+  $SQL->Insert('Action', array('ActionID' => 5,'Name' => 'WTF','Description' => 'This post is all sorts of shocking.','Tooltip' => 'WTF','CssClass' => 'ReactShocked','AwardValue' => 1,'Permission' => 'Yaga.Reactions.Add','Sort' => 4));
+  $SQL->Insert('Action', array('ActionID' => 6,'Name' => 'Spam','Description' => 'This post is spam.','Tooltip' => 'Spam','CssClass' => 'ReactWarning','AwardValue' => -5,'Permission' => 'Garden.Curation.Manage','Sort' => 5));
 }
 
-// Only insert stub content if nothing exists
+// Only insert default badges if none exist
 $Row = $SQL->get('Badge', '', 'asc', 1)->firstRow(DATASET_TYPE_ARRAY);
 if (!$Row) {
   $SQL->Insert('Badge', array('Name' => 'First Anniversary','Description' => 'Has it been a year already?','Photo' => '/applications/yaga/design/images/default_badges.svg#anniversary-1','RuleClass' => 'LengthOfService','RuleCriteria' => 'a:2:{s:8:"Duration";s:1:"1";s:6:"Period";s:4:"year";}','AwardValue' => 5));
