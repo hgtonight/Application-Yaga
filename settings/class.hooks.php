@@ -123,11 +123,10 @@ class YagaHooks implements Gdn_IPlugin {
    * @param UserInfoModule $Sender
    */
   public function UserInfoModule_OnBasicInfo_Handler($Sender) {
-    if(!C('Yaga.Badges.Enabled')) {
-      return;
+    if(C('Yaga.Badges.Enabled')) {
+      echo '<dd class="Badges">' . $Sender->User->CountBadges . '</dd>';
+      echo '<dt class="Badges">' . T('Yaga.Badges', 'Badges') . '</dt> ';
     }
-    echo '<dt class="Badges">' . T('Yaga.Badges', 'Badges') . '</dt> ';
-    echo '<dd class="Badges">' . $Sender->User->CountBadges . '</dd>';
   }
 
   /**
