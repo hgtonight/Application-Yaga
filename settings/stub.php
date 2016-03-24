@@ -125,18 +125,14 @@ if (!$Row) {
   $SQL->Insert('Badge', array('Name' => '500 LOLs','Description' => 'We\'re lucky to have you here. Amazing!','Photo' => '/applications/yaga/design/images/default_badges.svg#wink-5','RuleClass' => 'ReactionCount','RuleCriteria' => 'a:2:{s:6:"Target";s:3:"500";s:8:"ActionID";s:1:"4";}','AwardValue' => 50));
 }
 
-// Insert stub ranks
-$SQL->Insert('Rank', array(
-    'Name' => 'Entry Level',
-    'Description' => 'You are in the minor leagues. I suggest you work on your content to progress.',
-    'PointReq' => 1,
-    'Sort' => 1,
-    'Enabled' => 0
-));
-$SQL->Insert('Rank', array(
-    'Name' => 'Big Time',
-    'Description' => 'You have hit the big time! Keep up the good work.',
-    'PointReq' => 100,
-    'Sort' => 2,
-    'Enabled' => 0
-));
+// Only insert default ranks if none exist
+$Row = $SQL->get('Rank', '', 'asc', 1)->firstRow(DATASET_TYPE_ARRAY);
+if (!$Row) {
+  $SQL->Insert('Rank', array('RankID' => '2','Name' => 'Level 2','Description' => 'Level up!','Sort' => '2','PointReq' => '0','PostReq' => '5','AgeReq' => '86400','Perks' => 'a:4:{s:29:"ConfGarden.EditContentTimeout";s:1:"0";s:26:"PermGarden.Curation.Manage";s:6:"revoke";s:27:"PermPlugins.Signatures.Edit";s:6:"revoke";s:23:"PermPlugins.Tagging.Add";s:6:"revoke";}','Enabled' => '1'));
+  $SQL->Insert('Rank', array('RankID' => '1','Name' => 'Level 1','Description' => 'You are at the lowest level. Build up your points to unlock new features!','Sort' => '1','PointReq' => '0','PostReq' => '0','AgeReq' => '0','Perks' => 'a:6:{s:29:"ConfGarden.EditContentTimeout";s:1:"0";s:26:"PermGarden.Curation.Manage";s:6:"revoke";s:27:"PermPlugins.Signatures.Edit";s:6:"revoke";s:23:"PermPlugins.Tagging.Add";s:6:"revoke";s:35:"ConfPlugins.Emotify.FormatEmoticons";s:1:"0";s:27:"ConfGarden.Format.MeActions";s:1:"0";}','Enabled' => '1'));
+  $SQL->Insert('Rank', array('RankID' => '3','Name' => 'Level 3','Description' => 'Building your reputation has unlocked emoticons!','Sort' => '3','PointReq' => '15','PostReq' => '50','AgeReq' => '604800','Perks' => 'a:3:{s:29:"ConfGarden.EditContentTimeout";s:1:"0";s:35:"ConfPlugins.Emotify.FormatEmoticons";s:1:"1";s:27:"ConfGarden.Format.MeActions";s:1:"1";}','Enabled' => '1'));
+  $SQL->Insert('Rank', array('RankID' => '4','Name' => 'Level 4','Description' => 'Your pen now has an eraser! You can edit your posts for up to a week after making them.','Sort' => '4','PointReq' => '75','PostReq' => '200','AgeReq' => '2678400','Perks' => 'a:4:{s:29:"ConfGarden.EditContentTimeout";s:6:"604800";s:27:"PermPlugins.Signatures.Edit";s:5:"grant";s:35:"ConfPlugins.Emotify.FormatEmoticons";s:1:"1";s:27:"ConfGarden.Format.MeActions";s:1:"1";}','Enabled' => '1'));
+  $SQL->Insert('Rank', array('RankID' => '5','Name' => 'Level 5','Description' => 'Holy batman, you are awesome. Have some more reactions!','Sort' => '5','PointReq' => '250','PostReq' => '400','AgeReq' => '7776000','Perks' => 'a:6:{s:29:"ConfGarden.EditContentTimeout";s:7:"2592000";s:26:"PermGarden.Curation.Manage";s:5:"grant";s:27:"PermPlugins.Signatures.Edit";s:5:"grant";s:23:"PermPlugins.Tagging.Add";s:5:"grant";s:35:"ConfPlugins.Emotify.FormatEmoticons";s:1:"1";s:27:"ConfGarden.Format.MeActions";s:1:"1";}','Enabled' => '1'));
+  $SQL->Insert('Rank', array('RankID' => '6','Name' => 'Moderator','Description' => 'You can now moderate content. Welcome aboard!','Sort' => '6','PointReq' => '1000','PostReq' => '1000','AgeReq' => '31536000','Perks' => 'a:2:{s:4:"Role";s:2:"32";s:26:"PermGarden.Curation.Manage";s:5:"grant";}','Enabled' => '1'));
+  $SQL->Insert('Rank', array('RankID' => '7','Name' => 'Administrator','Description' => 'With great power comes great responsibility.','Sort' => '7','PointReq' => '10000','PostReq' => '10000','AgeReq' => '157766400','Perks' => 'a:7:{s:4:"Role";s:2:"16";s:29:"ConfGarden.EditContentTimeout";s:2:"-1";s:26:"PermGarden.Curation.Manage";s:5:"grant";s:27:"PermPlugins.Signatures.Edit";s:5:"grant";s:23:"PermPlugins.Tagging.Add";s:5:"grant";s:35:"ConfPlugins.Emotify.FormatEmoticons";s:1:"1";s:27:"ConfGarden.Format.MeActions";s:1:"1";}','Enabled' => '0'));
+}
