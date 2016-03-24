@@ -7,8 +7,9 @@
    xmlns="http://www.w3.org/2000/svg"
    xmlns:xlink="http://www.w3.org/1999/xlink"
    id="svg2"
-   height="1225"
-   width="600"
+   height="100"
+   width="100"
+   viewBox="0 0 600 1125"
    version="1.1">
   <defs
      id="defs4">
@@ -586,518 +587,6 @@
        r="44.015625"
        cy="1004.014"
        cx="45.061192" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-82.30423,-82.30423,0,55.296387,104.37598)"
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient5011"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0">
-      <stop
-         offset="0"
-         style="stop-color:#f9f9f9;stop-opacity:1"
-         id="stop5013" />
-      <stop
-         offset="1"
-         style="stop-color:#d1d1d3;stop-opacity:1"
-         id="stop5015" />
-    </linearGradient>
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-36.206055,-36.206055,0,106,103.95264)"
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient4979"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0">
-      <stop
-         offset="0"
-         style="stop-color:#f9f9f9;stop-opacity:1"
-         id="stop4981" />
-      <stop
-         offset="1"
-         style="stop-color:#d1d1d3;stop-opacity:1"
-         id="stop4983" />
-    </linearGradient>
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-23.393036,-23.393036,0,74.999512,150.3335)"
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient4927"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0">
-      <stop
-         offset="0"
-         style="stop-color:#f9f9f9;stop-opacity:1"
-         id="stop4929" />
-      <stop
-         offset="1"
-         style="stop-color:#000000;stop-opacity:1"
-         id="stop4931" />
-    </linearGradient>
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-28.684479,-28.684479,0,74.999512,137.6665)"
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient4891"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0">
-      <stop
-         offset="0"
-         style="stop-color:#000000;stop-opacity:1"
-         id="stop4893" />
-      <stop
-         offset="1"
-         style="stop-color:#000000;stop-opacity:1"
-         id="stop4895" />
-    </linearGradient>
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-28.684479,-28.684479,0,74.999512,137.6665)"
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient4871"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0">
-      <stop
-         offset="0"
-         style="stop-color:#ffffff;stop-opacity:0"
-         id="stop4873" />
-      <stop
-         offset="0.98773199"
-         style="stop-color:#ffffff;stop-opacity:1"
-         id="stop4875" />
-      <stop
-         offset="1"
-         style="stop-color:#ffffff;stop-opacity:1"
-         id="stop4877" />
-    </linearGradient>
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-128.53076,-128.53076,0,74.999512,127.94873)"
-       gradientUnits="userSpaceOnUse"
-       id="linearGradient4761"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0">
-      <stop
-         offset="0"
-         style="stop-color:#524e4e;stop-opacity:1"
-         id="stop4763" />
-      <stop
-         offset="1"
-         style="stop-color:#1a1818;stop-opacity:1"
-         id="stop4765" />
-    </linearGradient>
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-82.30423,-82.30423,0,55.296387,104.37598)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient5011"
-       id="linearGradient5238"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-36.206055,-36.206055,0,106,103.95264)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4979"
-       id="linearGradient5247"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-128.53076,-128.53076,0,74.999512,127.94873)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4761"
-       id="linearGradient5253"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-28.684479,-28.684479,0,74.999512,137.6665)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4891"
-       id="linearGradient5255"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-23.393036,-23.393036,0,74.999512,150.3335)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4927"
-       id="linearGradient5257"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-128.53076,-128.53076,0,74.999512,127.94873)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4761"
-       id="linearGradient5318"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-28.684479,-28.684479,0,74.999512,137.6665)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4891"
-       id="linearGradient5320"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-23.393036,-23.393036,0,74.999512,150.3335)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4927"
-       id="linearGradient5322"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-36.206055,-36.206055,0,106,103.95264)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4979"
-       id="linearGradient5382"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-82.30423,-82.30423,0,55.296387,104.37598)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient5011"
-       id="linearGradient5389"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-82.30423,-82.30423,0,55.296387,104.37598)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient5011"
-       id="linearGradient5394"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-36.206055,-36.206055,0,106,103.95264)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4979"
-       id="linearGradient5399"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-23.393036,-23.393036,0,74.999512,150.3335)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4927"
-       id="linearGradient5409"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-28.684479,-28.684479,0,74.999512,137.6665)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4891"
-       id="linearGradient5419"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-128.53076,-128.53076,0,74.999512,127.94873)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4761"
-       id="linearGradient5437"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-128.53076,-128.53076,0,74.999512,127.94873)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4761"
-       id="linearGradient5457"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-28.684479,-28.684479,0,74.999512,137.6665)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4891"
-       id="linearGradient5477"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-23.393036,-23.393036,0,74.999512,150.3335)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4927"
-       id="linearGradient5487"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-36.206055,-36.206055,0,106,103.95264)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4979"
-       id="linearGradient5498"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-82.30423,-82.30423,0,55.296387,104.37598)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient5011"
-       id="linearGradient5503"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-23.393036,-23.393036,0,74.999512,150.3335)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4927"
-       id="linearGradient5510"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-28.684479,-28.684479,0,74.999512,137.6665)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4891"
-       id="linearGradient5517"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-128.53076,-128.53076,0,74.999512,127.94873)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4761"
-       id="linearGradient5527"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-128.53076,-128.53076,0,74.999512,127.94873)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4761"
-       id="linearGradient5543"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-28.684479,-28.684479,0,74.999512,137.6665)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4891"
-       id="linearGradient5558"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-23.393036,-23.393036,0,74.999512,150.3335)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4927"
-       id="linearGradient5566"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-23.393036,-23.393036,0,74.999512,150.3335)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4927"
-       id="linearGradient5573"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-28.684479,-28.684479,0,74.999512,137.6665)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4891"
-       id="linearGradient5578"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-128.53076,-128.53076,0,74.999512,127.94873)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4761"
-       id="linearGradient5592"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-128.53076,-128.53076,0,74.999512,127.94873)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4761"
-       id="linearGradient5598"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-28.684479,-28.684479,0,74.999512,137.6665)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4891"
-       id="linearGradient5608"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-23.393036,-23.393036,0,74.999512,150.3335)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4927"
-       id="linearGradient5614"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-23.393036,-23.393036,0,74.999512,150.3335)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4927"
-       id="linearGradient5618"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,29.241295,-29.301188,0,238.78533,890.24842)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4927"
-       id="linearGradient5621"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-28.684479,-28.684479,0,74.999512,137.6665)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4891"
-       id="linearGradient5623"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-128.53076,-128.53076,0,74.999512,127.94873)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4761"
-       id="linearGradient5630"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-128.53076,-128.53076,0,74.999512,127.94873)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4761"
-       id="linearGradient5634"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,160.66345,-160.99253,0,238.78533,918.22939)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4761"
-       id="linearGradient5637"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,-28.684479,-28.684479,0,74.999512,137.6665)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4891"
-       id="linearGradient5641"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
-    <linearGradient
-       spreadMethod="pad"
-       gradientTransform="matrix(0,35.855599,-35.92904,0,238.78533,906.08217)"
-       gradientUnits="userSpaceOnUse"
-       xlink:href="#linearGradient4891"
-       id="linearGradient5644"
-       y2="0"
-       x2="1"
-       y1="0"
-       x1="0" />
     <radialGradient
        spreadMethod="pad"
        gradientUnits="userSpaceOnUse"
@@ -1129,8 +618,69 @@
       </cc:Work>
     </rdf:RDF>
   </metadata>
+  <view viewBox="0 0 100 100" />
+  
+  <view id="default-badge" viewBox="0 0 100 100" />
+  <view id="mention" viewBox="125 0 100 100" />
+  <view id="no-reaction" viewBox="250 0 100 100" />
+  <view id="unimpressed-necropost" viewBox="375 0 100 100" />
+  <view id="moon-landing" viewBox="500 0 100 100" />
+  
+  <view id="portrait-upload" viewBox="0 125 100 100" />
+  <view id="running-man" viewBox="125 125 100 100" />
+  <view id="cakeday" viewBox="250 125 100 100" />
+  <view id="welcome-committee" viewBox="375 125 100 100" />
+  <view id="threadshot-reticle" viewBox="500 125 100 100" />
+  
+  <view id="achievement-combo" viewBox="0 250 100 100" />
+  <view id="anniversary-longtime" viewBox="125 250 100 100" />
+  <view id="gplus-connector" viewBox="250 250 100 100" />
+  <view id="fb-connector" viewBox="375 250 100 100" />
+  <view id="twitter-connector" viewBox="500 250 100 100" />
+  
+  <view id="wink-1" viewBox="0 375 100 100" />
+  <view id="wink-2" viewBox="125 375 100 100" />
+  <view id="wink-3" viewBox="250 375 100 100" />
+  <view id="wink-4" viewBox="375 375 100 100" />
+  <view id="wink-5" viewBox="500 375 100 100" />
+  
+  <view id="shock-1" viewBox="0 500 100 100" />
+  <view id="shock-2" viewBox="125 500 100 100" />
+  <view id="shock-3" viewBox="250 500 100 100" />
+  <view id="shock-4" viewBox="375 500 100 100" />
+  <view id="shock-5" viewBox="500 500 100 100" />
+  
+  <view id="insightful-1" viewBox="0 625 100 100" />
+  <view id="insightful-2" viewBox="125 625 100 100" />
+  <view id="insightful-3" viewBox="250 625 100 100" />
+  <view id="insightful-4" viewBox="375 625 100 100" />
+  <view id="insightful-5" viewBox="500 625 100 100" />
+  
+  <view id="promote-1" viewBox="0 750 100 100" />
+  <view id="promote-2" viewBox="125 750 100 100" />
+  <view id="promote-3" viewBox="250 750 100 100" />
+  <view id="promote-4" viewBox="375 750 100 100" />
+  <view id="promote-5" viewBox="500 750 100 100" />
+  
+  <view id="awesome-1" viewBox="0 875 100 100" />
+  <view id="awesome-2" viewBox="125 875 100 100" />
+  <view id="awesome-3" viewBox="250 875 100 100" />
+  <view id="awesome-4" viewBox="375 875 100 100" />
+  <view id="awesome-5" viewBox="500 875 100 100" />
+  
+  <view id="comment-1" viewBox="0 1000 100 100" />
+  <view id="comment-2" viewBox="125 1000 100 100" />
+  <view id="comment-3" viewBox="250 1000 100 100" />
+  <view id="comment-4" viewBox="375 1000 100 100" />
+  <view id="comment-5" viewBox="500 1000 100 100" />
+  
+  <view id="anniversary-1" viewBox="0 1125 100 100" />
+  <view id="anniversary-2" viewBox="125 1125 100 100" />
+  <view id="anniversary-3" viewBox="250 1125 100 100" />
+  <view id="anniversary-4" viewBox="375 1125 100 100" />
+  <view id="anniversary-5" viewBox="500 1125 100 100" />
   <g
-     id="portrait-upload"
+     id="portrait-upload-group"
      transform="matrix(0.99795595,0,0,1,0.10220304,-827.3622)">
     <path
        style="fill:#800080;fill-opacity:1;stroke:none"
@@ -1153,7 +703,7 @@
        d="M 100,50 A 50,50 0 1 1 0,50 50,50 0 1 1 100,50 Z" />
   </g>
   <g
-     id="achievement-combo"
+     id="achievement-combo-group"
      transform="matrix(0.99795595,0,0,1,0.10220304,-702.3622)">
     <path
        style="fill:#33739b;fill-opacity:1;stroke:none"
@@ -1176,7 +726,7 @@
        d="M 100,50 A 50,50 0 1 1 0,50 50,50 0 1 1 100,50 Z" />
   </g>
   <g
-     id="welcome-committee"
+     id="welcome-committee-group"
      transform="matrix(0.99795595,0,0,1,375.1022,-827.3622)">
     <path
        style="fill:#f15a2b;fill-opacity:1;stroke:none"
@@ -1199,7 +749,7 @@
        d="M 100,50 A 50,50 0 1 1 0,50 50,50 0 1 1 100,50 Z" />
   </g>
   <g
-     id="anniversary-5"
+     id="anniversary-5-group"
      transform="translate(500,172.6378)">
     <path
        style="fill:#2c6020;fill-opacity:1;stroke:none"
@@ -1241,7 +791,7 @@
     </g>
   </g>
   <g
-     id="anniversary-4"
+     id="anniversary-4-group"
      transform="translate(375,172.6378)">
     <path
        style="fill:#2c6020;fill-opacity:1;stroke:none"
@@ -1283,7 +833,7 @@
     </g>
   </g>
   <g
-     id="anniversary-3"
+     id="anniversary-3-group"
      transform="translate(250,172.6378)">
     <path
        style="fill:#2c6020;fill-opacity:1;stroke:none"
@@ -1325,7 +875,7 @@
     </g>
   </g>
   <g
-     id="anniversary-2"
+     id="anniversary-2-group"
      transform="translate(125,172.6378)">
     <path
        style="fill:#2c6020;fill-opacity:1;stroke:none"
@@ -1367,7 +917,7 @@
     </g>
   </g>
   <g
-     id="anniversary-1"
+     id="anniversary-1-group"
      transform="translate(6.366175e-7,172.6378)">
     <path
        style="fill:#2c6020;fill-opacity:1;stroke:none"
@@ -1391,7 +941,7 @@
        d="M 100,50 A 50,50 0 1 1 0,50 50,50 0 1 1 100,50 Z" />
   </g>
   <g
-     id="comment-5"
+     id="comment-5-group"
      transform="translate(500,47.63782)">
     <path
        style="fill:#33739b;fill-opacity:1;stroke:none"
@@ -1456,7 +1006,7 @@
          x="80.873962">x5</tspan></text>
   </g>
   <g
-     id="comment-4"
+     id="comment-4-group"
      transform="translate(375,47.63782)">
     <path
        style="fill:#33739b;fill-opacity:1;stroke:none"
@@ -1521,7 +1071,7 @@
          x="80.873962">x4</tspan></text>
   </g>
   <g
-     id="comment-3"
+     id="comment-3-group"
      transform="translate(250,47.63782)">
     <path
        style="fill:#33739b;fill-opacity:1;stroke:none"
@@ -1586,7 +1136,7 @@
          x="80.873962">x3</tspan></text>
   </g>
   <g
-     id="comment-2"
+     id="comment-2-group"
      transform="translate(125,47.63782)">
     <path
        style="fill:#33739b;fill-opacity:1;stroke:none"
@@ -1651,7 +1201,7 @@
          x="80.873962">x2</tspan></text>
   </g>
   <g
-     id="comment-1"
+     id="comment-1-group"
      transform="translate(6.366175e-7,47.63782)">
     <path
        style="fill:#33739b;fill-opacity:1;stroke:none"
@@ -1696,7 +1246,7 @@
          x="51.643356" /></text>
   </g>
   <g
-     id="anniversary-longtime"
+     id="anniversary-longtime-group"
      transform="translate(125.88566,-702.3622)">
     <path
        style="fill:#2c6020;fill-opacity:1;stroke:none"
@@ -1718,7 +1268,7 @@
        d="M 100,50 A 50,50 0 1 1 0,50 50,50 0 1 1 100,50 Z" />
   </g>
   <g
-     id="mention"
+     id="mention-group"
      transform="matrix(0.99795595,0,0,1,125.1022,-952.3622)">
     <path
        style="fill:#f1b02b;fill-opacity:1;stroke:none"
@@ -1741,7 +1291,7 @@
        d="M 100,50 A 50,50 0 1 1 0,50 50,50 0 1 1 100,50 Z" />
   </g>
   <g
-     id="moon-landing"
+     id="moon-landing-group"
      transform="matrix(0.99795595,0,0,1,500.1022,-952.3622)">
     <path
        style="fill:#000000;fill-opacity:1;stroke:none"
@@ -1796,7 +1346,7 @@
        d="M 100,50 A 50,50 0 1 1 0,50 50,50 0 1 1 100,50 Z" />
   </g>
   <g
-     id="unimpressed-necropost"
+     id="unimpressed-necropost-group"
      transform="translate(375,-952.3622)">
     <path
        style="fill:#f12b8a;fill-opacity:1;stroke:none"
@@ -1838,7 +1388,7 @@
        d="M 100,50 A 50,50 0 1 1 0,50 50,50 0 1 1 100,50 Z" />
   </g>
   <g
-     id="running-man"
+     id="running-man-group"
      transform="matrix(0.99795595,0,0,1,125.1022,-827.3622)">
     <path
        style="fill:#9f2bf1;fill-opacity:1;stroke:none"
@@ -1872,7 +1422,7 @@
        d="M 100,50 A 50,50 0 1 1 0,50 50,50 0 1 1 100,50 Z" />
   </g>
   <g
-     id="cakeday"
+     id="cakeday-group"
      transform="matrix(0.99795595,0,0,1,250.1022,-827.3622)">
     <path
        style="fill:#2c6020;fill-opacity:1;stroke:none"
@@ -1932,7 +1482,7 @@
        d="M 100,50 A 50,50 0 1 1 0,50 50,50 0 1 1 100,50 Z" />
   </g>
   <g
-     id="gplus-connector"
+     id="gplus-connector-group"
      transform="matrix(0.99795595,0,0,1,250.1022,-702.3622)">
     <path
        style="fill:#dd4b39;fill-opacity:1;stroke:none"
@@ -1955,7 +1505,7 @@
        d="M 100,50 A 50,50 0 1 1 0,50 50,50 0 1 1 100,50 Z" />
   </g>
   <g
-     id="threadshot-reticle"
+     id="threadshot-reticle-group"
      transform="matrix(0.99795595,0,0,1,500.1022,-827.3622)">
     <path
        style="fill:#ff0000;fill-opacity:1;stroke:none"
@@ -1978,7 +1528,7 @@
        d="M 100,50 A 50,50 0 1 1 0,50 50,50 0 1 1 100,50 Z" />
   </g>
   <g
-     id="fb-connector"
+     id="fb-connector-group"
      transform="matrix(0.99795595,0,0,1,375.1022,-702.3622)">
     <path
        style="fill:#49629d;fill-opacity:1;stroke:none"
@@ -2001,7 +1551,7 @@
        d="M 100,50 A 50,50 0 1 1 0,50 50,50 0 1 1 100,50 Z" />
   </g>
   <g
-     id="twitter-connector"
+     id="twitter-connector-group"
      transform="matrix(0.99795595,0,0,1,500.1022,-702.3622)">
     <path
        style="fill:#6babe1;fill-opacity:1;stroke:none"
@@ -2024,7 +1574,7 @@
        d="M 100,50 A 50,50 0 1 1 0,50 50,50 0 1 1 100,50 Z" />
   </g>
   <g
-     id="awesome-5"
+     id="awesome-5-group"
      transform="translate(500,-77.36218)">
     <path
        style="fill:#ff0000;fill-opacity:1;stroke:none"
@@ -2079,7 +1629,7 @@
          x="80.873962">x5</tspan></text>
   </g>
   <g
-     id="awesome-4"
+     id="awesome-4-group"
      transform="translate(375,-77.36218)">
     <path
        style="fill:#ff0000;fill-opacity:1;stroke:none"
@@ -2134,7 +1684,7 @@
          x="80.873962">x4</tspan></text>
   </g>
   <g
-     id="awesome-3"
+     id="awesome-3-group"
      transform="translate(250,-77.36218)">
     <path
        style="fill:#ff0000;fill-opacity:1;stroke:none"
@@ -2189,7 +1739,7 @@
          x="80.873962">x3</tspan></text>
   </g>
   <g
-     id="awesome-2"
+     id="awesome-2-group"
      transform="translate(125,-77.36218)">
     <path
        style="fill:#ff0000;fill-opacity:1;stroke:none"
@@ -2244,7 +1794,7 @@
          x="80.873962">x2</tspan></text>
   </g>
   <g
-     id="awesome-1"
+     id="awesome-1-group"
      transform="translate(6.366175e-7,-77.36218)">
     <path
        style="fill:#ff0000;fill-opacity:1;stroke:none"
@@ -2279,7 +1829,7 @@
          x="51.643356" /></text>
   </g>
   <g
-     id="no-reaction"
+     id="no-reaction-group"
      transform="translate(250,-952.3622)">
     <path
        style="fill:#f1b02b;fill-opacity:1;stroke:none"
@@ -2314,7 +1864,7 @@
          x="51.643356" /></text>
   </g>
   <g
-     id="promote-5"
+     id="promote-5-group"
      transform="translate(500,-202.36218)">
     <path
        style="fill:#f15a2b;fill-opacity:1;stroke:none"
@@ -2369,7 +1919,7 @@
          x="80.873962">x5</tspan></text>
   </g>
   <g
-     id="promote-4"
+     id="promote-4-group"
      transform="translate(375,-202.36218)">
     <path
        style="fill:#f15a2b;fill-opacity:1;stroke:none"
@@ -2424,7 +1974,7 @@
          x="80.873962">x4</tspan></text>
   </g>
   <g
-     id="promote-3"
+     id="promote-3-group"
      transform="translate(250,-202.36218)">
     <path
        style="fill:#f15a2b;fill-opacity:1;stroke:none"
@@ -2479,7 +2029,7 @@
          x="80.873962">x3</tspan></text>
   </g>
   <g
-     id="promote-2"
+     id="promote-2-group"
      transform="translate(125,-202.36218)">
     <path
        style="fill:#f15a2b;fill-opacity:1;stroke:none"
@@ -2534,7 +2084,7 @@
          x="80.873962">x2</tspan></text>
   </g>
   <g
-     id="promote-1"
+     id="promote-1-group"
      transform="translate(6.366175e-7,-202.36218)">
     <path
        style="fill:#f15a2b;fill-opacity:1;stroke:none"
@@ -2569,7 +2119,7 @@
          x="51.643356" /></text>
   </g>
   <g
-     id="wink-1"
+     id="wink-1-group"
      transform="translate(6.366175e-7,-577.36218)">
     <path
        style="fill:#800080;fill-opacity:1;stroke:none"
@@ -2604,7 +2154,7 @@
          x="51.643356" /></text>
   </g>
   <g
-     id="wink-2"
+     id="wink-2-group"
      transform="translate(125,-577.36218)">
     <path
        style="fill:#800080;fill-opacity:1;stroke:none"
@@ -2659,7 +2209,7 @@
          x="80.873962">x2</tspan></text>
   </g>
   <g
-     id="wink-3"
+     id="wink-3-group"
      transform="translate(250,-577.36218)">
     <path
        style="fill:#800080;fill-opacity:1;stroke:none"
@@ -2714,7 +2264,7 @@
          x="80.873962">x3</tspan></text>
   </g>
   <g
-     id="wink-4"
+     id="wink-4-group"
      transform="translate(375,-577.36218)">
     <path
        style="fill:#800080;fill-opacity:1;stroke:none"
@@ -2769,7 +2319,7 @@
          x="80.873962">x4</tspan></text>
   </g>
   <g
-     id="wink-5"
+     id="wink-5-group"
      transform="translate(500,-577.36218)">
     <path
        style="fill:#800080;fill-opacity:1;stroke:none"
@@ -2824,7 +2374,7 @@
          x="80.873962">x5</tspan></text>
   </g>
   <g
-     id="shock-5"
+     id="shock-5-group"
      transform="translate(500,-452.36218)">
     <path
        style="fill:#9f2bf1;fill-opacity:1;stroke:none"
@@ -2879,7 +2429,7 @@
          x="80.873962">x5</tspan></text>
   </g>
   <g
-     id="shock-4"
+     id="shock-4-group"
      transform="translate(375,-452.36218)">
     <path
        style="fill:#9f2bf1;fill-opacity:1;stroke:none"
@@ -2934,7 +2484,7 @@
          x="80.873962">x4</tspan></text>
   </g>
   <g
-     id="shock-3"
+     id="shock-3-group"
      transform="translate(250,-452.36218)">
     <path
        style="fill:#9f2bf1;fill-opacity:1;stroke:none"
@@ -2989,7 +2539,7 @@
          x="80.873962">x3</tspan></text>
   </g>
   <g
-     id="shock-2"
+     id="shock-2-group"
      transform="translate(125,-452.36218)">
     <path
        style="fill:#9f2bf1;fill-opacity:1;stroke:none"
@@ -3044,7 +2594,7 @@
          x="80.873962">x2</tspan></text>
   </g>
   <g
-     id="shock-1"
+     id="shock-1-group"
      transform="translate(6.366175e-7,-452.36218)">
     <path
        style="fill:#9f2bf1;fill-opacity:1;stroke:none"
@@ -3079,7 +2629,7 @@
          x="51.643356" /></text>
   </g>
   <g
-     id="insightful-5"
+     id="insightful-5-group"
      transform="translate(500,-327.36218)">
     <path
        style="fill:#2c6020;fill-opacity:1;stroke:none"
@@ -3134,7 +2684,7 @@
          x="80.873962">x5</tspan></text>
   </g>
   <g
-     id="insightful-4"
+     id="insightful-4-group"
      transform="translate(375,-327.36218)">
     <path
        style="fill:#2c6020;fill-opacity:1;stroke:none"
@@ -3189,7 +2739,7 @@
          x="80.873962">x4</tspan></text>
   </g>
   <g
-     id="insightful-3"
+     id="insightful-3-group"
      transform="translate(250,-327.36218)">
     <path
        style="fill:#2c6020;fill-opacity:1;stroke:none"
@@ -3244,7 +2794,7 @@
          x="80.873962">x3</tspan></text>
   </g>
   <g
-     id="insightful-2"
+     id="insightful-2-group"
      transform="translate(125,-327.36218)">
     <path
        style="fill:#2c6020;fill-opacity:1;stroke:none"
@@ -3299,7 +2849,7 @@
          x="80.873962">x2</tspan></text>
   </g>
   <g
-     id="insightful-1"
+     id="insightful-1-group"
      transform="translate(6.366175e-7,-327.36218)">
     <path
        style="fill:#2c6020;fill-opacity:1;stroke:none"
@@ -3335,7 +2885,7 @@
   </g>
   <g
      transform="translate(0.10245304,0)"
-     id="default-badge">
+     id="default-badge-group">
     <path
        d="M 0,10 C 25,10 50,0 50,0 c 0,0 25,10 50,10 0,0 1.7267,46.371 -9,62.215 C 82.748,84.403 50,100 50,100 50,100 17.252,84.403 9,72.215 -1.727,56.371 0,10 0,10 Z"
        id="path4534-5" />
