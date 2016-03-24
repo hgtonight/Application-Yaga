@@ -18,7 +18,15 @@ class BestFilterModule extends Gdn_Module {
     parent::__construct($Sender);
     
     $ActionModel = Yaga::ActionModel();
-    $this->Data = $ActionModel->Get();
+    $actions = $ActionModel->Get();
+    
+    foreach($actions as $index => $action) {
+        if($action->AwardValue < 0) {
+            unset($actions[$index]);
+        }
+    }
+    
+    $this->Data = $actions;
   }
   
   /**
