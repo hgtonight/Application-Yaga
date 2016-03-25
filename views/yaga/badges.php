@@ -29,7 +29,7 @@ foreach($this->Data('Badges') as $Badge) {
 
   $Row .= Wrap(
           Wrap(
-                  Anchor($Badge->Name, 'badges/detail/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name), array('class' => 'Title')), 'div', array('class' => 'Title')
+                  Anchor($Badge->Name, 'yaga/badges/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name), array('class' => 'Title')), 'div', array('class' => 'Title')
           ) .
           Wrap(
                   Wrap($Badge->Description, 'span', array('class' => 'MItem BadgeDescription')) .

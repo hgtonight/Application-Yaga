@@ -31,10 +31,13 @@ class YagaController extends DashboardController {
     $this->AddSideMenu('yaga/settings');
 
     $this->AddCssFile('yaga.css');
+    $this->removeCssFile('magnific-popup.css');
   }
 
   /**
    * Redirect to settings by default
+   * 
+   * @since 1.0
    */
   public function Index() {
     $this->Settings();
@@ -42,6 +45,8 @@ class YagaController extends DashboardController {
 
   /**
    * This handles all the core settings for the gamification application.
+   * 
+   * @since 1.0
    */
   public function Settings() {
     $this->Permission('Garden.Settings.Manage');
@@ -63,6 +68,10 @@ class YagaController extends DashboardController {
             'LabelCode' => 'Yaga.Ranks.Use',
             'Control' => 'Checkbox'
         ),
+        'Yaga.MenuLinks.Show' => array(
+            'LabelCode' => 'Yaga.MenuLinks.Show',
+            'Control' => 'Checkbox'
+        ),
         'Yaga.LeaderBoard.Enabled' => array(
             'LabelCode' => 'Yaga.LeaderBoard.Use',
             'Control' => 'Checkbox'
@@ -78,11 +87,112 @@ class YagaController extends DashboardController {
     ));
     $this->ConfigurationModule = $ConfigModule;
 
-    $this->Render();
+    $this->Render('settings');
+  }
+  
+  /**
+   * Performs the necessary functions to change a backend controller into a
+   * frontend controller
+   * 
+   * @since 1.1
+   */
+  private function FrontendStyle() {
+    $this->RemoveCssFile('admin.css');
+    unset($this->Assets['Panel']['SideMenuModule']);
+    $this->AddCssFile('style.css');
+    $this->MasterView = 'default';
+    
+    $WeeklyModule = new LeaderBoardModule();
+    $WeeklyModule->SlotType = 'w';
+    $this->AddModule($WeeklyModule);
+    $AllTimeModule = new LeaderBoardModule();
+    $this->AddModule($AllTimeModule);
+  }
+  
+  /**
+   * Displays a summary of ranks currently configured on a frontend page to help
+   * users understand what is valued in this community
+   * 
+   * @since 1.1
+   */
+  public function Ranks() {
+    $this->permission('Yaga.Ranks.View');
+    $this->FrontendStyle();
+    $this->AddCssFile('ranks.css');
+    $this->Title(T('Yaga.Ranks.All'));
+
+    // Get list of ranks from the model and pass to the view
+    $this->SetData('Ranks', Yaga::RankModel()->Get());
+    
+    $this->Render('ranks');
+  }
+  
+  /**
+   * Displays a summary of badges currently configured on a frontend page to
+   * help users understand what is valued in this community.
+   * 
+   * Also provides a convenience redirect to badge details
+   * 
+   * @param int $BadgeID The badge ID you want to see details
+   * @param string $Slug The badge slug you want to see details
+   * @since 1.1
+   */
+  public function Badges($BadgeID = FALSE, $Slug = NULL) {
+    $this->permission('Yaga.Badges.View');
+    $this->FrontendStyle();
+    $this->AddCssFile('badges.css');
+    $this->AddModule('BadgesModule');
+    
+    if(is_numeric($BadgeID)) {
+      return $this->BadgeDetail($BadgeID, $Slug);
+    }
+    
+    $this->Title(T('Yaga.Badges.All'));
+
+    // Get list of badges from the model and pass to the view
+    $UserID = Gdn::Session()->UserID;
+    $AllBadges = Yaga::BadgeModel()->GetWithEarned($UserID);
+    $this->SetData('Badges', $AllBadges);
+
+    $this->Render('badges');
+  }
+  
+  /**
+   * Displays information about the specified badge including recent recipients 
+   * of the badge.
+   * 
+   * @param int $BadgeID
+   * @param string $Slug
+   */
+  public function BadgeDetail($BadgeID, $Slug = NULL) {
+    $this->permission('Yaga.Badges.View');
+    $Badge = Yaga::BadgeModel()->GetByID($BadgeID);
+    
+    if(!$Badge) {
+      throw NotFoundException('Badge');
+    }
+
+    $UserID = Gdn::Session()->UserID;
+    $BadgeAwardModel = Yaga::BadgeAwardModel();
+    $AwardCount = $BadgeAwardModel->GetCount($BadgeID);
+    $UserBadgeAward = $BadgeAwardModel->Exists($UserID, $BadgeID);
+    $RecentAwards = $BadgeAwardModel->GetRecent($BadgeID);
+
+    
+    $this->SetData('AwardCount', $AwardCount);
+    $this->SetData('RecentAwards', $RecentAwards);
+    $this->SetData('UserBadgeAward', $UserBadgeAward);
+    $this->SetData('Badge', $Badge);
+
+    $this->Title(T('Yaga.Badge.View') . $Badge->Name);
+
+    $this->Render('badgedetail');
   }
 
   /**
    * Import a Yaga transport file
+   * 
+   * @since 1.0
    */
   public function Import() {
     $this->Title(T('Yaga.Import'));
@@ -130,6 +240,8 @@ class YagaController extends DashboardController {
 
   /**
    * Create a Yaga transport file
+   * 
+   * @since 1.0
    */
   public function Export() {
     $this->Title(T('Yaga.Export'));
@@ -163,6 +275,7 @@ class YagaController extends DashboardController {
    * Yaga sections to be included in the transport file.
    * 
    * @return array
+   * @since 1.0
    */
   protected function _FindIncludes() {
     $FormValues = $this->Form->FormValues();
@@ -183,6 +296,7 @@ class YagaController extends DashboardController {
    * @param array An array containing the config areas to transfer
    * @param string Where to save the transport file
    * @return mixed False on failure, the path to the transport file on success
+   * @since 1.0
    */
   protected function _ExportData($Include = array(), $Path = NULL) {
     $StartTime = microtime(TRUE);
@@ -287,6 +401,7 @@ class YagaController extends DashboardController {
    *
    * @param string The transport file path
    * @return boolean Whether or not the transport file was extracted successfully
+   * @since 1.0
    */
   protected function _ExtractZip($Filename) {
     if(!file_exists($Filename)) {
@@ -331,6 +446,7 @@ class YagaController extends DashboardController {
    * @param array Which tables should be overwritten
    * @return bool Pass/Fail on the import being executed. Errors can exist on the
    * form with a passing return value.
+   * @since 1.0
    */
   protected function _ImportData($Info, $Include) {
     if(!$Info) {
@@ -373,6 +489,7 @@ class YagaController extends DashboardController {
    * @param array The nested array
    * @param string What should the configuration strings be prefixed with
    * @return array
+   * @since 1.0
    */
   protected function _NestedToDotNotation($Configs, $Prefix = '') {
     $ConfigStrings = array();
@@ -394,6 +511,7 @@ class YagaController extends DashboardController {
    *
    * @param stdClass The metadata object read in from the transport file
    * @return boolean Whether or not the checksum is valid
+   * @since 1.0
    */
   protected function _ValidateChecksum($MetaData) {
     $Hashes = array();
@@ -433,19 +551,20 @@ class YagaController extends DashboardController {
   }
 
   /**
-	 * Returns a list of all files in a directory, recursively (Thanks @businessdad)
-	 *
-	 * @param string Directory The directory to scan for files
-	 * @return array A list of Files and, optionally, Directories.
-	 */
-	protected function _GetFiles($Directory) {
+   * Returns a list of all files in a directory, recursively (Thanks @businessdad)
+   *
+   * @param string Directory The directory to scan for files
+   * @return array A list of Files and, optionally, Directories.
+   * @since 1.0
+   */
+  protected function _GetFiles($Directory) {
     $Files = array_diff(scandir($Directory), array('.', '..'));
     $Result = array();
     foreach($Files as $File) {
       $FileName = $Directory . '/' . $File;
       if(is_dir($FileName)) {
-          $Result = array_merge($Result, $this->_GetFiles($FileName));
-          continue;
+        $Result = array_merge($Result, $this->_GetFiles($FileName));
+        continue;
       }
       $Result[] = $FileName;
     }

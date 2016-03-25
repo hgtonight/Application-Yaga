@@ -12,6 +12,7 @@ if(!isset($Explicit)) {
 $Database = Gdn::Database();
 $SQL = $Database->SQL(); // To run queries.
 $Construct = $Database->Structure(); // To modify and add database tables.
+$Px = $Database->DatabasePrefix;
 
 // Tracks the data associated with reacting to content
 $Construct->Table('Reaction')
@@ -19,10 +20,15 @@ $Construct->Table('Reaction')
         ->Column('InsertUserID', 'int', FALSE, 'index.1')
         ->Column('ActionID', 'int', FALSE, 'index')
         ->Column('ParentID', 'int', TRUE)
-        ->Column('ParentType', array('discussion', 'comment', 'activity'), TRUE)
+        ->Column('ParentType', 'varchar(100)')
         ->Column('ParentAuthorID', 'int', FALSE)
         ->Column('DateInserted', 'datetime')
         ->Set($Explicit, $Drop);
+
+$result = $SQL->query("SHOW INDEX FROM ${Px}Reaction WHERE Key_name = 'IX_ParentID_ParentType'")->result(); 
+if(!$result && !$Construct->CaptureOnly) {
+  $SQL->query("ALTER TABLE ${Px}Reaction ADD INDEX IX_ParentID_ParentType (ParentID, ParentType)");
+}
 
 // Describes actions that can be taken on a comment, discussion or activity
 $Construct->Table('Action')
@@ -46,6 +52,7 @@ $Construct->Table('Badge')
         ->Column('RuleCriteria', 'text', TRUE)
         ->Column('AwardValue', 'int', 0)
         ->Column('Enabled', 'tinyint(1)', '1')
+        ->Column('Sort', 'int', TRUE)
         ->Set($Explicit, $Drop);
 
 // Tracks the actual awarding of badges

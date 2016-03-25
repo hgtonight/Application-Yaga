@@ -224,3 +224,12 @@ input + .ReactSprite {
 #Content .BoxFilter.BoxBestFilter {
   display: block;
 }
+
+/* Missing sprite background offsets */
+.Sprite.SpBestOf {
+    background-position: -246px -5px;
+}
+
+.Sprite.SpBadge {
+    background-position: -245px -52px;
+}

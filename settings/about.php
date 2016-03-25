@@ -1,19 +1,19 @@
 <?php
-/* Copyright 2013 Zachary Doll */
+/* Copyright 2013-2016 Zachary Doll */
 $ApplicationInfo['Yaga'] = array(
     'Name'        => 'Yet Another Gamification Application',
     'Description' => 'Yaga provides customizable reactions, badges, and ranks for your Vanilla forum software. Increase user activity by letting users react to content with emotions. Give users badges based on statistics and engagement in your community. Create and award custom badges for special events and recognition. Award Ranks which can confer different (configurable) permissions based on community perception and participation.',
-    'Version'     => '1.0.3',
-	  'Url'         => 'http://github.com/hgtonight/application-yaga',
+    'Version'     => '1.1',
+    'Url'         => 'http://github.com/hgtonight/application-yaga',
     'Author'      => 'Zachary Doll',
     'AuthorEmail' => 'hgtonight@daklutz.com',
     'AuthorUrl'   => 'http://www.daklutz.com',
-    'License'     => 'GPLv3',
+    'License'     => 'GPLv2',
     'SettingsUrl' => '/yaga/settings',
-	  'SettingsPermission' => 'Garden.Settings.Manage',
+    'SettingsPermission' => 'Garden.Settings.Manage',
 
     // Application requirements
-    'RequiredApplications' => array('Vanilla' => '2.1'),
+    'RequiredApplications' => array('Vanilla' => '2.2'),
 
     // Application-specific permissions
     'RegisterPermissions'  => array(
@@ -26,5 +26,6 @@ $ApplicationInfo['Yaga'] = array(
         'Yaga.Badges.View'      => 1, // Can a user view badges?
         'Yaga.Ranks.Add'        => 0, // Can a user assign ranks manually?
         'Yaga.Ranks.Manage'     => 0, // Can a user adit/edit/delete ranks from the system?
+        'Yaga.Ranks.View'       => 1, // Can a user view ranks?
     )
 );

@@ -31,6 +31,7 @@ class ActionController extends DashboardController {
     $this->AddJsFile('jquery-ui-1.10.0.custom.min.js');
     $this->AddJsFile('admin.actions.js');
     $this->AddCssFile('reactions.css');
+    $this->removeCssFile('magnific-popup.css');
   }
 
   /**
@@ -89,22 +90,17 @@ class ActionController extends DashboardController {
       }
     }
     else {
-      if($this->Form->Save()) {
-        if($Edit) {
-          $Action = $this->ActionModel->GetByID($this->Form->GetFormValue('ActionID'));
-        }
-        else {
-          $Action = $this->ActionModel->GetNewestAction();
-        }
-
-        $NewActionRow = ActionRow($Action);
+      $NewID = $this->Form->Save();
+      if($NewID) {
+        $Action = $this->ActionModel->GetByID($NewID);
+        $ActionRow = RenderActionRow($Action);
 
         if($Edit) {
-          $this->JsonTarget('#ActionID_' . $this->Action->ActionID, $NewActionRow, 'ReplaceWith');
+          $this->JsonTarget('#ActionID_' . $this->Action->ActionID, $ActionRow, 'ReplaceWith');
           $this->InformMessage(T('Yaga.ActionUpdated'));
         }
         else {
-          $this->JsonTarget('#Actions', $NewActionRow, 'Append');
+          $this->JsonTarget('#Actions', $ActionRow, 'Append');
           $this->InformMessage(T('Yaga.Action.Added'));
         }
       }

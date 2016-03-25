@@ -14,16 +14,22 @@ class LeaderBoardModule extends Gdn_Module {
    * 
    * @var string
    */
-  protected $Title = FALSE;
+  public $Title = FALSE;
+  
+  /**
+   * Holds the slot type of the module.
+   * 
+   * @var string Valid options are 'a': All Time, 'w': Weekly, 'm':
+   * Monthly, 'y': Yearly 
+   */
+  public $SlotType = 'a';
 
   
   /**
-   * Don't do anything special on construct.
-   * 
-   * @param string $Sender
+   * Set the application folder on construct.
    */
   public function __construct($Sender = '') {
-    parent::__construct($Sender);
+    parent::__construct($Sender, 'yaga');
   }
 
   /**
@@ -34,21 +40,43 @@ class LeaderBoardModule extends Gdn_Module {
   public function AssetTarget() {
     return 'Panel';
   }
-
+  
   /**
-   * Load up the leaderboard module data based on a specific time slot
+   * Set the slot type of the leaderboard. Defaults to 'a' for all time.
    * 
    * @param string $SlotType Valid options are 'a': All Time, 'w': Weekly, 'm':
    * Monthly, 'y': Yearly
    */
-  public function GetData($SlotType = 'a') {
+  public function GetData() {
+    switch(strtolower($this->SlotType)) {
+      case 'w':
+        $this->Title = T('Yaga.LeaderBoard.Week');
+        $slot = 'w';
+        break;
+      case 'm':
+        $this->Title = T('Yaga.LeaderBoard.Month');
+        $slot = 'm';
+        break;
+      case 'y':
+        $this->Title = T('Yaga.LeaderBoard.Year');
+        $slot = 'y';
+        break;
+      default:
+      case 'a':
+        $this->Title = T('Yaga.LeaderBoard.AllTime');
+        $slot = 'a';
+        break;
+    }
+
     // Get the leaderboard data
     $Leaders = Gdn::SQL()
             ->Select('up.Points as YagaPoints, u.*')
             ->From('User u')
             ->Join('UserPoints up', 'u.UserID = up.UserID')
-            ->Where('up.SlotType', $SlotType)
-            ->Where('up.TimeSlot', gmdate('Y-m-d', Gdn_Statistics::TimeSlotStamp($SlotType)))
+            ->Where('u.Banned', 0)
+            ->Where('u.Deleted', 0)
+            ->Where('up.SlotType', $slot)
+            ->Where('up.TimeSlot', gmdate('Y-m-d', Gdn_Statistics::TimeSlotStamp($slot)))
             ->Where('up.Source', 'Total')
             ->OrderBy('up.Points', 'desc')
             ->Limit(C('Yaga.LeaderBoard.Limit', 10), 0)
@@ -56,21 +84,6 @@ class LeaderBoardModule extends Gdn_Module {
             ->Result();
 
     $this->Data = $Leaders;
-    switch($SlotType) {
-      case 'a':
-        $this->Title = T('Yaga.LeaderBoard.AllTime');
-        break;
-      case 'w':
-        $this->Title = T('Yaga.LeaderBoard.Week');
-        break;
-      case 'm':
-        $this->Title = T('Yaga.LeaderBoard.Month');
-        break;
-      case 'y':
-        $this->Title = T('Yaga.LeaderBoard.Year');
-        break;
-    }
-
   }
 
   /**
@@ -79,18 +92,10 @@ class LeaderBoardModule extends Gdn_Module {
    * @return string
    */
   public function ToString() {
-    if(!$this->Data && !$this->Title) {
-      $this->GetData();
-    }
-
-    if($this->Visible && count($this->Data)) {
-      $ViewPath = $this->FetchViewLocation('leaderboard', 'yaga');
-      $String = '';
-      ob_start();
-      include ($ViewPath);
-      $String = ob_get_contents();
-      @ob_end_clean();
-      return $String;
+    $this->GetData();
+    
+    if(count($this->Data)) {
+      return parent::ToString();
     }
     return '';
   }

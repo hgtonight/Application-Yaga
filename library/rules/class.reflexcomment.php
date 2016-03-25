@@ -39,17 +39,13 @@ class ReflexComment implements YagaRule{
 
   public function Validate($Criteria, $Form) {
     $Validation = new Gdn_Validation();
-    $Validation->ApplyRules(array(
-        array(
-          'Name' => 'Seconds', 'Validation' => array('Required', 'Integer')
-        )
-    ));
+    $Validation->ApplyRule('Seconds', array('Required', 'Integer'));
     $Validation->Validate($Criteria);
     $Form->SetValidationResults($Validation->Results());
   }
 
   public function Hooks() {
-    return array('CommentModel_BeforeNotification');
+    return array('commentModel_beforeNotification');
   }
 
   public function Description() {

@@ -26,6 +26,7 @@ $Definition['Tooltip'] = 'Tooltip';
 $Definition['Weeks'] = 'Weeks';
 $Definition['Yaga.Settings'] = 'Yaga Settings';
 $Definition['Years'] = 'Years';
+$Definition['Yaga.MenuLinks.Show'] = 'Show links in the main menu that describe your Yaga configuration';
 
 // Actions
 $Definition['Yaga.Action'] = 'Action';
@@ -140,6 +141,7 @@ $Definition['Yaga.Rank.RecordActivity'] = 'Record this rank edit to the public a
 $Definition['Yaga.Rank.Updated'] = 'Rank updated successfully!';
 $Definition['Yaga.Ranks'] = 'Ranks';
 $Definition['Yaga.Ranks.AgeReq'] = 'Age Required';
+$Definition['Yaga.Ranks.All'] = 'All Ranks';
 $Definition['Yaga.Ranks.Desc'] = "Ranks are awarded to users based on their account age, accumulated points, and total posts. Ranks have associated perks that can be used to alter the user's experience.";
 $Definition['Yaga.Ranks.Manage'] = 'Manage Ranks';
 $Definition['Yaga.Ranks.Notify'] = 'Notify me when I am promoted in rank.';
@@ -149,6 +151,15 @@ $Definition['Yaga.Ranks.RequiredAgeDNC'] = 'Account can be any age';
 $Definition['Yaga.Ranks.RequiredAgeFormat'] = 'Account must be at least %s old.';
 $Definition['Yaga.Ranks.Settings.Desc'] = 'You can manage the available ranks here. Disabled ranks will not be awarded automatically. Drag items to sort the promotion order.';
 $Definition['Yaga.Ranks.Use'] = 'Use Ranks';
+$Definition['Yaga.Ranks.Story.Manual'] = 'This rank is given out manually';
+$Definition['Yaga.Ranks.Story.Auto'] = 'This rank will be automatically awarded';
+$Definition['Yaga.Ranks.Story.PostReq'] = 'has %s posts';
+$Definition['Yaga.Ranks.Story.PostAndPointReq'] = '%s points';
+$Definition['Yaga.Ranks.Story.PointReq'] = 'has %s points';
+$Definition['Yaga.Ranks.Story.AgeReq'] = 'is at least %s old';
+$Definition['Yaga.Ranks.Story.3Reqs'] = 'This rank will be awarded once your account %s, %s, and %s';
+$Definition['Yaga.Ranks.Story.2Reqs'] = 'This rank will be awarded once your account %s and %s';
+$Definition['Yaga.Ranks.Story.1Reqs'] = 'This rank will be awarded once your account %s';
 
 // Rules
 $Definition['Yaga.Rules.AwardCombo'] = 'Award Combo';
@@ -211,6 +222,8 @@ $Definition['Yaga.Rules.ReflexComment.Desc'] = "Award this badge if a comment is
 $Definition['Yaga.Rules.SocialConnection'] = 'Social Connections';
 $Definition['Yaga.Rules.SocialConnection.Criteria.Head'] = 'Which Social Network?';
 $Definition['Yaga.Rules.SocialConnection.Desc'] = 'Award this badge if the user has connected to the target social network.';
+$Definition['Yaga.Rules.UnknownRule'] = 'Unknown Rule';
+$Definition['Yaga.Rules.UnknownRule.Desc'] = 'This badge will <strong>never</strong> be awarded <em>automatically</em>. This is selected if the rule class saved in the database is no longer available. This is most likely due to a plugin providing a rule and no longer being enabled.';
 
 // Transport
 $Definition['Yaga.Export'] = 'Export Yaga Configuration';

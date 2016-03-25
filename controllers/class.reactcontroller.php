@@ -49,28 +49,35 @@ class ReactController extends Gdn_Controller {
       throw PermissionException();
     }
 
-    switch($Type) {
-      case 'discussion':
-        $Model = new DiscussionModel();
-        $AnchorID = '#Discussion_';
-        break;
-      case 'comment':
-        $Model = new CommentModel();
-        $AnchorID = '#Comment_';
-        break;
-      case 'activity':
-        $Model = new ActivityModel();
-        $AnchorID = '#Activity_';
-        break;
-      default:
+    $Item = null;
+    $AnchorID = '#' . ucfirst($Type) . '_';
+    $ItemOwnerID = 0;
+
+    if(in_array($Type, array('discussion', 'comment'))) {
+      $Item = GetRecord($Type, $ID);
+    }
+    else if($Type == 'activity') {
+      $Model = new ActivityModel();
+      $Item = $Model->GetID($ID, DATASET_TYPE_ARRAY);
+    }
+    else {
+      $this->EventArguments = array(
+        'TypeFound' => FALSE,
+        'TargetType' => $Type,
+        'TargetID' => $ID,
+        'Item' => &$Item,
+        'AnchorID' => &$AnchorID,
+        'ItemOwnerID' => &$ItemOwnerID
+      );
+      $this->FireEvent('CustomType');
+      
+      if(!$this->EventArguments['TypeFound']) {
         throw new Gdn_UserException(T('Yaga.Action.InvalidTargetType'));
-        break;
+      }
     }
 
-    $Item = $Model->GetID($ID);
-
     if($Item) {
-      $Anchor = $AnchorID . $ID . ' .ReactMenu';
+      $Anchor = $AnchorID . $ID;
     }
     else {
       throw new Gdn_UserException(T('Yaga.Action.InvalidTargetID'));
@@ -81,13 +88,12 @@ class ReactController extends Gdn_Controller {
     switch($Type) {
       case 'comment':
       case 'discussion':
-        $ItemOwnerID = $Item->InsertUserID;
+        $ItemOwnerID = $Item['InsertUserID'];
         break;
       case 'activity':
         $ItemOwnerID = $Item['RegardingUserID'];
         break;
       default:
-        throw new Gdn_UserException(T('Yaga.Action.InvalidTargetType'));
         break;
     }
 
@@ -98,7 +104,8 @@ class ReactController extends Gdn_Controller {
     // It has passed through the gauntlet
     $this->ReactionModel->Set($ID, $Type, $ItemOwnerID, $UserID, $ActionID);
 
-    $this->JsonTarget($Anchor, RenderReactionList($ID, $Type, FALSE), 'ReplaceWith');
+    $this->JsonTarget($Anchor . ' .ReactMenu', RenderReactionList($ID, $Type), 'ReplaceWith');
+    $this->JsonTarget($Anchor . ' .ReactionRecord', RenderReactionRecord($ID, $Type), 'ReplaceWith');
 
     // Don't render anything
     $this->Render('Blank', 'Utility', 'Dashboard');

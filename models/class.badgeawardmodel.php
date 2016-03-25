@@ -74,7 +74,7 @@ class BadgeAwardModel extends Gdn_Model {
         ));
 
         // Record the points for this badge
-        UserModel::GivePoints($UserID, $Badge->AwardValue, 'Badge');
+        Yaga::GivePoints($UserID, $Badge->AwardValue, 'Badge');
 
         // Increment the user's badge count
         $this->SQL->Update('User')
@@ -93,10 +93,10 @@ class BadgeAwardModel extends Gdn_Model {
             'ActivityType' => 'BadgeAward',
             'ActivityUserID' => $UserID,
             'RegardingUserID' => $InsertUserID,
-            'Photo' => $Badge->Photo,
+            'Photo' => Url($Badge->Photo, TRUE),
             'RecordType' => 'Badge',
             'RecordID' => $BadgeID,
-            'Route' => '/badges/detail/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name),
+            'Route' => '/yaga/badges/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name),
             'HeadlineFormat' => T('Yaga.Badge.EarnedHeadlineFormat'),
             'Data' => array(
                 'Name' => $Badge->Name

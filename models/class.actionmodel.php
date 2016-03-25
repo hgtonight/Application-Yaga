@@ -59,21 +59,6 @@ class ActionModel extends Gdn_Model {
   }
 
   /**
-   * Gets the last inserted Action
-   *
-   * @return DataSet
-   */
-  public function GetNewestAction() {
-    $Action = $this->SQL
-                    ->Select()
-                    ->From('Action')
-                    ->OrderBy('ActionID', 'desc')
-                    ->Get()
-                    ->FirstRow();
-    return $Action;
-  }
-
-  /**
    * Determine if a specified action exists
    *
    * @param int $ActionID

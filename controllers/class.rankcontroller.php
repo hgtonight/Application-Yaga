@@ -30,6 +30,7 @@ class RankController extends DashboardController {
     }
     $this->AddJsFile('jquery-ui-1.10.0.custom.min.js');
     $this->AddJsFile('admin.ranks.js');
+    $this->removeCssFile('magnific-popup.css');
   }
 
   /**
@@ -51,12 +52,13 @@ class RankController extends DashboardController {
 
       if($TmpImage) {
         // Generate the target image name
-        $TargetImage = $Upload->GenerateTargetName(PATH_UPLOADS);
+        $TargetImage = $Upload->GenerateTargetName(PATH_UPLOADS, FALSE);
         $ImageBaseName = pathinfo($TargetImage, PATHINFO_BASENAME);
 
         // Save the uploaded image
         $Parts = $Upload->SaveAs($TmpImage, 'yaga' . DS . $ImageBaseName);
-        $RelativeUrl = StringBeginsWith($Parts['Url'], Gdn_Url::WebRoot(TRUE), TRUE, TRUE);
+        $AssetRoot = Gdn::Request()->UrlDomain(TRUE).Gdn::Request()->AssetRoot();
+        $RelativeUrl = StringBeginsWith($Parts['Url'], $AssetRoot, TRUE, TRUE);
         SaveToConfig('Yaga.Ranks.Photo', $RelativeUrl);
 
         if(C('Yaga.Ranks.Photo') == $Parts['SaveName']) {
@@ -196,7 +198,7 @@ class RankController extends DashboardController {
     $this->Permission('Yaga.Ranks.Manage');
     $this->AddSideMenu('rank/settings');
 
-    $Rank = $this->RankModel->Get($RankID);
+    $Rank = $this->RankModel->GetByID($RankID);
 
     if($Rank->Enabled) {
       $Enable = FALSE;
@@ -211,7 +213,7 @@ class RankController extends DashboardController {
 
     $Slider = Wrap(Wrap(Anchor($ToggleText, 'rank/toggle/' . $Rank->RankID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
     $this->RankModel->Enable($RankID, $Enable);
-    $this->JsonTarget('#RankID_' . $RankID . ' td:nth-child(5)', $Slider, 'ReplaceWith');
+    $this->JsonTarget('#RankID_' . $RankID . ' td:nth-child(6)', $Slider, 'ReplaceWith');
     $this->Render('Blank', 'Utility', 'Dashboard');
   }
 

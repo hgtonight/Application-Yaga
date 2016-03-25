@@ -41,20 +41,14 @@ class HolidayVisit implements YagaRule {
 
   public function Validate($Criteria, $Form) {
     $Validation = new Gdn_Validation();
-    $Validation->ApplyRules(array(
-        array(
-          'Name' => 'Month', 'Validation' => array('Required', 'Integer')
-        ),
-        array(
-          'Name' => 'Day', 'Validation' => array('Required', 'Integer')
-        )
-    ));
+    $Validation->ApplyRule('Month', array('Required', 'Integer'));
+    $Validation->ApplyRule('Day', array('Required', 'Integer'));
     $Validation->Validate($Criteria);
     $Form->SetValidationResults($Validation->Results());
   }
 
   public function Hooks() {
-    return array('Gdn_Dispatcher_AppStartup');
+    return array('gdn_dispatcher_appStartup');
   }
 
   public function Description() {

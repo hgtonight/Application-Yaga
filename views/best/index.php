@@ -1,7 +1,7 @@
 <?php if(!defined('APPLICATION')) exit();
 /* Copyright 2014 Zachary Doll */
 
-$Contents = $this->_Content;
+$Contents = $this->_Content->Content;
 
 echo '<ul class="DataList Compact BlogList">';
 foreach ($Contents as $Content) {
@@ -14,17 +14,9 @@ foreach ($Contents as $Content) {
    $ContentID = GetValue("{$ContentType}ID", $Content);
    $Author = GetValue('Author', $Content);
 
-   switch (strtolower($ContentType)) {
-      case 'comment':
-         $ContentURL = CommentUrl($Content);
-         break;
-      case 'discussion':
-         $ContentURL = DiscussionUrl($Content);
-         break;
-   }
 ?>
    <li id="<?php echo "{$ContentType}_{$ContentID}"; ?>" class="Item">
-     <h3><?php echo Anchor(Gdn_Format::Text($Content['Name'], FALSE), $ContentURL); ?></h3>
+     <h3><?php echo Anchor(Gdn_Format::Text($Content['Name'], FALSE), $Content['ContentURL']); ?></h3>
      <div class="Item-Header">
        <div class="AuthorWrap">
          <span class="Author">
@@ -41,7 +33,7 @@ foreach ($Contents as $Content) {
       </div>
       <div class="Meta">
          <span class="MItem DateCreated">
-            <?php echo Anchor(Gdn_Format::Date($Content['DateInserted'], 'html'), $ContentURL, 'Permalink', array('rel' => 'nofollow')); ?>
+            <?php echo Anchor(Gdn_Format::Date($Content['DateInserted'], 'html'), $Content['ContentURL'], 'Permalink', array('rel' => 'nofollow')); ?>
          </span>
          <?php
          // Include source if one was set
@@ -58,7 +50,7 @@ foreach ($Contents as $Content) {
          </div>
          <?php
          if(C('Yaga.Reactions.Enabled') && Gdn::Session()->CheckPermission('Yaga.Reactions.View')) {
-            RenderReactionRecord($ContentID, strtolower($ContentType));
+            echo RenderReactionRecord($ContentID, strtolower($ContentType));
          }
          ?>
        </div>

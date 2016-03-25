@@ -50,20 +50,14 @@ class PostCount implements YagaRule{
 
   public function Validate($Criteria, $Form) {
     $Validation = new Gdn_Validation();
-    $Validation->ApplyRules(array(
-        array(
-          'Name' => 'Target', 'Validation' => array('Required', 'Integer')
-        ),
-        array(
-          'Name' => 'Comparison', 'Validation' => 'Required'
-        )
-    ));
+    $Validation->ApplyRule('Target', array('Required', 'Integer'));
+    $Validation->ApplyRule('Comparison', 'Required');
     $Validation->Validate($Criteria);
     $Form->SetValidationResults($Validation->Results());
   }
 
   public function Hooks() {
-    return array('Gdn_Dispatcher_AppStartup');
+    return array('gdn_dispatcher_appStartup');
   }
 
   public function Description() {

@@ -126,7 +126,7 @@ class RankModel extends Gdn_Model {
       }
     }
     
-    return self::$_Perks[$RankID];
+    return (array_key_exists($RankID, self::$_Perks)) ? self::$_Perks[$RankID] : array();
   }
   
   /**
@@ -176,7 +176,7 @@ class RankModel extends Gdn_Model {
    */
   public function Delete($RankID) {
     $Rank = $this->GetByID($RankID);
-    if(!$Rank) {
+    if($Rank) {
       $this->SQL->Delete('Rank', array('RankID' => $RankID));
       return TRUE;
     }
@@ -192,6 +192,14 @@ class RankModel extends Gdn_Model {
    */
   public function Set($RankID, $UserID, $Activity = FALSE) {
     $Rank = $this->GetByID($RankID);
+    $UserModel = Gdn::UserModel();
+    $OldRankID = $UserModel->GetID($UserID)->RankID;
+    
+    // Don't bother setting a rank that they already have
+    if($Rank->RankID == $OldRankID) {
+        return;
+    }
+    
     if($Activity) {
       // Throw up a promotion activity
       $ActivityModel = new ActivityModel();
@@ -219,10 +227,6 @@ class RankModel extends Gdn_Model {
 
       $ActivityModel->SaveQueue();
     }
-    
-    // Update the rank id
-    $UserModel = Gdn::UserModel();
-    $OldRankID = $UserModel->GetID($UserID)->RankID;
     
     $UserModel->SetField($UserID, 'RankID', $Rank->RankID);
 

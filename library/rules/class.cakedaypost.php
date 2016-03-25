@@ -14,13 +14,16 @@ class CakeDayPost implements YagaRule {
     // Determine if today is the target day
     $CakeDate = strtotime($User->DateInserted);
     
+    $CakeYear = date('Y', $CakeDate);
     $CakeMonth = date('n', $CakeDate);
     $CakeDay = date('j', $CakeDate);
+    $TodaysYear = date('Y');
     $TodaysMonth = date('n');
     $TodaysDay = date('j');
 
     if($CakeMonth == $TodaysMonth
-            && $CakeDay == $TodaysDay) {
+            && $CakeDay == $TodaysDay
+            && $CakeYear != $TodaysYear) {
       return TRUE;
     }
     else {
@@ -37,7 +40,7 @@ class CakeDayPost implements YagaRule {
   }
 
   public function Hooks() {
-    return array('DiscussionModel_AfterSaveDiscussion', 'CommentModel_AfterSaveComment', 'ActivityModel_BeforeSaveComment');
+    return array('discussionModel_afterSaveDiscussion', 'commentModel_afterSaveComment', 'activityModel_beforeSaveComment');
   }
 
   public function Description() {
