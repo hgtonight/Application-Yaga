@@ -14,13 +14,16 @@ class CakeDayPost implements YagaRule {
     // Determine if today is the target day
     $CakeDate = strtotime($User->DateInserted);
     
+    $CakeYear = date('Y', $CakeDate);
     $CakeMonth = date('n', $CakeDate);
     $CakeDay = date('j', $CakeDate);
+    $TodaysYear = date('Y');
     $TodaysMonth = date('n');
     $TodaysDay = date('j');
 
     if($CakeMonth == $TodaysMonth
-            && $CakeDay == $TodaysDay) {
+            && $CakeDay == $TodaysDay
+            && $CakeYear != $TodaysYear) {
       return TRUE;
     }
     else {
