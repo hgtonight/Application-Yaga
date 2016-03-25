@@ -304,7 +304,7 @@ class YagaHooks implements Gdn_IPlugin {
     if($Rank && $Rank->RankID != $User->RankID) {
       // Only promote automatically
       $OldRank = $RankModel->GetByID($User->RankID);
-      if($OldRank->Sort <= $Rank->Sort) {
+      if($OldRank->Sort < $Rank->Sort) {
         $RankModel->Set($Rank->RankID, $UserID, TRUE);
       }
     }
