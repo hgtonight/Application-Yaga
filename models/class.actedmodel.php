@@ -368,11 +368,10 @@ class ActedModel extends Gdn_Model {
       foreach($Section as $Item) {
         $ItemField = GetValue($Field, $Item);
         $Interleaved[$ItemField] = array_merge($Item, array('ItemType' => $SectionType));
-
-        ksort($Interleaved);
       }
     }
 
+    ksort($Interleaved);
     $Interleaved = array_reverse($Interleaved);
     return $Interleaved;
   }
