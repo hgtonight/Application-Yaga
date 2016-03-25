@@ -8,7 +8,7 @@ It is released under the GPLv2 and may be released under a different license _**
 
 Yaga requires:
 
-* Vanilla 2.2.x (Garden is the actual requirement
+* Vanilla 2.2.x (Garden is the actual requirement)
 * Pretty URLs enabled
 
 ## Documentation
