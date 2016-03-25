@@ -11,6 +11,10 @@ Yaga requires:
 * Vanilla 2.2.x (Garden is the actual requirement)
 * Pretty URLs enabled
 
+## Contributing
+
+Please contribute fixes against the `develop` branch.
+
 ## Documentation
 
 Yaga's [main documentation page is here](http://hgtonight.github.io/Application-Yaga/).
