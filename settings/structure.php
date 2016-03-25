@@ -26,7 +26,7 @@ $Construct->Table('Reaction')
         ->Set($Explicit, $Drop);
 
 $result = $SQL->query("SHOW INDEX FROM ${Px}Reaction WHERE Key_name = 'IX_ParentID_ParentType'")->result(); 
-if(!$result) {
+if(!$result && !$Construct->CaptureOnly) {
   $SQL->query("ALTER TABLE ${Px}Reaction ADD INDEX IX_ParentID_ParentType (ParentID, ParentType)");
 }
 
