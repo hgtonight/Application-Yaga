@@ -1,9 +1,9 @@
 <?php
-/* Copyright 2013-2015 Zachary Doll */
+/* Copyright 2013-2016 Zachary Doll */
 $ApplicationInfo['Yaga'] = array(
     'Name'        => 'Yet Another Gamification Application',
     'Description' => 'Yaga provides customizable reactions, badges, and ranks for your Vanilla forum software. Increase user activity by letting users react to content with emotions. Give users badges based on statistics and engagement in your community. Create and award custom badges for special events and recognition. Award Ranks which can confer different (configurable) permissions based on community perception and participation.',
-    'Version'     => '1.0.0-alpha',
+    'Version'     => '1.1',
     'Url'         => 'http://github.com/hgtonight/application-yaga',
     'Author'      => 'Zachary Doll',
     'AuthorEmail' => 'hgtonight@daklutz.com',
