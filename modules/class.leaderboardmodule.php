@@ -76,7 +76,7 @@ class LeaderBoardModule extends Gdn_Module {
             ->Where('u.Banned', 0)
             ->Where('u.Deleted', 0)
             ->Where('up.SlotType', $slot)
-            ->Where('up.TimeSlot', gmdate('Y-m-d', Gdn_Statistics::TimeSlotStamp($slot)))
+            ->Where('up.TimeSlot', Gdn_Format::toDate(Gdn_Statistics::TimeSlotStamp($slot)))
             ->Where('up.Source', 'Total')
             ->Where('up.Points >', 0)
             ->OrderBy('up.Points', 'desc')

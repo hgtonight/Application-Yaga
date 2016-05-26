@@ -185,7 +185,7 @@ class ReactionModel extends Gdn_Model {
         $Reaction = $this->SQL
               ->Update('Reaction')
               ->Set('ActionID', $ActionID)
-              ->Set('DateInserted', date(DATE_ISO8601))
+              ->Set('DateInserted', Gdn_Format::toDateTime())
               ->Where('ParentID', $ID)
               ->Where('ParentType', $Type)
               ->Where('InsertUserID', $UserID)
@@ -203,7 +203,7 @@ class ReactionModel extends Gdn_Model {
                       'ParentType' => $Type,
                       'ParentAuthorID' => $AuthorID,
                       'InsertUserID' => $UserID,
-                      'DateInserted' => date(DATE_ISO8601)));
+                      'DateInserted' => Gdn_Format::toDateTime()));
       $EventArgs['Exists'] = TRUE;
     }
 

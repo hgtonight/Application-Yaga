@@ -70,7 +70,7 @@ class BadgeAwardModel extends Gdn_Model {
             'UserID' => $UserID,
             'InsertUserID' => $InsertUserID,
             'Reason' => $Reason,
-            'DateInserted' => date(DATE_ISO8601)
+            'DateInserted' => Gdn_Format::toDateTime()
         ));
 
         // Record the points for this badge
