@@ -480,8 +480,12 @@ class YagaHooks implements Gdn_IPlugin {
         $this->RevokePermission($User, $PerkKey);
       }
       else {
-        // Do nothing
-        // TODO: look into firing a custom event
+        $Sender->EventArguments['PerkType'] = $PerkType;
+        $Sender->EventArguments['PerkKey'] = $PerkKey;
+        $Sender->EventArguments['PerkValue'] = $PerkValue;
+        $Sender->EventArguments['PerkHandled'] = false;
+        $Sender->fireAs('Yaga');
+        $Sender->fireEvent('CustomPerk');
       }
     }
   }
