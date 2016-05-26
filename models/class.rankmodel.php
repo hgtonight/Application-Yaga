@@ -219,7 +219,7 @@ class RankModel extends Gdn_Model {
       );
 
       // Create a public record
-      $ActivityModel->Queue($Activity, FALSE); // TODO: enable the grouped notifications after issue #1776 is resolved , array('GroupBy' => 'Story'));
+      $ActivityModel->Queue($Activity, FALSE, array('GroupBy' => 'Story'));
 
       // Notify the user of the award
       $Activity['NotifyUserID'] = $UserID;

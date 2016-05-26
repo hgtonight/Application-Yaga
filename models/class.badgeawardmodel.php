@@ -105,7 +105,7 @@ class BadgeAwardModel extends Gdn_Model {
         );
 
         // Create a public record
-        $ActivityModel->Queue($Activity, FALSE); // TODO: enable the grouped notifications after issue #1776 is resolved , array('GroupBy' => 'Route'));
+        $ActivityModel->Queue($Activity, FALSE, array('GroupBy' => 'Route'));
         // Notify the user of the award
         $Activity['NotifyUserID'] = $UserID;
         $ActivityModel->Queue($Activity, 'BadgeAward', array('Force' => TRUE));
