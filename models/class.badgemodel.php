@@ -32,7 +32,7 @@ class BadgeModel extends Gdn_Model {
    */
   public function Get($OrderFields = 'Sort', $OrderDirection = 'asc', $Limit = false, $PageNumber = false) {
     if(empty(self::$_Badges)) {
-      self::$_Badges = $this->
+      self::$_Badges = $this
               ->Get($OrderFields, $OrderDirection, $Limit, $PageNumber)
               ->Result();
     }
