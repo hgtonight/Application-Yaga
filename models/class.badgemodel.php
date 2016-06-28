@@ -30,13 +30,10 @@ class BadgeModel extends Gdn_Model {
    *
    * @return DataSet
    */
-  public function Get() {
+  public function Get($OrderFields = 'Sort', $OrderDirection = 'asc', $Limit = false, $PageNumber = false) {
     if(empty(self::$_Badges)) {
-      self::$_Badges = $this->SQL
-              ->Select()
-              ->From('Badge')
-              ->OrderBy('Sort')
-              ->Get()
+      self::$_Badges = $this
+              ->Get($OrderFields, $OrderDirection, $Limit, $PageNumber)
               ->Result();
     }
     return self::$_Badges;
@@ -63,8 +60,8 @@ class BadgeModel extends Gdn_Model {
    * Total number of badges in the system
    * @return int
    */
-  public function GetCount() {
-    return count($this->Get());
+  public function GetCount($Wheres = '') {
+    return count($this->GetWhere($Wheres));
   }
 
   /**
@@ -108,7 +105,7 @@ class BadgeModel extends Gdn_Model {
    * @throws Exception
    * @return boolean
    */
-  public function Delete($BadgeID) {
+  public function DeleteID($BadgeID, $Options = []) {
     $Badge = $this->GetByID($BadgeID);
     if(!empty($Badge)) {
       try {
