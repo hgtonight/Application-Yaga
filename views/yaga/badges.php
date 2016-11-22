@@ -33,7 +33,7 @@ foreach($this->Data('Badges') as $Badge) {
           ) .
           Wrap(
                   Wrap($Badge->Description, 'span', array('class' => 'MItem BadgeDescription')) .
-                  Wrap($Badge->AwardValue . ' points.', 'span', array('class' => 'MItem BadgePoints')) .
+                  Wrap(plural($Badge->AwardValue, '%s point', '%s points'), 'span', array('class' => 'MItem BadgePoints')) .
                   WrapIf($AwardDescription, 'p'),
                   'div',
                   array('class' => 'Meta')),

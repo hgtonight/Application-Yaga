@@ -11,7 +11,7 @@ class CommentMarathon implements YagaRule {
 
   public function Award($Sender, $User, $Criteria) {
     $Target = $Criteria->Target;
-    $TargetDate = date(DATE_ISO8601, strtotime($Criteria->Duration . ' ' . $Criteria->Period . ' ago'));
+    $TargetDate = Gdn_Format::toDateTime(strtotime($Criteria->Duration . ' ' . $Criteria->Period . ' ago'));
 
     $SQL = Gdn::SQL();
     $Count = $SQL->Select('count(CommentID) as Count')

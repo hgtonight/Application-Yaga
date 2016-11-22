@@ -22,9 +22,9 @@ class RulesController extends Gdn_Controller {
   }
 
   /**
-   * This checks the cache for current rule set and expires once a day.
-   * It loads all php files in the rules folder and selects only those that
-   * implement the 'YagaRule' interface.
+   * This checks the cache for current rule set and expires once a day by
+   * default. It loads all php files in the rules folder and selects only those
+   * that implement the 'YagaRule' interface.
    *
    * @return array Rules that are currently available to use. The class names
    * are keys and the friendly names are values.
@@ -44,7 +44,6 @@ class RulesController extends Gdn_Controller {
         }
       }
       
-      // TODO: Don't reuse badge model?
       $Model = Yaga::BadgeModel();
       $Model->EventArguments['Rules'] = &$TempRules;
       $Model->FireAs = 'Yaga';

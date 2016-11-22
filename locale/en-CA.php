@@ -27,6 +27,8 @@ $Definition['Weeks'] = 'Weeks';
 $Definition['Yaga.Settings'] = 'Yaga Settings';
 $Definition['Years'] = 'Years';
 $Definition['Yaga.MenuLinks.Show'] = 'Show links in the main menu that describe your Yaga configuration';
+$Definition['%s points'] = '%s points';
+$Definition['%s point'] = '%s point';
 
 // Actions
 $Definition['Yaga.Action'] = 'Action';

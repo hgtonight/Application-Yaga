@@ -124,8 +124,8 @@ class YagaHooks implements Gdn_IPlugin {
    */
   public function UserInfoModule_OnBasicInfo_Handler($Sender) {
     if(C('Yaga.Badges.Enabled')) {
-      echo '<dd class="Badges">' . $Sender->User->CountBadges . '</dd>';
       echo '<dt class="Badges">' . T('Yaga.Badges', 'Badges') . '</dt> ';
+      echo '<dd class="Badges">' . $Sender->User->CountBadges . '</dd>';
     }
   }
 
@@ -256,6 +256,9 @@ class YagaHooks implements Gdn_IPlugin {
    * @param ProfileController $Sender
    */
   public function ProfileController_AddProfileTabs_Handler($Sender) {
+    if(!C('Yaga.Reactions.Enabled')) {
+      return;
+    }
     if(is_object($Sender->User) && $Sender->User->UserID > 0) {
       $Sender->AddProfileTab(Sprite('SpBestOf', 'SpMod Sprite') . ' ' . T('Yaga.BestContent'), 'profile/best/' . $Sender->User->UserID . '/' . urlencode($Sender->User->Name), 'Best');
     }
@@ -477,8 +480,12 @@ class YagaHooks implements Gdn_IPlugin {
         $this->RevokePermission($User, $PerkKey);
       }
       else {
-        // Do nothing
-        // TODO: look into firing a custom event
+        $Sender->EventArguments['PerkType'] = $PerkType;
+        $Sender->EventArguments['PerkKey'] = $PerkKey;
+        $Sender->EventArguments['PerkValue'] = $PerkValue;
+        $Sender->EventArguments['PerkHandled'] = false;
+        $Sender->fireAs('Yaga');
+        $Sender->fireEvent('CustomPerk');
       }
     }
   }

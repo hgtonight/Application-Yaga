@@ -5,11 +5,6 @@ echo '<div class="Box Leaderboard">';
 echo '<h4>' . $this->Title . '</h4>';
 echo '<ul class="PanelInfo">';
 foreach($this->Data as $Leader) {
-
-  // Don't show users that have 0 or negative points
-  if($Leader->Points <= 0) {
-    break;
-  }
   echo Wrap(
           UserPhoto($Leader) . ' ' .
           UserAnchor($Leader) . ' ' .
