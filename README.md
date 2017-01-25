@@ -8,8 +8,8 @@ It is released under the GPLv2 and may be released under a different license _**
 
 Yaga requires:
 
-* Vanilla 2.2.x (Garden is the actual requirement)
-* Pretty URLs enabled
+* Vanilla 2.3.x (Garden is the actual requirement)
+* PHP 7.0
 
 ## Contributing
 
@@ -20,4 +20,4 @@ Please contribute fixes against the `develop` branch.
 Yaga's [main documentation page is here](http://hgtonight.github.io/Application-Yaga/).
 
 ---
-Copyright 2013 - 2016 © Zachary Doll
+Copyright 2013 - 2017 © Zachary Doll
