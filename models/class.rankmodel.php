@@ -36,13 +36,10 @@ class RankModel extends Gdn_Model {
    *
    * @return DataSet
    */
-  public function Get() {
+  public function Get($OrderFields = 'Sort', $OrderDirection = 'asc', $Limit = false, $PageNumber = false) {
     if(empty(self::$_Ranks)) {
-      self::$_Ranks = $this->SQL
-              ->Select()
-              ->From('Rank')
-              ->OrderBy('Sort')
-              ->Get()
+      self::$_Ranks = $this
+              ->Get($OrderFields, $OrderDirection, $Limit, $PageNumber)
               ->Result();
     }
     return self::$_Ranks;
@@ -53,8 +50,8 @@ class RankModel extends Gdn_Model {
    * 
    * @return int
    */
-  public function GetCount() {
-    return count($this->Get());
+  public function GetCount($Wheres = '') {
+    return count($this->GetWhere($Wheres));
   }
 
   /**
@@ -174,7 +171,7 @@ class RankModel extends Gdn_Model {
    * @param int $RankID
    * @return boolean
    */
-  public function Delete($RankID) {
+  public function DeleteID($RankID, $Options = []) {
     $Rank = $this->GetByID($RankID);
     if($Rank) {
       $this->SQL->Delete('Rank', array('RankID' => $RankID));
