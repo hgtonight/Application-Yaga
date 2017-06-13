@@ -14,6 +14,8 @@ class BadgeController extends DashboardController {
    * $this->ObjectName
    */
   public $Uses = array('Form', 'BadgeModel', 'BadgeAwardModel');
+  
+  private $EditFormFields = ['TransientKey', 'hpt', 'BadgeID', 'Name', 'Description', 'RuleClass', 'AwardValue', 'Checkboxes', 'Save', 'Enabled'];
 
   /**
    * Make this look like a dashboard page and add the resources
@@ -114,13 +116,7 @@ class BadgeController extends DashboardController {
 
       // Find the rule criteria
       $FormValues = $this->Form->FormValues(); 
-      $Criteria = array();
-      foreach($FormValues as $Key => $Value) {
-        if(substr($Key, 0, 7) == '_Rules/') {
-          $RealKey = substr($Key, 7);
-          $Criteria[$RealKey] = $Value;
-        }
-      }
+      $Criteria = array_diff_key($FormValues, array_flip($this->EditFormFields));
 
       // Validate the criteria
       $RuleClass = new $FormValues['RuleClass'];

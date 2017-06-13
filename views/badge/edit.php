@@ -60,14 +60,9 @@ echo $this->Form->Errors();
     ?>
   </li>
   <li id="Rule-Criteria">
-  <?php
-    // Save the Prefix for later
-    $Prefix = $this->Form->InputPrefix;
-    $this->Form->InputPrefix = $Prefix . '_Rules';
+    <?php
     echo $Rule->Form($this->Form);
-    // Restore the prefix
-    $this->Form->InputPrefix = $Prefix;
-  ?>
+    ?>
   </li>
   <li>
     <?php
