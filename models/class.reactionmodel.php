@@ -208,7 +208,8 @@ class ReactionModel extends Gdn_Model {
     }
 
     // Update the parent item score
-    $this->SetUserScore($ID, $Type, $UserID, $Score);
+    $TotalScore = $this->SetUserScore($ID, $Type, $UserID, $Score);
+    $EventArgs['TotalScore'] = $TotalScore;
     // Give the user points commesurate with reaction activity
     Yaga::GivePoints($AuthorID, $Points, 'Reaction');
     $EventArgs['Points'] = $Points;
