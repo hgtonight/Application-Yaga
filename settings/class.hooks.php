@@ -542,6 +542,7 @@ class YagaHooks implements Gdn_IPlugin {
    * @param mixed $Value
    */
   private function ApplyCustomConfigs($Name = NULL, $Value = NULL) {
+    SaveToConfig('Yaga.ConfBackup.'.$Name, C($Name, null), array('Save' => FALSE));
     SaveToConfig($Name, $Value, array('Save' => FALSE));
   }
 
@@ -864,5 +865,25 @@ class YagaHooks implements Gdn_IPlugin {
     include(CombinePaths(array(PATH_APPLICATIONS . DS . 'yaga' . DS . 'settings' . DS . 'about.php')));
     $Version = ArrayValue('Version', ArrayValue('Yaga', $ApplicationInfo, array()), 'Undefined');
     SaveToConfig('Yaga.Version', $Version);
+  }
+
+  /**
+   * Restore rank specific custom configs to site defaults.
+   *
+   * The rank feature allows custom config settings. In order to show divergent
+   * site settings correctly, those custom config settings have to be replaced
+   * by the original ones.
+   *
+   * @param SettingsController $Sender Instance of the calling class.
+   *
+   * @return void.
+   */
+  public function SettingsController_Render_Before($Sender) {
+    // If Ranks feature isn't used, there's nothing to do here.
+    if(!C('Yaga.Ranks.Enabled') == true) {
+      return;
+    }
+    // Restore backed up configs.
+    Gdn::config()->loadArray(C('Yaga.ConfBackup'));
   }
 }
