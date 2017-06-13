@@ -262,7 +262,7 @@ class ReactionModel extends Gdn_Model {
    * @param string $Type The type of the item (only supports 'discussion' and 'comment'
    * @param int $UserID The user that is scoring the item
    * @param int $Score What they give it
-   * @return boolean Whether or not the the request was successful
+   * @return int Total score if request was successful, FALSE if not.
    */
   private function SetUserScore($ID, $Type, $UserID, $Score) {
     $Model = FALSE;
@@ -278,8 +278,7 @@ class ReactionModel extends Gdn_Model {
     }
 
     if($Model) {
-      $Model->SetUserScore($ID, $UserID, $Score);
-      return TRUE;
+      return $Model->SetUserScore($ID, $UserID, $Score);
     }
     else {
       return FALSE;
