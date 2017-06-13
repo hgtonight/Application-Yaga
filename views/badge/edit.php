@@ -1,7 +1,7 @@
 <?php if(!defined('APPLICATION')) exit();
 /* Copyright 2013 Zachary Doll */
 
-// Gnab the rules so we can render the first criteria form by default
+// Grab the rules so we can render the first criteria form by default
 $Rules = RulesController::GetRules();
 $RuleClass = key($Rules);
 

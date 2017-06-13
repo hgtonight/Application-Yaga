@@ -113,7 +113,7 @@ class BadgeController extends DashboardController {
       }
 
       // Find the rule criteria
-      $FormValues = $this->Form->FormValues();     
+      $FormValues = $this->Form->FormValues(); 
       $Criteria = array();
       foreach($FormValues as $Key => $Value) {
         if(substr($Key, 0, 7) == '_Rules/') {
