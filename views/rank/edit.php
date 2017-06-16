@@ -48,13 +48,8 @@ echo $this->Form->Errors();
   echo Wrap(T('Yaga.Perks'), 'h3');
 ?>
 <ul>
-  <?php
-    // Save the Prefix for later
-    $Prefix = $this->Form->InputPrefix;
-    $this->Form->InputPrefix = $Prefix . '_Perks';
-    ?>
   <li>
-    <?php    
+    <?php
     echo $this->Form->Label('Role', 'Role');
     echo $this->Form->Dropdown('Role', $this->Data('Roles'), array('IncludeNULL' => TRUE));
     ?>
@@ -62,8 +57,8 @@ echo $this->Form->Errors();
   <li>
   <?php
   echo RenderPerkConfigurationForm('Garden.EditContentTimeout', 'Yaga.Perks.EditTimeout', array('0' => T('Authors may never edit'),
-                      '350' => sprintf(T('Authors may edit for %s'), T('5 minutes')), 
-                      '900' => sprintf(T('Authors may edit for %s'), T('15 minutes')), 
+                      '350' => sprintf(T('Authors may edit for %s'), T('5 minutes')),
+                      '900' => sprintf(T('Authors may edit for %s'), T('15 minutes')),
                      '3600' => sprintf(T('Authors may edit for %s'), T('1 hour')),
                     '14400' => sprintf(T('Authors may edit for %s'), T('4 hours')),
                     '86400' => sprintf(T('Authors may edit for %s'), T('1 day')),
@@ -99,9 +94,6 @@ echo $this->Form->Errors();
   </li>
   <?php
   $this->FireEvent('PerkOptions');
-
-  // Restore the prefix
-  $this->Form->InputPrefix = $Prefix;
   ?>
 </ul>
 <?php

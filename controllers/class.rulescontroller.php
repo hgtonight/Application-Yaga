@@ -104,7 +104,6 @@ class RulesController extends Gdn_Controller {
     if(class_exists($RuleClass) && in_array('YagaRule', class_implements($RuleClass))) {
       $Rule = new $RuleClass();
       $Form = Gdn::Factory('Form');
-      $Form->InputPrefix = '_Rules';
       $FormString = $Rule->Form($Form);
       $Description = $Rule->Description();
       $Name = $Rule->Name();
