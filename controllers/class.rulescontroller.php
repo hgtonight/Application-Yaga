@@ -31,11 +31,13 @@ class RulesController extends Gdn_Controller {
    */
   public static function GetRules() {
     $Rules = Gdn::Cache()->Get('Yaga.Badges.Rules');
+    
+    // rule files must always be loaded
+     foreach(glob(PATH_APPLICATIONS . DS . 'yaga' . DS . 'library' . DS . 'rules' . DS . '*.php') as $filename) {
+       include_once $filename;
+     }
+    
     if($Rules === Gdn_Cache::CACHEOP_FAILURE) {
-      foreach(glob(PATH_APPLICATIONS . DS . 'yaga' . DS . 'library' . DS . 'rules' . DS . '*.php') as $filename) {
-        include_once $filename;
-      }
-
       $TempRules = array();
       foreach(get_declared_classes() as $className) {
         if(in_array('YagaRule', class_implements($className))) {
