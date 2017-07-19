@@ -109,26 +109,33 @@ class RankController extends DashboardController {
     }
     else {
       // Find the perk options
-      $FormValues = $this->Form->FormValues();     
-      $PerkOptions = array();
-      foreach($FormValues as $Key => $Value) {
-        // Don't save default settings
-        if($Value === '') {
-          continue;
-        }
-        
-        if(substr($Key, 0, 7) == '_Perks/') {
-          $RealKey = substr($Key, 7);
-          $PerkOptions[$RealKey] = $Value;
-        }
-      }
+      $PerkOptions = array_intersect_key(
+        $this->Form->FormValues(),
+        array_flip(
+          [
+            'ConfGarden.EditContentTimeout',
+            'ConfGarden.Format.MeActions',
+            'ConfPlugins.Emotify.FormatEmoticons',
+            'ConfYaga.Perks.EditTimeout',
+            'ConfYaga.Perks.Emoticons',
+            'ConfYaga.Perks.MeActions',
+            'PermGarden.Curation.Manage',
+            'PermPlugins.Signatures.Edit',
+            'PermPlugins.Tagging.Add',
+            'PermYaga.Perks.Curation',
+            'PermYaga.Perks.Signatures',
+            'PermYaga.Perks.Tags',
+            'Role'
+          ]
+        )
+      );
 
       // Fire event for validating perk options
       $this->EventArguments['PerkOptions'] =& $PerkOptions;
       $this->FireEvent('BeforeValidation');
-      
+
       $this->Form->SetFormValue('Perks', serialize($PerkOptions));
-      
+
       if($this->Form->Save()) {
         if($Edit) {
           $this->InformMessage(T('Yaga.Rank.Updated'));
