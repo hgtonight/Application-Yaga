@@ -21,7 +21,7 @@ $Construct->Table('Reaction')
         ->Column('ActionID', 'int', FALSE, 'index')
         ->Column('ParentID', 'int', TRUE)
         ->Column('ParentType', 'varchar(100)')
-        ->Column('ParentAuthorID', 'int', FALSE)
+        ->Column('ParentAuthorID', 'int', FALSE, 'index')
         ->Column('DateInserted', 'datetime')
         ->Set($Explicit, $Drop);
 
