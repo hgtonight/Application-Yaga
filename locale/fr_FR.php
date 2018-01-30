@@ -150,7 +150,6 @@ $Definition['Yaga.Ranks.PostsReq'] = 'Commentaires requis';
 $Definition['Yaga.Ranks.RequiredAgeDNC'] = 'L\'âge du compte n\'importe pas';
 $Definition['Yaga.Ranks.RequiredAgeFormat'] = 'Le compte doit être plus vieux que %s.';
 $Definition['Yaga.Ranks.Settings.Desc'] = 'Içi, ous pouvez gérer les rangs disponibles.You can manage the available ranks here. Les rangs désactivés ne seont pas attribués automatiquement. Faites glissers les items pour modifier leur classement.';
-$Definition['Yaga.Ranks.Use'] = 'Utiliser les rangs';
 $Definition['Yaga.Ranks.Story.Manual'] = 'Ce rang est donné manuellement';
 $Definition['Yaga.Ranks.Story.Auto'] = 'Ce rang sera décerné automatiquement';
 $Definition['Yaga.Ranks.Story.PostReq'] = 'a %s posts';

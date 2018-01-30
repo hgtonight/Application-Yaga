@@ -38,7 +38,7 @@ class RankController extends DashboardController {
    */
   public function Settings() {
     $this->Permission('Yaga.Ranks.Manage');
-    $this->AddSideMenu('rank/settings');
+    $this->setHighlightRoute('rank/settings');
 
     $this->Title(T('Yaga.Ranks.Manage'));
 
@@ -79,7 +79,7 @@ class RankController extends DashboardController {
    */
   public function Edit($RankID = NULL) {
     $this->Permission('Yaga.Ranks.Manage');
-    $this->AddSideMenu('rank/settings');
+    $this->setHighlightRoute('rank/settings');
     $this->Form->SetModel($this->RankModel);
 
     $Edit = FALSE;
@@ -187,7 +187,7 @@ class RankController extends DashboardController {
       }
     }
 
-    $this->AddSideMenu('rank/settings');
+    $this->setHighlightRoute('rank/settings');
     $this->SetData('Title', T('Yaga.Rank.Delete'));
     $this->Render();
   }
@@ -203,7 +203,7 @@ class RankController extends DashboardController {
       throw PermissionException('Javascript');
     }
     $this->Permission('Yaga.Ranks.Manage');
-    $this->AddSideMenu('rank/settings');
+    $this->setHighlightRoute('rank/settings');
 
     $Rank = $this->RankModel->GetByID($RankID);
 
@@ -260,7 +260,7 @@ class RankController extends DashboardController {
    public function Promote($UserID) {
     // Check permission
     $this->Permission('Yaga.Ranks.Add');
-    $this->AddSideMenu('rank/settings');
+    $this->setHighlightRoute('rank/settings');
 
     // Only allow awarding if some ranks exist
     if(!$this->RankModel->GetCount()) {
@@ -313,7 +313,7 @@ class RankController extends DashboardController {
 
   /**
    * This takes in a sort array and updates the rank sort order.
-   * 
+   *
    * Renders the Save tree and/or the Result of the sort update.
    */
   public function Sort() {

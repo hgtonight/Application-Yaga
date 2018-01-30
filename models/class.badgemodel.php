@@ -44,7 +44,7 @@ class BadgeModel extends Gdn_Model {
 
   /**
    * Gets the badge list with an optional limit and offset
-   * 
+   *
    * @param int $Limit
    * @param int $Offset
    * @return DataSet
@@ -63,7 +63,7 @@ class BadgeModel extends Gdn_Model {
    * Total number of badges in the system
    * @return int
    */
-  public function GetCount() {
+  public function GetCount($wheres = '') {
     return count($this->Get());
   }
 
@@ -167,10 +167,10 @@ class BadgeModel extends Gdn_Model {
 
     return $this->Database->Query($Sql, array(':UserID' => $UserID))->Result();
   }
-  
+
   /**
    * Updates the sort field for each badge in the sort array
-   * 
+   *
    * @since 1.1
    * @param array $SortArray
    * @return boolean
