@@ -63,7 +63,7 @@ $Definition['Yaga.Badge.Earned.Format'] = 'Vous avez reçu ce badge le %s de la 
 $Definition['Yaga.Badge.EarnedByNone'] = 'Personne n\'a encore reçu ce badge.';
 $Definition['Yaga.Badge.EarnedByPlural'] = '%s personnes ont reçu ce badge.';
 $Definition['Yaga.Badge.EarnedBySingle'] = '%s personne a reçu badge.';
-$Definition['Yaga.Badge.EarnedHeadlineFormat'] = '{ActivityUserID,You} avez reçu le badge <a href="{Url,html}">{Data.Name,text}</a>.';
+$Definition['Yaga.Badge.EarnedHeadlineFormat'] = '{ActivityUserID,You} a reçu le badge <a href="{Url,html}">{Data.Name,text}</a>.';
 $Definition['Yaga.Badge.Edit'] = 'Editer le badge';
 $Definition['Yaga.Badge.GiveTo'] = 'Attribuer le badge à %s';
 $Definition['Yaga.Badge.PhotoDeleted'] = 'L\'image du badge à été supprimée.';
