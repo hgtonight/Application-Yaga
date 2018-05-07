@@ -4,6 +4,8 @@
 $Badges = $this->Data('Badges');
 $Username = $this->Data('Username', 'Unknown');
 
+$this->Form->setStyles('legacy');
+
 echo '<div id="UserBadgeForm">';
 echo Wrap(sprintf(T('Yaga.Badge.GiveTo'), $Username), 'h1');
 echo $this->Form->Open();
