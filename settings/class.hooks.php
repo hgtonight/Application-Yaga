@@ -53,8 +53,7 @@ class YagaHooks implements Gdn_IPlugin {
   public function Base_GetAppSettingsMenuItems_Handler($Sender) {
     $Menu = $Sender->EventArguments['SideMenu'];
     $Section = 'Gamification';
-    $Attrs = array('class' => $Section);
-    $Menu->AddItem($Section, $Section, FALSE, $Attrs);
+    $Menu->AddItem($Section, $Section);
     $Menu->AddLink($Section, T('Settings'), 'yaga/settings', 'Garden.Settings.Manage');
     if(C('Yaga.Reactions.Enabled')) {
       $Menu->AddLink($Section, T('Yaga.Reactions'), 'action/settings', 'Yaga.Reactions.Manage');
@@ -571,7 +570,7 @@ class YagaHooks implements Gdn_IPlugin {
         Yaga::ReactionModel()->Prefetch('discussion', $Sender->Data['Discussion']->DiscussionID);
       }
       if (isset($Sender->Data['Comments'])) {
-        $CommentIDs = array_column ($Sender->Data['Comments']->ResultArray(), 'CommentID');
+        $CommentIDs = ConsolidateArrayValuesByKey($Sender->Data['Comments']->ResultArray(), 'CommentID');
         // set the DataSet type back to "object"
         $Sender->Data['Comments']->DataSetType(DATASET_TYPE_OBJECT);
         Yaga::ReactionModel()->Prefetch('comment', $CommentIDs);
