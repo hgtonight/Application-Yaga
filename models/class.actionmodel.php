@@ -27,10 +27,10 @@ class ActionModel extends Gdn_Model {
 
   /**
    * Returns a list of all available actions
-   * 
+   *
    * @return dataset
    */
-  public function Get() {
+  public function Get($orderFields = '', $orderDirection = 'asc', $limit = false, $pageNumber = false) {
     if(empty(self::$_Actions)) {
       self::$_Actions = $this->SQL
               ->Select()
@@ -77,7 +77,7 @@ class ActionModel extends Gdn_Model {
    * to. Null will delete the associated reactions.
    * @return boolean Whether or not the deletion was successful
    */
-  public function Delete($ActionID, $ReplacementID = NULL) {
+  public function DeleteAction($ActionID, $ReplacementID = NULL) {
     if($this->Exists($ActionID)) {
       $this->SQL->Delete('Action', array('ActionID' => $ActionID));
 
@@ -98,7 +98,7 @@ class ActionModel extends Gdn_Model {
 
   /**
    * Updates the sort field for each action in the sort array
-   * 
+   *
    * @param array $SortArray
    * @return boolean
    */

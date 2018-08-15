@@ -137,7 +137,7 @@ class ActionController extends DashboardController {
       $Actions[$Index] = (array)$ActionObject;
     }
 
-    $Actions = ConsolidateArrayValuesByKey($Actions, 'ActionID', 'Name');
+    $Actions = array_column($Actions, 'ActionID', 'Name');
     unset($Actions[$ActionID]);
 
     $this->SetData('OtherActions', $Actions);
@@ -148,7 +148,7 @@ class ActionController extends DashboardController {
       $ReplacementID = $FormValues['Move'] ? $FormValues['ReplacementID'] : NULL;
 
       //$Replacement
-      if(!$this->ActionModel->Delete($ActionID, $ReplacementID)) {
+      if(!$this->ActionModel->DeleteAction($ActionID, $ReplacementID)) {
         $this->Form->AddError(sprintf(T('Yaga.Error.DeleteFailed'), T('Yaga.Action')));
       }
 

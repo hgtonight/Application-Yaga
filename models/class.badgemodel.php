@@ -30,7 +30,7 @@ class BadgeModel extends Gdn_Model {
    *
    * @return DataSet
    */
-  public function Get() {
+  public function Get($orderFields = '', $orderDirection = 'asc', $limit = false, $pageNumber = false) {
     if(empty(self::$_Badges)) {
       self::$_Badges = $this->SQL
               ->Select()
@@ -108,7 +108,7 @@ class BadgeModel extends Gdn_Model {
    * @throws Exception
    * @return boolean
    */
-  public function Delete($BadgeID) {
+  public function DeleteID($BadgeID, $options = []) {
     $Badge = $this->GetByID($BadgeID);
     if(!empty($Badge)) {
       try {
@@ -121,9 +121,9 @@ class BadgeModel extends Gdn_Model {
                 ->From('BadgeAward')
                 ->Where('BadgeID', $BadgeID)
                 ->Get()
-                ->Result();
+                ->ResultArray();
 
-        $UserIDs = ConsolidateArrayValuesByKey($UserIDSet, 'UserID');
+        $UserIDs = array_column($UserIDSet, 'UserID');
 
         // Decrement their badge count
         $this->SQL->Update('User')

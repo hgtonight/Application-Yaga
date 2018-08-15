@@ -174,7 +174,7 @@ class RankController extends DashboardController {
     $this->Permission('Yaga.Ranks.Manage');
 
     if($this->Form->IsPostBack()) {
-      if(!$this->RankModel->Delete($RankID)) {
+      if(!$this->RankModel->DeleteID($RankID)) {
         $this->Form->AddError(sprintf(T('Yaga.Error.DeleteFailed'), T('Yaga.Rank')));
       }
 

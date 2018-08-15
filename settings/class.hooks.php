@@ -570,7 +570,7 @@ class YagaHooks implements Gdn_IPlugin {
         Yaga::ReactionModel()->Prefetch('discussion', $Sender->Data['Discussion']->DiscussionID);
       }
       if (isset($Sender->Data['Comments'])) {
-        $CommentIDs = ConsolidateArrayValuesByKey($Sender->Data['Comments']->ResultArray(), 'CommentID');
+        $CommentIDs = array_column($Sender->Data['Comments']->ResultArray(), 'CommentID');
         // set the DataSet type back to "object"
         $Sender->Data['Comments']->DataSetType(DATASET_TYPE_OBJECT);
         Yaga::ReactionModel()->Prefetch('comment', $CommentIDs);
@@ -883,6 +883,9 @@ class YagaHooks implements Gdn_IPlugin {
       return;
     }
     // Restore backed up configs.
+    // Restore backed up configs.
+    if (C('Yaga.ConfBackup')) {
     Gdn::config()->loadArray(C('Yaga.ConfBackup'),'applications/yaga');
+    }
   }
 }

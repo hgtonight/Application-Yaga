@@ -163,7 +163,7 @@ class BadgeController extends DashboardController {
     $this->Permission('Yaga.Badges.Manage');
 
     if($this->Form->IsPostBack()) {
-      if(!$this->BadgeModel->Delete($BadgeID)) {
+      if(!$this->BadgeModel->DeleteID($BadgeID)) {
         $this->Form->AddError(sprintf(T('Yaga.Error.DeleteFailed'), T('Yaga.Badge')));
       }
 

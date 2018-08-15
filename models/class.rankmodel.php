@@ -17,7 +17,7 @@ class RankModel extends Gdn_Model {
    * @var DataSet
    */
   private static $_Ranks = NULL;
-  
+
   /**
    * Used as a cache
    * @var DataSet
@@ -36,7 +36,7 @@ class RankModel extends Gdn_Model {
    *
    * @return DataSet
    */
-  public function Get() {
+  public function Get($orderFields = '', $orderDirection = 'asc', $limit = false, $pageNumber = false) {
     if(empty(self::$_Ranks)) {
       self::$_Ranks = $this->SQL
               ->Select()
@@ -50,10 +50,10 @@ class RankModel extends Gdn_Model {
 
   /**
    * Gets the number of ranks currently specified in the database.
-   * 
+   *
    * @return int
    */
-  public function GetCount() {
+  public function GetCount($wheres = '') {
     return count($this->Get());
   }
 
@@ -65,13 +65,13 @@ class RankModel extends Gdn_Model {
    */
   public function GetByID($RankID) {
     $Ranks = $this->Get();
-    
+
     foreach($Ranks as $Rank) {
       if($Rank->RankID == $RankID) {
         return $Rank;
       }
     }
-    
+
     return NULL;
   }
 
@@ -85,16 +85,16 @@ class RankModel extends Gdn_Model {
     $Points = $User->Points;
     $Posts = $User->CountDiscussions + $User->CountComments;
     $StartDate = strtotime($User->DateInserted);
-    
+
     $Ranks = $this->Get();
-    
+
     $HighestRank = NULL;
     foreach($Ranks as $Rank) {
       // skip disabled ranks
       if(!$Rank->Enabled) {
         continue;
       }
-      
+
       $TargetDate = time() - $Rank->AgeReq;
       if($Points >= $Rank->PointReq && $Posts >= $Rank->PostReq && $StartDate <= $TargetDate) {
         $HighestRank = $Rank;
@@ -107,10 +107,10 @@ class RankModel extends Gdn_Model {
 
     return $HighestRank;
   }
-  
+
   /**
    * Get a list of perks associated with the specified Rank ID
-   * 
+   *
    * @param int $RankID
    * @return array
    */
@@ -119,31 +119,31 @@ class RankModel extends Gdn_Model {
       $Ranks = $this->Get();
       foreach($Ranks as $Rank) {
         self::$_Perks[$Rank->RankID] = unserialize($Rank->Perks);
-        
+
         if(self::$_Perks[$Rank->RankID] === FALSE) {
           self::$_Perks[$Rank->RankID] = array();
         }
       }
     }
-    
+
     return (array_key_exists($RankID, self::$_Perks)) ? self::$_Perks[$RankID] : array();
   }
-  
+
   /**
    * Returns all role IDs the specified rank confers as a perk
-   * 
+   *
    * @param int $RankID
    * @return array
    */
   public function GetPerkRoleIDs($RankID) {
     $RoleIDs = array();
-    
+
     $Perks = $this->GetPerks($RankID);
-    
+
     if(empty($Perks)) {
       return $RoleIDs;
     }
-    
+
     foreach($Perks as $Perk => $Value) {
       if(substr($Perk, 0, 4) === 'Role') {
         $RoleIDs[] = $Value;
@@ -168,20 +168,7 @@ class RankModel extends Gdn_Model {
             ->Put();
   }
 
-  /**
-   * Remove a rank and associated awards
-   *
-   * @param int $RankID
-   * @return boolean
-   */
-  public function Delete($RankID) {
-    $Rank = $this->GetByID($RankID);
-    if($Rank) {
-      $this->SQL->Delete('Rank', array('RankID' => $RankID));
-      return TRUE;
-    }
-    return FALSE;
-  }
+
 
   /**
    * Set a user's rank and record some activity if it was a promotion
@@ -194,12 +181,12 @@ class RankModel extends Gdn_Model {
     $Rank = $this->GetByID($RankID);
     $UserModel = Gdn::UserModel();
     $OldRankID = $UserModel->GetID($UserID)->RankID;
-    
+
     // Don't bother setting a rank that they already have
     if($Rank->RankID == $OldRankID) {
         return;
     }
-    
+
     if($Activity) {
       // Throw up a promotion activity
       $ActivityModel = new ActivityModel();
@@ -227,20 +214,20 @@ class RankModel extends Gdn_Model {
 
       $ActivityModel->SaveQueue();
     }
-    
+
     $UserModel->SetField($UserID, 'RankID', $Rank->RankID);
 
     // Update the roles if necessary
     $this->_UpdateUserRoles($UserID, $OldRankID, $Rank->RankID);
-    
+
     $this->EventArguments['Rank'] = $Rank;
     $this->EventArguments['UserID'] = $UserID;
     $this->FireEvent('AfterRankChange');
   }
-  
+
   /**
    * Updates the sort field for each rank in the sort array
-   * 
+   *
    * @param array $SortArray
    * @return boolean
    */
@@ -250,14 +237,14 @@ class RankModel extends Gdn_Model {
       if($Index == 0) {
         continue;
       }
-      
+
       // remove the 'RankID_' prefix
       $RankID = substr($Rank, 7);
       $this->SetField($RankID, 'Sort', $Index);
     }
     return TRUE;
   }
-  
+
   /**
    * Updates a user roles by removing role perks from the old rank and adding the
    * roles from the new rank
@@ -267,10 +254,10 @@ class RankModel extends Gdn_Model {
    */
   private function _UpdateUserRoles($UserID, $OldRankID, $NewRankID) {
     $UserModel = Gdn::UserModel();
-    
+
     // Get the user's current roles
     $CurrentRoleData = $UserModel->GetRoles($UserID);
-    $CurrentRoleIDs = ConsolidateArrayValuesByKey($CurrentRoleData->Result(), 'RoleID');
+    $CurrentRoleIDs = array_column($CurrentRoleData->ResultArray(), 'RoleID');
 
     // Get the associated role perks
     $OldPerkRoles = $this->GetPerkRoleIDs($OldRankID);
