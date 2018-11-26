@@ -885,7 +885,7 @@ class YagaHooks implements Gdn_IPlugin {
     // Restore backed up configs.
     // Restore backed up configs.
     if (C('Yaga.ConfBackup')) {
-    Gdn::config()->loadArray(C('Yaga.ConfBackup'),'applications/yaga');
+    Gdn::config()->loadArray(C('Yaga.ConfBackup'),'yaga');
     }
   }
 }
