@@ -20,7 +20,7 @@ class BadgeAwardModel extends Gdn_Model {
 
   /**
    * Gets the number of badges that have been awarded with a specific ID
-   * 
+   *
    * @param int $BadgeID
    * @return int
    */
@@ -36,7 +36,7 @@ class BadgeAwardModel extends Gdn_Model {
 
   /**
    * Gets recently awarded badges with a specific ID
-   * 
+   *
    * @param int $BadgeID
    * @param int $Limit
    * @return dataset
@@ -70,7 +70,7 @@ class BadgeAwardModel extends Gdn_Model {
             'UserID' => $UserID,
             'InsertUserID' => $InsertUserID,
             'Reason' => $Reason,
-            'DateInserted' => date(DATE_ISO8601)
+            'DateInserted' => Gdn_Format::toDateTime()
         ));
 
         // Record the points for this badge
@@ -185,7 +185,7 @@ class BadgeAwardModel extends Gdn_Model {
     else {
       $Where = NULL;
     }
-    
+
     $Result = array('Complete' => TRUE);
     switch($Column) {
       case 'CountBadges':
