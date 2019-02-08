@@ -243,7 +243,7 @@ class YagaHooks implements Gdn_IPlugin {
     $Sender->Pager = $PagerFactory->GetPager('Pager', $Sender);
     $Sender->Pager->ClientID = 'Pager';
     $Sender->Pager->Configure(
-            $Offset, $Limit, FALSE, 'profile/best/' . $Sender->User->UserID . '/' . Gdn_Format::Url($Sender->User->Name) . '/%1$s/'
+            $Offset, $Limit, $Data->TotalRecords, 'profile/best/' . $Sender->User->UserID . '/' . Gdn_Format::Url($Sender->User->Name) . '/%1$s/'
     );
 
     // Render the ProfileController
