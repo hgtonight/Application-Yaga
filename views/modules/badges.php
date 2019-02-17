@@ -1,7 +1,7 @@
 <?php if(!defined('APPLICATION')) exit();
 /* Copyright 2013 Zachary Doll */
 
-echo '<div id="Badges" class="Box Badges">';
+echo '<div id="Badges" class="Box BadgeGrid">';
 echo '<h4>' . $this->Title . '</h4>';
 echo '<div class="PhotoGrid">';
 foreach($this->Data as $Badge) {
