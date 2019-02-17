@@ -14,7 +14,7 @@ class BestController extends Gdn_Controller {
    * @var array
    */
   protected $_Content = array();
-  
+
   /**
    * @var array These objects will be created on instantiation and available via
    * $this->ObjectName
@@ -29,6 +29,7 @@ class BestController extends Gdn_Controller {
     parent::Initialize();
     $this->Application = 'Yaga';
     $this->Head = new HeadModule($this);
+    $this->Head->AddTag('meta', array('name' => 'robots', 'content' => 'noindex,noarchive'));
     $this->AddJsFile('jquery.js');
     $this->AddJsFile('jquery-ui.js');
     $this->AddJsFile('jquery.livequery.js');
@@ -43,35 +44,35 @@ class BestController extends Gdn_Controller {
 
   /**
    * Default to showing the best of all time
-   * 
+   *
    * @param int $Page What page of content should be shown
    */
   public function Index($Page = 0) {
-    list($Offset, $Limit) = $this->_TranslatePage($Page);    
+    list($Offset, $Limit) = $this->_TranslatePage($Page);
     $this->Title(T('Yaga.BestContent.Recent'));
     $this->_Content = $this->ActedModel->GetRecent($Limit, $Offset);
     $this->_BuildPager($Offset, $Limit, '/best/%1$s/');
     $this->SetData('ActiveFilter', 'Recent');
     $this->Render('index');
   }
-  
+
   /**
    * Get the highest scoring content from all time
    *
    * @param int $Page What page of content should be shown
    */
   public function AllTime($Page = 0) {
-    list($Offset, $Limit) = $this->_TranslatePage($Page); 
+    list($Offset, $Limit) = $this->_TranslatePage($Page);
     $this->Title(T('Yaga.BestContent.AllTime'));
     $this->_Content = $this->ActedModel->GetBest(NULL, $Limit, $Offset);
     $this->_BuildPager($Offset, $Limit, '/best/alltime/%1$s/');
     $this->SetData('ActiveFilter', 'AllTime');
     $this->Render('index');
   }
-  
+
   /**
    * Get the latest promoted content
-   * 
+   *
    * @param int $ID Filter on a specific action ID
    * @param int $Page What page of content should be shown
    */
@@ -86,7 +87,7 @@ class BestController extends Gdn_Controller {
       $this->Index($Page);
       return;
     }
-    
+
     list($Offset, $Limit) = $this->_TranslatePage($Page);
     $this->Title(sprintf(T('Yaga.BestContent.Action'), $Action->Name));
     $this->_Content = $this->ActedModel->GetAction($ID, $Limit, $Offset);
@@ -94,10 +95,10 @@ class BestController extends Gdn_Controller {
     $this->SetData('ActiveFilter', $ID);
     $this->Render('index');
   }
-  
+
   /**
    * Converts a page number to an offset and limit useful for model queries.
-   * 
+   *
    * @param int $Page What page of content should be shown
    * @return array An array containing the offset and limit
    */
@@ -108,10 +109,10 @@ class BestController extends Gdn_Controller {
     }
     return array($Offset, $Limit);
   }
-  
+
   /**
    * Builds a simple more/less pager to be rendered on the page
-   * 
+   *
    * @param int $Offset
    * @param int $Limit
    * @param string $Link
