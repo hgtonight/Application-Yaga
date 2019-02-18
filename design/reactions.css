@@ -49,7 +49,7 @@
 }
 
 .CountItemWrap {
-  width: 10%;
+  width: auto;
   display: inline-block;
 }
 
@@ -216,7 +216,7 @@ input + .ReactSprite {
   background-image: url('../../dashboard/design/images/sprites-14-000000.png');
 }
 
-  
+
 .MenuItems a:hover .ReactSprite {
   background-image: url('images/action-sprites-white.png');
 }
