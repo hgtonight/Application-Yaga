@@ -218,7 +218,7 @@ class RankController extends DashboardController {
       $ActiveClass = 'Active';
     }
 
-    $Slider = Wrap(Wrap(Anchor($ToggleText, 'rank/toggle/' . $Rank->RankID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
+    $Slider = Wrap(Wrap(Anchor($ToggleText, 'rank/toggle/' . $Rank->RankID, 'Hijack Button'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
     $this->RankModel->Enable($RankID, $Enable);
     $this->JsonTarget('#RankID_' . $RankID . ' td:nth-child(6)', $Slider, 'ReplaceWith');
     $this->Render('Blank', 'Utility', 'Dashboard');

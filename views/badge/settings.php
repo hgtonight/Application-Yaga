@@ -6,7 +6,7 @@ $Rules = $this->Data('Rules');
 echo Wrap($this->Title(), 'h1');
 echo Wrap(Wrap(T('Yaga.Badges.Desc'), 'div'), 'div', array('class' => 'Wrap'));
 echo Wrap(Wrap(T('Yaga.Badges.Settings.Desc'), 'div'), 'div', array('class' => 'Wrap'));
-echo Wrap(Anchor(T('Yaga.Badge.Add'), 'badge/add', array('class' => 'SmallButton')), 'div', array('class' => 'Wrap'));
+echo Wrap(Anchor(T('Yaga.Badge.Add'), 'badge/add', array('class' => 'Button')), 'div', array('class' => 'Wrap'));
 
 ?>
 <table id="Badges" class="AltRows Sortable">
@@ -41,8 +41,8 @@ echo Wrap(Anchor(T('Yaga.Badge.Add'), 'badge/add', array('class' => 'SmallButton
       $Row .= Wrap($Badge->AwardValue, 'td');
       $ToggleText = ($Badge->Enabled) ? T('Enabled') : T('Disabled');
       $ActiveClass = ($Badge->Enabled) ? 'Active' : 'InActive';
-      $Row .= Wrap(Wrap(Anchor($ToggleText, 'badge/toggle/' . $Badge->BadgeID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
-      $Row .= Wrap(Anchor(T('Edit'), 'badge/edit/' . $Badge->BadgeID, array('class' => 'SmallButton')) . Anchor(T('Delete'), 'badge/delete/' . $Badge->BadgeID, array('class' => 'Danger Popup SmallButton')), 'td');
+      $Row .= Wrap(Wrap(Anchor($ToggleText, 'badge/toggle/' . $Badge->BadgeID, 'Hijack Button'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
+      $Row .= Wrap(Anchor(T('Edit'), 'badge/edit/' . $Badge->BadgeID, array('class' => 'Button')) . Anchor(T('Delete'), 'badge/delete/' . $Badge->BadgeID, array('class' => 'Danger Popup Button')), 'td');
       echo Wrap($Row, 'tr', array('id' => 'BadgeID_' . $Badge->BadgeID, 'data-badgeid' => $Badge->BadgeID, 'class' => $Alt));
     }
     ?>

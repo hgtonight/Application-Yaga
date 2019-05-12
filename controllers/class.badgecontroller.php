@@ -207,7 +207,7 @@ class BadgeController extends DashboardController {
       $ActiveClass = 'Active';
     }
 
-    $Slider = Wrap(Wrap(Anchor($ToggleText, 'badge/toggle/' . $Badge->BadgeID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
+    $Slider = Wrap(Wrap(Anchor($ToggleText, 'badge/toggle/' . $Badge->BadgeID, 'Hijack Button'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
     $this->BadgeModel->Enable($BadgeID, $Enable);
     $this->JsonTarget('#BadgeID_' . $BadgeID . ' td:nth-child(6)', $Slider, 'ReplaceWith');
     $this->Render('Blank', 'Utility', 'Dashboard');

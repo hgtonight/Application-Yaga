@@ -89,7 +89,7 @@ if(!function_exists('RenderActionRow')) {
   function RenderActionRow($Action) {
     return Wrap(
             Wrap(
-                    Anchor(T('Edit'), 'action/edit/' . $Action->ActionID, array('class' => 'Popup SmallButton')) . Anchor(T('Delete'), 'action/delete/' . $Action->ActionID, array('class' => 'Popup SmallButton')), 'div', array('class' => 'Tools')) .
+                    Anchor(T('Edit'), 'action/edit/' . $Action->ActionID, array('class' => 'Popup Button')) . Anchor(T('Delete'), 'action/delete/' . $Action->ActionID, array('class' => 'Popup Button')), 'div', array('class' => 'Tools')) .
             Wrap(
                     Wrap($Action->Name, 'h4') .
                     Wrap(
