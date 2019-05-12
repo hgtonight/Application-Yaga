@@ -13,12 +13,12 @@ echo Wrap(
         Anchor(
                 T('Import'),
                 'yaga/import',
-                array('class' => 'SmallButton')
+                array('class' => 'Button')
                 ) .
         Anchor(
                 T('Export'),
                 'yaga/export',
-                array('class' => 'SmallButton')),
+                array('class' => 'Button')),
         'div',
         array(
             'class' => 'Wrap')
