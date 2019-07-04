@@ -10,11 +10,11 @@ foreach($this->Data as $Leader) {
   if($Leader->Points <= 0) {
     break;
   }
-  echo '<li><a href="https://routeur4g.fr/discussions/profile/'.$Leader->Name.'">'
-  .Wrap(Wrap(Plural($Leader->YagaPoints, '%s Point', '%s Points'), 'span', array('class' => 'Count')),'span', array('class' => 'Aside')).
-  ' <span class="Leaderboard-User"><img src="'.userPhotoUrl($Leader).'" class="ProfilePhoto ProfilePhotoSmall"> <span class="Username">
-  '.$Leader->Name.'</span></span></a> </li>';
-
+   echo '<li>'
+  .'<span class="Leaderboard-User"><img src="'.userPhotoUrl($Leader).'" class="ProfilePhoto ProfilePhotoSmall"> <span class="Username">'
+  .userAnchor($Leader)
+  .Wrap(Wrap(Plural($Leader->YagaPoints, '%s Point', '%s Points'), 'span', array('class' => 'Count')),'span', array('class' => 'Aside'))
+  .'</span></span> </li>';
 }
 echo '</ul>';
 echo '</div>';
