@@ -14,7 +14,7 @@ class BadgeController extends DashboardController {
    * $this->ObjectName
    */
   public $Uses = array('Form', 'BadgeModel', 'BadgeAwardModel');
-  
+
   private $EditFormFields = ['TransientKey', 'hpt', 'BadgeID', 'Name', 'Description', 'RuleClass', 'AwardValue', 'Checkboxes', 'Save', 'Enabled'];
 
   /**
@@ -43,7 +43,7 @@ class BadgeController extends DashboardController {
    */
   public function Settings($Page = '') {
     $this->Permission('Yaga.Badges.Manage');
-    $this->AddSideMenu('badge/settings');
+    $this->setHighlightRoute('badge/settings');
 
     $this->Title(T('Yaga.Badges.Manage'));
 
@@ -63,7 +63,7 @@ class BadgeController extends DashboardController {
    */
   public function Edit($BadgeID = NULL) {
     $this->Permission('Yaga.Badges.Manage');
-    $this->AddSideMenu('badge/settings');
+    $this->setHighlightRoute('badge/settings');
     $this->Form->SetModel($this->BadgeModel);
 
     // Only allow editing if some rules exist
@@ -115,7 +115,7 @@ class BadgeController extends DashboardController {
       }
 
       // Find the rule criteria
-      $FormValues = $this->Form->FormValues(); 
+      $FormValues = $this->Form->FormValues();
       $Criteria = array_diff_key($FormValues, array_flip($this->EditFormFields));
 
       // Validate the criteria
@@ -163,7 +163,7 @@ class BadgeController extends DashboardController {
     $this->Permission('Yaga.Badges.Manage');
 
     if($this->Form->IsPostBack()) {
-      if(!$this->BadgeModel->Delete($BadgeID)) {
+      if(!$this->BadgeModel->DeleteID($BadgeID)) {
         $this->Form->AddError(sprintf(T('Yaga.Error.DeleteFailed'), T('Yaga.Badge')));
       }
 
@@ -176,7 +176,7 @@ class BadgeController extends DashboardController {
       }
     }
 
-    $this->AddSideMenu('badge/settings');
+    $this->setHighlightRoute('badge/settings');
     $this->SetData('Title', T('Yaga.Badge.Delete'));
     $this->Render();
   }
@@ -192,7 +192,7 @@ class BadgeController extends DashboardController {
       throw new Gdn_UserException(T('Yaga.Error.NeedJS'));
     }
     $this->Permission('Yaga.Badges.Manage');
-    $this->AddSideMenu('badge/settings');
+    $this->setHighlightRoute('badge/settings');
 
     $Badge = $this->BadgeModel->GetByID($BadgeID);
 
@@ -207,7 +207,7 @@ class BadgeController extends DashboardController {
       $ActiveClass = 'Active';
     }
 
-    $Slider = Wrap(Wrap(Anchor($ToggleText, 'badge/toggle/' . $Badge->BadgeID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
+    $Slider = Wrap(Wrap(Anchor($ToggleText, 'badge/toggle/' . $Badge->BadgeID, 'Hijack Button'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
     $this->BadgeModel->Enable($BadgeID, $Enable);
     $this->JsonTarget('#BadgeID_' . $BadgeID . ' td:nth-child(6)', $Slider, 'ReplaceWith');
     $this->Render('Blank', 'Utility', 'Dashboard');
@@ -249,7 +249,7 @@ class BadgeController extends DashboardController {
    public function Award($UserID) {
     // Check permission
     $this->Permission('Yaga.Badges.Add');
-    $this->AddSideMenu('badge/settings');
+    $this->setHighlightRoute('badge/settings');
 
     // Only allow awarding if some badges exist
     if(!$this->BadgeModel->GetCount()) {
@@ -308,9 +308,9 @@ class BadgeController extends DashboardController {
 
   /**
    * This takes in a sort array and updates the badge sort order.
-   * 
+   *
    * Renders the Save tree and/or the Result of the sort update.
-   * 
+   *
    * @since 1.1
    */
   public function Sort() {

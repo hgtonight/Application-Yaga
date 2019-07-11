@@ -28,7 +28,7 @@ class ReactionModel extends Gdn_Model {
   /**
    * Returns all available actions along with the current count specified by
    * the $ID and $Type of content.
-   * 
+   *
    * @param int $ID
    * @param string $Type
    * @return DataSet
@@ -116,15 +116,11 @@ class ReactionModel extends Gdn_Model {
    * @param int $ActionID
    * @return DataSet
    */
-  public function GetUserCount($UserID, $ActionID) {
-    return $this->SQL
-            ->Select()
-            ->From('Reaction')
-            ->Where('ActionID', $ActionID)
-            ->Where('ParentAuthorID', $UserID)
-            ->GetCount();
-  }
   
+   public function GetUserCount($UserID, $ActionID) {
+      return $this->SQL->GetCount('Reaction',['ActionID'=> $ActionID,'ParentAuthorID'=> $UserID]);
+   }
+
   /**
    * Return the count of actions taken by a user
    *
@@ -133,12 +129,7 @@ class ReactionModel extends Gdn_Model {
    * @return DataSet
    */
   public function GetUserTakenCount($UserID, $ActionID) {
-    return $this->SQL
-            ->Select()
-            ->From('Reaction')
-            ->Where('ActionID', $ActionID)
-            ->Where('InsertUserID', $UserID)
-            ->GetCount();
+    return $this->SQL->GetCount('Reaction',['ActionID'=> $ActionID,'InsertUserID'=> $UserID]);
   }
 
   /**
@@ -185,7 +176,7 @@ class ReactionModel extends Gdn_Model {
         $Reaction = $this->SQL
               ->Update('Reaction')
               ->Set('ActionID', $ActionID)
-              ->Set('DateInserted', date(DATE_ISO8601))
+              ->Set('DateInserted', Gdn_Format::toDateTime())
               ->Where('ParentID', $ID)
               ->Where('ParentType', $Type)
               ->Where('InsertUserID', $UserID)
@@ -203,7 +194,7 @@ class ReactionModel extends Gdn_Model {
                       'ParentType' => $Type,
                       'ParentAuthorID' => $AuthorID,
                       'InsertUserID' => $UserID,
-                      'DateInserted' => date(DATE_ISO8601)));
+                      'DateInserted' => Gdn_Format::toDateTime()));
       $EventArgs['Exists'] = TRUE;
     }
 
@@ -228,7 +219,7 @@ class ReactionModel extends Gdn_Model {
     if (!is_array($IDs)) {
         $IDs = (array)$IDs;
     }
-    
+
     if (in_array($Type, array('discussion', 'comment', 'activity')) && !empty($IDs)) {
       $Result = $this->SQL
         ->Select('a.*, r.InsertUserID as UserID, r.DateInserted, r.ParentID')
@@ -239,11 +230,11 @@ class ReactionModel extends Gdn_Model {
         ->OrderBy('r.DateInserted')
         ->Get()
         ->Result();
-      
+
       foreach ($IDs as $ID) {
         self::$_Reactions[$Type . $ID] = array();
       }
-      
+
       $UserIDs = array();
       // fill the cache
       foreach ($Result as $Reaction) {

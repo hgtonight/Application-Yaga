@@ -41,7 +41,7 @@ class ActionController extends DashboardController {
    */
   public function Settings($Page = '') {
     $this->Permission('Yaga.Reactions.Manage');
-    $this->AddSideMenu('action/settings');
+    $this->setHighlightRoute('action/settings');
 
     $this->Title(T('Yaga.Actions.Manage'));
 
@@ -58,7 +58,7 @@ class ActionController extends DashboardController {
    */
   public function Edit($ActionID = NULL) {
     $this->Permission('Yaga.Reactions.Manage');
-    $this->AddSideMenu('action/settings');
+    $this->setHighlightRoute('action/settings');
     $this->Form->SetModel($this->ActionModel);
 
     $Edit = FALSE;
@@ -136,19 +136,19 @@ class ActionController extends DashboardController {
     foreach($Actions as $Index => $ActionObject) {
       $Actions[$Index] = (array)$ActionObject;
     }
-    
-    $Actions = ConsolidateArrayValuesByKey($Actions, 'ActionID', 'Name');
+
+    $Actions = array_column($Actions, 'ActionID', 'Name');
     unset($Actions[$ActionID]);
-    
+
     $this->SetData('OtherActions', $Actions);
     $this->SetData('ActionName', $Action->Name);
-    
+
     if($this->Form->IsPostBack()) {
       $FormValues = $this->Form->FormValues();
       $ReplacementID = $FormValues['Move'] ? $FormValues['ReplacementID'] : NULL;
 
       //$Replacement
-      if(!$this->ActionModel->Delete($ActionID, $ReplacementID)) {
+      if(!$this->ActionModel->DeleteAction($ActionID, $ReplacementID)) {
         $this->Form->AddError(sprintf(T('Yaga.Error.DeleteFailed'), T('Yaga.Action')));
       }
 
@@ -161,14 +161,14 @@ class ActionController extends DashboardController {
       }
     }
 
-    $this->AddSideMenu('action/settings');
+    $this->setHighlightRoute('action/settings');
     $this->SetData('Title', T('Yaga.Action.Delete'));
     $this->Render();
   }
 
   /**
    * This takes in a sort array and updates the action sort order.
-   * 
+   *
    * Renders the Save tree and/or the Result of the sort update.
    */
   public function Sort() {

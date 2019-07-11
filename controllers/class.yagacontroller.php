@@ -28,7 +28,7 @@ class YagaController extends DashboardController {
     if($this->Menu) {
       $this->Menu->HighlightRoute('/yaga');
     }
-    $this->AddSideMenu('yaga/settings');
+    $this->setHighlightRoute('yaga/settings');
 
     $this->AddCssFile('yaga.css');
     $this->removeCssFile('magnific-popup.css');
@@ -36,7 +36,7 @@ class YagaController extends DashboardController {
 
   /**
    * Redirect to settings by default
-   * 
+   *
    * @since 1.0
    */
   public function Index() {
@@ -45,7 +45,7 @@ class YagaController extends DashboardController {
 
   /**
    * This handles all the core settings for the gamification application.
-   * 
+   *
    * @since 1.0
    */
   public function Settings() {
@@ -89,11 +89,11 @@ class YagaController extends DashboardController {
 
     $this->Render('settings');
   }
-  
+
   /**
    * Performs the necessary functions to change a backend controller into a
    * frontend controller
-   * 
+   *
    * @since 1.1
    */
   private function FrontendStyle() {
@@ -101,18 +101,18 @@ class YagaController extends DashboardController {
     unset($this->Assets['Panel']['SideMenuModule']);
     $this->AddCssFile('style.css');
     $this->MasterView = 'default';
-    
+
     $WeeklyModule = new LeaderBoardModule();
     $WeeklyModule->SlotType = 'w';
     $this->AddModule($WeeklyModule);
     $AllTimeModule = new LeaderBoardModule();
     $this->AddModule($AllTimeModule);
   }
-  
+
   /**
    * Displays a summary of ranks currently configured on a frontend page to help
    * users understand what is valued in this community
-   * 
+   *
    * @since 1.1
    */
   public function Ranks() {
@@ -123,16 +123,16 @@ class YagaController extends DashboardController {
 
     // Get list of ranks from the model and pass to the view
     $this->SetData('Ranks', Yaga::RankModel()->Get());
-    
+
     $this->Render('ranks');
   }
-  
+
   /**
    * Displays a summary of badges currently configured on a frontend page to
    * help users understand what is valued in this community.
-   * 
+   *
    * Also provides a convenience redirect to badge details
-   * 
+   *
    * @param int $BadgeID The badge ID you want to see details
    * @param string $Slug The badge slug you want to see details
    * @since 1.1
@@ -142,11 +142,11 @@ class YagaController extends DashboardController {
     $this->FrontendStyle();
     $this->AddCssFile('badges.css');
     $this->AddModule('BadgesModule');
-    
+
     if(is_numeric($BadgeID)) {
       return $this->BadgeDetail($BadgeID, $Slug);
     }
-    
+
     $this->Title(T('Yaga.Badges.All'));
 
     // Get list of badges from the model and pass to the view
@@ -156,18 +156,18 @@ class YagaController extends DashboardController {
 
     $this->Render('badges');
   }
-  
+
   /**
-   * Displays information about the specified badge including recent recipients 
+   * Displays information about the specified badge including recent recipients
    * of the badge.
-   * 
+   *
    * @param int $BadgeID
    * @param string $Slug
    */
   public function BadgeDetail($BadgeID, $Slug = NULL) {
     $this->permission('Yaga.Badges.View');
     $Badge = Yaga::BadgeModel()->GetByID($BadgeID);
-    
+
     if(!$Badge) {
       throw NotFoundException('Badge');
     }
@@ -178,7 +178,7 @@ class YagaController extends DashboardController {
     $UserBadgeAward = $BadgeAwardModel->Exists($UserID, $BadgeID);
     $RecentAwards = $BadgeAwardModel->GetRecent($BadgeID);
 
-    
+
     $this->SetData('AwardCount', $AwardCount);
     $this->SetData('RecentAwards', $RecentAwards);
     $this->SetData('UserBadgeAward', $UserBadgeAward);
@@ -191,17 +191,17 @@ class YagaController extends DashboardController {
 
   /**
    * Import a Yaga transport file
-   * 
+   *
    * @since 1.0
    */
   public function Import() {
     $this->Title(T('Yaga.Import'));
     $this->SetData('TransportType', 'Import');
-    
+
     if(!class_exists('ZipArchive')) {
       $this->Form->AddError(T('Yaga.Error.TransportRequirements'));
     }
-    
+
     if($this->Form->IsPostBack() == TRUE) {
       // Handle the file upload
       $Upload = new Gdn_Upload();
@@ -229,7 +229,7 @@ class YagaController extends DashboardController {
         $this->Form->AddError(T('Yaga.Error.Includes'));
       }
     }
-    
+
     if($this->Form->ErrorCount() == 0 && $this->Form->IsPostBack()) {
       $this->Render('transport-success');
     }
@@ -240,7 +240,7 @@ class YagaController extends DashboardController {
 
   /**
    * Create a Yaga transport file
-   * 
+   *
    * @since 1.0
    */
   public function Export() {
@@ -273,7 +273,7 @@ class YagaController extends DashboardController {
   /**
    * This searches through the submitted checkboxes and constructs an array of
    * Yaga sections to be included in the transport file.
-   * 
+   *
    * @return array
    * @since 1.0
    */
@@ -288,7 +288,7 @@ class YagaController extends DashboardController {
     }
     return $Include;
   }
-  
+
   /**
    * Creates a transport file for easily transferring Yaga configurations across
    * installs
@@ -323,7 +323,7 @@ class YagaController extends DashboardController {
     $ConfigData = serialize($Configs);
     $FH->addFromString('configs.yaga', $ConfigData);
     $Hashes[] = md5($ConfigData);
-    
+
     // Add actions
     if($Include['Action']) {
       $Info->Action = 'actions.yaga';
@@ -439,9 +439,9 @@ class YagaController extends DashboardController {
   }
 
   /**
-   * Overwrites Yaga configurations, dumps Yaga db tables, inserts data via the 
+   * Overwrites Yaga configurations, dumps Yaga db tables, inserts data via the
    * model, and copies uploaded files to the server
-   * 
+   *
    * @param stdClass The info object read in from the archive
    * @param array Which tables should be overwritten
    * @return bool Pass/Fail on the import being executed. Errors can exist on the
@@ -452,14 +452,14 @@ class YagaController extends DashboardController {
     if(!$Info) {
       return FALSE;
     }
-    
+
     // Import Configs
     $Configs = unserialize(file_get_contents(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . $Info->Config));
     $Configurations = $this->_NestedToDotNotation($Configs, 'Yaga');
     foreach($Configurations as $Name => $Value) {
       SaveToConfig($Name, $Value);
     }
-    
+
     // Import model data
     foreach($Include as $Key => $Value) {
       if($Value) {
@@ -473,19 +473,19 @@ class YagaController extends DashboardController {
         $this->SetData($Key . 'Count', $Model->GetCount());
       }
     }
-    
+
     // Import uploaded files
     if(Gdn_FileSystem::Copy(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . 'images' . DS . 'uploads' . DS, PATH_UPLOADS . DS) === FALSE) {
       $this->Form->AddError(T('Yaga.Error.TransportCopy'));
     }
-    
+
     return TRUE;
   }
-  
+
   /**
    * Converted a nest config array into an array where indexes are the configuration
    * strings and the value is the value
-   * 
+   *
    * @param array The nested array
    * @param string What should the configuration strings be prefixed with
    * @return array
@@ -493,7 +493,7 @@ class YagaController extends DashboardController {
    */
   protected function _NestedToDotNotation($Configs, $Prefix = '') {
     $ConfigStrings = array();
-    
+
     foreach($Configs as $Name => $Value) {
       if(is_array($Value)) {
         $ConfigStrings = array_merge($ConfigStrings, $this->_NestedToDotNotation($Value, "$Prefix.$Name"));
@@ -502,7 +502,7 @@ class YagaController extends DashboardController {
         $ConfigStrings["$Prefix.$Name"] = $Value;
       }
     }
-    
+
     return $ConfigStrings;
   }
 
@@ -515,10 +515,10 @@ class YagaController extends DashboardController {
    */
   protected function _ValidateChecksum($MetaData) {
     $Hashes = array();
-    
+
     // Hash the config file
     $Hashes[] = md5_file(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . $MetaData->Config);
-    
+
     // Hash the data files
     if(property_exists($MetaData, 'Action')) {
       $Hashes[] = md5_file(PATH_UPLOADS . DS . 'import' . DS . 'yaga' . DS . $MetaData->Action);
@@ -541,7 +541,7 @@ class YagaController extends DashboardController {
 
     sort($Hashes);
 		$CalculatedChecksum = md5(implode(',', $Hashes));
-   
+
     if($CalculatedChecksum != $MetaData->MD5) {
       return FALSE;
 		}

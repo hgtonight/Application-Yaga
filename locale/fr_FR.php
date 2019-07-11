@@ -63,7 +63,7 @@ $Definition['Yaga.Badge.Earned.Format'] = 'Vous avez reçu ce badge le %s de la 
 $Definition['Yaga.Badge.EarnedByNone'] = 'Personne n\'a encore reçu ce badge.';
 $Definition['Yaga.Badge.EarnedByPlural'] = '%s personnes ont reçu ce badge.';
 $Definition['Yaga.Badge.EarnedBySingle'] = '%s personne a reçu badge.';
-$Definition['Yaga.Badge.EarnedHeadlineFormat'] = '{ActivityUserID,user} a reçu le badge <a href="{Url,html}">{Data.Name,text}</a>.';
+$Definition['Yaga.Badge.EarnedHeadlineFormat'] = '{ActivityUserID,You} a reçu le badge <a href="{Url,html}">{Data.Name,text}</a>.';
 $Definition['Yaga.Badge.Edit'] = 'Editer le badge';
 $Definition['Yaga.Badge.GiveTo'] = 'Attribuer le badge à %s';
 $Definition['Yaga.Badge.PhotoDeleted'] = 'L\'image du badge à été supprimée.';
@@ -88,7 +88,7 @@ $Definition['Yaga.BestContent.Recent'] = 'Les meilleurs commentaires réçents';
 
 // Erreurs
 $Definition['Yaga.Error.AddFile'] ='Impossible d\'ajouter le fichier: %s';
-$Definition['Yaga.Error.ArchiveChecksum'] = 'L\Archive semble corrompue: l\'empreinte est invalide.';
+$Definition['Yaga.Error.ArchiveChecksum'] = 'L\Archive semble corrompu: l\'empreinte est invalide.';
 $Definition['Yaga.Error.ArchiveCreate'] = 'Impossible de créer l\'archive: %s';
 $Definition['Yaga.Error.ArchiveExtract'] = 'Impossible d\'extraire le fichier.';
 $Definition['Yaga.Error.ArchiveOpen'] = 'Impossible d\'ouvrir l\'archive.';
@@ -150,7 +150,6 @@ $Definition['Yaga.Ranks.PostsReq'] = 'Commentaires requis';
 $Definition['Yaga.Ranks.RequiredAgeDNC'] = 'L\'âge du compte n\'importe pas';
 $Definition['Yaga.Ranks.RequiredAgeFormat'] = 'Le compte doit être plus vieux que %s.';
 $Definition['Yaga.Ranks.Settings.Desc'] = 'Içi, ous pouvez gérer les rangs disponibles.You can manage the available ranks here. Les rangs désactivés ne seont pas attribués automatiquement. Faites glissers les items pour modifier leur classement.';
-$Definition['Yaga.Ranks.Use'] = 'Utiliser les rangs';
 $Definition['Yaga.Ranks.Story.Manual'] = 'Ce rang est donné manuellement';
 $Definition['Yaga.Ranks.Story.Auto'] = 'Ce rang sera décerné automatiquement';
 $Definition['Yaga.Ranks.Story.PostReq'] = 'a %s posts';

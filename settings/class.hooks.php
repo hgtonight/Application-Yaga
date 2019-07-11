@@ -3,7 +3,7 @@
 
 /**
  * A collection of hooks that are enabled when Yaga is.
- * 
+ *
  * @package Yaga
  * @since 1.0
  */
@@ -53,8 +53,7 @@ class YagaHooks implements Gdn_IPlugin {
   public function Base_GetAppSettingsMenuItems_Handler($Sender) {
     $Menu = $Sender->EventArguments['SideMenu'];
     $Section = 'Gamification';
-    $Attrs = array('class' => $Section);
-    $Menu->AddItem($Section, $Section, FALSE, $Attrs);
+    $Menu->AddItem($Section, $Section);
     $Menu->AddLink($Section, T('Settings'), 'yaga/settings', 'Garden.Settings.Manage');
     if(C('Yaga.Reactions.Enabled')) {
       $Menu->AddLink($Section, T('Yaga.Reactions'), 'action/settings', 'Yaga.Reactions.Manage');
@@ -69,7 +68,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Add a Best Content item to the discussion filters module
-   * 
+   *
    * @param mixed $Sender
    * @return boolean
    */
@@ -176,7 +175,7 @@ class YagaHooks implements Gdn_IPlugin {
     }
 
     // Build a pager
-    $BaseUrl = 'profile/reactions/' . $Sender->User->UserID . '/' . Gdn_Format::Url($Sender->User->Name) . '/' . $ActionID; 
+    $BaseUrl = 'profile/reactions/' . $Sender->User->UserID . '/' . Gdn_Format::Url($Sender->User->Name) . '/' . $ActionID;
     $PagerFactory = new Gdn_PagerFactory();
     $Sender->Pager = $PagerFactory->GetPager('Pager', $Sender);
     $Sender->Pager->ClientID = 'Pager';
@@ -189,7 +188,7 @@ class YagaHooks implements Gdn_IPlugin {
     if($action) {
       $Sender->_SetBreadcrumbs($action->Name, $BaseUrl);
     }
-    
+
     // Render the ProfileController
     $Sender->Render();
   }
@@ -244,7 +243,7 @@ class YagaHooks implements Gdn_IPlugin {
     $Sender->Pager = $PagerFactory->GetPager('Pager', $Sender);
     $Sender->Pager->ClientID = 'Pager';
     $Sender->Pager->Configure(
-            $Offset, $Limit, FALSE, 'profile/best/' . $Sender->User->UserID . '/' . Gdn_Format::Url($Sender->User->Name) . '/%1$s/'
+            $Offset, $Limit, $Data->TotalRecords, 'profile/best/' . $Sender->User->UserID . '/' . Gdn_Format::Url($Sender->User->Name) . '/%1$s/'
     );
 
     // Render the ProfileController
@@ -256,9 +255,9 @@ class YagaHooks implements Gdn_IPlugin {
    * @param ProfileController $Sender
    */
   public function ProfileController_AddProfileTabs_Handler($Sender) {
-    if(is_object($Sender->User) && $Sender->User->UserID > 0) {
+    /*if(is_object($Sender->User) && $Sender->User->UserID > 0) {
       $Sender->AddProfileTab(Sprite('SpBestOf', 'SpMod Sprite') . ' ' . T('Yaga.BestContent'), 'profile/best/' . $Sender->User->UserID . '/' . urlencode($Sender->User->Name), 'Best');
-    }
+    }*/
   }
 
   /**
@@ -271,10 +270,10 @@ class YagaHooks implements Gdn_IPlugin {
     if(!C('Yaga.Ranks.Enabled')) {
       return;
     }
-    
+
     $Fields = $Sender->EventArguments['Fields'];
     $FieldHooks = array('Points', 'CountDiscussions', 'CountComments');
-    
+
     foreach($FieldHooks as $FieldHook) {
       if(array_key_exists($FieldHook, $Fields)) {
         $UserID = $Sender->EventArguments['UserID'];
@@ -283,10 +282,10 @@ class YagaHooks implements Gdn_IPlugin {
       }
     }
   }
-  
+
   /**
    * Update a user's rank id if they qualify
-   * 
+   *
    * @param int $UserID
    */
   protected function RankProgression($UserID) {
@@ -435,7 +434,7 @@ class YagaHooks implements Gdn_IPlugin {
     if(!Gdn::Session()->CheckPermission('Yaga.Reactions.Add')) {
       return;
     }
-    
+
     if($CurrentUserID == $Activity->RegardingUserID) {
       // The current user made this activity item happen
     }
@@ -461,12 +460,12 @@ class YagaHooks implements Gdn_IPlugin {
 
     $RankModel = Yaga::RankModel();
     $Perks = $RankModel->GetPerks($RankID);
-    
+
     // Apply all the perks
     foreach($Perks as $Perk => $PerkValue) {
       $PerkType = substr($Perk, 0, 4);
       $PerkKey = substr($Perk, 4);
-      
+
       if($PerkType === 'Conf') {
         $this->ApplyCustomConfigs($PerkKey, $PerkValue);
       }
@@ -492,7 +491,7 @@ class YagaHooks implements Gdn_IPlugin {
     if($Permission === '') {
       return;
     }
-    
+
     if(!is_array($User->Permissions)) {
       $TempPerms = unserialize($User->Permissions);
       if(!in_array($Permission, $TempPerms)) {
@@ -518,7 +517,7 @@ class YagaHooks implements Gdn_IPlugin {
     if($Permission === '') {
       return;
     }
-    
+
     if(!is_array($User->Permissions)) {
       $TempPerms = unserialize($User->Permissions);
       $Key = array_search($Permission, $TempPerms);
@@ -548,7 +547,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Insert JS and CSS files into the appropiate controllers
-   * 
+   *
    * @param ProfileController $Sender
    */
   public function ProfileController_Render_Before($Sender) {
@@ -561,7 +560,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Insert JS and CSS files into the appropiate controllers and fill the reaction cache
-   * 
+   *
    * @param DiscussionController $Sender
    */
   public function DiscussionController_Render_Before($Sender) {
@@ -571,17 +570,17 @@ class YagaHooks implements Gdn_IPlugin {
         Yaga::ReactionModel()->Prefetch('discussion', $Sender->Data['Discussion']->DiscussionID);
       }
       if (isset($Sender->Data['Comments'])) {
-        $CommentIDs = ConsolidateArrayValuesByKey($Sender->Data['Comments']->ResultArray(), 'CommentID');
+        $CommentIDs = array_column($Sender->Data['Comments']->ResultArray(), 'CommentID');
         // set the DataSet type back to "object"
         $Sender->Data['Comments']->DataSetType(DATASET_TYPE_OBJECT);
         Yaga::ReactionModel()->Prefetch('comment', $CommentIDs);
       }
     }
   }
-  
+
   /**
    * Insert JS and CSS files into the appropiate controllers
-   * 
+   *
    * @since 1.1
    * @param DiscussionsController $Sender
    */
@@ -591,7 +590,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Insert JS and CSS files into the appropiate controllers
-   * 
+   *
    * @param CommentController $Sender
    */
   public function CommentController_Render_Before($Sender) {
@@ -600,7 +599,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Insert JS and CSS files into the appropiate controllers
-   * 
+   *
    * @param ActivityController $Sender
    */
   public function ActivityController_Render_Before($Sender) {
@@ -618,7 +617,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Check for Badge Awards
-   * 
+   *
    * @param Gdn_Dispatcher $Sender
    */
   public function Gdn_Dispatcher_AppStartup_Handler($Sender) {
@@ -627,7 +626,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Check for Badge Awards
-   * 
+   *
    * @param mixed $Sender
    */
   public function Base_AfterGetSession_Handler($Sender) {
@@ -636,7 +635,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Check for Badge Awards
-   * 
+   *
    * @param CommentModel $Sender
    */
   public function CommentModel_AfterSaveComment_Handler($Sender) {
@@ -645,7 +644,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Check for Badge Awards
-   * 
+   *
    * @param DiscussionModel $Sender
    */
   public function DiscussionModel_AfterSaveDiscussion_Handler($Sender) {
@@ -654,7 +653,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Check for Badge Awards
-   * 
+   *
    * @param ActivityModel $Sender
    */
   public function ActivityModel_BeforeSaveComment_Handler($Sender) {
@@ -663,7 +662,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Check for Badge Awards
-   * 
+   *
    * @param CommentModel $Sender
    */
   public function CommentModel_BeforeNotification_Handler($Sender) {
@@ -672,7 +671,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Check for Badge Awards
-   * 
+   *
    * @param DiscussionModel $Sender
    */
   public function DiscussionModel_BeforeNotification_Handler($Sender) {
@@ -681,7 +680,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Check for Badge Awards
-   * 
+   *
    * @param mixed $Sender
    */
   public function Base_AfterSignIn_Handler($Sender) {
@@ -690,7 +689,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Check for Badge Awards
-   * 
+   *
    * @param UserModel $Sender
    */
   public function UserModel_AfterSave_Handler($Sender) {
@@ -699,7 +698,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Check for Badge Awards
-   * 
+   *
    * @param ReactionModel $Sender
    */
   public function ReactionModel_AfterReactionSave_Handler($Sender) {
@@ -708,7 +707,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Check for Badge Awards
-   * 
+   *
    * @param BadgeAwardModel $Sender
    */
   public function BadgeAwardModel_AfterBadgeAward_Handler($Sender) {
@@ -717,7 +716,7 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Check for Badge Awards
-   * 
+   *
    * @param mixed $Sender
    */
   public function Base_AfterConnection_Handler($Sender) {
@@ -748,10 +747,10 @@ class YagaHooks implements Gdn_IPlugin {
       }
     }
   }
-  
+
   /**
    * Adds links to the frontend
-   * 
+   *
    * @since 1.1
    * @param MenuModule $Menu
    */
@@ -766,12 +765,12 @@ class YagaHooks implements Gdn_IPlugin {
 
   /**
    * Delete all of the Yaga related information for a specific user.
-   * 
+   *
    * @param int $UserID The ID of the user to delete.
    * @param array $Options An array of options:
    *  - DeleteMethod: One of delete, wipe, or NULL
    * @param array $Data
-   * 
+   *
    * @since 1.0
    */
    protected function DeleteUserData($UserID, $Options = array(), &$Data = NULL) {
@@ -884,6 +883,9 @@ class YagaHooks implements Gdn_IPlugin {
       return;
     }
     // Restore backed up configs.
-    Gdn::config()->loadArray(C('Yaga.ConfBackup'));
+    // Restore backed up configs.
+    if (C('Yaga.ConfBackup')) {
+    Gdn::config()->loadArray(C('Yaga.ConfBackup'), 'applications/yaga');
+    }
   }
 }

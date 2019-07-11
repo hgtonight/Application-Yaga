@@ -6,7 +6,7 @@ $DelButton = '';
 $Photo = C('Yaga.Ranks.Photo', FALSE);
 if($Photo) {
   $PhotoString = Img($Photo);
-  $DelButton = Anchor(T('Delete Photo'), CombinePaths(array('rank/deletephoto', Gdn::Session()->TransientKey())), 'SmallButton Danger PopConfirm');
+  $DelButton = Anchor(T('Delete Photo'), CombinePaths(array('rank/deletephoto', Gdn::Session()->TransientKey())), 'Button Danger PopConfirm');
 }
 $AgeArray = AgeArray();
 
@@ -23,13 +23,13 @@ echo Wrap($PhotoString .
                 ) .
                 $DelButton .
                 $this->Form->Input('PhotoUpload', 'file') .
-                $this->Form->Button('Save', array('class' => 'SmallButton')), 'li'), 'ul') .
+                $this->Form->Button('Save', array('class' => 'Button')), 'li'), 'ul') .
  $this->Form->Close('', ' '), 'div', array('class' => 'Aside'));
 
 echo Wrap(
         Wrap(T('Yaga.Ranks.Desc'), 'p') . 
         Wrap(T('Yaga.Ranks.Settings.Desc'), 'p') .
-        Wrap(Anchor(T('Yaga.Rank.Add'), 'rank/add', array('class' => 'SmallButton')), 'p'),
+        Wrap(Anchor(T('Yaga.Rank.Add'), 'rank/add', array('class' => 'Button')), 'p'),
         'div',
         array('class' => 'Wrap'));
 ?>
@@ -58,8 +58,8 @@ echo Wrap(
       $Row .= Wrap($AgeArray[$Rank->AgeReq], 'td');
       $ToggleText = ($Rank->Enabled) ? T('Enabled') : T('Disabled');
       $ActiveClass = ($Rank->Enabled) ? 'Active' : 'InActive';
-      $Row .= Wrap(Wrap(Anchor($ToggleText, 'rank/toggle/' . $Rank->RankID, 'Hijack SmallButton'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
-      $Row .= Wrap(Anchor(T('Edit'), 'rank/edit/' . $Rank->RankID, array('class' => 'SmallButton')) . Anchor(T('Delete'), 'rank/delete/' . $Rank->RankID, array('class' => 'Danger Popup SmallButton')), 'td');
+      $Row .= Wrap(Wrap(Anchor($ToggleText, 'rank/toggle/' . $Rank->RankID, 'Hijack Button'), 'span', array('class' => "ActivateSlider ActivateSlider-{$ActiveClass}")), 'td');
+      $Row .= Wrap(Anchor(T('Edit'), 'rank/edit/' . $Rank->RankID, array('class' => 'Button')) . Anchor(T('Delete'), 'rank/delete/' . $Rank->RankID, array('class' => 'Danger Popup Button')), 'td');
       echo Wrap($Row, 'tr', array('id' => 'RankID_' . $Rank->RankID, 'data-rankid' => $Rank->RankID, 'class' => $Alt));
     }
     ?>
