@@ -93,7 +93,7 @@ class BadgeAwardModel extends Gdn_Model {
             'ActivityType' => 'BadgeAward',
             'ActivityUserID' => $UserID,
             'RegardingUserID' => $InsertUserID,
-            'Photo' => Url($Badge->Photo, TRUE),
+            'Photo' => $Badge->Photo,
             'RecordType' => 'Badge',
             'RecordID' => $BadgeID,
             'Route' => '/yaga/badges/' . $Badge->BadgeID . '/' . Gdn_Format::Url($Badge->Name),
